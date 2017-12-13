@@ -1,0 +1,6 @@
+framework module Pods_GameRankr {
+  umbrella header "Pods-GameRankr-umbrella.h"
+
+  export *
+  module * { export * }
+}
