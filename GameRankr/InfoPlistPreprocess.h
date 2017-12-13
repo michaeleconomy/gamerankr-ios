@@ -1,0 +1,18 @@
+
+#ifndef SANDBOX_SERVER_TOGGLE
+#define SANDBOX_SERVER_TOGGLE
+
+#define SANDBOX_SERVER
+
+#ifndef SANDBOX_SERVER
+
+#define FACEBOOK_APP_ID 144598422256403
+
+#else
+
+
+#define FACEBOOK_APP_ID 112664328800446
+#endif
+
+
+#endif
