@@ -2,7 +2,7 @@ import UIKit
 import FacebookCore
 import FacebookLogin
 
-class FirstViewController: UIViewController {
+class FirstViewController: UIViewController, AlertAPIErrorDelegate {
 
     @IBOutlet weak var fbButton: UIButton!
     override func viewDidLoad() {
@@ -35,6 +35,7 @@ class FirstViewController: UIViewController {
             case .success(let grantedPermissions, let declinedPermissions, let accessToken):
                 NSLog("Logged in via facebook.  grantedPermissions: \(grantedPermissions) declinedPermissions: \(declinedPermissions) accessToken: \(accessToken)")
                 self.fbButton.isHidden = true
+                api.login(fbAuthToken: accessToken.authenticationToken, delegate: self)
             }
         }
     }

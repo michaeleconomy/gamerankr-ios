@@ -1,6 +1,6 @@
 import UIKit
 
-class SearchViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, APISearchResultsDelegate {
+class SearchViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, APISearchResultsDelegate, AlertAPIErrorDelegate {
     
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var tableView: UITableView!
@@ -39,12 +39,6 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
         NSLog("searchBar clicked, search: \(searchBar.text!)")
         api.search(query: searchBar.text!, delegate: self)
         searchBar.endEditing(true)
-    }
-    
-    func handleApi(error: String) {
-        let alert = UIAlertController(title: "Alert", message: error, preferredStyle: UIAlertControllerStyle.alert)
-        alert.addAction(UIAlertAction(title: "Click", style: UIAlertActionStyle.default, handler: nil))
-        self.present(alert, animated: true, completion: nil)
     }
     
     func handleAPISearch(results: [Game]) {

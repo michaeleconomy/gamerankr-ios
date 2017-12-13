@@ -13,6 +13,9 @@
 		4C42E4DA1FE05539003F1C68 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C42E4D91FE05539003F1C68 /* User.swift */; };
 		4C42E4DC1FE05581003F1C68 /* Platform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C42E4DB1FE05581003F1C68 /* Platform.swift */; };
 		4C42E4DE1FE06387003F1C68 /* PaginationInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C42E4DD1FE06387003F1C68 /* PaginationInfo.swift */; };
+		4C42E4ED1FE1B679003F1C68 /* AlertAPIErrorDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C42E4EC1FE1B679003F1C68 /* AlertAPIErrorDelegate.swift */; };
+		4C42E4EF1FE1BB92003F1C68 /* bulleted-list.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C42E4EE1FE1BB92003F1C68 /* bulleted-list.png */; };
+		4C42E4F11FE1BC58003F1C68 /* MyGamesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C42E4F01FE1BC58003F1C68 /* MyGamesViewController.swift */; };
 		4C57FC0B1FDF784F00A04E57 /* menu.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C57FC071FDF784F00A04E57 /* menu.png */; };
 		4C57FC0C1FDF784F00A04E57 /* person.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C57FC081FDF784F00A04E57 /* person.png */; };
 		4C57FC0D1FDF784F00A04E57 /* news.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C57FC091FDF784F00A04E57 /* news.png */; };
@@ -36,6 +39,9 @@
 		4C42E4DB1FE05581003F1C68 /* Platform.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Platform.swift; sourceTree = "<group>"; };
 		4C42E4DD1FE06387003F1C68 /* PaginationInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaginationInfo.swift; sourceTree = "<group>"; };
 		4C42E4EA1FE0C935003F1C68 /* InfoPlistPreprocess.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = InfoPlistPreprocess.h; sourceTree = "<group>"; };
+		4C42E4EC1FE1B679003F1C68 /* AlertAPIErrorDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertAPIErrorDelegate.swift; sourceTree = "<group>"; };
+		4C42E4EE1FE1BB92003F1C68 /* bulleted-list.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bulleted-list.png"; sourceTree = "<group>"; };
+		4C42E4F01FE1BC58003F1C68 /* MyGamesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyGamesViewController.swift; sourceTree = "<group>"; };
 		4C57FC071FDF784F00A04E57 /* menu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = menu.png; sourceTree = "<group>"; };
 		4C57FC081FDF784F00A04E57 /* person.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = person.png; sourceTree = "<group>"; };
 		4C57FC091FDF784F00A04E57 /* news.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = news.png; sourceTree = "<group>"; };
@@ -89,9 +95,29 @@
 			path = models;
 			sourceTree = "<group>";
 		};
+		4C42E4F21FE1BC62003F1C68 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				4C42E4F31FE1BC72003F1C68 /* Shared */,
+				4CD1C9DC1FDF6B62001A0B8D /* FirstViewController.swift */,
+				4CD1C9DE1FDF6B62001A0B8D /* SearchViewController.swift */,
+				4C42E4F01FE1BC58003F1C68 /* MyGamesViewController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		4C42E4F31FE1BC72003F1C68 /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				4C42E4EC1FE1B679003F1C68 /* AlertAPIErrorDelegate.swift */,
+			);
+			path = Shared;
+			sourceTree = "<group>";
+		};
 		4C57FC061FDF775A00A04E57 /* icons */ = {
 			isa = PBXGroup;
 			children = (
+				4C42E4EE1FE1BB92003F1C68 /* bulleted-list.png */,
 				4C57FC111FDF799300A04E57 /* search.png */,
 				4C57FC071FDF784F00A04E57 /* menu.png */,
 				4C57FC091FDF784F00A04E57 /* news.png */,
@@ -132,9 +158,8 @@
 			isa = PBXGroup;
 			children = (
 				4C57FC131FDF7D7600A04E57 /* api */,
+				4C42E4F21FE1BC62003F1C68 /* Controllers */,
 				4CD1C9DA1FDF6B62001A0B8D /* AppDelegate.swift */,
-				4CD1C9DC1FDF6B62001A0B8D /* FirstViewController.swift */,
-				4CD1C9DE1FDF6B62001A0B8D /* SearchViewController.swift */,
 				4CD1C9E01FDF6B62001A0B8D /* Main.storyboard */,
 				4C57FC061FDF775A00A04E57 /* icons */,
 				4CD1C9E31FDF6B62001A0B8D /* Assets.xcassets */,
@@ -220,6 +245,7 @@
 				4C57FC0B1FDF784F00A04E57 /* menu.png in Resources */,
 				4CD1C9E71FDF6B62001A0B8D /* LaunchScreen.storyboard in Resources */,
 				4C57FC0D1FDF784F00A04E57 /* news.png in Resources */,
+				4C42E4EF1FE1BB92003F1C68 /* bulleted-list.png in Resources */,
 				4CD1C9E41FDF6B62001A0B8D /* Assets.xcassets in Resources */,
 				4CD1C9E21FDF6B62001A0B8D /* Main.storyboard in Resources */,
 				4C57FC0C1FDF784F00A04E57 /* person.png in Resources */,
@@ -301,8 +327,10 @@
 			files = (
 				4C42E4DC1FE05581003F1C68 /* Platform.swift in Sources */,
 				4C42E4D61FE053E7003F1C68 /* Port.swift in Sources */,
+				4C42E4ED1FE1B679003F1C68 /* AlertAPIErrorDelegate.swift in Sources */,
 				4CD1C9DF1FDF6B62001A0B8D /* SearchViewController.swift in Sources */,
 				4CD1C9DB1FDF6B62001A0B8D /* AppDelegate.swift in Sources */,
+				4C42E4F11FE1BC58003F1C68 /* MyGamesViewController.swift in Sources */,
 				4C42E4D81FE05519003F1C68 /* Ranking.swift in Sources */,
 				4C42E4DE1FE06387003F1C68 /* PaginationInfo.swift in Sources */,
 				4C42E4DA1FE05539003F1C68 /* User.swift in Sources */,
