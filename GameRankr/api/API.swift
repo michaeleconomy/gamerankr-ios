@@ -9,14 +9,39 @@
 import Foundation
 let api = API()
 
-protocol APISearchResultsDelegate {
-    func handleApiSearch(error: String)
+protocol APIErrorDelegate {
+    func handleApi(error: String)
+}
+protocol APISearchResultsDelegate : APIErrorDelegate {
     func handleAPISearch(results: [Game])
 }
 
 
 class API {
     let base_url = "http://localhost:3000"
+//    let base_url = "https://www.gamerankr.com"
+    
+    func login(fbAuthToken: String, delegate: APIErrorDelegate) {
+        var urlComponents = URLComponents(string: "\(base_url)/login.json")!
+        urlComponents.queryItems = [
+            URLQueryItem(name: "fb_auth_token", value: fbAuthToken)
+        ]
+        
+        let task = URLSession.shared.dataTask(with: urlComponents.url!) { data, response, error in
+            if let error = error {
+                delegate.handleApi(error: "error: \(error)")
+                return
+            }
+            guard let httpResponse = response as? HTTPURLResponse,
+                (200...299).contains(httpResponse.statusCode) else {
+                    delegate.handleApi(error: "server error, response: \(String(describing: response))")
+                    return
+            }
+            NSLog("login was successful. Data: \(String(describing: data))")
+            // success!
+        }
+        task.resume()
+    }
     
     func search(query: String, delegate: APISearchResultsDelegate) {
         var urlComponents = URLComponents(string: "\(base_url)/search.json")!
@@ -26,12 +51,12 @@ class API {
         
         let task = URLSession.shared.dataTask(with: urlComponents.url!) { data, response, error in
             if let error = error {
-                delegate.handleApiSearch(error: "error: \(error)")
+                delegate.handleApi(error: "error: \(error)")
                 return
             }
             guard let httpResponse = response as? HTTPURLResponse,
                     (200...299).contains(httpResponse.statusCode) else {
-                delegate.handleApiSearch(error: "server error, response: \(String(describing: response))")
+                delegate.handleApi(error: "server error, response: \(String(describing: response))")
                 return
             }
             
@@ -46,7 +71,7 @@ class API {
                 }
                 delegate.handleAPISearch(results: results)
             } catch {
-                delegate.handleApiSearch(error: "error parsing json: \(error)")
+                delegate.handleApi(error: "error parsing json: \(error)")
             }
         }
         task.resume()
