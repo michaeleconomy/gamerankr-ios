@@ -1,4 +1,7 @@
 PODS:
+  - Apollo (0.7.0):
+    - Apollo/Core (= 0.7.0)
+  - Apollo/Core (0.7.0)
   - Bolts (1.8.4):
     - Bolts/AppLinks (= 1.8.4)
     - Bolts/Tasks (= 1.8.4)
@@ -26,11 +29,13 @@ PODS:
     - FBSDKCoreKit
 
 DEPENDENCIES:
+  - Apollo
   - FacebookCore
   - FacebookLogin
   - FacebookShare
 
 SPEC CHECKSUMS:
+  Apollo: d6649ac06168660e70c6226c4eadfc0770791ba5
   Bolts: 8a7995239dbe724f9cba2248b766d48b7ebdd322
   FacebookCore: 3ffa190a3f1f96cec0e44d3fc221bc322c595ffa
   FacebookLogin: 0af839ea858faef99550d16596b87b4a8e8906e6
@@ -39,6 +44,6 @@ SPEC CHECKSUMS:
   FBSDKLoginKit: 56a057ca6822535ea0faa25f57a7c41edb697fd4
   FBSDKShareKit: 18a2cd118aef11dd657fe7e8b64bae5c719088b2
 
-PODFILE CHECKSUM: fdd292b7581e940b054bd7068c60accc4b489bde
+PODFILE CHECKSUM: c8f4b9492f7f59eaec150ec561af15aec5c1a89b
 
 COCOAPODS: 1.3.1

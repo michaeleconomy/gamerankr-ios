@@ -5,7 +5,7 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var tableView: UITableView!
     
-    var results: [Game] = []
+    var results: [SearchQuery.Data.Game] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,7 +41,7 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
         searchBar.endEditing(true)
     }
     
-    func handleAPISearch(results: [Game]) {
+    func handleAPISearch(results: [SearchQuery.Data.Game]) {
         self.results = results
         DispatchQueue.main.async(execute: {
             self.tableView.reloadData()

@@ -1,11 +1,3 @@
-//
-//  AppDelegate.swift
-//  GameRankr
-//
-//  Created by Michael on 12/11/17.
-//  Copyright © 2017 Michael. All rights reserved.
-//
-
 import UIKit
 import FacebookCore
 

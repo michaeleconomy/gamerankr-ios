@@ -2,7 +2,8 @@ import UIKit
 
 class MyGamesViewController: UIViewController, UITableViewDataSource, UITableViewDelegate,  APIMyGamesDelegate, AlertAPIErrorDelegate {
     
-    var games: [Game] = []
+    
+    var rankings: [MyGamesQuery.Data.Ranking] = []
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var signedInView: UIView!
@@ -27,19 +28,19 @@ class MyGamesViewController: UIViewController, UITableViewDataSource, UITableVie
     
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return games.count
+        return rankings.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
-        let game = games[indexPath.row]
-        cell.textLabel!.text = game.title
+        let ranking = rankings[indexPath.row]
+        cell.textLabel!.text = ranking.game.title
         return cell
     }
     
     
-    func handleAPIMyGames(games: [Game]) {
-        self.games = games
+    func handleAPIMyGames(rankings: [MyGamesQuery.Data.Ranking]) {
+        self.rankings = rankings
         DispatchQueue.main.async(execute: {
             self.tableView.reloadData()
         })

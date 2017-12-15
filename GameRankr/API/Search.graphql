@@ -1,0 +1,6 @@
+query Search($query: String!) {
+    games : search(query: $query) {
+        id
+        title
+    }
+}

@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4C3FC26A1FE322BC00299D7D /* Search.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 4C3FC2691FE322BC00299D7D /* Search.graphql */; };
+		4C3FC26C1FE3392A00299D7D /* GameRankrHTTPNetworkTransport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C3FC26B1FE3392A00299D7D /* GameRankrHTTPNetworkTransport.swift */; };
 		4C42E4D41FE053CD003F1C68 /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C42E4D31FE053CD003F1C68 /* Game.swift */; };
 		4C42E4D61FE053E7003F1C68 /* Port.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C42E4D51FE053E7003F1C68 /* Port.swift */; };
 		4C42E4D81FE05519003F1C68 /* Ranking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C42E4D71FE05519003F1C68 /* Ranking.swift */; };
@@ -16,12 +18,14 @@
 		4C42E4ED1FE1B679003F1C68 /* AlertAPIErrorDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C42E4EC1FE1B679003F1C68 /* AlertAPIErrorDelegate.swift */; };
 		4C42E4EF1FE1BB92003F1C68 /* bulleted-list.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C42E4EE1FE1BB92003F1C68 /* bulleted-list.png */; };
 		4C42E4F11FE1BC58003F1C68 /* MyGamesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C42E4F01FE1BC58003F1C68 /* MyGamesViewController.swift */; };
+		4C4FC9D91FE23C9F002F6428 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C4FC9D81FE23C9F002F6428 /* API.swift */; };
+		4C4FC9DB1FE23D42002F6428 /* MyGames.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 4C4FC9DA1FE23D42002F6428 /* MyGames.graphql */; };
 		4C57FC0B1FDF784F00A04E57 /* menu.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C57FC071FDF784F00A04E57 /* menu.png */; };
 		4C57FC0C1FDF784F00A04E57 /* person.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C57FC081FDF784F00A04E57 /* person.png */; };
 		4C57FC0D1FDF784F00A04E57 /* news.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C57FC091FDF784F00A04E57 /* news.png */; };
 		4C57FC0E1FDF784F00A04E57 /* people.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C57FC0A1FDF784F00A04E57 /* people.png */; };
 		4C57FC121FDF799300A04E57 /* search.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C57FC111FDF799300A04E57 /* search.png */; };
-		4C57FC151FDF7D9600A04E57 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C57FC141FDF7D9600A04E57 /* API.swift */; };
+		4C57FC151FDF7D9600A04E57 /* GamerankrAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C57FC141FDF7D9600A04E57 /* GamerankrAPI.swift */; };
 		4CD1C9DB1FDF6B62001A0B8D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CD1C9DA1FDF6B62001A0B8D /* AppDelegate.swift */; };
 		4CD1C9DD1FDF6B62001A0B8D /* FirstViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CD1C9DC1FDF6B62001A0B8D /* FirstViewController.swift */; };
 		4CD1C9DF1FDF6B62001A0B8D /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CD1C9DE1FDF6B62001A0B8D /* SearchViewController.swift */; };
@@ -32,6 +36,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4C3FC2691FE322BC00299D7D /* Search.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = Search.graphql; sourceTree = "<group>"; };
+		4C3FC26B1FE3392A00299D7D /* GameRankrHTTPNetworkTransport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameRankrHTTPNetworkTransport.swift; sourceTree = "<group>"; };
 		4C42E4D31FE053CD003F1C68 /* Game.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Game.swift; sourceTree = "<group>"; };
 		4C42E4D51FE053E7003F1C68 /* Port.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Port.swift; sourceTree = "<group>"; };
 		4C42E4D71FE05519003F1C68 /* Ranking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ranking.swift; sourceTree = "<group>"; };
@@ -42,12 +48,14 @@
 		4C42E4EC1FE1B679003F1C68 /* AlertAPIErrorDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertAPIErrorDelegate.swift; sourceTree = "<group>"; };
 		4C42E4EE1FE1BB92003F1C68 /* bulleted-list.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bulleted-list.png"; sourceTree = "<group>"; };
 		4C42E4F01FE1BC58003F1C68 /* MyGamesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyGamesViewController.swift; sourceTree = "<group>"; };
+		4C4FC9D81FE23C9F002F6428 /* API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
+		4C4FC9DA1FE23D42002F6428 /* MyGames.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = MyGames.graphql; sourceTree = "<group>"; };
 		4C57FC071FDF784F00A04E57 /* menu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = menu.png; sourceTree = "<group>"; };
 		4C57FC081FDF784F00A04E57 /* person.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = person.png; sourceTree = "<group>"; };
 		4C57FC091FDF784F00A04E57 /* news.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = news.png; sourceTree = "<group>"; };
 		4C57FC0A1FDF784F00A04E57 /* people.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = people.png; sourceTree = "<group>"; };
 		4C57FC111FDF799300A04E57 /* search.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = search.png; sourceTree = "<group>"; };
-		4C57FC141FDF7D9600A04E57 /* API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
+		4C57FC141FDF7D9600A04E57 /* GamerankrAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GamerankrAPI.swift; sourceTree = "<group>"; };
 		4CD1C9D71FDF6B62001A0B8D /* GameRankr.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GameRankr.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4CD1C9DA1FDF6B62001A0B8D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4CD1C9DC1FDF6B62001A0B8D /* FirstViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstViewController.swift; sourceTree = "<group>"; };
@@ -127,13 +135,16 @@
 			path = icons;
 			sourceTree = "<group>";
 		};
-		4C57FC131FDF7D7600A04E57 /* api */ = {
+		4C57FC131FDF7D7600A04E57 /* API */ = {
 			isa = PBXGroup;
 			children = (
 				4C42E4D21FE053B8003F1C68 /* models */,
-				4C57FC141FDF7D9600A04E57 /* API.swift */,
+				4C57FC141FDF7D9600A04E57 /* GamerankrAPI.swift */,
+				4C4FC9DA1FE23D42002F6428 /* MyGames.graphql */,
+				4C3FC2691FE322BC00299D7D /* Search.graphql */,
+				4C3FC26B1FE3392A00299D7D /* GameRankrHTTPNetworkTransport.swift */,
 			);
-			path = api;
+			path = API;
 			sourceTree = "<group>";
 		};
 		4CD1C9CE1FDF6B62001A0B8D = {
@@ -157,7 +168,8 @@
 		4CD1C9D91FDF6B62001A0B8D /* GameRankr */ = {
 			isa = PBXGroup;
 			children = (
-				4C57FC131FDF7D7600A04E57 /* api */,
+				4C4FC9D81FE23C9F002F6428 /* API.swift */,
+				4C57FC131FDF7D7600A04E57 /* API */,
 				4C42E4F21FE1BC62003F1C68 /* Controllers */,
 				4CD1C9DA1FDF6B62001A0B8D /* AppDelegate.swift */,
 				4CD1C9E01FDF6B62001A0B8D /* Main.storyboard */,
@@ -186,6 +198,7 @@
 			buildConfigurationList = 4CD1C9EB1FDF6B62001A0B8D /* Build configuration list for PBXNativeTarget "GameRankr" */;
 			buildPhases = (
 				518D6CDF62FBA23A731FC52D /* [CP] Check Pods Manifest.lock */,
+				4C4FC9D51FE2303F002F6428 /* Generate Apollo GraphQL API */,
 				4CD1C9D31FDF6B62001A0B8D /* Sources */,
 				4CD1C9D41FDF6B62001A0B8D /* Frameworks */,
 				4CD1C9D51FDF6B62001A0B8D /* Resources */,
@@ -241,11 +254,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				4C57FC0E1FDF784F00A04E57 /* people.png in Resources */,
+				4C4FC9DB1FE23D42002F6428 /* MyGames.graphql in Resources */,
 				4C57FC121FDF799300A04E57 /* search.png in Resources */,
 				4C57FC0B1FDF784F00A04E57 /* menu.png in Resources */,
 				4CD1C9E71FDF6B62001A0B8D /* LaunchScreen.storyboard in Resources */,
 				4C57FC0D1FDF784F00A04E57 /* news.png in Resources */,
 				4C42E4EF1FE1BB92003F1C68 /* bulleted-list.png in Resources */,
+				4C3FC26A1FE322BC00299D7D /* Search.graphql in Resources */,
 				4CD1C9E41FDF6B62001A0B8D /* Assets.xcassets in Resources */,
 				4CD1C9E21FDF6B62001A0B8D /* Main.storyboard in Resources */,
 				4C57FC0C1FDF784F00A04E57 /* person.png in Resources */,
@@ -255,6 +270,20 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		4C4FC9D51FE2303F002F6428 /* Generate Apollo GraphQL API */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Generate Apollo GraphQL API";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "APOLLO_FRAMEWORK_PATH=\"$(eval find $FRAMEWORK_SEARCH_PATHS -name \"Apollo.framework\" -maxdepth 1)\"\n\nif [ -z \"$APOLLO_FRAMEWORK_PATH\" ]; then\necho \"error: Couldn't find Apollo.framework in FRAMEWORK_SEARCH_PATHS; make sure to add the framework to your project.\"\nexit 1\nfi\n\ncd \"${SRCROOT}/${TARGET_NAME}\"\n$APOLLO_FRAMEWORK_PATH/check-and-run-apollo-codegen.sh generate $(find . -name '*.graphql') --schema schema.json --output API.swift";
+		};
 		518D6CDF62FBA23A731FC52D /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -280,6 +309,7 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-GameRankr/Pods-GameRankr-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Apollo/Apollo.framework",
 				"${BUILT_PRODUCTS_DIR}/Bolts/Bolts.framework",
 				"${BUILT_PRODUCTS_DIR}/FBSDKCoreKit/FBSDKCoreKit.framework",
 				"${BUILT_PRODUCTS_DIR}/FBSDKLoginKit/FBSDKLoginKit.framework",
@@ -290,6 +320,7 @@
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Apollo.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Bolts.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKCoreKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKLoginKit.framework",
@@ -332,10 +363,12 @@
 				4CD1C9DB1FDF6B62001A0B8D /* AppDelegate.swift in Sources */,
 				4C42E4F11FE1BC58003F1C68 /* MyGamesViewController.swift in Sources */,
 				4C42E4D81FE05519003F1C68 /* Ranking.swift in Sources */,
+				4C3FC26C1FE3392A00299D7D /* GameRankrHTTPNetworkTransport.swift in Sources */,
 				4C42E4DE1FE06387003F1C68 /* PaginationInfo.swift in Sources */,
+				4C4FC9D91FE23C9F002F6428 /* API.swift in Sources */,
 				4C42E4DA1FE05539003F1C68 /* User.swift in Sources */,
 				4C42E4D41FE053CD003F1C68 /* Game.swift in Sources */,
-				4C57FC151FDF7D9600A04E57 /* API.swift in Sources */,
+				4C57FC151FDF7D9600A04E57 /* GamerankrAPI.swift in Sources */,
 				4CD1C9DD1FDF6B62001A0B8D /* FirstViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
