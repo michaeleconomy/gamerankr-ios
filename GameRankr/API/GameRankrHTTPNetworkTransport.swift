@@ -67,10 +67,10 @@ class GamerankerHTTPNetworkTransport : NetworkTransport {
     ///   - url: The URL of a GraphQL server to connect to.
     ///   - configuration: A session configuration used to configure the session. Defaults to `URLSessionConfiguration.default`.
     ///   - sendOperationIdentifiers: Whether to send operation identifiers rather than full operation text, for use with servers that support query persistence. Defaults to false.
-    public init(url: URL, configuration: URLSessionConfiguration = URLSessionConfiguration.default, sendOperationIdentifiers: Bool = false) {
+    public init(url: URL) {
         self.url = url
-        self.session = URLSession(configuration: configuration)
-        self.sendOperationIdentifiers = sendOperationIdentifiers
+        self.session = URLSession.shared
+        self.sendOperationIdentifiers = false
     }
     
     /// Send a GraphQL operation to a server and return a response.
@@ -84,7 +84,6 @@ class GamerankerHTTPNetworkTransport : NetworkTransport {
     public func send<Operation>(operation: Operation, completionHandler: @escaping (GraphQLResponse<Operation>?, Error?) -> Void) -> Cancellable {
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
-        
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         
         let body = requestBody(for: operation)
