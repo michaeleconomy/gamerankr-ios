@@ -21,12 +21,9 @@ class GamerankrAPI {
     let base_url = "http://localhost:3000"
 //    let base_url = "https://www.gamerankr.com"
     let apollo: ApolloClient
-    let session: URLSession
     
     init() {
-        let transport = GamerankerHTTPNetworkTransport(url: URL(string: "\(base_url)/graphql")!)
-        session = transport.session
-        apollo = ApolloClient(networkTransport: transport)
+        apollo = ApolloClient(url: URL(string: "\(base_url)/graphql")!)
     }
 
     func login(fbAuthToken: String, delegate: APIErrorDelegate) {
@@ -35,7 +32,7 @@ class GamerankrAPI {
             URLQueryItem(name: "fb_auth_token", value: fbAuthToken)
         ]
         
-        let task = session.dataTask(with: urlComponents.url!) { data, response, error in
+        let task = URLSession.shared.dataTask(with: urlComponents.url!) { data, response, error in
             if !(self.handleAPIErrorsBasic(data: data, response: response, error: error, apiErrorDelegate: delegate)) {
                 return
             }
