@@ -531,7 +531,7 @@
                     "name": null,
                     "ofType": {
                       "kind": "SCALAR",
-                      "name": "Int",
+                      "name": "ID",
                       "ofType": null
                     }
                   },
@@ -646,7 +646,7 @@
                     "name": null,
                     "ofType": {
                       "kind": "SCALAR",
-                      "name": "Int",
+                      "name": "ID",
                       "ofType": null
                     }
                   },
@@ -702,6 +702,22 @@
                 "ofType": {
                   "kind": "SCALAR",
                   "name": "ID",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "port",
+              "description": null,
+              "args": [],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "Port",
                   "ofType": null
                 }
               },
@@ -917,6 +933,18 @@
               "deprecationReason": null
             },
             {
+              "name": "large_image_url",
+              "description": null,
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
               "name": "platform",
               "description": null,
               "args": [],
@@ -952,6 +980,18 @@
                     }
                   }
                 }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "small_image_url",
+              "description": null,
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
               },
               "isDeprecated": false,
               "deprecationReason": null
@@ -1060,6 +1100,22 @@
                 "ofType": {
                   "kind": "SCALAR",
                   "name": "ID",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "photo_url",
+              "description": null,
+              "args": [],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "String",
                   "ofType": null
                 }
               },

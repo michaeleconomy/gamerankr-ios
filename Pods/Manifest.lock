@@ -27,12 +27,14 @@ PODS:
     - FBSDKCoreKit
   - FBSDKShareKit (4.29.0):
     - FBSDKCoreKit
+  - Kingfisher (4.5.0)
 
 DEPENDENCIES:
   - Apollo
   - FacebookCore
   - FacebookLogin
   - FacebookShare
+  - Kingfisher
 
 SPEC CHECKSUMS:
   Apollo: d6649ac06168660e70c6226c4eadfc0770791ba5
@@ -43,7 +45,8 @@ SPEC CHECKSUMS:
   FBSDKCoreKit: 6f139173dc63a1deaff4430a55f2fe5bb222d2af
   FBSDKLoginKit: 56a057ca6822535ea0faa25f57a7c41edb697fd4
   FBSDKShareKit: 18a2cd118aef11dd657fe7e8b64bae5c719088b2
+  Kingfisher: 26ae0473102b77b575da51960c932431e3745407
 
-PODFILE CHECKSUM: c8f4b9492f7f59eaec150ec561af15aec5c1a89b
+PODFILE CHECKSUM: a54746efffdd9af31a69b7e34caaf7c3266fa81d
 
 COCOAPODS: 1.3.1

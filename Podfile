@@ -10,4 +10,5 @@ target 'GameRankr' do
   pod 'FacebookShare'
   
   pod 'Apollo'
+  pod 'Kingfisher'
 end

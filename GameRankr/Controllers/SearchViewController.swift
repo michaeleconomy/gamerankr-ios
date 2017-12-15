@@ -1,4 +1,5 @@
 import UIKit
+import Kingfisher
 
 class SearchViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, APISearchResultsDelegate, AlertAPIErrorDelegate {
     
@@ -9,7 +10,6 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        NSLog("test123")
         // Do any additional setup after loading the view, typically from a nib.
         searchBar.delegate = self
     }
@@ -28,6 +28,11 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
         let game = results[indexPath.row]
         cell.textLabel!.text = game.title
+        let port = game.ports.first
+        if (port != nil && port?.smallImageUrl != nil) {
+            cell.imageView?.kf.indicatorType = .activity
+            cell.imageView?.kf.setImage(with: URL(string: port!.smallImageUrl!)!, placeholder: PlaceholderImages.game)
+        }
         return cell
     }
 

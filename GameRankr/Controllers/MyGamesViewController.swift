@@ -35,6 +35,12 @@ class MyGamesViewController: UIViewController, UITableViewDataSource, UITableVie
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
         let ranking = rankings[indexPath.row]
         cell.textLabel!.text = ranking.game.title
+        
+        
+        if (ranking.port.smallImageUrl != nil) {
+            cell.imageView?.kf.indicatorType = .activity
+            cell.imageView?.kf.setImage(with: URL(string: ranking.port.smallImageUrl!)!, placeholder: PlaceholderImages.game)
+        }
         return cell
     }
     

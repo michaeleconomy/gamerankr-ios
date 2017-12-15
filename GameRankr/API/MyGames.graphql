@@ -6,5 +6,13 @@ query MyGames {
             id
             title
         }
+        port {
+            id
+            small_image_url
+            platform {
+                id
+                name
+            }
+        }
     }
 }
