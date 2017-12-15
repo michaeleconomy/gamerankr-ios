@@ -7,11 +7,11 @@ protocol APIErrorDelegate {
     func handleApi(error: String)
 }
 protocol APISearchResultsDelegate : APIErrorDelegate {
-    func handleAPISearch(results: [SearchQuery.Data.Search])
+    func handleAPISearch(results: [SearchQuery.Data.Game])
 }
 
 protocol APIMyGamesDelegate : APIErrorDelegate {
-    func handleAPIMyGames(rankings: [MyGamesQuery.Data.MyGame])
+    func handleAPIMyGames(rankings: [MyGamesQuery.Data.Ranking])
 }
 
 
@@ -49,7 +49,7 @@ class GamerankrAPI {
     func search(query: String, delegate: APISearchResultsDelegate) {
         apollo.fetch(query: SearchQuery(query: query)) { (result, error) in
             guard let data = result?.data else { return }
-            delegate.handleAPISearch(results: data.search! as! [SearchQuery.Data.Search])
+            delegate.handleAPISearch(results: data.games)
         }
     }
 
@@ -57,7 +57,7 @@ class GamerankrAPI {
         
         apollo.fetch(query: MyGamesQuery()) { (result, error) in
             guard let data = result?.data else { return }
-            delegate.handleAPIMyGames(rankings: data.myGames! as! [MyGamesQuery.Data.MyGame])
+            delegate.handleAPIMyGames(rankings: data.rankings)
         }
     }
     

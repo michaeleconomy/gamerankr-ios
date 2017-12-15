@@ -37,6 +37,8 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         NSLog("searchBar clicked, search: \(searchBar.text!)")
+        self.results = []
+        self.tableView.reloadData()
         api.search(query: searchBar.text!, delegate: self)
         searchBar.endEditing(true)
     }
