@@ -1,14 +1,7 @@
 query Game($id: ID!) {
     game(id: $id) {
-        id
-        title
+        ...GameBasic
         ports {
-            id
-            platform {
-                id
-                name
-            }
-            small_image_url
             large_image_url
         }
         rankings {
