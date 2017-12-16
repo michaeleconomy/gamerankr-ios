@@ -3,8 +3,7 @@ query MyGames {
         id
         ranking
         game {
-            id
-            title
+            ...GameBasic
         }
         port {
             id

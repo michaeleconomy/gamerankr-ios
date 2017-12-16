@@ -6,7 +6,7 @@ class GameViewController : UIViewController {
     
     
     
-    var game: SearchQuery.Data.Game? {
+    var game: GameBasic? {
         didSet {
             configureView()
         }

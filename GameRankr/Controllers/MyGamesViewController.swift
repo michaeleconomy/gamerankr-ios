@@ -51,6 +51,18 @@ class MyGamesViewController: UIViewController, UITableViewDataSource, UITableVie
             self.tableView.reloadData()
         })
     }
+    
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "myRankingGameDetail" {
+            if let indexPath = tableView.indexPathForSelectedRow {
+                let controller = segue.destination as! GameViewController
+                controller.game = rankings[indexPath.row].game.fragments.gameBasic
+                
+            }
+        }
+    }
+    
 }
 
 

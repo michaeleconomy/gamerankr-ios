@@ -1,14 +1,5 @@
 query Search($query: String!) {
     games : search(query: $query) {
-        id
-        title
-        ports {
-            id
-            platform {
-                id
-                name
-            }
-            small_image_url
-        }
+        ...GameBasic
     }
 }

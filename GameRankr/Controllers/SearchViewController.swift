@@ -58,7 +58,7 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
         if segue.identifier == "showDetail" {
             if let indexPath = tableView.indexPathForSelectedRow {
                 let controller = segue.destination as! GameViewController
-                controller.game = results[indexPath.row]
+                controller.game = results[indexPath.row].fragments.gameBasic
             }
         }
     }

@@ -23,6 +23,7 @@
 		4C7CF6481FE465D200E7B32A /* picture.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C7CF6471FE465D200E7B32A /* picture.png */; };
 		4C7CF64C1FE46A5400E7B32A /* PlaceholderImages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C7CF64B1FE46A5400E7B32A /* PlaceholderImages.swift */; };
 		4C7CF64E1FE4937800E7B32A /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C7CF64D1FE4937800E7B32A /* GameViewController.swift */; };
+		4C7CF6501FE4CF2200E7B32A /* GameBasic.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 4C7CF64F1FE4CF2200E7B32A /* GameBasic.graphql */; };
 		4CD1C9DB1FDF6B62001A0B8D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CD1C9DA1FDF6B62001A0B8D /* AppDelegate.swift */; };
 		4CD1C9DD1FDF6B62001A0B8D /* FirstViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CD1C9DC1FDF6B62001A0B8D /* FirstViewController.swift */; };
 		4CD1C9DF1FDF6B62001A0B8D /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CD1C9DE1FDF6B62001A0B8D /* SearchViewController.swift */; };
@@ -50,6 +51,7 @@
 		4C7CF6471FE465D200E7B32A /* picture.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = picture.png; sourceTree = "<group>"; };
 		4C7CF64B1FE46A5400E7B32A /* PlaceholderImages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceholderImages.swift; sourceTree = "<group>"; };
 		4C7CF64D1FE4937800E7B32A /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
+		4C7CF64F1FE4CF2200E7B32A /* GameBasic.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = GameBasic.graphql; sourceTree = "<group>"; };
 		4CD1C9D71FDF6B62001A0B8D /* GameRankr.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GameRankr.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4CD1C9DA1FDF6B62001A0B8D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4CD1C9DC1FDF6B62001A0B8D /* FirstViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstViewController.swift; sourceTree = "<group>"; };
@@ -126,6 +128,7 @@
 				4C4FC9DA1FE23D42002F6428 /* MyGames.graphql */,
 				4C3FC2691FE322BC00299D7D /* Search.graphql */,
 				4C3FC26D1FE4590A00299D7D /* Game.graphql */,
+				4C7CF64F1FE4CF2200E7B32A /* GameBasic.graphql */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -236,6 +239,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4C7CF6501FE4CF2200E7B32A /* GameBasic.graphql in Resources */,
 				4C57FC0E1FDF784F00A04E57 /* people.png in Resources */,
 				4C4FC9DB1FE23D42002F6428 /* MyGames.graphql in Resources */,
 				4C57FC121FDF799300A04E57 /* search.png in Resources */,
