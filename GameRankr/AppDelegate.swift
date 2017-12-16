@@ -1,5 +1,6 @@
 import UIKit
 import FacebookCore
+import Kingfisher
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {

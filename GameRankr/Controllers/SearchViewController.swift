@@ -1,5 +1,4 @@
 import UIKit
-import Kingfisher
 
 class SearchViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, APISearchResultsDelegate, AlertAPIErrorDelegate {
     
@@ -37,11 +36,11 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
     }
 
     func searchBar(_: UISearchBar, textDidChange: String) {
-        NSLog("searchText Changed: \(searchBar.text!)")
+//        NSLog("searchText Changed: \(searchBar.text!)")
+        // TODO: search as you type
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        NSLog("searchBar clicked, search: \(searchBar.text!)")
         self.results = []
         self.tableView.reloadData()
         api.search(query: searchBar.text!, delegate: self)

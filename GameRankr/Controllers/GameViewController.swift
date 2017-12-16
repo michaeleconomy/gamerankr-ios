@@ -1,6 +1,11 @@
 import UIKit
 
 class GameViewController : UIViewController {
+    @IBOutlet weak var platformsLabel: UILabel!
+    @IBOutlet weak var imageView: UIImageView!
+    
+    
+    
     var game: SearchQuery.Data.Game? {
         didSet {
             configureView()
@@ -8,13 +13,15 @@ class GameViewController : UIViewController {
     }
     
     func configureView() {
-        self.title = game?.title
-//        let port = game?.ports.first
-//        if (port != nil){
-//            self.mainImage.kf.setImage(with: URL(string: port!.smallImageUrl!)!, placeholder: PlaceholderImages.game)
-//
-//        }
-//        platformsLabel.text = "foo"
+        if (game != nil) {
+            self.title = game!.title
+            let port = game!.ports.first
+            if (port != nil){
+                self.imageView?.kf.setImage(with: URL(string: port!.smallImageUrl!)!)
+            }
+            
+            platformsLabel?.text = game!.ports.map{$0.platform.name}.joined(separator: ", ")
+        }
     }
     
     override func viewDidLoad() {
