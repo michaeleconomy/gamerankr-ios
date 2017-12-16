@@ -22,6 +22,7 @@
 		4C57FC151FDF7D9600A04E57 /* GamerankrAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C57FC141FDF7D9600A04E57 /* GamerankrAPI.swift */; };
 		4C7CF6481FE465D200E7B32A /* picture.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C7CF6471FE465D200E7B32A /* picture.png */; };
 		4C7CF64C1FE46A5400E7B32A /* PlaceholderImages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C7CF64B1FE46A5400E7B32A /* PlaceholderImages.swift */; };
+		4C7CF64E1FE4937800E7B32A /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C7CF64D1FE4937800E7B32A /* GameViewController.swift */; };
 		4CD1C9DB1FDF6B62001A0B8D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CD1C9DA1FDF6B62001A0B8D /* AppDelegate.swift */; };
 		4CD1C9DD1FDF6B62001A0B8D /* FirstViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CD1C9DC1FDF6B62001A0B8D /* FirstViewController.swift */; };
 		4CD1C9DF1FDF6B62001A0B8D /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CD1C9DE1FDF6B62001A0B8D /* SearchViewController.swift */; };
@@ -48,6 +49,7 @@
 		4C57FC141FDF7D9600A04E57 /* GamerankrAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GamerankrAPI.swift; sourceTree = "<group>"; };
 		4C7CF6471FE465D200E7B32A /* picture.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = picture.png; sourceTree = "<group>"; };
 		4C7CF64B1FE46A5400E7B32A /* PlaceholderImages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceholderImages.swift; sourceTree = "<group>"; };
+		4C7CF64D1FE4937800E7B32A /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
 		4CD1C9D71FDF6B62001A0B8D /* GameRankr.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GameRankr.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4CD1C9DA1FDF6B62001A0B8D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4CD1C9DC1FDF6B62001A0B8D /* FirstViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstViewController.swift; sourceTree = "<group>"; };
@@ -89,6 +91,7 @@
 				4CD1C9DC1FDF6B62001A0B8D /* FirstViewController.swift */,
 				4CD1C9DE1FDF6B62001A0B8D /* SearchViewController.swift */,
 				4C42E4F01FE1BC58003F1C68 /* MyGamesViewController.swift */,
+				4C7CF64D1FE4937800E7B32A /* GameViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -344,6 +347,7 @@
 				4CD1C9DF1FDF6B62001A0B8D /* SearchViewController.swift in Sources */,
 				4CD1C9DB1FDF6B62001A0B8D /* AppDelegate.swift in Sources */,
 				4C7CF64C1FE46A5400E7B32A /* PlaceholderImages.swift in Sources */,
+				4C7CF64E1FE4937800E7B32A /* GameViewController.swift in Sources */,
 				4C42E4F11FE1BC58003F1C68 /* MyGamesViewController.swift in Sources */,
 				4C4FC9D91FE23C9F002F6428 /* API.swift in Sources */,
 				4C57FC151FDF7D9600A04E57 /* GamerankrAPI.swift in Sources */,

@@ -35,7 +35,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="W5J-7L-Pyd" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="749.60000000000002" y="-320.68965517241384"/>
+            <point key="canvasLocation" x="849" y="-391"/>
         </scene>
         <!--My Games-->
         <scene sceneID="009-tf-Pof">
@@ -106,7 +106,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Y4V-NK-cN1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="869.60000000000002" y="1047.5262368815593"/>
+            <point key="canvasLocation" x="415" y="1149"/>
         </scene>
         <!--Search-->
         <scene sceneID="e7j-nr-WDf">
@@ -117,7 +117,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="pTg-81-Txs">
-                                <rect key="frame" x="0.0" y="76" width="375" height="542"/>
+                                <rect key="frame" x="0.0" y="120" width="375" height="498"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
@@ -137,6 +137,9 @@
                                                 </label>
                                             </subviews>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <segue destination="IYP-Yd-OuH" kind="show" identifier="showDetail" id="PEt-s8-htz"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                                 <connections>
@@ -144,7 +147,7 @@
                                 </connections>
                             </tableView>
                             <searchBar contentMode="redraw" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mo5-gI-o4Y">
-                                <rect key="frame" x="0.0" y="20" width="375" height="56"/>
+                                <rect key="frame" x="0.0" y="64" width="375" height="56"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                 <textInputTraits key="textInputTraits"/>
                             </searchBar>
@@ -153,6 +156,7 @@
                         <viewLayoutGuide key="safeArea" id="2Ca-os-QK7"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="Search" image="search.png" id="eOv-BZ-lLq"/>
+                    <navigationItem key="navigationItem" title="Search" id="oCK-kl-0ie"/>
                     <connections>
                         <outlet property="searchBar" destination="mo5-gI-o4Y" id="5qy-52-QNx"/>
                         <outlet property="tableView" destination="pTg-81-Txs" id="RbV-CH-mL0"/>
@@ -160,7 +164,39 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="h7u-mv-JBj" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="869.60000000000002" y="372.86356821589209"/>
+            <point key="canvasLocation" x="1909.5999999999999" y="356.67166416791605"/>
+        </scene>
+        <!--Game View Controller-->
+        <scene sceneID="NxY-yD-0wW">
+            <objects>
+                <viewController id="IYP-Yd-OuH" customClass="GameViewController" customModule="GameRankr" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="AVM-ck-wa3">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="DGm-6w-jHv"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="QZv-bM-d79" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2678" y="358"/>
+        </scene>
+        <!--Search-->
+        <scene sceneID="JM0-0l-get">
+            <objects>
+                <navigationController id="rJB-QW-iAR" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Search" image="search.png" id="luE-8e-qtx"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="L7U-np-JOE">
+                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="sv4-Wb-agr" kind="relationship" relationship="rootViewController" id="Nps-mA-WxM"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ES3-hj-gGC" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1042" y="357"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="yl2-sM-qoP">
@@ -173,8 +209,8 @@
                     </tabBar>
                     <connections>
                         <segue destination="9pv-A4-QxB" kind="relationship" relationship="viewControllers" id="u7Y-xg-7CH"/>
-                        <segue destination="sv4-Wb-agr" kind="relationship" relationship="viewControllers" id="DE7-Xh-vEO"/>
                         <segue destination="yWf-PP-lUP" kind="relationship" relationship="viewControllers" id="s4r-IC-HKv"/>
+                        <segue destination="rJB-QW-iAR" kind="relationship" relationship="viewControllers" id="kEh-yA-kV9"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HuB-VB-40B" sceneMemberID="firstResponder"/>

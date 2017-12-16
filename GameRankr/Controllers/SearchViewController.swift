@@ -54,5 +54,14 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
             self.tableView.reloadData()
         })
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "showDetail" {
+            if let indexPath = tableView.indexPathForSelectedRow {
+                let controller = segue.destination as! GameViewController
+                controller.game = results[indexPath.row]
+            }
+        }
+    }
 }
 
