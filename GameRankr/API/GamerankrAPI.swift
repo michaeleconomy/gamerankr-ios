@@ -14,12 +14,16 @@ protocol APIMyGamesDelegate : APIErrorDelegate {
     func handleAPIMyGames(rankings: [MyGamesQuery.Data.Ranking])
 }
 
+protocol APIGameDetailDelegate : APIErrorDelegate {
+    func handleAPIMyGames(gameDetail: GameQuery.Data.Game)
+}
+
 
 class GamerankrAPI {
     
     public private(set) var signed_in = false
-    let base_url = "http://localhost:3000"
-//    let base_url = "https://www.gamerankr.com"
+//    let base_url = "http://localhost:3000"
+    let base_url = "https://www.gamerankr.com"
     let apollo: ApolloClient
     
     init() {
@@ -45,15 +49,31 @@ class GamerankrAPI {
 
     func search(query: String, delegate: APISearchResultsDelegate) {
         apollo.fetch(query: SearchQuery(query: query)) { (result, error) in
-            guard let data = result?.data else { return }
+            guard let data = result?.data else {
+                delegate.handleApi(error: "error: \(String(describing: error))")
+                return
+            }
             delegate.handleAPISearch(results: data.games)
+        }
+    }
+    
+    func getGameDetail(id: String, delegate: APIGameDetailDelegate) {
+        apollo.fetch(query: GameQuery(id: id)) { (result, error) in
+            guard let data = result?.data else {
+                delegate.handleApi(error: "error: \(String(describing: error))")
+                return
+            }
+            delegate.handleAPIMyGames(gameDetail: data.game)
         }
     }
 
     func getMyGames(delegate: APIMyGamesDelegate) {
         
         apollo.fetch(query: MyGamesQuery()) { (result, error) in
-            guard let data = result?.data else { return }
+            guard let data = result?.data else {
+                delegate.handleApi(error: "error: \(String(describing: error))")
+                return
+            }
             delegate.handleAPIMyGames(rankings: data.rankings)
         }
     }

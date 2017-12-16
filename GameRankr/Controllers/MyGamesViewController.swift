@@ -34,8 +34,10 @@ class MyGamesViewController: UIViewController, UITableViewDataSource, UITableVie
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
         let ranking = rankings[indexPath.row]
-        cell.textLabel!.text = ranking.game.title
+        let game = ranking.game
         
+        cell.textLabel!.text = game.title
+        cell.detailTextLabel!.text = game.ports.map{$0.platform.name}.joined(separator: ", ")
         
         if (ranking.port.smallImageUrl != nil) {
             cell.imageView?.kf.indicatorType = .activity

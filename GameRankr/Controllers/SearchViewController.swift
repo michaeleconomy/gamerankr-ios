@@ -27,6 +27,7 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
         let game = results[indexPath.row]
         cell.textLabel!.text = game.title
+        cell.detailTextLabel!.text = game.ports.map{$0.platform.name}.joined(separator: ", ")
         let port = game.ports.first
         if (port != nil && port?.smallImageUrl != nil) {
             cell.imageView?.kf.indicatorType = .activity

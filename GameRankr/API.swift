@@ -4,7 +4,9 @@ import Apollo
 
 public final class GameQuery: GraphQLQuery {
   public static let operationString =
-    "query Game($id: ID!) {\n  game(id: $id) {\n    __typename\n    id\n    title\n    ports {\n      __typename\n      id\n      platform {\n        __typename\n        id\n        name\n      }\n      small_image_url\n      large_image_url\n    }\n    rankings {\n      __typename\n      id\n      ranking\n      review\n      user {\n        __typename\n        id\n        real_name\n        photo_url\n      }\n    }\n  }\n}"
+    "query Game($id: ID!) {\n  game(id: $id) {\n    __typename\n    ...GameBasic\n    ports {\n      __typename\n      large_image_url\n    }\n    rankings {\n      __typename\n      id\n      ranking\n      review\n      user {\n        __typename\n        id\n        real_name\n        photo_url\n      }\n    }\n  }\n}"
+
+  public static var requestString: String { return operationString.appending(GameBasic.fragmentString) }
 
   public var id: GraphQLID
 
@@ -47,8 +49,10 @@ public final class GameQuery: GraphQLQuery {
 
       public static let selections: [GraphQLSelection] = [
         GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+        GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
         GraphQLField("id", type: .nonNull(.scalar(GraphQLID.self))),
         GraphQLField("title", type: .nonNull(.scalar(String.self))),
+        GraphQLField("ports", type: .nonNull(.list(.nonNull(.object(Port.selections))))),
         GraphQLField("ports", type: .nonNull(.list(.nonNull(.object(Port.selections))))),
         GraphQLField("rankings", type: .nonNull(.list(.nonNull(.object(Ranking.selections))))),
       ]
@@ -108,6 +112,28 @@ public final class GameQuery: GraphQLQuery {
         }
       }
 
+      public var fragments: Fragments {
+        get {
+          return Fragments(snapshot: snapshot)
+        }
+        set {
+          snapshot += newValue.snapshot
+        }
+      }
+
+      public struct Fragments {
+        public var snapshot: Snapshot
+
+        public var gameBasic: GameBasic {
+          get {
+            return GameBasic(snapshot: snapshot)
+          }
+          set {
+            snapshot += newValue.snapshot
+          }
+        }
+      }
+
       public struct Port: GraphQLSelectionSet {
         public static let possibleTypes = ["Port"]
 
@@ -116,6 +142,7 @@ public final class GameQuery: GraphQLQuery {
           GraphQLField("id", type: .nonNull(.scalar(GraphQLID.self))),
           GraphQLField("platform", type: .nonNull(.object(Platform.selections))),
           GraphQLField("small_image_url", type: .scalar(String.self)),
+          GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
           GraphQLField("large_image_url", type: .scalar(String.self)),
         ]
 
