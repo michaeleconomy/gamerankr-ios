@@ -2,12 +2,13 @@ import UIKit
 import FacebookCore
 import FacebookLogin
 
-class FirstViewController: UIViewController, AlertAPIErrorDelegate {
-
+class SignInViewController : UIViewController, AlertAPIErrorDelegate {
     @IBOutlet weak var fbButton: UIButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        self.navigationController!.navigationBar.isUserInteractionEnabled = false
+        self.navigationController!.navigationBar.tintColor = UIColor.lightGray
         
         if let accessToken = AccessToken.current {
             NSLog("accessToken: \(accessToken)")
@@ -17,16 +18,10 @@ class FirstViewController: UIViewController, AlertAPIErrorDelegate {
             fbButton.addTarget(self, action:#selector(loginButtonClicked(sender:)), for: .touchUpInside)
         }
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
     
     // Once the button is clicked, show the login dialog
     @objc func loginButtonClicked(sender: UIButton) {
-        let loginManager = LoginManager()
-        loginManager.logIn(readPermissions: [ReadPermission.publicProfile], viewController: self) { loginResult in
+        LoginManager().logIn(readPermissions: [.publicProfile, .email, .userFriends], viewController: self) { loginResult in
             switch loginResult {
             case .failed(let error):
                 print(error)
@@ -34,12 +29,9 @@ class FirstViewController: UIViewController, AlertAPIErrorDelegate {
                 NSLog("User cancelled login.")
             case .success(let grantedPermissions, let declinedPermissions, let accessToken):
                 NSLog("Logged in via facebook.  grantedPermissions: \(grantedPermissions) declinedPermissions: \(declinedPermissions) accessToken: \(accessToken)")
-                self.fbButton.isHidden = true
                 api.login(fbAuthToken: accessToken.authenticationToken, delegate: self)
             }
         }
     }
-        
-
 }
 

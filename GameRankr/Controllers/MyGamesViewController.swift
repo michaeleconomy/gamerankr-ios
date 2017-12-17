@@ -6,19 +6,14 @@ class MyGamesViewController: UIViewController, UITableViewDataSource, UITableVie
     var rankings: [MyGamesQuery.Data.Ranking] = []
     
     @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var signedInView: UIView!
-    @IBOutlet weak var signedOutView: UIView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        if (api.signed_in) {
-            signedOutView.isHidden = true
-            signedInView.isHidden = false
-            api.getMyGames(delegate: self)
+        if (!api.signed_in) {
+            performSegue(withIdentifier: "requireSignIn", sender: nil)
         }
         else {
-            signedOutView.isHidden = false
-            signedInView.isHidden = true
+            api.getMyGames(delegate: self)
         }
     }
     
