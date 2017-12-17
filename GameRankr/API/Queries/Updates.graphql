@@ -1,0 +1,8 @@
+query Updates {
+    rankings : updates {
+        ...Ranking
+        user {
+            ...UserBasic
+        }
+    }
+}

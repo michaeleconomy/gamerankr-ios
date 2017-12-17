@@ -1,9 +1,6 @@
 import UIKit
 
 class GameViewController : UIViewController, APIGameDetailDelegate, AlertAPIErrorDelegate {
-    func handleAPIMyGames(gameDetail: GameQuery.Data.Game) {
-        self.gameDetail = gameDetail
-    }
     
     @IBOutlet weak var platformsLabel: UILabel!
     @IBOutlet weak var imageView: UIImageView!
@@ -21,7 +18,7 @@ class GameViewController : UIViewController, APIGameDetailDelegate, AlertAPIErro
                 if(gameDetail?.id != game!.id) {
                     self.gameDetail = nil
                 }
-                api.getGameDetail(id: game!.id, delegate: self)
+                api.gameDetail(id: game!.id, delegate: self)
             }
             configureView()
         }
@@ -55,6 +52,11 @@ class GameViewController : UIViewController, APIGameDetailDelegate, AlertAPIErro
     override func viewDidLoad() {
         super.viewDidLoad()
         configureView()
+    }
+    
+    
+    func handleAPI(gameDetail: GameQuery.Data.Game) {
+        self.gameDetail = gameDetail
     }
     
 }

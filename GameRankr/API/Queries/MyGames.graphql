@@ -1,0 +1,5 @@
+query MyGames {
+    rankings : my_games {
+        ...Ranking
+    }
+}

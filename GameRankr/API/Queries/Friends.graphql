@@ -1,0 +1,5 @@
+query Friends($limit: Int, $offset: Int) {
+    users : friends(limit: $limit, offset: $offset) {
+        ...UserBasic
+    }
+}

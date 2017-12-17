@@ -1,0 +1,22 @@
+fragment Ranking on Ranking {
+    id
+    ranking
+    review
+    verb
+    port {
+        id
+        platform {
+            id
+            name
+        }
+        small_image_url
+    }
+    game {
+        ...GameBasic
+    }
+    shelves {
+        name
+    }
+}
+
+

@@ -1,0 +1,22 @@
+query Game($id: ID!, $limit: Int) {
+    game(id: $id) {
+        ...GameBasic
+        ports {
+            medium_image_url
+        }
+        rankings(limit: $limit) {
+            id
+            ranking
+            review
+            shelves {
+                name
+            }
+            port {
+                id
+            }
+            user {
+                ...UserBasic
+            }
+        }
+    }
+}

@@ -4,23 +4,23 @@ class MyGamesViewController: UIViewController, UITableViewDataSource, UITableVie
     
     
     var rankings: [MyGamesQuery.Data.Ranking] = []
+    var fetchedRankings = false
     
     @IBOutlet weak var tableView: UITableView!
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
         if (!api.signed_in) {
             performSegue(withIdentifier: "requireSignIn", sender: nil)
         }
         else {
-            api.getMyGames(delegate: self)
+            if(!fetchedRankings) {
+                fetchedRankings = true
+                api.myGames(delegate: self)
+            }
         }
     }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-    }
-    
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return rankings.count
@@ -30,9 +30,10 @@ class MyGamesViewController: UIViewController, UITableViewDataSource, UITableVie
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
         let ranking = rankings[indexPath.row]
         let game = ranking.game
+        let port = ranking.port
         
         cell.textLabel!.text = game.title
-        cell.detailTextLabel!.text = game.ports.map{$0.platform.name}.joined(separator: ", ")
+        cell.detailTextLabel!.text = port.platform.name
         
         if (ranking.port.smallImageUrl != nil) {
             cell.imageView?.kf.indicatorType = .activity
@@ -51,7 +52,7 @@ class MyGamesViewController: UIViewController, UITableViewDataSource, UITableVie
     
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "myRankingGameDetail" {
+        if segue.identifier == "showDetail" {
             if let indexPath = tableView.indexPathForSelectedRow {
                 let controller = segue.destination as! GameViewController
                 controller.game = rankings[indexPath.row].game.fragments.gameBasic

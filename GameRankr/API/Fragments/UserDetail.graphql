@@ -1,0 +1,10 @@
+fragment UserDetail on User {
+    ...UserBasic
+    rankings(limit: 5) {
+        ...Ranking
+    }
+    shelves {
+        id
+        name
+    }
+}

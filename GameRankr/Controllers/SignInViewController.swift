@@ -2,7 +2,7 @@ import UIKit
 import FacebookCore
 import FacebookLogin
 
-class SignInViewController : UIViewController, AlertAPIErrorDelegate {
+class SignInViewController : UIViewController, APILoginDelegate, AlertAPIErrorDelegate {
     @IBOutlet weak var fbButton: UIButton!
     
     override func viewDidLoad() {
@@ -10,13 +10,7 @@ class SignInViewController : UIViewController, AlertAPIErrorDelegate {
         self.navigationController!.navigationBar.isUserInteractionEnabled = false
         self.navigationController!.navigationBar.tintColor = UIColor.lightGray
         
-        if let accessToken = AccessToken.current {
-            NSLog("accessToken: \(accessToken)")
-            fbButton.isHidden = true
-        }
-        else {
-            fbButton.addTarget(self, action:#selector(loginButtonClicked(sender:)), for: .touchUpInside)
-        }
+        fbButton.addTarget(self, action:#selector(loginButtonClicked(sender:)), for: .touchUpInside)
     }
     
     // Once the button is clicked, show the login dialog
@@ -32,6 +26,14 @@ class SignInViewController : UIViewController, AlertAPIErrorDelegate {
                 api.login(fbAuthToken: accessToken.authenticationToken, delegate: self)
             }
         }
+    }
+    func handleAPILogin() {
+        DispatchQueue.main.async(execute: {
+            self.navigationController!.navigationBar.isUserInteractionEnabled = true
+            self.navigationController!.navigationBar.tintColor = UIColor.blue
+            
+            self.navigationController!.popViewController(animated: true)
+        })
     }
 }
 

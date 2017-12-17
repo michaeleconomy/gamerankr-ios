@@ -15,7 +15,22 @@ protocol APIMyGamesDelegate : APIErrorDelegate {
 }
 
 protocol APIGameDetailDelegate : APIErrorDelegate {
-    func handleAPIMyGames(gameDetail: GameQuery.Data.Game)
+    func handleAPI(gameDetail: GameQuery.Data.Game)
+}
+
+protocol APIUserDetailDelegate : APIErrorDelegate {
+    func handleAPI(userDetail: UserDetail)
+}
+
+protocol APIUpdatesDelegate : APIErrorDelegate {
+    func handleAPI(updates: [UpdatesQuery.Data.Ranking])
+}
+protocol APIFriendsDelegate : APIErrorDelegate {
+    func handleAPI(friends: [UserBasic])
+}
+
+protocol APILoginDelegate : APIErrorDelegate {
+    func handleAPILogin()
 }
 
 
@@ -30,7 +45,7 @@ class GamerankrAPI {
         apollo = ApolloClient(url: URL(string: "\(base_url)/graphql")!)
     }
 
-    func login(fbAuthToken: String, delegate: APIErrorDelegate) {
+    func login(fbAuthToken: String, delegate: APILoginDelegate) {
         var urlComponents = URLComponents(string: "\(base_url)/login.json")!
         urlComponents.queryItems = [
             URLQueryItem(name: "fb_auth_token", value: fbAuthToken)
@@ -43,6 +58,7 @@ class GamerankrAPI {
             NSLog("login was successful. Data: \(String(describing: data))")
             self.signed_in = true
             // success!
+            delegate.handleAPILogin()
         }
         task.resume()
     }
@@ -57,24 +73,65 @@ class GamerankrAPI {
         }
     }
     
-    func getGameDetail(id: String, delegate: APIGameDetailDelegate) {
+    func gameDetail(id: String, delegate: APIGameDetailDelegate) {
         apollo.fetch(query: GameQuery(id: id)) { (result, error) in
             guard let data = result?.data else {
                 delegate.handleApi(error: "error: \(String(describing: error))")
                 return
             }
-            delegate.handleAPIMyGames(gameDetail: data.game)
+            delegate.handleAPI(gameDetail: data.game)
+        }
+    }
+    
+    
+    func userDetail(id: String, delegate: APIUserDetailDelegate) {
+        apollo.fetch(query: UserQuery(id: id)) { (result, error) in
+            guard let data = result?.data else {
+                delegate.handleApi(error: "error: \(String(describing: error))")
+                return
+            }
+            delegate.handleAPI(userDetail: data.user.fragments.userDetail)
+        }
+    }
+    
+    
+    func me(id: String, delegate: APIUserDetailDelegate) {
+        apollo.fetch(query: MeQuery()) { (result, error) in
+            guard let data = result?.data else {
+                delegate.handleApi(error: "error: \(String(describing: error))")
+                return
+            }
+            delegate.handleAPI(userDetail: data.user.fragments.userDetail)
         }
     }
 
-    func getMyGames(delegate: APIMyGamesDelegate) {
-        
+    func myGames(delegate: APIMyGamesDelegate) {
         apollo.fetch(query: MyGamesQuery()) { (result, error) in
             guard let data = result?.data else {
                 delegate.handleApi(error: "error: \(String(describing: error))")
                 return
             }
             delegate.handleAPIMyGames(rankings: data.rankings)
+        }
+    }
+    
+    func updates(delegate: APIUpdatesDelegate) {
+        apollo.fetch(query: UpdatesQuery()) { (result, error) in
+            guard let data = result?.data else {
+                delegate.handleApi(error: "error: \(String(describing: error))")
+                return
+            }
+            delegate.handleAPI(updates: data.rankings)
+        }
+    }
+    
+    func friends(delegate: APIFriendsDelegate) {
+        apollo.fetch(query: FriendsQuery()) { (result, error) in
+            guard let data = result?.data else {
+                delegate.handleApi(error: "error: \(String(describing: error))")
+                return
+            }
+            delegate.handleAPI(friends: data.users.map{$0.fragments.userBasic})
         }
     }
     
@@ -90,15 +147,5 @@ class GamerankrAPI {
         }
         return true
     }
-    
-//    private func parseListOfGames(games_raw: Any?) -> [Game] {
-//        let games_raw_cast = games_raw as! [[String:Any]]
-//
-//        var games: [Game] = []
-//        for game_raw in games_raw_cast {
-//            games.append(Game(id: game_raw["id"] as! String, title: game_raw["title"] as! String))
-//        }
-//        return games
-//    }
 }
 
