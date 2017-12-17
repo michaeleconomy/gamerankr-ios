@@ -34,7 +34,8 @@ class GameViewController : UIViewController, APIGameDetailDelegate, AlertAPIErro
             if (gameDetail != nil) {
                 let port = gameDetail!.ports.first
                 if (port != nil){
-                    self.imageView?.kf.setImage(with: URL(string: port!.largeImageUrl!)!, options: [.keepCurrentImageWhileLoading])
+                    self.imageView?.kf.indicatorType = .activity
+                    self.imageView?.kf.setImage(with: URL(string: port!.mediumImageUrl!)!, options: [.keepCurrentImageWhileLoading])
                 }
             }
             else {

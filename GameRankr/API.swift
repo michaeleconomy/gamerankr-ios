@@ -4,7 +4,7 @@ import Apollo
 
 public final class GameQuery: GraphQLQuery {
   public static let operationString =
-    "query Game($id: ID!) {\n  game(id: $id) {\n    __typename\n    ...GameBasic\n    ports {\n      __typename\n      large_image_url\n    }\n    rankings {\n      __typename\n      id\n      ranking\n      review\n      user {\n        __typename\n        id\n        real_name\n        photo_url\n      }\n    }\n  }\n}"
+    "query Game($id: ID!) {\n  game(id: $id) {\n    __typename\n    ...GameBasic\n    ports {\n      __typename\n      medium_image_url\n    }\n    rankings {\n      __typename\n      id\n      ranking\n      review\n      user {\n        __typename\n        id\n        real_name\n        photo_url\n      }\n    }\n  }\n}"
 
   public static var requestString: String { return operationString.appending(GameBasic.fragmentString) }
 
@@ -143,7 +143,7 @@ public final class GameQuery: GraphQLQuery {
           GraphQLField("platform", type: .nonNull(.object(Platform.selections))),
           GraphQLField("small_image_url", type: .scalar(String.self)),
           GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
-          GraphQLField("large_image_url", type: .scalar(String.self)),
+          GraphQLField("medium_image_url", type: .scalar(String.self)),
         ]
 
         public var snapshot: Snapshot
@@ -152,8 +152,8 @@ public final class GameQuery: GraphQLQuery {
           self.snapshot = snapshot
         }
 
-        public init(id: GraphQLID, platform: Platform, smallImageUrl: String? = nil, largeImageUrl: String? = nil) {
-          self.init(snapshot: ["__typename": "Port", "id": id, "platform": platform.snapshot, "small_image_url": smallImageUrl, "large_image_url": largeImageUrl])
+        public init(id: GraphQLID, platform: Platform, smallImageUrl: String? = nil, mediumImageUrl: String? = nil) {
+          self.init(snapshot: ["__typename": "Port", "id": id, "platform": platform.snapshot, "small_image_url": smallImageUrl, "medium_image_url": mediumImageUrl])
         }
 
         public var __typename: String {
@@ -192,12 +192,12 @@ public final class GameQuery: GraphQLQuery {
           }
         }
 
-        public var largeImageUrl: String? {
+        public var mediumImageUrl: String? {
           get {
-            return snapshot["large_image_url"] as? String
+            return snapshot["medium_image_url"] as? String
           }
           set {
-            snapshot.updateValue(newValue, forKey: "large_image_url")
+            snapshot.updateValue(newValue, forKey: "medium_image_url")
           }
         }
 
