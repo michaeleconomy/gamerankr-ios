@@ -95,7 +95,7 @@ class GamerankrAPI {
     }
     
     
-    func me(id: String, delegate: APIUserDetailDelegate) {
+    func me(delegate: APIUserDetailDelegate) {
         apollo.fetch(query: MeQuery()) { (result, error) in
             guard let data = result?.data else {
                 delegate.handleApi(error: "error: \(String(describing: error))")

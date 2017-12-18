@@ -1,6 +1,7 @@
 import UIKit
 
 class FriendsController : UIViewController, APIFriendsDelegate, AlertAPIErrorDelegate, UITableViewDataSource {
+    @IBOutlet weak var tableView: UITableView!
     
     var friends: [UserBasic] = []
     var fetchedFriends = false
@@ -36,20 +37,20 @@ class FriendsController : UIViewController, APIFriendsDelegate, AlertAPIErrorDel
     
     
     func handleAPI(friends: [UserBasic]) {
-//        self.friends = friends
-//        DispatchQueue.main.async(execute: {
-//            self.tableView.reloadData()
-//        })
+        self.friends = friends
+        DispatchQueue.main.async(execute: {
+            self.tableView.reloadData()
+        })
     }
     
     
-//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-//        if segue.identifier == "showDetail" {
-//            if let indexPath = tableView.indexPathForSelectedRow {
-//                let controller = segue.destination as! GameViewController
-//                controller.game = rankings[indexPath.row].game.fragments.gameBasic
-//
-//            }
-//        }
-//    }
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "showDetail" {
+            if let indexPath = tableView.indexPathForSelectedRow {
+                let controller = segue.destination as! UserViewController
+                controller.user = friends[indexPath.row]
+
+            }
+        }
+    }
 }

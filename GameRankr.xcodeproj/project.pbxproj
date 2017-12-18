@@ -35,6 +35,7 @@
 		4CBD0F8F1FE6F5D200230771 /* UserDetail.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 4CBD0F8E1FE6F5D200230771 /* UserDetail.graphql */; };
 		4CBD0F911FE6F69200230771 /* Me.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 4CBD0F901FE6F69200230771 /* Me.graphql */; };
 		4CBD0F931FE6FC8500230771 /* FriendsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CBD0F921FE6FC8500230771 /* FriendsController.swift */; };
+		4CBD0F951FE7801F00230771 /* IntrinsicTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CBD0F941FE7801F00230771 /* IntrinsicTableView.swift */; };
 		4CD1C9DB1FDF6B62001A0B8D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CD1C9DA1FDF6B62001A0B8D /* AppDelegate.swift */; };
 		4CD1C9DD1FDF6B62001A0B8D /* UpdatesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CD1C9DC1FDF6B62001A0B8D /* UpdatesViewController.swift */; };
 		4CD1C9DF1FDF6B62001A0B8D /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CD1C9DE1FDF6B62001A0B8D /* SearchViewController.swift */; };
@@ -74,6 +75,7 @@
 		4CBD0F8E1FE6F5D200230771 /* UserDetail.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = UserDetail.graphql; sourceTree = "<group>"; };
 		4CBD0F901FE6F69200230771 /* Me.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = Me.graphql; sourceTree = "<group>"; };
 		4CBD0F921FE6FC8500230771 /* FriendsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsController.swift; sourceTree = "<group>"; };
+		4CBD0F941FE7801F00230771 /* IntrinsicTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntrinsicTableView.swift; sourceTree = "<group>"; };
 		4CD1C9D71FDF6B62001A0B8D /* GameRankr.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GameRankr.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4CD1C9DA1FDF6B62001A0B8D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4CD1C9DC1FDF6B62001A0B8D /* UpdatesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdatesViewController.swift; sourceTree = "<group>"; };
@@ -128,6 +130,7 @@
 			children = (
 				4C42E4EC1FE1B679003F1C68 /* AlertAPIErrorDelegate.swift */,
 				4C7CF64B1FE46A5400E7B32A /* PlaceholderImages.swift */,
+				4CBD0F941FE7801F00230771 /* IntrinsicTableView.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -413,6 +416,7 @@
 				4C7CF64E1FE4937800E7B32A /* GameViewController.swift in Sources */,
 				4C42E4F11FE1BC58003F1C68 /* MyGamesViewController.swift in Sources */,
 				4C4FC9D91FE23C9F002F6428 /* API.swift in Sources */,
+				4CBD0F951FE7801F00230771 /* IntrinsicTableView.swift in Sources */,
 				4C57FC151FDF7D9600A04E57 /* GamerankrAPI.swift in Sources */,
 				4CBD0F7D1FE627FB00230771 /* SignInViewController.swift in Sources */,
 				4CD1C9DD1FDF6B62001A0B8D /* UpdatesViewController.swift in Sources */,

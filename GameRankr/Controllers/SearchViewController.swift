@@ -33,6 +33,9 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
             cell.imageView?.kf.indicatorType = .activity
             cell.imageView?.kf.setImage(with: URL(string: port!.smallImageUrl!)!, placeholder: PlaceholderImages.game)
         }
+        else {
+            cell.imageView?.image = PlaceholderImages.game
+        }
         return cell
     }
 

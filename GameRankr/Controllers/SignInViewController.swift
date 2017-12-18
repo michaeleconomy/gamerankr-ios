@@ -13,6 +13,19 @@ class SignInViewController : UIViewController, APILoginDelegate, AlertAPIErrorDe
         fbButton.addTarget(self, action:#selector(loginButtonClicked(sender:)), for: .touchUpInside)
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        if(api.signed_in) {
+            handleLogin()
+        }
+    }
+    
+    func handleLogin() {
+        self.navigationController!.navigationBar.isUserInteractionEnabled = true
+        self.navigationController!.navigationBar.tintColor = UIColor.blue
+        
+        self.navigationController!.popViewController(animated: true)
+    }
+    
     // Once the button is clicked, show the login dialog
     @objc func loginButtonClicked(sender: UIButton) {
         LoginManager().logIn(readPermissions: [.publicProfile, .email, .userFriends], viewController: self) { loginResult in
@@ -27,12 +40,11 @@ class SignInViewController : UIViewController, APILoginDelegate, AlertAPIErrorDe
             }
         }
     }
+    
+    
     func handleAPILogin() {
         DispatchQueue.main.async(execute: {
-            self.navigationController!.navigationBar.isUserInteractionEnabled = true
-            self.navigationController!.navigationBar.tintColor = UIColor.blue
-            
-            self.navigationController!.popViewController(animated: true)
+            self.handleLogin()
         })
     }
 }

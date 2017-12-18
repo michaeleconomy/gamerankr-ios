@@ -39,6 +39,9 @@ class MyGamesViewController: UIViewController, UITableViewDataSource, UITableVie
             cell.imageView?.kf.indicatorType = .activity
             cell.imageView?.kf.setImage(with: URL(string: ranking.port.smallImageUrl!)!, placeholder: PlaceholderImages.game)
         }
+        else {
+            cell.imageView?.image = PlaceholderImages.game
+        }
         return cell
     }
     
