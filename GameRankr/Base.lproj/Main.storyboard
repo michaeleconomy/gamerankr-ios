@@ -140,7 +140,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="htI-x9-JLu" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2828" y="-424"/>
+            <point key="canvasLocation" x="2869" y="-425"/>
         </scene>
         <!--Updates-->
         <scene sceneID="0GT-gz-gCX">
@@ -157,7 +157,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SrO-OD-bw4" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="975" y="-423"/>
+            <point key="canvasLocation" x="1041" y="-424"/>
         </scene>
         <!--My Games-->
         <scene sceneID="009-tf-Pof">
@@ -392,12 +392,12 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ygr-oe-Vrg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="975" y="-1136"/>
+            <point key="canvasLocation" x="1041" y="-1136"/>
         </scene>
-        <!--Title-->
+        <!--Edit Review View Controller-->
         <scene sceneID="KQD-j1-u7d">
             <objects>
-                <viewController id="4WY-Uh-9bf" sceneMemberID="viewController">
+                <viewController id="4WY-Uh-9bf" customClass="EditReviewViewController" customModule="GameRankr" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="nkM-Gw-dy8">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -419,10 +419,14 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="PDA-ca-KxP"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Title" id="z2v-zG-xNL">
+                    <navigationItem key="navigationItem" id="z2v-zG-xNL">
                         <barButtonItem key="rightBarButtonItem" title="Save" id="TEP-OU-unK"/>
                     </navigationItem>
                     <nil key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <outlet property="reviewView" destination="t6o-9h-Zbq" id="rZG-Hm-RNU"/>
+                        <outlet property="saveButton" destination="TEP-OU-unK" id="8oy-JT-Ycq"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hGr-HK-NCd" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -454,7 +458,7 @@
                                 <rect key="frame" x="0.0" y="64" width="320" height="416"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" id="d7O-Fy-HPl">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" id="d7O-Fy-HPl" customClass="ShelveGameCell" customModule="GameRankr" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="d7O-Fy-HPl" id="wYI-ZC-nKn">
@@ -470,6 +474,9 @@
                                                 <constraint firstAttribute="trailing" secondItem="tnr-5v-97Z" secondAttribute="trailing" constant="16" id="Bod-It-mWh"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="switch" destination="tnr-5v-97Z" id="jDh-oL-oAP"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                                 <connections>
@@ -491,11 +498,12 @@
                     </view>
                     <connections>
                         <outlet property="doneButton" destination="A2U-WS-SlJ" id="oUb-0c-5Qx"/>
+                        <outlet property="tableView" destination="S63-GC-Arp" id="xxH-j7-dOy"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jlD-kv-sMH" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3733" y="356"/>
+            <point key="canvasLocation" x="3731" y="395"/>
         </scene>
         <!--RankingViewController-->
         <scene sceneID="0Z0-Mc-FjR">
@@ -659,7 +667,7 @@
                                 <rect key="frame" x="0.0" y="64" width="320" height="687"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="center" axis="vertical" distribution="equalSpacing" alignment="center" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="U4K-Ug-BNO">
-                                        <rect key="frame" x="0.0" y="0.0" width="320" height="534"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="540"/>
                                         <subviews>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="EeY-ft-ro8">
                                                 <rect key="frame" x="0.0" y="0.0" width="320" height="160"/>
@@ -684,8 +692,8 @@
                                                     </label>
                                                 </subviews>
                                             </stackView>
-                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="Gje-2J-uxY">
-                                                <rect key="frame" x="0.0" y="204.5" width="320" height="68"/>
+                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="Gje-2J-uxY">
+                                                <rect key="frame" x="0.0" y="204.5" width="320" height="74"/>
                                                 <subviews>
                                                     <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vUG-EV-Acs">
                                                         <rect key="frame" x="60" y="0.0" width="200" height="40"/>
@@ -713,7 +721,7 @@
                                                         </subviews>
                                                     </stackView>
                                                     <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dIt-TI-B90">
-                                                        <rect key="frame" x="80.5" y="40" width="159" height="28"/>
+                                                        <rect key="frame" x="80.5" y="46" width="159" height="28"/>
                                                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" relation="lessThanOrEqual" constant="300" id="Utq-SW-SwJ"/>
@@ -731,13 +739,13 @@
                                                             </userDefinedRuntimeAttribute>
                                                         </userDefinedRuntimeAttributes>
                                                         <connections>
-                                                            <segue destination="qeM-Qj-MYO" kind="presentation" id="cyz-dq-rU7"/>
+                                                            <segue destination="qeM-Qj-MYO" kind="presentation" identifier="shelveGame" id="cyz-dq-rU7"/>
                                                         </connections>
                                                     </button>
                                                 </subviews>
                                             </stackView>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="RcW-cg-5Tc">
-                                                <rect key="frame" x="0.0" y="284.5" width="320" height="71"/>
+                                                <rect key="frame" x="0.0" y="290.5" width="320" height="71"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="this is a long string for testing wowowowo owowo ow owo owow ow" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="th2-0k-46i">
                                                         <rect key="frame" x="0.0" y="0.0" width="320" height="41"/>
@@ -749,7 +757,7 @@
                                                         <rect key="frame" x="109.5" y="41" width="101" height="30"/>
                                                         <state key="normal" title="Write a Review"/>
                                                         <connections>
-                                                            <segue destination="4WY-Uh-9bf" kind="show" id="gDx-Ht-Qqd"/>
+                                                            <segue destination="4WY-Uh-9bf" kind="show" identifier="editReview" id="gDx-Ht-Qqd"/>
                                                         </connections>
                                                     </button>
                                                 </subviews>
@@ -758,13 +766,13 @@
                                                 </constraints>
                                             </stackView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Reviews" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OOq-CZ-h3l">
-                                                <rect key="frame" x="117" y="367.5" width="86.5" height="26.5"/>
+                                                <rect key="frame" x="117" y="373.5" width="86.5" height="26.5"/>
                                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="22"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="pnO-MZ-4bf" customClass="IntrinsicTableView" customModule="GameRankr" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="406" width="320" height="128"/>
+                                                <rect key="frame" x="0.0" y="412" width="320" height="128"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <prototypes>
                                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" textLabel="TyD-S1-ZLl" detailTextLabel="9U0-qo-kX2" style="IBUITableViewCellStyleSubtitle" id="c58-ez-anF">
@@ -791,7 +799,7 @@
                                                             </subviews>
                                                         </tableViewCellContentView>
                                                         <connections>
-                                                            <segue destination="SWv-hS-tjw" kind="show" id="nf6-rL-y31"/>
+                                                            <segue destination="SWv-hS-tjw" kind="show" identifier="showRankingDetail" id="nf6-rL-y31"/>
                                                         </connections>
                                                     </tableViewCell>
                                                 </prototypes>
@@ -837,11 +845,12 @@
                         <outlet property="reviewsTable" destination="pnO-MZ-4bf" id="RIN-31-BTd"/>
                         <outlet property="shelveButton" destination="dIt-TI-B90" id="dip-9F-Cu0"/>
                         <outlet property="stars" destination="vUG-EV-Acs" id="eQO-Td-ZMf"/>
+                        <segue destination="dzd-8i-Ijl" kind="show" identifier="requireSignIn" id="oqx-vY-9wK"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QZv-bM-d79" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2827.5" y="355"/>
+            <point key="canvasLocation" x="2869" y="555"/>
         </scene>
         <!--Search-->
         <scene sceneID="JM0-0l-get">
@@ -894,7 +903,7 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="Ipv-SX-m7u"/>
-        <segue reference="int-zW-xEI"/>
+        <segue reference="tfh-hU-DDF"/>
         <segue reference="Cu6-IW-o67"/>
     </inferredMetricsTieBreakers>
 </document>

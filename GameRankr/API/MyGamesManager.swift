@@ -10,6 +10,7 @@ class MyGamesManager : APIMyGamesDelegate {
     
     var rankings : [RankingBasic] = []
     var rankingsByGameId = [GraphQLID:RankingBasic]()
+    
     var delegates = [APIMyGamesManagerDelegate]()
     var loading = false
     var loaded = false
@@ -67,5 +68,4 @@ class MyGamesManager : APIMyGamesDelegate {
         // - if multiple delegates all try and pop alerts - is that a problem?
         delegates.forEach{$0.handleApi(error: error)}
     }
-    
 }

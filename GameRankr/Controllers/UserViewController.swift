@@ -69,9 +69,7 @@ class UserViewController : UIViewController, APIUserDetailDelegate, AlertAPIErro
     
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        NSLog("table count called")
         if (userDetail != nil) {
-            NSLog("returning: \(userDetail!.rankings.count)")
             return userDetail!.rankings.count
         }
         return 0

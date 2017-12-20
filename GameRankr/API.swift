@@ -22,7 +22,7 @@ public final class FriendsQuery: GraphQLQuery {
     public static let possibleTypes = ["Query"]
 
     public static let selections: [GraphQLSelection] = [
-      GraphQLField("friends", arguments: ["first": 30, "after": GraphQLVariable("after")], type: .object(Friend.selections)),
+      GraphQLField("friends", arguments: ["first": 30, "after": GraphQLVariable("after")], type: .nonNull(.object(Friend.selections))),
     ]
 
     public var snapshot: Snapshot
@@ -31,16 +31,16 @@ public final class FriendsQuery: GraphQLQuery {
       self.snapshot = snapshot
     }
 
-    public init(friends: Friend? = nil) {
-      self.init(snapshot: ["__typename": "Query", "friends": friends.flatMap { $0.snapshot }])
+    public init(friends: Friend) {
+      self.init(snapshot: ["__typename": "Query", "friends": friends.snapshot])
     }
 
-    public var friends: Friend? {
+    public var friends: Friend {
       get {
-        return (snapshot["friends"] as? Snapshot).flatMap { Friend(snapshot: $0) }
+        return Friend(snapshot: snapshot["friends"]! as! Snapshot)
       }
       set {
-        snapshot.updateValue(newValue?.snapshot, forKey: "friends")
+        snapshot.updateValue(newValue.snapshot, forKey: "friends")
       }
     }
 
@@ -1424,7 +1424,7 @@ public final class MyGamesQuery: GraphQLQuery {
     public static let possibleTypes = ["Query"]
 
     public static let selections: [GraphQLSelection] = [
-      GraphQLField("my_games", arguments: ["first": 30, "after": GraphQLVariable("after")], type: .object(MyGame.selections)),
+      GraphQLField("my_games", arguments: ["first": 30, "after": GraphQLVariable("after")], type: .nonNull(.object(MyGame.selections))),
     ]
 
     public var snapshot: Snapshot
@@ -1433,17 +1433,17 @@ public final class MyGamesQuery: GraphQLQuery {
       self.snapshot = snapshot
     }
 
-    public init(myGames: MyGame? = nil) {
-      self.init(snapshot: ["__typename": "Query", "my_games": myGames.flatMap { $0.snapshot }])
+    public init(myGames: MyGame) {
+      self.init(snapshot: ["__typename": "Query", "my_games": myGames.snapshot])
     }
 
     /// get games the current user has added
-    public var myGames: MyGame? {
+    public var myGames: MyGame {
       get {
-        return (snapshot["my_games"] as? Snapshot).flatMap { MyGame(snapshot: $0) }
+        return MyGame(snapshot: snapshot["my_games"]! as! Snapshot)
       }
       set {
-        snapshot.updateValue(newValue?.snapshot, forKey: "my_games")
+        snapshot.updateValue(newValue.snapshot, forKey: "my_games")
       }
     }
 
@@ -2030,6 +2030,88 @@ public final class MyGamesQuery: GraphQLQuery {
   }
 }
 
+public final class MyShelvesQuery: GraphQLQuery {
+  public static let operationString =
+    "query MyShelves {\n  shelves: my_shelves {\n    __typename\n    id\n    name\n  }\n}"
+
+  public init() {
+  }
+
+  public struct Data: GraphQLSelectionSet {
+    public static let possibleTypes = ["Query"]
+
+    public static let selections: [GraphQLSelection] = [
+      GraphQLField("my_shelves", alias: "shelves", type: .nonNull(.list(.nonNull(.object(Shelf.selections))))),
+    ]
+
+    public var snapshot: Snapshot
+
+    public init(snapshot: Snapshot) {
+      self.snapshot = snapshot
+    }
+
+    public init(shelves: [Shelf]) {
+      self.init(snapshot: ["__typename": "Query", "shelves": shelves.map { $0.snapshot }])
+    }
+
+    public var shelves: [Shelf] {
+      get {
+        return (snapshot["shelves"] as! [Snapshot]).map { Shelf(snapshot: $0) }
+      }
+      set {
+        snapshot.updateValue(newValue.map { $0.snapshot }, forKey: "shelves")
+      }
+    }
+
+    public struct Shelf: GraphQLSelectionSet {
+      public static let possibleTypes = ["Shelf"]
+
+      public static let selections: [GraphQLSelection] = [
+        GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+        GraphQLField("id", type: .nonNull(.scalar(GraphQLID.self))),
+        GraphQLField("name", type: .nonNull(.scalar(String.self))),
+      ]
+
+      public var snapshot: Snapshot
+
+      public init(snapshot: Snapshot) {
+        self.snapshot = snapshot
+      }
+
+      public init(id: GraphQLID, name: String) {
+        self.init(snapshot: ["__typename": "Shelf", "id": id, "name": name])
+      }
+
+      public var __typename: String {
+        get {
+          return snapshot["__typename"]! as! String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "__typename")
+        }
+      }
+
+      public var id: GraphQLID {
+        get {
+          return snapshot["id"]! as! GraphQLID
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "id")
+        }
+      }
+
+      public var name: String {
+        get {
+          return snapshot["name"]! as! String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "name")
+        }
+      }
+    }
+  }
+}
+
 public final class SearchQuery: GraphQLQuery {
   public static let operationString =
     "query Search($query: String!) {\n  games: search(query: $query) {\n    __typename\n    ...GameBasic\n  }\n}"
@@ -2279,7 +2361,7 @@ public final class UpdatesQuery: GraphQLQuery {
     public static let possibleTypes = ["Query"]
 
     public static let selections: [GraphQLSelection] = [
-      GraphQLField("updates", arguments: ["first": 30, "after": GraphQLVariable("after")], type: .object(Update.selections)),
+      GraphQLField("updates", arguments: ["first": 30, "after": GraphQLVariable("after")], type: .nonNull(.object(Update.selections))),
     ]
 
     public var snapshot: Snapshot
@@ -2288,16 +2370,16 @@ public final class UpdatesQuery: GraphQLQuery {
       self.snapshot = snapshot
     }
 
-    public init(updates: Update? = nil) {
-      self.init(snapshot: ["__typename": "Query", "updates": updates.flatMap { $0.snapshot }])
+    public init(updates: Update) {
+      self.init(snapshot: ["__typename": "Query", "updates": updates.snapshot])
     }
 
-    public var updates: Update? {
+    public var updates: Update {
       get {
-        return (snapshot["updates"] as? Snapshot).flatMap { Update(snapshot: $0) }
+        return Update(snapshot: snapshot["updates"]! as! Snapshot)
       }
       set {
-        snapshot.updateValue(newValue?.snapshot, forKey: "updates")
+        snapshot.updateValue(newValue.snapshot, forKey: "updates")
       }
     }
 

@@ -32,6 +32,10 @@
 		4C7CF64C1FE46A5400E7B32A /* PlaceholderImages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C7CF64B1FE46A5400E7B32A /* PlaceholderImages.swift */; };
 		4C7CF64E1FE4937800E7B32A /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C7CF64D1FE4937800E7B32A /* GameViewController.swift */; };
 		4C7CF6501FE4CF2200E7B32A /* GameBasic.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 4C7CF64F1FE4CF2200E7B32A /* GameBasic.graphql */; };
+		4CAA416D1FEAE74D007EBB7C /* EditReviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CAA416C1FEAE74D007EBB7C /* EditReviewViewController.swift */; };
+		4CAA416F1FEAF639007EBB7C /* ShelveGameCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CAA416E1FEAF639007EBB7C /* ShelveGameCell.swift */; };
+		4CAA41711FEAFD85007EBB7C /* MyShelves.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 4CAA41701FEAFD85007EBB7C /* MyShelves.graphql */; };
+		4CAA41731FEAFFFC007EBB7C /* MyShelvesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CAA41721FEAFFFC007EBB7C /* MyShelvesManager.swift */; };
 		4CBD0F7D1FE627FB00230771 /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CBD0F7C1FE627FB00230771 /* SignInViewController.swift */; };
 		4CBD0F7F1FE6DD3F00230771 /* RankingBasic.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 4CBD0F7E1FE6DD3F00230771 /* RankingBasic.graphql */; };
 		4CBD0F811FE6DD7E00230771 /* Updates.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 4CBD0F801FE6DD7E00230771 /* Updates.graphql */; };
@@ -83,6 +87,10 @@
 		4C7CF64B1FE46A5400E7B32A /* PlaceholderImages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceholderImages.swift; sourceTree = "<group>"; };
 		4C7CF64D1FE4937800E7B32A /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
 		4C7CF64F1FE4CF2200E7B32A /* GameBasic.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = GameBasic.graphql; sourceTree = "<group>"; };
+		4CAA416C1FEAE74D007EBB7C /* EditReviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditReviewViewController.swift; sourceTree = "<group>"; };
+		4CAA416E1FEAF639007EBB7C /* ShelveGameCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShelveGameCell.swift; sourceTree = "<group>"; };
+		4CAA41701FEAFD85007EBB7C /* MyShelves.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = MyShelves.graphql; sourceTree = "<group>"; };
+		4CAA41721FEAFFFC007EBB7C /* MyShelvesManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyShelvesManager.swift; sourceTree = "<group>"; };
 		4CBD0F7C1FE627FB00230771 /* SignInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
 		4CBD0F7E1FE6DD3F00230771 /* RankingBasic.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = RankingBasic.graphql; sourceTree = "<group>"; };
 		4CBD0F801FE6DD7E00230771 /* Updates.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = Updates.graphql; sourceTree = "<group>"; };
@@ -145,6 +153,7 @@
 				4CBD0F921FE6FC8500230771 /* FriendsController.swift */,
 				4C2E1BBB1FE9EB4400C048BC /* ShelveGameController.swift */,
 				4C2E1BBD1FE9ED3900C048BC /* RankingViewController.swift */,
+				4CAA416C1FEAE74D007EBB7C /* EditReviewViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -155,6 +164,7 @@
 				4C42E4EC1FE1B679003F1C68 /* AlertAPIErrorDelegate.swift */,
 				4C7CF64B1FE46A5400E7B32A /* PlaceholderImages.swift */,
 				4CBD0F941FE7801F00230771 /* IntrinsicTableView.swift */,
+				4CAA416E1FEAF639007EBB7C /* ShelveGameCell.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -188,6 +198,7 @@
 				4CBD0F821FE6DD8500230771 /* Fragments */,
 				4C57FC141FDF7D9600A04E57 /* GamerankrAPI.swift */,
 				4CBD0F981FE88EA600230771 /* MyGamesManager.swift */,
+				4CAA41721FEAFFFC007EBB7C /* MyShelvesManager.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -214,6 +225,7 @@
 				4CBD0F861FE6DF9D00230771 /* Friends.graphql */,
 				4CBD0F8C1FE6F57B00230771 /* User.graphql */,
 				4CBD0F901FE6F69200230771 /* Me.graphql */,
+				4CAA41701FEAFD85007EBB7C /* MyShelves.graphql */,
 			);
 			path = Queries;
 			sourceTree = "<group>";
@@ -335,6 +347,7 @@
 				4CBD0F871FE6DF9D00230771 /* Friends.graphql in Resources */,
 				4C2E1BB21FE9CD1F00C048BC /* star-empty.png in Resources */,
 				4C2E1BB91FE9D39400C048BC /* star-full-large.png in Resources */,
+				4CAA41711FEAFD85007EBB7C /* MyShelves.graphql in Resources */,
 				4CBD0F851FE6DE0C00230771 /* UserBasic.graphql in Resources */,
 				4C7CF6481FE465D200E7B32A /* picture.png in Resources */,
 				4C3FC26E1FE4590A00299D7D /* Game.graphql in Resources */,
@@ -456,11 +469,14 @@
 				4CBD0F991FE88EA600230771 /* MyGamesManager.swift in Sources */,
 				4C7CF64C1FE46A5400E7B32A /* PlaceholderImages.swift in Sources */,
 				4C7CF64E1FE4937800E7B32A /* GameViewController.swift in Sources */,
+				4CAA416F1FEAF639007EBB7C /* ShelveGameCell.swift in Sources */,
 				4C42E4F11FE1BC58003F1C68 /* MyGamesViewController.swift in Sources */,
+				4CAA41731FEAFFFC007EBB7C /* MyShelvesManager.swift in Sources */,
 				4C4FC9D91FE23C9F002F6428 /* API.swift in Sources */,
 				4CBD0F951FE7801F00230771 /* IntrinsicTableView.swift in Sources */,
 				4C2E1BBC1FE9EB4400C048BC /* ShelveGameController.swift in Sources */,
 				4C57FC151FDF7D9600A04E57 /* GamerankrAPI.swift in Sources */,
+				4CAA416D1FEAE74D007EBB7C /* EditReviewViewController.swift in Sources */,
 				4CBD0F7D1FE627FB00230771 /* SignInViewController.swift in Sources */,
 				4CD1C9DD1FDF6B62001A0B8D /* UpdatesViewController.swift in Sources */,
 				4C2E1BBE1FE9ED3900C048BC /* RankingViewController.swift in Sources */,

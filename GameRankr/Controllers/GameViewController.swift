@@ -157,12 +157,43 @@ class GameViewController : UIViewController, APIGameDetailDelegate, APIMyGamesMa
             cell.textLabel!.text = "\(user.realName) \(ranking.verb)"
         }
         
-        if (ranking.review != nil) {
+        if (ranking.review != nil && ranking.review! != "") {
             cell.detailTextLabel!.text = "\"\(ranking.review!)\""
         }
         else {
             cell.detailTextLabel!.text = ""
         }
         return cell
+    }
+    
+    override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
+        if (!api.signed_in) {
+            if (identifier == "editReview" || identifier == "shelveGame") {
+                performSegue(withIdentifier: "requireSignIn", sender: nil)
+                return false
+            }
+        }
+        return super.shouldPerformSegue(withIdentifier: identifier, sender: sender)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if (segue.identifier == nil) {
+            NSLog("nil segue from game view")
+            return
+        }
+        switch segue.identifier! {
+        case "editReview":
+            let controller = segue.destination as! EditReviewViewController
+            controller.ranking = ranking
+        case "shelveGame":
+            let controller = segue.destination as! ShelveGameController
+            controller.game = game
+            controller.ranking = ranking
+        case "showRankingDetail":
+            let controller = segue.destination as! RankingViewController
+            controller.ranking = ranking
+        default:
+            NSLog("unknown segue from game view: \(segue.identifier!)")
+        }
     }
 }

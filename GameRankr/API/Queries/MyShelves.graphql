@@ -1,0 +1,6 @@
+query MyShelves {
+    shelves: my_shelves {
+        id
+        name
+    }
+}
