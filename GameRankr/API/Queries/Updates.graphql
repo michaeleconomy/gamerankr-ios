@@ -1,8 +1,13 @@
-query Updates {
-    rankings : updates {
-        ...Ranking
-        user {
-            ...UserBasic
+query Updates($after: String) {
+    updates(first: 30, after: $after) {
+        edges {
+            ranking : node {
+                ...RankingWithUser
+            }
+        }
+        pageInfo {
+            endCursor
+            hasNextPage
         }
     }
 }

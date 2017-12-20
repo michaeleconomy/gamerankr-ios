@@ -1,5 +1,13 @@
-query Friends($limit: Int, $offset: Int) {
-    users : friends(limit: $limit, offset: $offset) {
-        ...UserBasic
+query Friends($after: String) {
+    friends(first: 30, after: $after) {
+        edges {
+            user: node {
+                ...UserBasic
+            }
+        }
+        pageInfo {
+            endCursor
+            hasNextPage
+        }
     }
 }

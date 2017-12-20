@@ -8,6 +8,7 @@ query Game($id: ID!, $limit: Int) {
             id
             ranking
             review
+            verb
             shelves {
                 name
             }

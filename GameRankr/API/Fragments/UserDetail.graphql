@@ -1,7 +1,7 @@
 fragment UserDetail on User {
     ...UserBasic
     rankings(limit: 5) {
-        ...Ranking
+        ...RankingBasic
     }
     shelves {
         id

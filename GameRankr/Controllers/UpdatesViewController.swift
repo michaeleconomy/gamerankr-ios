@@ -5,7 +5,7 @@ import FacebookLogin
 class UpdatesViewController: UIViewController, AlertAPIErrorDelegate, UITableViewDataSource, APIUpdatesDelegate {
     
     @IBOutlet weak var tableView: UITableView!
-    var updates : [UpdatesQuery.Data.Ranking] = []
+    var updates : [RankingWithUser] = []
     var fetchedUpdates = false
     
     override func viewDidLoad() {
@@ -28,7 +28,7 @@ class UpdatesViewController: UIViewController, AlertAPIErrorDelegate, UITableVie
         
     }
     
-    func handleAPI(updates: [UpdatesQuery.Data.Ranking]) {
+    func handleAPI(updates: [RankingWithUser]) {
         self.updates = updates
         
         DispatchQueue.main.async(execute: {

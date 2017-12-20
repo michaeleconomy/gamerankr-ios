@@ -11,7 +11,7 @@ protocol APISearchResultsDelegate : APIErrorDelegate {
 }
 
 protocol APIMyGamesDelegate : APIErrorDelegate {
-    func handleAPIMyGames(rankings: [MyGamesQuery.Data.Ranking])
+    func handleAPIMyGames(response: MyGamesQuery.Data.MyGame)
 }
 
 protocol APIGameDetailDelegate : APIErrorDelegate {
@@ -23,7 +23,7 @@ protocol APIUserDetailDelegate : APIErrorDelegate {
 }
 
 protocol APIUpdatesDelegate : APIErrorDelegate {
-    func handleAPI(updates: [UpdatesQuery.Data.Ranking])
+    func handleAPI(updates: [RankingWithUser])
 }
 protocol APIFriendsDelegate : APIErrorDelegate {
     func handleAPI(friends: [UserBasic])
@@ -57,6 +57,7 @@ class GamerankrAPI {
             }
             NSLog("login was successful. Data: \(String(describing: data))")
             self.signed_in = true
+            MyGamesManager.sharedInstance.load()
             // success!
             delegate.handleAPILogin()
         }
@@ -104,14 +105,15 @@ class GamerankrAPI {
             delegate.handleAPI(userDetail: data.user.fragments.userDetail)
         }
     }
-
-    func myGames(delegate: APIMyGamesDelegate) {
-        apollo.fetch(query: MyGamesQuery()) { (result, error) in
+    
+    
+    func myGames(after: String? = nil, delegate: APIMyGamesDelegate) {
+        apollo.fetch(query: MyGamesQuery(after: after)) { (result, error) in
             guard let data = result?.data else {
                 delegate.handleApi(error: "error: \(String(describing: error))")
                 return
             }
-            delegate.handleAPIMyGames(rankings: data.rankings)
+            delegate.handleAPIMyGames(response: data.myGames!)
         }
     }
     
@@ -121,7 +123,7 @@ class GamerankrAPI {
                 delegate.handleApi(error: "error: \(String(describing: error))")
                 return
             }
-            delegate.handleAPI(updates: data.rankings)
+            delegate.handleAPI(updates: (data.updates?.edges!.map{($0?.ranking!.fragments.rankingWithUser)!})!)
         }
     }
     
@@ -131,7 +133,7 @@ class GamerankrAPI {
                 delegate.handleApi(error: "error: \(String(describing: error))")
                 return
             }
-            delegate.handleAPI(friends: data.users.map{$0.fragments.userBasic})
+            delegate.handleAPI(friends: (data.friends?.edges!.map{($0?.user!.fragments.userBasic)!})!)
         }
     }
     

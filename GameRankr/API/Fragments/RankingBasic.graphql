@@ -1,4 +1,4 @@
-fragment Ranking on Ranking {
+fragment RankingBasic on Ranking {
     id
     ranking
     review
