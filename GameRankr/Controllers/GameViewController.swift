@@ -119,9 +119,37 @@ class GameViewController : UIViewController, APIGameDetailDelegate, APIMyGamesMa
         MyGamesManager.sharedInstance.registerDelegate(delegate: self)
         shelveButton.layer.borderColor = UIColor.lightGray.cgColor
         shelveButton.layer.borderWidth = 2
+        stars.arrangedSubviews.forEach({ subview in
+            let star = subview as! UIButton
+            star.addTarget(self, action: #selector(starTapped(sender:)), for: .touchUpInside)
+        })
         configureView()
     }
     
+    @objc func starTapped(sender: UIButton) {
+        if (!api.signed_in) {
+            performSegue(withIdentifier: "requireSignIn", sender: nil)
+            return
+        }
+        
+        var ranking = 1
+        
+        var isBefore = true
+        stars.arrangedSubviews.forEach({subview in
+            let star = subview as! UIButton
+            if (isBefore) {
+                star.setImage(starFull, for: .normal)
+                if (star == sender) {
+                    NSLog ("Ranking \(ranking) selected for game \(game!.title)")
+                    isBefore = false
+                }
+            }
+            else {
+                star.setImage(starEmpty, for: .normal)
+            }
+            ranking += 1
+        })
+    }
     
     func handleAPI(gameDetail: GameQuery.Data.Game) {
         self.gameDetail = gameDetail

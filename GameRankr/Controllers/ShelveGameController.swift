@@ -50,7 +50,16 @@ class ShelveGameController : UIViewController, UITableViewDataSource, APIMyShelv
         else {
             cell.switch.isOn = false
         }
+        cell.switch.addTarget(self, action: #selector(shelfToggled(sender:)), for: .valueChanged)
         return cell
+    }
+    
+    
+    @objc func shelfToggled(sender: UISwitch) {
+        let cell = sender.superview!.superview as! ShelveGameCell
+        let indexForCell = tableView.indexPath(for: cell)!
+        let shelf = MyShelvesManager.sharedInstance[indexForCell.row]!
+        NSLog("shelfToggled for \(game!.title) \(game!.id) \(shelf.name) \(shelf.id) \(sender.isOn)")
     }
     
     

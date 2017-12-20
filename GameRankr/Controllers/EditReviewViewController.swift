@@ -5,6 +5,7 @@ class EditReviewViewController : UIViewController {
     
     @IBOutlet weak var saveButton: UIBarButtonItem!
     @IBOutlet weak var reviewView: UITextView!
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
@@ -26,7 +27,7 @@ class EditReviewViewController : UIViewController {
     }
     
     @objc func saveButtonClick(sender: UIButton) {
-        //TODO - save the reivew
-        self.dismiss(animated: true)
+        NSLog("review for game \(ranking!.game.id) (\(ranking!.game.title)) - \(reviewView.text)")
+        self.navigationController!.popViewController(animated: true)
     }
 }
