@@ -51,7 +51,7 @@ class MyGamesManager : APIMyGamesDelegate {
         NSLog("MyGamesManager loaded response")
         let additionalRankings = response.edges?.map({$0?.ranking?.fragments.rankingBasic}) as! [RankingBasic]
         if (!additionalRankings.isEmpty) {
-            additionalRankings.forEach{ rankingsByGameId[$0.id] = $0}
+            additionalRankings.forEach{ rankingsByGameId[$0.game.id] = $0}
             self.rankings.append(contentsOf: additionalRankings)
             if (response.pageInfo.hasNextPage){
                 NSLog("MyGamesManager loading next page: \(response.pageInfo.endCursor ?? "nil")")

@@ -394,6 +394,40 @@
             </objects>
             <point key="canvasLocation" x="975" y="-1136"/>
         </scene>
+        <!--Title-->
+        <scene sceneID="KQD-j1-u7d">
+            <objects>
+                <viewController id="4WY-Uh-9bf" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="nkM-Gw-dy8">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="t6o-9h-Zbq">
+                                <rect key="frame" x="0.0" y="64" width="320" height="416"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="t6o-9h-Zbq" firstAttribute="top" secondItem="PDA-ca-KxP" secondAttribute="top" id="Hf6-Pm-p3s"/>
+                            <constraint firstItem="t6o-9h-Zbq" firstAttribute="leading" secondItem="PDA-ca-KxP" secondAttribute="leading" id="Wgd-iS-lb7"/>
+                            <constraint firstItem="t6o-9h-Zbq" firstAttribute="trailing" secondItem="PDA-ca-KxP" secondAttribute="trailing" id="Z8Y-lD-h9s"/>
+                            <constraint firstItem="t6o-9h-Zbq" firstAttribute="bottom" secondItem="PDA-ca-KxP" secondAttribute="bottom" id="av0-WX-R3M"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="PDA-ca-KxP"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Title" id="z2v-zG-xNL">
+                        <barButtonItem key="rightBarButtonItem" title="Save" id="TEP-OU-unK"/>
+                    </navigationItem>
+                    <nil key="simulatedBottomBarMetrics"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="hGr-HK-NCd" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3725.625" y="-348.75"/>
+        </scene>
         <!--ShelveGameController-->
         <scene sceneID="4gM-mx-prh">
             <objects>
@@ -710,6 +744,9 @@
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8iI-hI-wM2">
                                                         <rect key="frame" x="109.5" y="41" width="101" height="30"/>
                                                         <state key="normal" title="Write a Review"/>
+                                                        <connections>
+                                                            <segue destination="4WY-Uh-9bf" kind="show" id="gDx-Ht-Qqd"/>
+                                                        </connections>
                                                     </button>
                                                 </subviews>
                                                 <constraints>

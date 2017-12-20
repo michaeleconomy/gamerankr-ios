@@ -21,11 +21,20 @@ class GameViewController : UIViewController, APIGameDetailDelegate, APIMyGamesMa
     var game: GameBasic? {
         didSet {
             if(game != nil) {
-                if(gameDetail?.id != game!.id) {
+                if(gameDetail != nil && gameDetail!.id != game!.id) {
+                    NSLog("clearing old gameDetail: \(gameDetail!.id)")
                     self.gameDetail = nil
                 }
-                api.gameDetail(id: game!.id, delegate: self)
+                if(gameDetail == nil) {
+                    api.gameDetail(id: game!.id, delegate: self)
+                }
                 self.ranking = MyGamesManager.sharedInstance.getRanking(gameId: game!.id)
+                if (ranking != nil) {
+                    NSLog("found rating for game")
+                }
+                else {
+                    NSLog("did not find rating for game")
+                }
             }
             
             DispatchQueue.main.async(execute: {
@@ -59,10 +68,10 @@ class GameViewController : UIViewController, APIGameDetailDelegate, APIMyGamesMa
             platformsLabel?.text = game!.ports.map{$0.platform.name}.joined(separator: ", ")
             
             if(ranking != nil) {
-                
+                reviewStack.isHidden = false
             }
             else {
-                
+                reviewStack.isHidden = true
             }
         }
         self.reviewsTable?.reloadData()
@@ -83,14 +92,12 @@ class GameViewController : UIViewController, APIGameDetailDelegate, APIMyGamesMa
         if (ranking == nil && game != nil) {
             self.ranking = MyGamesManager.sharedInstance.getRanking(gameId: game!.id)
             if (ranking != nil) {
-                
                 DispatchQueue.main.async(execute: {
                     self.configureView()
                 })
             }
         }
     }
-    
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if (gameDetail != nil) {
@@ -104,7 +111,12 @@ class GameViewController : UIViewController, APIGameDetailDelegate, APIMyGamesMa
         let ranking = gameDetail!.rankings[indexPath.row]
         let user = ranking.user
         
-        cell.textLabel!.text = "\(user.realName) \(ranking.verb) - \(ranking.ranking)"
+        if (ranking.ranking != nil) {
+            cell.textLabel!.text = "\(user.realName) \(ranking.verb) - \(ranking.ranking!) stars"
+        }
+        else {
+            cell.textLabel!.text = "\(user.realName) \(ranking.verb)"
+        }
         cell.detailTextLabel!.text = ranking.review
         return cell
     }
