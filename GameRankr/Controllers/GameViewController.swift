@@ -27,7 +27,10 @@ class GameViewController : UIViewController, APIGameDetailDelegate, APIMyGamesMa
                 api.gameDetail(id: game!.id, delegate: self)
                 self.ranking = MyGamesManager.sharedInstance.getRanking(gameId: game!.id)
             }
-            configureView()
+            
+            DispatchQueue.main.async(execute: {
+                self.configureView()
+            })
         }
     }
     var ranking: RankingBasic?
@@ -62,7 +65,7 @@ class GameViewController : UIViewController, APIGameDetailDelegate, APIMyGamesMa
                 
             }
         }
-        self.reviewsTable.reloadData()
+        self.reviewsTable?.reloadData()
     }
     
     override func viewDidLoad() {
