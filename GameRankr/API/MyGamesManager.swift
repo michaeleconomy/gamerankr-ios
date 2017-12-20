@@ -48,13 +48,11 @@ class MyGamesManager : APIMyGamesDelegate {
     }
     
     func handleAPIMyGames(response: MyGamesQuery.Data.MyGame) {
-        NSLog("MyGamesManager loaded response")
         let additionalRankings = response.edges?.map({$0?.ranking?.fragments.rankingBasic}) as! [RankingBasic]
         if (!additionalRankings.isEmpty) {
             additionalRankings.forEach{ rankingsByGameId[$0.game.id] = $0}
             self.rankings.append(contentsOf: additionalRankings)
             if (response.pageInfo.hasNextPage){
-                NSLog("MyGamesManager loading next page: \(response.pageInfo.endCursor ?? "nil")")
                 api.myGames(after: response.pageInfo.endCursor, delegate: self)
             }
             delegates.forEach{$0.handleUpdates()}
@@ -66,7 +64,6 @@ class MyGamesManager : APIMyGamesDelegate {
     }
     
     func handleApi(error: String) {
-        NSLog("MyGamesManager encountered api error: \(error)")
         // - if multiple delegates all try and pop alerts - is that a problem?
         delegates.forEach{$0.handleApi(error: error)}
     }

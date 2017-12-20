@@ -27,6 +27,10 @@ class ShelveGameController : UIViewController, UITableViewDataSource {
     }
     override func viewWillAppear(_ animated: Bool) {
         configureView()
+        
+        if (!api.signed_in) {
+            performSegue(withIdentifier: "requireSignIn", sender: nil)
+        }
     }
     
     @objc func doneButtonClick(sender: UIButton) {

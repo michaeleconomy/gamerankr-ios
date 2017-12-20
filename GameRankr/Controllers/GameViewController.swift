@@ -6,10 +6,14 @@ class GameViewController : UIViewController, APIGameDetailDelegate, APIMyGamesMa
     @IBOutlet weak var platformsLabel: UILabel!
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var stars: UIStackView!
+    @IBOutlet weak var shelveButton: UIButton!
     @IBOutlet weak var reviewStack: UIStackView!
     @IBOutlet weak var reviewLabel: UILabel!
     @IBOutlet weak var reviewButton: UIButton!
     @IBOutlet weak var reviewsTable: IntrinsicTableView!
+    
+    let starFull = UIImage(named: "star-full-medium.png")
+    let starEmpty = UIImage(named: "star-empty-medium.png")
     
     var gameDetail: GameQuery.Data.Game? {
         didSet {
@@ -66,20 +70,55 @@ class GameViewController : UIViewController, APIGameDetailDelegate, APIMyGamesMa
             }
             
             platformsLabel?.text = game!.ports.map{$0.platform.name}.joined(separator: ", ")
+            var starsToFill = 0
             
             if(ranking != nil) {
                 reviewStack.isHidden = false
+                let shelvesStr = ranking!.shelves.map{$0.name}.joined(separator: ", ")
+                shelveButton.setTitle("Shelved: \(shelvesStr)", for: .normal)
+                shelveButton.imageEdgeInsets = UIEdgeInsetsMake(0, shelveButton.frame.size.width - 25, 0, 0)
+                shelveButton.backgroundColor = UIColor.white
+                if (ranking!.ranking != nil) {
+                    starsToFill = ranking!.ranking!
+                }
+                if (ranking!.review != nil && ranking!.review != "") {
+                    reviewLabel.isHidden = false
+                    reviewLabel.text = "\"\(ranking!.review!)\""
+                    reviewButton.setTitle("Edit My Review", for: .normal)
+                }
+                else {
+                    reviewLabel.isHidden = true
+                    reviewButton.setTitle("Write a Review", for: .normal)
+                }
             }
             else {
+                shelveButton.setTitle("Add to My Games", for: .normal)
+                shelveButton.imageEdgeInsets = UIEdgeInsetsMake(0, shelveButton.frame.size.width - 25, 0, 0)
+                shelveButton.backgroundColor = UIColor.lightGray
                 reviewStack.isHidden = true
             }
+            
+            var starNum = 1
+            stars.subviews.forEach({starUntyped in
+                let star = starUntyped as! UIButton
+                if (starNum <= starsToFill) {
+                    star.setImage(starFull, for: .normal)
+                }
+                else {
+                    star.setImage(starEmpty, for: .normal)
+                }
+                starNum += 1
+            })
         }
         self.reviewsTable?.reloadData()
     }
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         MyGamesManager.sharedInstance.registerDelegate(delegate: self)
+        shelveButton.layer.borderColor = UIColor.lightGray.cgColor
+        shelveButton.layer.borderWidth = 2
         configureView()
     }
     
@@ -117,7 +156,13 @@ class GameViewController : UIViewController, APIGameDetailDelegate, APIMyGamesMa
         else {
             cell.textLabel!.text = "\(user.realName) \(ranking.verb)"
         }
-        cell.detailTextLabel!.text = ranking.review
+        
+        if (ranking.review != nil) {
+            cell.detailTextLabel!.text = "\"\(ranking.review!)\""
+        }
+        else {
+            cell.detailTextLabel!.text = ""
+        }
         return cell
     }
 }
