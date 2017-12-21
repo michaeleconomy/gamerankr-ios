@@ -4,19 +4,23 @@ query Game($id: ID!, $limit: Int) {
         ports {
             medium_image_url
         }
-        rankings(limit: $limit) {
-            id
-            ranking
-            review
-            verb
-            shelves {
-                name
-            }
-            port {
-                id
-            }
-            user {
-                ...UserBasic
+        rankings(first: $limit) {
+            edges {
+                node {
+                    id
+                    ranking
+                    review
+                    verb
+                    shelves {
+                        name
+                    }
+                    port {
+                        id
+                    }
+                    user {
+                        ...UserBasic
+                    }
+                }
             }
         }
     }

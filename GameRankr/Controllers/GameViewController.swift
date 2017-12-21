@@ -1,10 +1,12 @@
 import UIKit
+import Apollo
 
 class GameViewController : UIViewController, APIGameDetailDelegate, APIMyGamesManagerDelegate, AlertAPIErrorDelegate, UITableViewDataSource {
     
     
-    @IBOutlet weak var platformsLabel: UILabel!
     @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var platformLabel: UILabel!
+    @IBOutlet weak var otherPlatformsButton: UIButton!
     @IBOutlet weak var stars: UIStackView!
     @IBOutlet weak var shelveButton: UIButton!
     @IBOutlet weak var reviewStack: UIStackView!
@@ -18,7 +20,15 @@ class GameViewController : UIViewController, APIGameDetailDelegate, APIMyGamesMa
     var gameDetail: GameQuery.Data.Game? {
         didSet {
             if (gameDetail != nil) {
-                self.game = gameDetail?.fragments.gameBasic
+                if (gameDetail!.id != game!.id) {
+                    self.gameDetail = nil
+                }
+                else {
+                    self.rankings = gameDetail!.rankings.edges!.map({$0!.node!})
+                    DispatchQueue.main.async(execute: {
+                        self.configureView()
+                    })
+                }
             }
         }
     }
@@ -28,18 +38,14 @@ class GameViewController : UIViewController, APIGameDetailDelegate, APIMyGamesMa
                 if(gameDetail != nil && gameDetail!.id != game!.id) {
                     NSLog("clearing old gameDetail: \(gameDetail!.id)")
                     self.gameDetail = nil
+                    self.rankings = nil
                 }
-                if(gameDetail == nil) {
+                if (gameDetail == nil) {
                     api.gameDetail(id: game!.id, delegate: self)
                 }
                 self.ranking = MyGamesManager.sharedInstance.getRanking(gameId: game!.id)
-                if (ranking != nil) {
-                    NSLog("found rating for game")
-                }
-                else {
-                    NSLog("did not find rating for game")
-                }
             }
+            self.portId = nil
             
             DispatchQueue.main.async(execute: {
                 self.configureView()
@@ -47,31 +53,59 @@ class GameViewController : UIViewController, APIGameDetailDelegate, APIMyGamesMa
         }
     }
     var ranking: RankingBasic?
+    var rankings: [GameQuery.Data.Game.Ranking.Edge.Node]?
+    var portId: GraphQLID?
+    
+    func selectPort(portId: GraphQLID) {
+        self.portId = portId
+    }
+    
+    func selectedPort() -> GameBasic.Port {
+        if (portId != nil) {
+            return game!.ports.first(where: {$0.id == portId!})!
+        }
+        return game!.ports.first!
+    }
+    func selectedPortDetail() -> GameQuery.Data.Game.Port {
+        if (portId != nil) {
+            return gameDetail!.ports.first(where: {$0.id == portId!})!
+        }
+        return gameDetail!.ports.first!
+    }
     
     func configureView() {
         if (game != nil) {
+            let port = selectedPort()
             self.title = game!.title
+            platformLabel?.text = "Platform: \(port.platform.name)"
+            
+            let remainingPorts = game!.ports.filter({$0.id != port.id})
+            if (remainingPorts.isEmpty) {
+                otherPlatformsButton?.isHidden = true
+            }
+            else {
+                otherPlatformsButton?.isHidden = false
+                let otherPlatforms = remainingPorts.map{$0.platform.name}.joined(separator: ", ")
+                otherPlatformsButton.setTitle("Other Platforms: \(otherPlatforms)", for: .normal)
+            }
             
             if (gameDetail != nil) {
-                let port = gameDetail!.ports.first
-                if (port != nil && port?.mediumImageUrl != nil){
+                let portDetail = selectedPortDetail()
+                if (portDetail.mediumImageUrl != nil) {
                     self.imageView?.kf.indicatorType = .activity
-                    self.imageView?.kf.setImage(with: URL(string: port!.mediumImageUrl!)!, options: [.keepCurrentImageWhileLoading])
+                    self.imageView?.kf.setImage(with: URL(string: portDetail.mediumImageUrl!)!, options: [.keepCurrentImageWhileLoading])
                 }
             }
             else {
-                let port = game!.ports.first
-                if (port != nil && port?.smallImageUrl != nil){
-                    self.imageView?.kf.setImage(with: URL(string: port!.smallImageUrl!)!)
+                if (port.smallImageUrl != nil) {
+                    self.imageView?.kf.setImage(with: URL(string: port.smallImageUrl!)!)
                 }
                 else {
                     self.imageView?.image = PlaceholderImages.game
                 }
             }
             
-            platformsLabel?.text = game!.ports.map{$0.platform.name}.joined(separator: ", ")
             var starsToFill = 0
-            
             if(ranking != nil) {
                 reviewStack.isHidden = false
                 let shelvesStr = ranking!.shelves.map{$0.name}.joined(separator: ", ")
@@ -123,6 +157,9 @@ class GameViewController : UIViewController, APIGameDetailDelegate, APIMyGamesMa
             let star = subview as! UIButton
             star.addTarget(self, action: #selector(starTapped(sender:)), for: .touchUpInside)
         })
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         configureView()
     }
     
@@ -167,15 +204,15 @@ class GameViewController : UIViewController, APIGameDetailDelegate, APIMyGamesMa
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if (gameDetail != nil) {
-            return gameDetail!.rankings.count
+        if (rankings != nil) {
+            return rankings!.count
         }
         return 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
-        let ranking = gameDetail!.rankings[indexPath.row]
+        let ranking = rankings![indexPath.row]
         let user = ranking.user
         
         if (ranking.ranking != nil) {
@@ -220,6 +257,11 @@ class GameViewController : UIViewController, APIGameDetailDelegate, APIMyGamesMa
         case "showRankingDetail":
             let controller = segue.destination as! RankingViewController
             controller.ranking = ranking
+        case "chooseEdition":
+            let controller = segue.destination as! PortChooserViewController
+            controller.game = game
+            controller.selected = selectedPort().id
+            controller.ranked = ranking?.port.id
         default:
             NSLog("unknown segue from game view: \(segue.identifier!)")
         }

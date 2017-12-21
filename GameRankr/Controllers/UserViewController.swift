@@ -5,10 +5,13 @@ class UserViewController : UIViewController, APIUserDetailDelegate, AlertAPIErro
     @IBOutlet weak var shelvesStack: UIStackView!
     @IBOutlet weak var reviewTable: UITableView!
     @IBOutlet weak var imageView: UIImageView!
+    
+    var rankings: [RankingBasic]?
     var userDetail: UserDetail? {
         didSet {
             if (userDetail != nil) {
                 self.user = userDetail!.fragments.userBasic
+                self.rankings = userDetail!.rankings.edges!.map({$0!.ranking!.fragments.rankingBasic})
             }
         }
     }
@@ -17,6 +20,7 @@ class UserViewController : UIViewController, APIUserDetailDelegate, AlertAPIErro
             if(user != nil) {
                 if(userDetail?.id != user!.id) {
                     self.userDetail = nil
+                    self.rankings = nil
                 }
                 if (userDetail == nil) {
                     api.userDetail(id: user!.id, delegate: self)
@@ -69,8 +73,8 @@ class UserViewController : UIViewController, APIUserDetailDelegate, AlertAPIErro
     
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if (userDetail != nil) {
-            return userDetail!.rankings.count
+        if (rankings != nil) {
+            return rankings!.count
         }
         return 0
     }
@@ -78,7 +82,7 @@ class UserViewController : UIViewController, APIUserDetailDelegate, AlertAPIErro
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
         
-        let ranking = userDetail!.rankings[indexPath.row]
+        let ranking = rankings![indexPath.row]
         let game = ranking.game
         let port = ranking.port
         
@@ -95,4 +99,16 @@ class UserViewController : UIViewController, APIUserDetailDelegate, AlertAPIErro
         return cell
     }
     
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "showDetail" {
+            if let indexPath = reviewTable.indexPathForSelectedRow {
+                let ranking = rankings![indexPath.row]
+                let controller = segue.destination as! GameViewController
+                let game = ranking.game.fragments.gameBasic
+                controller.game = game
+                controller.selectPort(portId: ranking.port.id)
+            }
+        }
+    }
 }

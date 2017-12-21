@@ -1,7 +1,11 @@
 fragment UserDetail on User {
     ...UserBasic
-    rankings(limit: 5) {
-        ...RankingBasic
+    rankings(first: 5) {
+        edges {
+            ranking : node {
+                ...RankingBasic
+            }
+        }
     }
     shelves {
         id
