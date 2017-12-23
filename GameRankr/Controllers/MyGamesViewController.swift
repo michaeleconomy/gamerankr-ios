@@ -49,8 +49,9 @@ class MyGamesViewController: UIViewController, UITableViewDataSource, UITableVie
         if segue.identifier == "showDetail" {
             if let indexPath = tableView.indexPathForSelectedRow {
                 let controller = segue.destination as! GameViewController
-                controller.game = MyGamesManager.sharedInstance[indexPath.row]!.game.fragments.gameBasic
-                
+                let ranking = MyGamesManager.sharedInstance[indexPath.row]!
+                controller.game = ranking.game.fragments.gameBasic
+                controller.selectPort(portId: ranking.port.id)
             }
         }
     }

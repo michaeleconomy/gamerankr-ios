@@ -25,9 +25,16 @@ protocol APIUserDetailDelegate : APIErrorDelegate {
 protocol APIUpdatesDelegate : APIErrorDelegate {
     func handleAPI(updates: [RankingWithUser])
 }
+
 protocol APIFriendsDelegate : APIErrorDelegate {
     func handleAPI(friends: [UserBasic])
 }
+
+protocol APIRankDelegate : APIErrorDelegate {
+    func handleAPI(ranking: RankingBasic)
+}
+
+
 protocol APIShelvesDelegate : APIErrorDelegate {
     func handleAPI(shelves: [MyShelvesQuery.Data.Shelf])
 }
@@ -35,7 +42,6 @@ protocol APIShelvesDelegate : APIErrorDelegate {
 protocol APILoginDelegate : APIErrorDelegate {
     func handleAPILogin()
 }
-
 
 class GamerankrAPI {
     
@@ -149,6 +155,16 @@ class GamerankrAPI {
                 return
             }
             delegate.handleAPI(friends: (data.friends.edges!.map{($0?.user!.fragments.userBasic)!}))
+        }
+    }
+    
+    func rankPort(portId: GraphQLID, ranking: Int?, removeRanking: Bool, review: String?, addShelfId: GraphQLID?, removeShelfId: GraphQLID?, delegate: APIRankDelegate) {
+        apollo.perform(mutation: RankPortMutation(portId: portId, ranking: ranking, removeRanking: removeRanking, review: review, addShelfId: addShelfId, removeShelfId: removeShelfId)) { (result, error) in
+            guard let data = result?.data else {
+                delegate.handleApi(error: "error: \(String(describing: error))")
+                return
+            }
+            delegate.handleAPI(ranking: data.ranking.fragments.rankingBasic)
         }
     }
     

@@ -20,14 +20,14 @@ class EditReviewViewController : UIViewController {
         }
     }
     
-    
     override func viewDidLoad() {
         saveButton.target = self
         saveButton.action = #selector(saveButtonClick(sender:))
     }
     
     @objc func saveButtonClick(sender: UIButton) {
-        NSLog("review for game \(ranking!.game.id) (\(ranking!.game.title)) - \(reviewView.text)")
+        MyGamesManager.sharedInstance.rankPort(portId: ranking!.port.id, review: reviewView.text)
+        ranking?.review = reviewView.text
         self.navigationController!.popViewController(animated: true)
     }
 }

@@ -2,6 +2,673 @@
 
 import Apollo
 
+public final class CommentMutation: GraphQLMutation {
+  public static let operationString =
+    "mutation Comment($resourceId: ID!, $comment: String!) {\n  comment(resource_id: $resourceId, resource_type: \"Ranking\", comment: $comment) {\n    __typename\n    ...CommentBasic\n  }\n}"
+
+  public static var requestString: String { return operationString.appending(CommentBasic.fragmentString) }
+
+  public var resourceId: GraphQLID
+  public var comment: String
+
+  public init(resourceId: GraphQLID, comment: String) {
+    self.resourceId = resourceId
+    self.comment = comment
+  }
+
+  public var variables: GraphQLMap? {
+    return ["resourceId": resourceId, "comment": comment]
+  }
+
+  public struct Data: GraphQLSelectionSet {
+    public static let possibleTypes = ["Mutation"]
+
+    public static let selections: [GraphQLSelection] = [
+      GraphQLField("comment", arguments: ["resource_id": GraphQLVariable("resourceId"), "resource_type": "Ranking", "comment": GraphQLVariable("comment")], type: .nonNull(.object(Comment.selections))),
+    ]
+
+    public var snapshot: Snapshot
+
+    public init(snapshot: Snapshot) {
+      self.snapshot = snapshot
+    }
+
+    public init(comment: Comment) {
+      self.init(snapshot: ["__typename": "Mutation", "comment": comment.snapshot])
+    }
+
+    public var comment: Comment {
+      get {
+        return Comment(snapshot: snapshot["comment"]! as! Snapshot)
+      }
+      set {
+        snapshot.updateValue(newValue.snapshot, forKey: "comment")
+      }
+    }
+
+    public struct Comment: GraphQLSelectionSet {
+      public static let possibleTypes = ["Comment"]
+
+      public static let selections: [GraphQLSelection] = [
+        GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+        GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+        GraphQLField("id", type: .nonNull(.scalar(GraphQLID.self))),
+        GraphQLField("comment", type: .nonNull(.scalar(String.self))),
+        GraphQLField("created_at", type: .nonNull(.scalar(String.self))),
+      ]
+
+      public var snapshot: Snapshot
+
+      public init(snapshot: Snapshot) {
+        self.snapshot = snapshot
+      }
+
+      public init(id: GraphQLID, comment: String, createdAt: String) {
+        self.init(snapshot: ["__typename": "Comment", "id": id, "comment": comment, "created_at": createdAt])
+      }
+
+      public var __typename: String {
+        get {
+          return snapshot["__typename"]! as! String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "__typename")
+        }
+      }
+
+      public var id: GraphQLID {
+        get {
+          return snapshot["id"]! as! GraphQLID
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "id")
+        }
+      }
+
+      public var comment: String {
+        get {
+          return snapshot["comment"]! as! String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "comment")
+        }
+      }
+
+      public var createdAt: String {
+        get {
+          return snapshot["created_at"]! as! String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "created_at")
+        }
+      }
+
+      public var fragments: Fragments {
+        get {
+          return Fragments(snapshot: snapshot)
+        }
+        set {
+          snapshot += newValue.snapshot
+        }
+      }
+
+      public struct Fragments {
+        public var snapshot: Snapshot
+
+        public var commentBasic: CommentBasic {
+          get {
+            return CommentBasic(snapshot: snapshot)
+          }
+          set {
+            snapshot += newValue.snapshot
+          }
+        }
+      }
+    }
+  }
+}
+
+public final class DestroyRankingMutation: GraphQLMutation {
+  public static let operationString =
+    "mutation DestroyRanking($portId: ID!) {\n  destroy_ranking(port_id: $portId)\n}"
+
+  public var portId: GraphQLID
+
+  public init(portId: GraphQLID) {
+    self.portId = portId
+  }
+
+  public var variables: GraphQLMap? {
+    return ["portId": portId]
+  }
+
+  public struct Data: GraphQLSelectionSet {
+    public static let possibleTypes = ["Mutation"]
+
+    public static let selections: [GraphQLSelection] = [
+      GraphQLField("destroy_ranking", arguments: ["port_id": GraphQLVariable("portId")], type: .nonNull(.scalar(Bool.self))),
+    ]
+
+    public var snapshot: Snapshot
+
+    public init(snapshot: Snapshot) {
+      self.snapshot = snapshot
+    }
+
+    public init(destroyRanking: Bool) {
+      self.init(snapshot: ["__typename": "Mutation", "destroy_ranking": destroyRanking])
+    }
+
+    public var destroyRanking: Bool {
+      get {
+        return snapshot["destroy_ranking"]! as! Bool
+      }
+      set {
+        snapshot.updateValue(newValue, forKey: "destroy_ranking")
+      }
+    }
+  }
+}
+
+public final class RankPortMutation: GraphQLMutation {
+  public static let operationString =
+    "mutation RankPort($portId: ID!, $ranking: Int, $removeRanking: Boolean, $review: String, $addShelfId: ID, $removeShelfId: ID) {\n  ranking: rank_port(port_id: $portId, ranking: $ranking, remove_ranking: $removeRanking, review: $review, add_shelf_id: $addShelfId, remove_shelf_id: $removeShelfId) {\n    __typename\n    ...RankingBasic\n  }\n}"
+
+  public static var requestString: String { return operationString.appending(RankingBasic.fragmentString).appending(GameBasic.fragmentString) }
+
+  public var portId: GraphQLID
+  public var ranking: Int?
+  public var removeRanking: Bool?
+  public var review: String?
+  public var addShelfId: GraphQLID?
+  public var removeShelfId: GraphQLID?
+
+  public init(portId: GraphQLID, ranking: Int? = nil, removeRanking: Bool? = nil, review: String? = nil, addShelfId: GraphQLID? = nil, removeShelfId: GraphQLID? = nil) {
+    self.portId = portId
+    self.ranking = ranking
+    self.removeRanking = removeRanking
+    self.review = review
+    self.addShelfId = addShelfId
+    self.removeShelfId = removeShelfId
+  }
+
+  public var variables: GraphQLMap? {
+    return ["portId": portId, "ranking": ranking, "removeRanking": removeRanking, "review": review, "addShelfId": addShelfId, "removeShelfId": removeShelfId]
+  }
+
+  public struct Data: GraphQLSelectionSet {
+    public static let possibleTypes = ["Mutation"]
+
+    public static let selections: [GraphQLSelection] = [
+      GraphQLField("rank_port", alias: "ranking", arguments: ["port_id": GraphQLVariable("portId"), "ranking": GraphQLVariable("ranking"), "remove_ranking": GraphQLVariable("removeRanking"), "review": GraphQLVariable("review"), "add_shelf_id": GraphQLVariable("addShelfId"), "remove_shelf_id": GraphQLVariable("removeShelfId")], type: .nonNull(.object(Ranking.selections))),
+    ]
+
+    public var snapshot: Snapshot
+
+    public init(snapshot: Snapshot) {
+      self.snapshot = snapshot
+    }
+
+    public init(ranking: Ranking) {
+      self.init(snapshot: ["__typename": "Mutation", "ranking": ranking.snapshot])
+    }
+
+    public var ranking: Ranking {
+      get {
+        return Ranking(snapshot: snapshot["ranking"]! as! Snapshot)
+      }
+      set {
+        snapshot.updateValue(newValue.snapshot, forKey: "ranking")
+      }
+    }
+
+    public struct Ranking: GraphQLSelectionSet {
+      public static let possibleTypes = ["Ranking"]
+
+      public static let selections: [GraphQLSelection] = [
+        GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+        GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+        GraphQLField("id", type: .nonNull(.scalar(GraphQLID.self))),
+        GraphQLField("ranking", type: .scalar(Int.self)),
+        GraphQLField("review", type: .scalar(String.self)),
+        GraphQLField("verb", type: .nonNull(.scalar(String.self))),
+        GraphQLField("port", type: .nonNull(.object(Port.selections))),
+        GraphQLField("game", type: .nonNull(.object(Game.selections))),
+        GraphQLField("shelves", type: .nonNull(.list(.nonNull(.object(Shelf.selections))))),
+      ]
+
+      public var snapshot: Snapshot
+
+      public init(snapshot: Snapshot) {
+        self.snapshot = snapshot
+      }
+
+      public init(id: GraphQLID, ranking: Int? = nil, review: String? = nil, verb: String, port: Port, game: Game, shelves: [Shelf]) {
+        self.init(snapshot: ["__typename": "Ranking", "id": id, "ranking": ranking, "review": review, "verb": verb, "port": port.snapshot, "game": game.snapshot, "shelves": shelves.map { $0.snapshot }])
+      }
+
+      public var __typename: String {
+        get {
+          return snapshot["__typename"]! as! String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "__typename")
+        }
+      }
+
+      public var id: GraphQLID {
+        get {
+          return snapshot["id"]! as! GraphQLID
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "id")
+        }
+      }
+
+      public var ranking: Int? {
+        get {
+          return snapshot["ranking"] as? Int
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "ranking")
+        }
+      }
+
+      public var review: String? {
+        get {
+          return snapshot["review"] as? String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "review")
+        }
+      }
+
+      public var verb: String {
+        get {
+          return snapshot["verb"]! as! String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "verb")
+        }
+      }
+
+      public var port: Port {
+        get {
+          return Port(snapshot: snapshot["port"]! as! Snapshot)
+        }
+        set {
+          snapshot.updateValue(newValue.snapshot, forKey: "port")
+        }
+      }
+
+      public var game: Game {
+        get {
+          return Game(snapshot: snapshot["game"]! as! Snapshot)
+        }
+        set {
+          snapshot.updateValue(newValue.snapshot, forKey: "game")
+        }
+      }
+
+      public var shelves: [Shelf] {
+        get {
+          return (snapshot["shelves"] as! [Snapshot]).map { Shelf(snapshot: $0) }
+        }
+        set {
+          snapshot.updateValue(newValue.map { $0.snapshot }, forKey: "shelves")
+        }
+      }
+
+      public var fragments: Fragments {
+        get {
+          return Fragments(snapshot: snapshot)
+        }
+        set {
+          snapshot += newValue.snapshot
+        }
+      }
+
+      public struct Fragments {
+        public var snapshot: Snapshot
+
+        public var rankingBasic: RankingBasic {
+          get {
+            return RankingBasic(snapshot: snapshot)
+          }
+          set {
+            snapshot += newValue.snapshot
+          }
+        }
+      }
+
+      public struct Port: GraphQLSelectionSet {
+        public static let possibleTypes = ["Port"]
+
+        public static let selections: [GraphQLSelection] = [
+          GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+          GraphQLField("id", type: .nonNull(.scalar(GraphQLID.self))),
+          GraphQLField("platform", type: .nonNull(.object(Platform.selections))),
+          GraphQLField("small_image_url", type: .scalar(String.self)),
+        ]
+
+        public var snapshot: Snapshot
+
+        public init(snapshot: Snapshot) {
+          self.snapshot = snapshot
+        }
+
+        public init(id: GraphQLID, platform: Platform, smallImageUrl: String? = nil) {
+          self.init(snapshot: ["__typename": "Port", "id": id, "platform": platform.snapshot, "small_image_url": smallImageUrl])
+        }
+
+        public var __typename: String {
+          get {
+            return snapshot["__typename"]! as! String
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "__typename")
+          }
+        }
+
+        public var id: GraphQLID {
+          get {
+            return snapshot["id"]! as! GraphQLID
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "id")
+          }
+        }
+
+        public var platform: Platform {
+          get {
+            return Platform(snapshot: snapshot["platform"]! as! Snapshot)
+          }
+          set {
+            snapshot.updateValue(newValue.snapshot, forKey: "platform")
+          }
+        }
+
+        public var smallImageUrl: String? {
+          get {
+            return snapshot["small_image_url"] as? String
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "small_image_url")
+          }
+        }
+
+        public struct Platform: GraphQLSelectionSet {
+          public static let possibleTypes = ["Platforms"]
+
+          public static let selections: [GraphQLSelection] = [
+            GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+            GraphQLField("id", type: .nonNull(.scalar(GraphQLID.self))),
+            GraphQLField("name", type: .nonNull(.scalar(String.self))),
+          ]
+
+          public var snapshot: Snapshot
+
+          public init(snapshot: Snapshot) {
+            self.snapshot = snapshot
+          }
+
+          public init(id: GraphQLID, name: String) {
+            self.init(snapshot: ["__typename": "Platforms", "id": id, "name": name])
+          }
+
+          public var __typename: String {
+            get {
+              return snapshot["__typename"]! as! String
+            }
+            set {
+              snapshot.updateValue(newValue, forKey: "__typename")
+            }
+          }
+
+          public var id: GraphQLID {
+            get {
+              return snapshot["id"]! as! GraphQLID
+            }
+            set {
+              snapshot.updateValue(newValue, forKey: "id")
+            }
+          }
+
+          public var name: String {
+            get {
+              return snapshot["name"]! as! String
+            }
+            set {
+              snapshot.updateValue(newValue, forKey: "name")
+            }
+          }
+        }
+      }
+
+      public struct Game: GraphQLSelectionSet {
+        public static let possibleTypes = ["Game"]
+
+        public static let selections: [GraphQLSelection] = [
+          GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+          GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+          GraphQLField("id", type: .nonNull(.scalar(GraphQLID.self))),
+          GraphQLField("title", type: .nonNull(.scalar(String.self))),
+          GraphQLField("ports", type: .nonNull(.list(.nonNull(.object(Port.selections))))),
+        ]
+
+        public var snapshot: Snapshot
+
+        public init(snapshot: Snapshot) {
+          self.snapshot = snapshot
+        }
+
+        public init(id: GraphQLID, title: String, ports: [Port]) {
+          self.init(snapshot: ["__typename": "Game", "id": id, "title": title, "ports": ports.map { $0.snapshot }])
+        }
+
+        public var __typename: String {
+          get {
+            return snapshot["__typename"]! as! String
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "__typename")
+          }
+        }
+
+        public var id: GraphQLID {
+          get {
+            return snapshot["id"]! as! GraphQLID
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "id")
+          }
+        }
+
+        public var title: String {
+          get {
+            return snapshot["title"]! as! String
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "title")
+          }
+        }
+
+        public var ports: [Port] {
+          get {
+            return (snapshot["ports"] as! [Snapshot]).map { Port(snapshot: $0) }
+          }
+          set {
+            snapshot.updateValue(newValue.map { $0.snapshot }, forKey: "ports")
+          }
+        }
+
+        public var fragments: Fragments {
+          get {
+            return Fragments(snapshot: snapshot)
+          }
+          set {
+            snapshot += newValue.snapshot
+          }
+        }
+
+        public struct Fragments {
+          public var snapshot: Snapshot
+
+          public var gameBasic: GameBasic {
+            get {
+              return GameBasic(snapshot: snapshot)
+            }
+            set {
+              snapshot += newValue.snapshot
+            }
+          }
+        }
+
+        public struct Port: GraphQLSelectionSet {
+          public static let possibleTypes = ["Port"]
+
+          public static let selections: [GraphQLSelection] = [
+            GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+            GraphQLField("id", type: .nonNull(.scalar(GraphQLID.self))),
+            GraphQLField("platform", type: .nonNull(.object(Platform.selections))),
+            GraphQLField("small_image_url", type: .scalar(String.self)),
+          ]
+
+          public var snapshot: Snapshot
+
+          public init(snapshot: Snapshot) {
+            self.snapshot = snapshot
+          }
+
+          public init(id: GraphQLID, platform: Platform, smallImageUrl: String? = nil) {
+            self.init(snapshot: ["__typename": "Port", "id": id, "platform": platform.snapshot, "small_image_url": smallImageUrl])
+          }
+
+          public var __typename: String {
+            get {
+              return snapshot["__typename"]! as! String
+            }
+            set {
+              snapshot.updateValue(newValue, forKey: "__typename")
+            }
+          }
+
+          public var id: GraphQLID {
+            get {
+              return snapshot["id"]! as! GraphQLID
+            }
+            set {
+              snapshot.updateValue(newValue, forKey: "id")
+            }
+          }
+
+          public var platform: Platform {
+            get {
+              return Platform(snapshot: snapshot["platform"]! as! Snapshot)
+            }
+            set {
+              snapshot.updateValue(newValue.snapshot, forKey: "platform")
+            }
+          }
+
+          public var smallImageUrl: String? {
+            get {
+              return snapshot["small_image_url"] as? String
+            }
+            set {
+              snapshot.updateValue(newValue, forKey: "small_image_url")
+            }
+          }
+
+          public struct Platform: GraphQLSelectionSet {
+            public static let possibleTypes = ["Platforms"]
+
+            public static let selections: [GraphQLSelection] = [
+              GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+              GraphQLField("id", type: .nonNull(.scalar(GraphQLID.self))),
+              GraphQLField("name", type: .nonNull(.scalar(String.self))),
+            ]
+
+            public var snapshot: Snapshot
+
+            public init(snapshot: Snapshot) {
+              self.snapshot = snapshot
+            }
+
+            public init(id: GraphQLID, name: String) {
+              self.init(snapshot: ["__typename": "Platforms", "id": id, "name": name])
+            }
+
+            public var __typename: String {
+              get {
+                return snapshot["__typename"]! as! String
+              }
+              set {
+                snapshot.updateValue(newValue, forKey: "__typename")
+              }
+            }
+
+            public var id: GraphQLID {
+              get {
+                return snapshot["id"]! as! GraphQLID
+              }
+              set {
+                snapshot.updateValue(newValue, forKey: "id")
+              }
+            }
+
+            public var name: String {
+              get {
+                return snapshot["name"]! as! String
+              }
+              set {
+                snapshot.updateValue(newValue, forKey: "name")
+              }
+            }
+          }
+        }
+      }
+
+      public struct Shelf: GraphQLSelectionSet {
+        public static let possibleTypes = ["Shelf"]
+
+        public static let selections: [GraphQLSelection] = [
+          GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+          GraphQLField("name", type: .nonNull(.scalar(String.self))),
+        ]
+
+        public var snapshot: Snapshot
+
+        public init(snapshot: Snapshot) {
+          self.snapshot = snapshot
+        }
+
+        public init(name: String) {
+          self.init(snapshot: ["__typename": "Shelf", "name": name])
+        }
+
+        public var __typename: String {
+          get {
+            return snapshot["__typename"]! as! String
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "__typename")
+          }
+        }
+
+        public var name: String {
+          get {
+            return snapshot["name"]! as! String
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "name")
+          }
+        }
+      }
+    }
+  }
+}
+
 public final class FriendsQuery: GraphQLQuery {
   public static let operationString =
     "query Friends($after: String) {\n  friends(first: 30, after: $after) {\n    __typename\n    edges {\n      __typename\n      user: node {\n        __typename\n        ...UserBasic\n      }\n    }\n    pageInfo {\n      __typename\n      endCursor\n      hasNextPage\n    }\n  }\n}"
@@ -3934,6 +4601,239 @@ public final class UserQuery: GraphQLQuery {
           set {
             snapshot.updateValue(newValue, forKey: "name")
           }
+        }
+      }
+    }
+  }
+}
+
+public struct CommentBasic: GraphQLFragment {
+  public static let fragmentString =
+    "fragment CommentBasic on Comment {\n  __typename\n  id\n  comment\n  created_at\n}"
+
+  public static let possibleTypes = ["Comment"]
+
+  public static let selections: [GraphQLSelection] = [
+    GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+    GraphQLField("id", type: .nonNull(.scalar(GraphQLID.self))),
+    GraphQLField("comment", type: .nonNull(.scalar(String.self))),
+    GraphQLField("created_at", type: .nonNull(.scalar(String.self))),
+  ]
+
+  public var snapshot: Snapshot
+
+  public init(snapshot: Snapshot) {
+    self.snapshot = snapshot
+  }
+
+  public init(id: GraphQLID, comment: String, createdAt: String) {
+    self.init(snapshot: ["__typename": "Comment", "id": id, "comment": comment, "created_at": createdAt])
+  }
+
+  public var __typename: String {
+    get {
+      return snapshot["__typename"]! as! String
+    }
+    set {
+      snapshot.updateValue(newValue, forKey: "__typename")
+    }
+  }
+
+  public var id: GraphQLID {
+    get {
+      return snapshot["id"]! as! GraphQLID
+    }
+    set {
+      snapshot.updateValue(newValue, forKey: "id")
+    }
+  }
+
+  public var comment: String {
+    get {
+      return snapshot["comment"]! as! String
+    }
+    set {
+      snapshot.updateValue(newValue, forKey: "comment")
+    }
+  }
+
+  public var createdAt: String {
+    get {
+      return snapshot["created_at"]! as! String
+    }
+    set {
+      snapshot.updateValue(newValue, forKey: "created_at")
+    }
+  }
+}
+
+public struct CommentWithUser: GraphQLFragment {
+  public static let fragmentString =
+    "fragment CommentWithUser on Comment {\n  __typename\n  ...CommentBasic\n  user {\n    __typename\n    ...UserBasic\n  }\n}"
+
+  public static let possibleTypes = ["Comment"]
+
+  public static let selections: [GraphQLSelection] = [
+    GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+    GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+    GraphQLField("id", type: .nonNull(.scalar(GraphQLID.self))),
+    GraphQLField("comment", type: .nonNull(.scalar(String.self))),
+    GraphQLField("created_at", type: .nonNull(.scalar(String.self))),
+    GraphQLField("user", type: .nonNull(.object(User.selections))),
+  ]
+
+  public var snapshot: Snapshot
+
+  public init(snapshot: Snapshot) {
+    self.snapshot = snapshot
+  }
+
+  public init(id: GraphQLID, comment: String, createdAt: String, user: User) {
+    self.init(snapshot: ["__typename": "Comment", "id": id, "comment": comment, "created_at": createdAt, "user": user.snapshot])
+  }
+
+  public var __typename: String {
+    get {
+      return snapshot["__typename"]! as! String
+    }
+    set {
+      snapshot.updateValue(newValue, forKey: "__typename")
+    }
+  }
+
+  public var id: GraphQLID {
+    get {
+      return snapshot["id"]! as! GraphQLID
+    }
+    set {
+      snapshot.updateValue(newValue, forKey: "id")
+    }
+  }
+
+  public var comment: String {
+    get {
+      return snapshot["comment"]! as! String
+    }
+    set {
+      snapshot.updateValue(newValue, forKey: "comment")
+    }
+  }
+
+  public var createdAt: String {
+    get {
+      return snapshot["created_at"]! as! String
+    }
+    set {
+      snapshot.updateValue(newValue, forKey: "created_at")
+    }
+  }
+
+  public var user: User {
+    get {
+      return User(snapshot: snapshot["user"]! as! Snapshot)
+    }
+    set {
+      snapshot.updateValue(newValue.snapshot, forKey: "user")
+    }
+  }
+
+  public var fragments: Fragments {
+    get {
+      return Fragments(snapshot: snapshot)
+    }
+    set {
+      snapshot += newValue.snapshot
+    }
+  }
+
+  public struct Fragments {
+    public var snapshot: Snapshot
+
+    public var commentBasic: CommentBasic {
+      get {
+        return CommentBasic(snapshot: snapshot)
+      }
+      set {
+        snapshot += newValue.snapshot
+      }
+    }
+  }
+
+  public struct User: GraphQLSelectionSet {
+    public static let possibleTypes = ["User"]
+
+    public static let selections: [GraphQLSelection] = [
+      GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+      GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+      GraphQLField("id", type: .nonNull(.scalar(GraphQLID.self))),
+      GraphQLField("real_name", type: .nonNull(.scalar(String.self))),
+      GraphQLField("photo_url", type: .nonNull(.scalar(String.self))),
+    ]
+
+    public var snapshot: Snapshot
+
+    public init(snapshot: Snapshot) {
+      self.snapshot = snapshot
+    }
+
+    public init(id: GraphQLID, realName: String, photoUrl: String) {
+      self.init(snapshot: ["__typename": "User", "id": id, "real_name": realName, "photo_url": photoUrl])
+    }
+
+    public var __typename: String {
+      get {
+        return snapshot["__typename"]! as! String
+      }
+      set {
+        snapshot.updateValue(newValue, forKey: "__typename")
+      }
+    }
+
+    public var id: GraphQLID {
+      get {
+        return snapshot["id"]! as! GraphQLID
+      }
+      set {
+        snapshot.updateValue(newValue, forKey: "id")
+      }
+    }
+
+    public var realName: String {
+      get {
+        return snapshot["real_name"]! as! String
+      }
+      set {
+        snapshot.updateValue(newValue, forKey: "real_name")
+      }
+    }
+
+    public var photoUrl: String {
+      get {
+        return snapshot["photo_url"]! as! String
+      }
+      set {
+        snapshot.updateValue(newValue, forKey: "photo_url")
+      }
+    }
+
+    public var fragments: Fragments {
+      get {
+        return Fragments(snapshot: snapshot)
+      }
+      set {
+        snapshot += newValue.snapshot
+      }
+    }
+
+    public struct Fragments {
+      public var snapshot: Snapshot
+
+      public var userBasic: UserBasic {
+        get {
+          return UserBasic(snapshot: snapshot)
+        }
+        set {
+          snapshot += newValue.snapshot
         }
       }
     }

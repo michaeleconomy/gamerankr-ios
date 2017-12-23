@@ -7,6 +7,7 @@ class GameViewController : UIViewController, APIGameDetailDelegate, APIMyGamesMa
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var platformLabel: UILabel!
     @IBOutlet weak var otherPlatformsButton: UIButton!
+    @IBOutlet weak var switchEditionButton: UIButton!
     @IBOutlet weak var stars: UIStackView!
     @IBOutlet weak var shelveButton: UIButton!
     @IBOutlet weak var reviewStack: UIStackView!
@@ -24,7 +25,7 @@ class GameViewController : UIViewController, APIGameDetailDelegate, APIMyGamesMa
                     self.gameDetail = nil
                 }
                 else {
-                    self.rankings = gameDetail!.rankings.edges!.map({$0!.node!})
+                    self.rankings = gameDetail!.rankings.edges!.map{$0!.node!}
                     DispatchQueue.main.async(execute: {
                         self.configureView()
                     })
@@ -36,7 +37,6 @@ class GameViewController : UIViewController, APIGameDetailDelegate, APIMyGamesMa
         didSet {
             if(game != nil) {
                 if(gameDetail != nil && gameDetail!.id != game!.id) {
-                    NSLog("clearing old gameDetail: \(gameDetail!.id)")
                     self.gameDetail = nil
                     self.rankings = nil
                 }
@@ -106,15 +106,20 @@ class GameViewController : UIViewController, APIGameDetailDelegate, APIMyGamesMa
             }
             
             var starsToFill = 0
-            if(ranking != nil) {
+            if (ranking != nil) {
+                if (ranking!.port.id == selectedPort().id) {
+                    switchEditionButton.isHidden = true
+                }
+                else {
+                    switchEditionButton.isHidden = false
+                }
                 reviewStack.isHidden = false
-                let shelvesStr = ranking!.shelves.map{$0.name}.joined(separator: ", ")
-                shelveButton.setTitle("Shelved: \(shelvesStr)", for: .normal)
-                shelveButton.imageEdgeInsets = UIEdgeInsetsMake(0, shelveButton.frame.size.width - 25, 0, 0)
-                shelveButton.backgroundColor = UIColor.white
                 if (ranking!.ranking != nil) {
                     starsToFill = ranking!.ranking!
                 }
+                let shelvesStr = ranking!.shelves.map{$0.name}.joined(separator: ", ")
+                shelveButton.setTitle("Shelved: \(shelvesStr)", for: .normal)
+                shelveButton.backgroundColor = UIColor.white
                 if (ranking!.review != nil && ranking!.review != "") {
                     reviewLabel.isHidden = false
                     reviewLabel.text = "\"\(ranking!.review!)\""
@@ -126,28 +131,19 @@ class GameViewController : UIViewController, APIGameDetailDelegate, APIMyGamesMa
                 }
             }
             else {
+                switchEditionButton.isHidden = true
                 shelveButton.setTitle("Add to My Games", for: .normal)
-                shelveButton.imageEdgeInsets = UIEdgeInsetsMake(0, shelveButton.frame.size.width - 25, 0, 0)
                 shelveButton.backgroundColor = UIColor.lightGray
                 reviewStack.isHidden = true
             }
+            shelveButton.sizeToFit()
+            shelveButton.imageEdgeInsets = UIEdgeInsetsMake(0, shelveButton.frame.size.width - 25, 0, 0)
             
-            var starNum = 1
-            stars.subviews.forEach({starUntyped in
-                let star = starUntyped as! UIButton
-                if (starNum <= starsToFill) {
-                    star.setImage(starFull, for: .normal)
-                }
-                else {
-                    star.setImage(starEmpty, for: .normal)
-                }
-                starNum += 1
-            })
+            setStars(starsToFill)
         }
         self.reviewsTable?.reloadData()
     }
-    
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         MyGamesManager.sharedInstance.registerDelegate(delegate: self)
@@ -157,10 +153,17 @@ class GameViewController : UIViewController, APIGameDetailDelegate, APIMyGamesMa
             let star = subview as! UIButton
             star.addTarget(self, action: #selector(starTapped(sender:)), for: .touchUpInside)
         })
+        switchEditionButton.addTarget(self, action: #selector(switchEditions(sender:)), for: .touchUpInside)
     }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         configureView()
+    }
+    
+    @objc func switchEditions(sender: UIButton) {
+        switchEditionButton.isHidden = true
+        rankPort(portId: selectedPort().id)
     }
     
     @objc func starTapped(sender: UIButton) {
@@ -169,22 +172,37 @@ class GameViewController : UIViewController, APIGameDetailDelegate, APIMyGamesMa
             return
         }
         
-        var ranking = 1
-        
-        var isBefore = true
+        let rankingValue = stars.arrangedSubviews.index(where: {$0 == sender})! + 1
+        starRankPort(rankingValue: rankingValue)
+    }
+    
+    func starRankPort(rankingValue: Int) {
+        if (ranking != nil && ranking?.ranking == rankingValue) {
+            // for taping on the existing ranking - remove the ranking
+            setStars(0)
+            rankPort(removeRanking: true)
+            return
+        }
+        setStars(rankingValue)
+        rankPort(rankingValue: rankingValue)
+    }
+    
+    func rankPort(portId: GraphQLID? = nil, rankingValue: Int? = nil, removeRanking: Bool = false, review: String? = nil, addShelfId: GraphQLID? = nil, removeShelfId: GraphQLID? = nil) {
+        let optimalPortId = portId ?? ranking?.port.id ?? selectedPort().id
+        MyGamesManager.sharedInstance.rankPort(portId: optimalPortId, ranking: rankingValue, removeRanking: removeRanking, review: review, addShelfId: addShelfId, removeShelfId: removeShelfId)
+    }
+    
+    func setStars(_ value: Int) {
+        var i = 1
         stars.arrangedSubviews.forEach({subview in
             let star = subview as! UIButton
-            if (isBefore) {
+            if (i <= value) {
                 star.setImage(starFull, for: .normal)
-                if (star == sender) {
-                    NSLog ("Ranking \(ranking) selected for game \(game!.title)")
-                    isBefore = false
-                }
             }
             else {
                 star.setImage(starEmpty, for: .normal)
             }
-            ranking += 1
+            i += 1
         })
     }
     
@@ -193,13 +211,12 @@ class GameViewController : UIViewController, APIGameDetailDelegate, APIMyGamesMa
     }
     
     func handleUpdates() {
-        if (ranking == nil && game != nil) {
+        if (game != nil) {
             self.ranking = MyGamesManager.sharedInstance.getRanking(gameId: game!.id)
-            if (ranking != nil) {
-                DispatchQueue.main.async(execute: {
-                    self.configureView()
-                })
-            }
+            //TODO - this is maybe extra work, but is hard to figure out if ranking changed
+            DispatchQueue.main.async(execute: {
+                self.configureView()
+            })
         }
     }
     
@@ -254,6 +271,7 @@ class GameViewController : UIViewController, APIGameDetailDelegate, APIMyGamesMa
             let controller = segue.destination as! ShelveGameController
             controller.game = game
             controller.ranking = ranking
+            controller.portId = ranking?.port.id ?? selectedPort().id
         case "showRankingDetail":
             let controller = segue.destination as! RankingViewController
             controller.ranking = ranking

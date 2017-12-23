@@ -3,5 +3,3 @@ fragment UserBasic on User {
     real_name
     photo_url
 }
-
-

@@ -1,7 +1,7 @@
 import Foundation
 
 protocol APIMyShelvesManagerDelegate : APIErrorDelegate {
-    func handleUpdates()
+    func handleShelvesUpdates()
 }
 
 class MyShelvesManager : APIShelvesDelegate {
@@ -45,7 +45,7 @@ class MyShelvesManager : APIShelvesDelegate {
     func handleAPI(shelves: [MyShelvesQuery.Data.Shelf]) {
         self.shelves = shelves
         self.loading = false
-        delegates.forEach{$0.handleUpdates()}
+        delegates.forEach{$0.handleShelvesUpdates()}
     }
     
     func registerDelegate(delegate: APIMyShelvesManagerDelegate) {

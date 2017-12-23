@@ -1,0 +1,6 @@
+
+mutation Comment($resourceId: ID!, $comment : String!) {
+    comment(resource_id: $resourceId, resource_type: "Ranking", comment: $comment) {
+        ...CommentBasic
+    }
+}
