@@ -5,7 +5,7 @@ protocol APIMyGamesManagerDelegate : APIErrorDelegate {
     func handleUpdates()
 }
 
-class MyGamesManager : APIMyGamesDelegate, APIRankDelegate {
+class MyGamesManager : APIMyGamesDelegate, APIRankDelegate, APIDestroyRankingDelegate {
     static let sharedInstance = MyGamesManager()
     
     var rankings : [RankingBasic] = []
@@ -52,11 +52,14 @@ class MyGamesManager : APIMyGamesDelegate, APIRankDelegate {
         api.rankPort(portId: portId, ranking: ranking, removeRanking: removeRanking, review: review, addShelfId: addShelfId, removeShelfId: removeShelfId, delegate: self)
     }
     
+    func destroyRanking(portId: GraphQLID) {
+        api.destroyRanking(portId: portId, delegate: self)
+    }
+    
     func handleAPIMyGames(response: MyGamesQuery.Data.MyGame) {
         let additionalRankings = response.edges?.map({$0?.ranking?.fragments.rankingBasic}) as! [RankingBasic]
         if (!additionalRankings.isEmpty) {
-            additionalRankings.forEach{ rankingsByGameId[$0.game.id] = $0}
-            self.rankings.append(contentsOf: additionalRankings)
+            additionalRankings.forEach{ addRanking($0) }
             if (response.pageInfo.hasNextPage){
                 api.myGames(after: response.pageInfo.endCursor, delegate: self)
             }
@@ -68,16 +71,24 @@ class MyGamesManager : APIMyGamesDelegate, APIRankDelegate {
         }
     }
     
-    func handleAPI(ranking: RankingBasic) {
+    private func addRanking(_ ranking: RankingBasic) {
         let gameId = ranking.game.id
+        
+        rankingsByGameId[gameId] = ranking
+        rankings.insert(ranking, at: 0)
+    }
+    
+    func handleAPI(ranking: RankingBasic) {
+        addRanking(ranking)
+        notifyDelegates()
+    }
+    
+    private func deleteRankingFor(gameId: GraphQLID) {
         if let oldRanking = getRanking(gameId: gameId) {
             if let oldIndex = rankings.index(where: {$0.id == oldRanking.id}) {
                 rankings.remove(at: oldIndex)
             }
         }
-        rankingsByGameId[gameId] = ranking
-        rankings.insert(ranking, at: 0)
-        notifyDelegates()
     }
     
     func notifyDelegates() {
@@ -88,4 +99,11 @@ class MyGamesManager : APIMyGamesDelegate, APIRankDelegate {
         //??? - if multiple delegates all try and pop alerts - is that a problem?
         delegates.forEach{$0.handleApi(error: error)}
     }
+    
+    func handleAPIRankingDestruction(ranking: DestroyRankingMutation.Data.Ranking) {
+        let gameId = ranking.game.id
+        deleteRankingFor(gameId: gameId)
+        notifyDelegates()
+    }
+    
 }

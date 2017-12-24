@@ -38,7 +38,7 @@ class UserViewController : UIViewController, APIUserDetailDelegate, AlertAPIErro
         if (user != nil) {
             self.navigationItem.title = user!.realName
             
-            self.imageView?.kf.setImage(with: URL(string: user!.photoUrl)!, placeholder: PlaceholderImages.user)
+            self.imageView?.kf.setImage(with: largePhotoUrl(), placeholder: PlaceholderImages.user)
             
             if (userDetail != nil) {
                 shelvesStack?.subviews.forEach{ $0.removeFromSuperview()}
@@ -50,6 +50,10 @@ class UserViewController : UIViewController, APIUserDetailDelegate, AlertAPIErro
             }
             self.reviewTable?.reloadData()
         }
+    }
+    
+    func largePhotoUrl() -> URL {
+        return URL(string: "\(user!.photoUrl)?type=large")!
     }
     
     override func viewWillAppear(_ animated: Bool) {

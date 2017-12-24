@@ -34,6 +34,9 @@ protocol APIRankDelegate : APIErrorDelegate {
     func handleAPI(ranking: RankingBasic)
 }
 
+protocol APIDestroyRankingDelegate : APIErrorDelegate {
+    func handleAPIRankingDestruction(ranking: DestroyRankingMutation.Data.Ranking)
+}
 
 protocol APIShelvesDelegate : APIErrorDelegate {
     func handleAPI(shelves: [MyShelvesQuery.Data.Shelf])
@@ -165,6 +168,16 @@ class GamerankrAPI {
                 return
             }
             delegate.handleAPI(ranking: data.ranking.fragments.rankingBasic)
+        }
+    }
+    
+    func destroyRanking(portId: GraphQLID, delegate: APIDestroyRankingDelegate) {
+        apollo.perform(mutation: DestroyRankingMutation(portId: portId)) { (result, error) in
+            guard let data = result?.data else {
+                delegate.handleApi(error: "error: \(String(describing: error))")
+                return
+            }
+            delegate.handleAPIRankingDestruction(ranking: data.ranking)
         }
     }
     

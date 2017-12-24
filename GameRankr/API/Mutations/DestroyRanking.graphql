@@ -1,4 +1,8 @@
 mutation DestroyRanking($portId: ID!) {
-    destroy_ranking(port_id: $portId)
+    ranking : destroy_ranking(port_id: $portId) {
+        id
+        game {
+            id
+        }
+    }
 }
-

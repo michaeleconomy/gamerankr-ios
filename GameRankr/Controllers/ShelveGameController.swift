@@ -34,7 +34,7 @@ class ShelveGameController : UIViewController, UITableViewDataSource, APIMyShelv
     }
     
     @objc func removeButtonTap(sender: UIButton) {
-        api.deleteRanking(portId:ranking!.port.id)
+        MyGamesManager.sharedInstance.destroyRanking(portId:ranking!.port.id)
         self.dismiss(animated: true)
     }
     
@@ -96,14 +96,14 @@ class ShelveGameController : UIViewController, UITableViewDataSource, APIMyShelv
     
     func handleShelvesUpdates() {
         DispatchQueue.main.async(execute: {
-            configureView()
+            self.configureView()
         })
     }
     
     func handleUpdates() {
         ranking = MyGamesManager.sharedInstance.getRanking(gameId: game!.id)
         DispatchQueue.main.async(execute: {
-            configureView()
+            self.configureView()
         })
     }
 }

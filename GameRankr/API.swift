@@ -128,9 +128,88 @@ public final class CommentMutation: GraphQLMutation {
   }
 }
 
+public final class DestroyCommentMutation: GraphQLMutation {
+  public static let operationString =
+    "mutation DestroyComment($commentId: ID!) {\n  comment: destroy_comment(id: $commentId) {\n    __typename\n    id\n  }\n}"
+
+  public var commentId: GraphQLID
+
+  public init(commentId: GraphQLID) {
+    self.commentId = commentId
+  }
+
+  public var variables: GraphQLMap? {
+    return ["commentId": commentId]
+  }
+
+  public struct Data: GraphQLSelectionSet {
+    public static let possibleTypes = ["Mutation"]
+
+    public static let selections: [GraphQLSelection] = [
+      GraphQLField("destroy_comment", alias: "comment", arguments: ["id": GraphQLVariable("commentId")], type: .nonNull(.object(Comment.selections))),
+    ]
+
+    public var snapshot: Snapshot
+
+    public init(snapshot: Snapshot) {
+      self.snapshot = snapshot
+    }
+
+    public init(comment: Comment) {
+      self.init(snapshot: ["__typename": "Mutation", "comment": comment.snapshot])
+    }
+
+    public var comment: Comment {
+      get {
+        return Comment(snapshot: snapshot["comment"]! as! Snapshot)
+      }
+      set {
+        snapshot.updateValue(newValue.snapshot, forKey: "comment")
+      }
+    }
+
+    public struct Comment: GraphQLSelectionSet {
+      public static let possibleTypes = ["Comment"]
+
+      public static let selections: [GraphQLSelection] = [
+        GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+        GraphQLField("id", type: .nonNull(.scalar(GraphQLID.self))),
+      ]
+
+      public var snapshot: Snapshot
+
+      public init(snapshot: Snapshot) {
+        self.snapshot = snapshot
+      }
+
+      public init(id: GraphQLID) {
+        self.init(snapshot: ["__typename": "Comment", "id": id])
+      }
+
+      public var __typename: String {
+        get {
+          return snapshot["__typename"]! as! String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "__typename")
+        }
+      }
+
+      public var id: GraphQLID {
+        get {
+          return snapshot["id"]! as! GraphQLID
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "id")
+        }
+      }
+    }
+  }
+}
+
 public final class DestroyRankingMutation: GraphQLMutation {
   public static let operationString =
-    "mutation DestroyRanking($portId: ID!) {\n  destroy_ranking(port_id: $portId)\n}"
+    "mutation DestroyRanking($portId: ID!) {\n  ranking: destroy_ranking(port_id: $portId) {\n    __typename\n    id\n    game {\n      __typename\n      id\n    }\n  }\n}"
 
   public var portId: GraphQLID
 
@@ -146,7 +225,7 @@ public final class DestroyRankingMutation: GraphQLMutation {
     public static let possibleTypes = ["Mutation"]
 
     public static let selections: [GraphQLSelection] = [
-      GraphQLField("destroy_ranking", arguments: ["port_id": GraphQLVariable("portId")], type: .nonNull(.scalar(Bool.self))),
+      GraphQLField("destroy_ranking", alias: "ranking", arguments: ["port_id": GraphQLVariable("portId")], type: .nonNull(.object(Ranking.selections))),
     ]
 
     public var snapshot: Snapshot
@@ -155,16 +234,100 @@ public final class DestroyRankingMutation: GraphQLMutation {
       self.snapshot = snapshot
     }
 
-    public init(destroyRanking: Bool) {
-      self.init(snapshot: ["__typename": "Mutation", "destroy_ranking": destroyRanking])
+    public init(ranking: Ranking) {
+      self.init(snapshot: ["__typename": "Mutation", "ranking": ranking.snapshot])
     }
 
-    public var destroyRanking: Bool {
+    public var ranking: Ranking {
       get {
-        return snapshot["destroy_ranking"]! as! Bool
+        return Ranking(snapshot: snapshot["ranking"]! as! Snapshot)
       }
       set {
-        snapshot.updateValue(newValue, forKey: "destroy_ranking")
+        snapshot.updateValue(newValue.snapshot, forKey: "ranking")
+      }
+    }
+
+    public struct Ranking: GraphQLSelectionSet {
+      public static let possibleTypes = ["Ranking"]
+
+      public static let selections: [GraphQLSelection] = [
+        GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+        GraphQLField("id", type: .nonNull(.scalar(GraphQLID.self))),
+        GraphQLField("game", type: .nonNull(.object(Game.selections))),
+      ]
+
+      public var snapshot: Snapshot
+
+      public init(snapshot: Snapshot) {
+        self.snapshot = snapshot
+      }
+
+      public init(id: GraphQLID, game: Game) {
+        self.init(snapshot: ["__typename": "Ranking", "id": id, "game": game.snapshot])
+      }
+
+      public var __typename: String {
+        get {
+          return snapshot["__typename"]! as! String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "__typename")
+        }
+      }
+
+      public var id: GraphQLID {
+        get {
+          return snapshot["id"]! as! GraphQLID
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "id")
+        }
+      }
+
+      public var game: Game {
+        get {
+          return Game(snapshot: snapshot["game"]! as! Snapshot)
+        }
+        set {
+          snapshot.updateValue(newValue.snapshot, forKey: "game")
+        }
+      }
+
+      public struct Game: GraphQLSelectionSet {
+        public static let possibleTypes = ["Game"]
+
+        public static let selections: [GraphQLSelection] = [
+          GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+          GraphQLField("id", type: .nonNull(.scalar(GraphQLID.self))),
+        ]
+
+        public var snapshot: Snapshot
+
+        public init(snapshot: Snapshot) {
+          self.snapshot = snapshot
+        }
+
+        public init(id: GraphQLID) {
+          self.init(snapshot: ["__typename": "Game", "id": id])
+        }
+
+        public var __typename: String {
+          get {
+            return snapshot["__typename"]! as! String
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "__typename")
+          }
+        }
+
+        public var id: GraphQLID {
+          get {
+            return snapshot["id"]! as! GraphQLID
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "id")
+          }
+        }
       }
     }
   }
