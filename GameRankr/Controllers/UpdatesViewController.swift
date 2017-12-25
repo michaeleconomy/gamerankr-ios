@@ -4,6 +4,7 @@ import FacebookLogin
 
 class UpdatesViewController: UIViewController, AlertAPIErrorDelegate, UITableViewDataSource, APIUpdatesDelegate {
     
+    @IBOutlet weak var loadingImage: UIImageView!
     @IBOutlet weak var tableView: UITableView!
     var updates : [RankingWithUser] = []
     var fetchedUpdates = false
@@ -11,21 +12,22 @@ class UpdatesViewController: UIViewController, AlertAPIErrorDelegate, UITableVie
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        loadingImage.image = PlaceholderImages.loadingBar
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        if (api.signed_in) {
-            if !fetchedUpdates {
-                fetchedUpdates = true
-                api.updates(delegate: self)
-            }
-        }
-        else {
+        if (!api.signed_in) {
             performSegue(withIdentifier: "requireSignIn", sender: nil)
+            return
         }
         
+        if (!fetchedUpdates) {
+            fetchedUpdates = true
+            loadingImage.isHidden = false
+            api.updates(delegate: self)
+        }
     }
     
     func handleAPI(updates: [RankingWithUser]) {
@@ -33,6 +35,7 @@ class UpdatesViewController: UIViewController, AlertAPIErrorDelegate, UITableVie
         
         DispatchQueue.main.async(execute: {
             self.tableView.reloadData()
+            self.loadingImage.isHidden = true
         })
     }
     

@@ -3,6 +3,7 @@ import Apollo
 
 class ShelveGameController : UIViewController, UITableViewDataSource, APIMyShelvesManagerDelegate, APIMyGamesManagerDelegate, AlertAPIErrorDelegate {
     
+    @IBOutlet weak var loadingImage: UIImageView!
     @IBOutlet weak var doneButton: UIButton!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var removeButton: UIButton!
@@ -12,6 +13,8 @@ class ShelveGameController : UIViewController, UITableViewDataSource, APIMyShelv
     var portId: GraphQLID?
     
     override func viewDidLoad() {
+        super.viewDidLoad()
+        loadingImage.image = PlaceholderImages.loadingBar
         doneButton.addTarget(self, action:#selector(doneButtonClick(sender:)), for: .touchUpInside)
         MyShelvesManager.sharedInstance.registerDelegate(delegate: self)
         MyGamesManager.sharedInstance.registerDelegate(delegate: self)
@@ -24,6 +27,7 @@ class ShelveGameController : UIViewController, UITableViewDataSource, APIMyShelv
     }
     
     func configureView() {
+        loadingImage.isHidden = !MyGamesManager.sharedInstance.loading()
         if (game == nil) {
             easyAlert("game could not be found for ShelveGameViewController")
             return

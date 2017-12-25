@@ -17,6 +17,7 @@ class MyGamesViewController: UIViewController, UITableViewDataSource, UITableVie
         if (!api.signed_in) {
             performSegue(withIdentifier: "requireSignIn", sender: nil)
         }
+        self.loadingImage.isHidden = !MyGamesManager.sharedInstance.loading()
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

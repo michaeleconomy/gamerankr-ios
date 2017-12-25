@@ -2,6 +2,7 @@ import UIKit
 
 class UserViewController : UIViewController, APIUserDetailDelegate, AlertAPIErrorDelegate, UITableViewDataSource {
     
+    @IBOutlet weak var loadingImage: UIImageView!
     @IBOutlet weak var shelvesStack: UIStackView!
     @IBOutlet weak var reviewTable: UITableView!
     @IBOutlet weak var imageView: UIImageView!
@@ -10,7 +11,10 @@ class UserViewController : UIViewController, APIUserDetailDelegate, AlertAPIErro
     var userDetail: UserDetail? {
         didSet {
             if (userDetail != nil) {
-                self.user = userDetail!.fragments.userBasic
+                if (userDetail?.id != user!.id) {
+                    self.userDetail = nil
+                    return
+                }
                 self.rankings = userDetail!.rankings.edges!.map({$0!.ranking!.fragments.rankingBasic})
             }
         }
@@ -18,7 +22,7 @@ class UserViewController : UIViewController, APIUserDetailDelegate, AlertAPIErro
     var user: UserBasic? {
         didSet {
             if(user != nil) {
-                if(userDetail?.id != user!.id) {
+                if (userDetail?.id != user!.id) {
                     self.userDetail = nil
                     self.rankings = nil
                 }
@@ -34,11 +38,11 @@ class UserViewController : UIViewController, APIUserDetailDelegate, AlertAPIErro
     }
     
     func configureView() {
-        NSLog("configuring view: \(String(describing: user?.id)) \(String(describing: userDetail?.id))")
         if (user != nil) {
             self.navigationItem.title = user!.realName
+            loadingImage?.isHidden = userDetail != nil
             
-            self.imageView?.kf.setImage(with: largePhotoUrl(), placeholder: PlaceholderImages.user)
+            imageView?.kf.setImage(with: largePhotoUrl(), placeholder: PlaceholderImages.user)
             
             if (userDetail != nil) {
                 shelvesStack?.subviews.forEach{ $0.removeFromSuperview()}
@@ -48,6 +52,7 @@ class UserViewController : UIViewController, APIUserDetailDelegate, AlertAPIErro
                     shelvesStack?.addArrangedSubview(shelfLabel)
                 }
             }
+            
             self.reviewTable?.reloadData()
         }
     }
@@ -56,23 +61,31 @@ class UserViewController : UIViewController, APIUserDetailDelegate, AlertAPIErro
         return URL(string: "\(user!.photoUrl)?type=large")!
     }
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        loadingImage.image = PlaceholderImages.loadingBar
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         if (user == nil) {
-            if (api.signed_in) {
-                api.me(delegate: self)
-            }
-            else {
+            if (!api.signed_in) {
                 performSegue(withIdentifier: "requireSignIn", sender: nil)
+                return
             }
+            api.me(delegate: self)
         }
         configureView()
     }
     
     
     func handleAPI(userDetail: UserDetail) {
-        NSLog("recieved userDetail: \(userDetail.id)")
         self.userDetail = userDetail
+        
+        DispatchQueue.main.async(execute: {
+            self.configureView()
+        })
     }
     
     
@@ -102,7 +115,6 @@ class UserViewController : UIViewController, APIUserDetailDelegate, AlertAPIErro
         }
         return cell
     }
-    
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showDetail" {

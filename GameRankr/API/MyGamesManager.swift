@@ -73,19 +73,19 @@ class MyGamesManager : APIMyGamesDelegate, APIRankDelegate, APIDestroyRankingDel
     
     private func addRanking(_ ranking: RankingBasic) {
         let gameId = ranking.game.id
-        
         rankingsByGameId[gameId] = ranking
         rankings.insert(ranking, at: 0)
     }
     
     func handleAPI(ranking: RankingBasic) {
+        deleteRankingFor(gameId: ranking.game.id)
         addRanking(ranking)
         loadingCount -= 1
         notifyDelegates()
     }
     
     private func deleteRankingFor(gameId: GraphQLID) {
-        if let oldRanking = getRanking(gameId: gameId) {
+        if let oldRanking = rankingsByGameId.removeValue(forKey: gameId) {
             if let oldIndex = rankings.index(where: {$0.id == oldRanking.id}) {
                 rankings.remove(at: oldIndex)
             }

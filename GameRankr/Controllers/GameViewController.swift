@@ -74,7 +74,7 @@ class GameViewController : UIViewController, APIGameDetailDelegate, APIMyGamesMa
     }
     
     func isLoading() -> Bool {
-        return MyGamesManager.sharedInstance.loading() && gameDetail != nil
+        return MyGamesManager.sharedInstance.loading() || gameDetail == nil
     }
     
     func configureView() {

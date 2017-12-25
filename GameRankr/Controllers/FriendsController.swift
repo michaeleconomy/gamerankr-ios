@@ -1,22 +1,31 @@
 import UIKit
 
 class FriendsController : UIViewController, APIFriendsDelegate, AlertAPIErrorDelegate, UITableViewDataSource {
+    @IBOutlet weak var loadingImage: UIImageView!
     @IBOutlet weak var tableView: UITableView!
     
     var friends: [UserBasic] = []
     var fetchedFriends = false
+    
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        loadingImage.image = PlaceholderImages.loadingBar
+    }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         if (!api.signed_in) {
             performSegue(withIdentifier: "requireSignIn", sender: nil)
+            return
         }
-        else {
-            if(!fetchedFriends) {
-                fetchedFriends = true
-                api.friends(delegate: self)
-            }
+        
+        if(!fetchedFriends) {
+            fetchedFriends = true
+            loadingImage.isHidden = false
+            api.friends(delegate: self)
         }
     }
     
@@ -40,6 +49,8 @@ class FriendsController : UIViewController, APIFriendsDelegate, AlertAPIErrorDel
         self.friends = friends
         DispatchQueue.main.async(execute: {
             self.tableView.reloadData()
+            
+            self.loadingImage.isHidden = true
         })
     }
     
