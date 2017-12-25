@@ -4,6 +4,7 @@ import Apollo
 class GameViewController : UIViewController, APIGameDetailDelegate, APIMyGamesManagerDelegate, AlertAPIErrorDelegate, UITableViewDataSource {
     
     
+    @IBOutlet weak var loadingImage: UIImageView!
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var platformLabel: UILabel!
     @IBOutlet weak var otherPlatformsButton: UIButton!
@@ -74,6 +75,8 @@ class GameViewController : UIViewController, APIGameDetailDelegate, APIMyGamesMa
     }
     
     func configureView() {
+        loadingImage.image = UIImage.animatedImageNamed("loading-bar-", duration: 1.0)
+        loadingImage.isHidden = !MyGamesManager.sharedInstance.loading()
         if (game != nil) {
             let port = selectedPort()
             self.title = game!.title
@@ -136,8 +139,6 @@ class GameViewController : UIViewController, APIGameDetailDelegate, APIMyGamesMa
                 shelveButton.backgroundColor = UIColor.lightGray
                 reviewStack.isHidden = true
             }
-            shelveButton.sizeToFit()
-            shelveButton.imageEdgeInsets = UIEdgeInsetsMake(0, shelveButton.frame.size.width - 25, 0, 0)
             
             setStars(starsToFill)
         }

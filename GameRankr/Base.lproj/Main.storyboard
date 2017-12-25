@@ -717,8 +717,14 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="800"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="zb3-dZ-srK">
+                                <rect key="frame" x="0.0" y="64" width="320" height="2"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="2" id="emE-VT-NRQ"/>
+                                </constraints>
+                            </imageView>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="acZ-JB-V7n">
-                                <rect key="frame" x="0.0" y="64" width="320" height="687"/>
+                                <rect key="frame" x="0.0" y="66" width="320" height="685"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="center" axis="vertical" distribution="equalSpacing" alignment="center" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="U4K-Ug-BNO">
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="600"/>
@@ -779,7 +785,7 @@
                                                             </button>
                                                         </subviews>
                                                     </stackView>
-                                                    <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dIt-TI-B90">
+                                                    <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" semanticContentAttribute="forceRightToLeft" contentHorizontalAlignment="left" contentVerticalAlignment="top" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dIt-TI-B90">
                                                         <rect key="frame" x="80.5" y="46" width="159" height="28"/>
                                                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <constraints>
@@ -787,8 +793,6 @@
                                                         </constraints>
                                                         <fontDescription key="fontDescription" type="system" pointSize="23"/>
                                                         <inset key="contentEdgeInsets" minX="5" minY="0.0" maxX="5" maxY="0.0"/>
-                                                        <inset key="titleEdgeInsets" minX="-20" minY="0.0" maxX="20" maxY="0.0"/>
-                                                        <inset key="imageEdgeInsets" minX="125" minY="0.0" maxX="0.0" maxY="0.0"/>
                                                         <state key="normal" title="Want to Play" image="down-arrow.png">
                                                             <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
                                                         </state>
@@ -887,16 +891,20 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="acZ-JB-V7n" firstAttribute="leading" secondItem="AVM-ck-wa3" secondAttribute="leading" id="9MB-1l-juy"/>
+                            <constraint firstItem="zb3-dZ-srK" firstAttribute="centerX" secondItem="DGm-6w-jHv" secondAttribute="centerX" id="DaT-p9-kM2"/>
                             <constraint firstItem="acZ-JB-V7n" firstAttribute="bottom" secondItem="DGm-6w-jHv" secondAttribute="bottom" id="MBf-Qm-saT"/>
                             <constraint firstItem="acZ-JB-V7n" firstAttribute="width" secondItem="DGm-6w-jHv" secondAttribute="width" id="Rkm-TL-o2H"/>
-                            <constraint firstItem="acZ-JB-V7n" firstAttribute="top" secondItem="DGm-6w-jHv" secondAttribute="top" id="X1w-7L-Hrp"/>
+                            <constraint firstItem="acZ-JB-V7n" firstAttribute="top" secondItem="zb3-dZ-srK" secondAttribute="bottom" id="X1w-7L-Hrp"/>
                             <constraint firstAttribute="trailing" secondItem="acZ-JB-V7n" secondAttribute="trailing" id="YAe-N2-hOB"/>
+                            <constraint firstItem="zb3-dZ-srK" firstAttribute="width" secondItem="AVM-ck-wa3" secondAttribute="width" id="jjg-bJ-amJ"/>
+                            <constraint firstItem="zb3-dZ-srK" firstAttribute="top" secondItem="DGm-6w-jHv" secondAttribute="top" id="mB7-zQ-Rl1"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="DGm-6w-jHv"/>
                     </view>
                     <size key="freeformSize" width="320" height="800"/>
                     <connections>
                         <outlet property="imageView" destination="EeY-ft-ro8" id="pqa-JJ-ONV"/>
+                        <outlet property="loadingImage" destination="zb3-dZ-srK" id="9Na-MG-w7t"/>
                         <outlet property="otherPlatformsButton" destination="1UP-EE-KEi" id="kyi-TF-NhT"/>
                         <outlet property="platformLabel" destination="QLZ-5s-uw0" id="e1p-UE-xn2"/>
                         <outlet property="reviewButton" destination="8iI-hI-wM2" id="2Wz-na-SHC"/>
@@ -964,7 +972,7 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="4c7-5c-r8U"/>
-        <segue reference="tfh-hU-DDF"/>
+        <segue reference="oqx-vY-9wK"/>
         <segue reference="Cu6-IW-o67"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -56,8 +56,6 @@ class ShelveGameController : UIViewController, UITableViewDataSource, APIMyShelv
         }
         cell.textLabel?.text = shelf!.name
         if (ranking != nil) {
-            let shelfNames = ranking!.shelves.map{$0.name}.joined(separator: ", ")
-            NSLog("ranking was set, shelf names are: \(shelfNames)// current_Shelf_name is: \(shelf!.name)")
             let matchingShelf = ranking!.shelves.first(where: { (r_shelf) -> Bool in
                 return r_shelf.name == shelf!.name
             })

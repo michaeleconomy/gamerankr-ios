@@ -12,24 +12,23 @@ class MyGamesManager : APIMyGamesDelegate, APIRankDelegate, APIDestroyRankingDel
     var rankingsByGameId = [GraphQLID:RankingBasic]()
     
     var delegates = [APIMyGamesManagerDelegate]()
-    var loading = false
-    var loaded = false
+    var loadingCount = 0
     
     func load() {
-        if (loading) {
+        if (loading()) {
             NSLog("MyGamesManager was already loading")
-            return
-        }
-        if (loaded) {
-            NSLog("MyGamesManager is already loaded")
             return
         }
         if (!api.signed_in) {
             NSLog("MyGamesManager - cannot load, not signed in yet")
             return
         }
-        self.loading = true
+        self.loadingCount += 1
         api.myGames(delegate: self)
+    }
+    
+    func loading() -> Bool {
+        return loadingCount > 0
     }
     
     func registerDelegate(delegate: APIMyGamesManagerDelegate) {
@@ -49,10 +48,12 @@ class MyGamesManager : APIMyGamesDelegate, APIRankDelegate, APIDestroyRankingDel
     }
     
     func rankPort(portId: GraphQLID, ranking: Int? = nil, removeRanking: Bool = false, review: String? = nil, addShelfId: GraphQLID? = nil, removeShelfId: GraphQLID? = nil) {
+        loadingCount += 1
         api.rankPort(portId: portId, ranking: ranking, removeRanking: removeRanking, review: review, addShelfId: addShelfId, removeShelfId: removeShelfId, delegate: self)
     }
     
     func destroyRanking(portId: GraphQLID) {
+        loadingCount += 1
         api.destroyRanking(portId: portId, delegate: self)
     }
     
@@ -66,8 +67,7 @@ class MyGamesManager : APIMyGamesDelegate, APIRankDelegate, APIDestroyRankingDel
             notifyDelegates()
         }
         if (!response.pageInfo.hasNextPage) {
-            loading = false
-            loaded = true
+            loadingCount -= 1
         }
     }
     
@@ -80,6 +80,7 @@ class MyGamesManager : APIMyGamesDelegate, APIRankDelegate, APIDestroyRankingDel
     
     func handleAPI(ranking: RankingBasic) {
         addRanking(ranking)
+        loadingCount -= 1
         notifyDelegates()
     }
     
@@ -96,11 +97,13 @@ class MyGamesManager : APIMyGamesDelegate, APIRankDelegate, APIDestroyRankingDel
     }
     
     func handleApi(error: String) {
+        loadingCount -= 1 //yuck!
         //??? - if multiple delegates all try and pop alerts - is that a problem?
         delegates.forEach{$0.handleApi(error: error)}
     }
     
     func handleAPIRankingDestruction(ranking: DestroyRankingMutation.Data.Ranking) {
+        loadingCount -= 1
         let gameId = ranking.game.id
         deleteRankingFor(gameId: gameId)
         notifyDelegates()
