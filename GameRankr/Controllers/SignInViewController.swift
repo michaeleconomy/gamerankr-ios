@@ -3,6 +3,7 @@ import FacebookCore
 import FacebookLogin
 
 class SignInViewController : UIViewController, APILoginDelegate, AlertAPIErrorDelegate {
+    @IBOutlet weak var loadingImage: UIImageView!
     @IBOutlet weak var fbButton: UIButton!
     
     override func viewDidLoad() {
@@ -11,15 +12,19 @@ class SignInViewController : UIViewController, APILoginDelegate, AlertAPIErrorDe
         self.navigationController!.navigationBar.tintColor = UIColor.lightGray
         
         fbButton.addTarget(self, action:#selector(loginButtonClicked(sender:)), for: .touchUpInside)
+        loadingImage.image = PlaceholderImages.loadingBar
+        loadingImage.isHidden = true
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         if(api.signed_in) {
             handleLogin()
         }
     }
     
     func handleLogin() {
+        loadingImage.isHidden = true
         self.navigationController!.navigationBar.isUserInteractionEnabled = true
         self.navigationController!.navigationBar.tintColor = UIColor.blue
         
@@ -28,12 +33,18 @@ class SignInViewController : UIViewController, APILoginDelegate, AlertAPIErrorDe
     
     // Once the button is clicked, show the login dialog
     @objc func loginButtonClicked(sender: UIButton) {
+        loadingImage.isHidden = false
         LoginManager().logIn(readPermissions: [.publicProfile, .email, .userFriends], viewController: self) { loginResult in
             switch loginResult {
             case .failed(let error):
-                print(error)
+                DispatchQueue.main.async(execute: {
+                    self.loadingImage.isHidden = true
+                    self.easyAlert(error.localizedDescription)
+                })
             case .cancelled:
-                NSLog("User cancelled login.")
+                DispatchQueue.main.async(execute: {
+                    self.loadingImage.isHidden = true
+                })
             case .success(let grantedPermissions, let declinedPermissions, let accessToken):
                 NSLog("Logged in via facebook.  grantedPermissions: \(grantedPermissions) declinedPermissions: \(declinedPermissions) accessToken: \(accessToken)")
                 api.login(fbAuthToken: accessToken.authenticationToken, delegate: self)

@@ -583,8 +583,20 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="nQI-Bf-vHK">
+                                <rect key="frame" x="0.0" y="64" width="320" height="2"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="2" id="rbt-rX-CmQ"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="GameRankr" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wej-fc-5KO">
+                                <rect key="frame" x="0.0" y="81" width="320" height="30"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="25"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="To track your games, and see friends you must first connect to facebook." textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="46w-28-Tln">
-                                <rect key="frame" x="46" y="117" width="228" height="123"/>
+                                <rect key="frame" x="46" y="119" width="228" height="123"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="123" id="Fub-hv-hff"/>
                                 </constraints>
@@ -600,12 +612,6 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="26"/>
                                 <state key="normal" title="Sign in to facebook"/>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="GameRankr" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wej-fc-5KO">
-                                <rect key="frame" x="0.0" y="79" width="320" height="30"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="25"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
@@ -616,14 +622,18 @@
                             <constraint firstItem="gbE-WF-Yyg" firstAttribute="trailing" secondItem="46w-28-Tln" secondAttribute="trailing" constant="46" id="XcH-Ga-YSf"/>
                             <constraint firstItem="uoR-Ay-Jxx" firstAttribute="bottom" secondItem="gbE-WF-Yyg" secondAttribute="bottom" id="YvB-gZ-KyC"/>
                             <constraint firstItem="wej-fc-5KO" firstAttribute="leading" secondItem="gbE-WF-Yyg" secondAttribute="leading" id="bvc-kC-UDb"/>
-                            <constraint firstItem="wej-fc-5KO" firstAttribute="top" secondItem="gbE-WF-Yyg" secondAttribute="top" constant="15" id="o82-8N-V87"/>
+                            <constraint firstItem="nQI-Bf-vHK" firstAttribute="width" secondItem="096-p7-rPv" secondAttribute="width" id="ccg-Sb-rby"/>
+                            <constraint firstItem="wej-fc-5KO" firstAttribute="top" secondItem="nQI-Bf-vHK" secondAttribute="bottom" constant="15" id="o82-8N-V87"/>
+                            <constraint firstItem="nQI-Bf-vHK" firstAttribute="top" secondItem="gbE-WF-Yyg" secondAttribute="top" id="otJ-fz-RA8"/>
                             <constraint firstItem="46w-28-Tln" firstAttribute="top" secondItem="wej-fc-5KO" secondAttribute="bottom" constant="8" id="x3m-xt-Er1"/>
+                            <constraint firstItem="nQI-Bf-vHK" firstAttribute="centerX" secondItem="gbE-WF-Yyg" secondAttribute="centerX" id="zC6-Qj-0W7"/>
                             <constraint firstItem="wej-fc-5KO" firstAttribute="trailing" secondItem="gbE-WF-Yyg" secondAttribute="trailing" id="zeq-RC-5BW"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="gbE-WF-Yyg"/>
                     </view>
                     <connections>
                         <outlet property="fbButton" destination="uoR-Ay-Jxx" id="Nw8-na-Zas"/>
+                        <outlet property="loadingImage" destination="nQI-Bf-vHK" id="3rr-HL-IsY"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eJU-GW-sDE" userLabel="First Responder" sceneMemberID="firstResponder"/>
