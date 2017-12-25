@@ -167,8 +167,14 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="dW0-bn-ZRR">
+                                <rect key="frame" x="0.0" y="64" width="320" height="2"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="2" id="hBW-z3-Gx5"/>
+                                </constraints>
+                            </imageView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="06l-0M-Hoj">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="431"/>
+                                <rect key="frame" x="0.0" y="66" width="320" height="365"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" textLabel="Y2p-es-g8v" detailTextLabel="0oq-qO-JAC" style="IBUITableViewCellStyleSubtitle" id="sou-7i-7Jy">
@@ -208,14 +214,18 @@
                         <constraints>
                             <constraint firstItem="06l-0M-Hoj" firstAttribute="leading" secondItem="GBJ-cJ-hq1" secondAttribute="leading" id="31s-SS-8qK"/>
                             <constraint firstItem="GBJ-cJ-hq1" firstAttribute="bottom" secondItem="06l-0M-Hoj" secondAttribute="bottom" id="GdR-Yk-5lZ"/>
-                            <constraint firstItem="06l-0M-Hoj" firstAttribute="top" secondItem="Vl3-7E-xhp" secondAttribute="top" id="ano-wG-SIK"/>
+                            <constraint firstItem="dW0-bn-ZRR" firstAttribute="centerX" secondItem="GBJ-cJ-hq1" secondAttribute="centerX" id="MBB-Ks-fKD"/>
+                            <constraint firstItem="06l-0M-Hoj" firstAttribute="top" secondItem="dW0-bn-ZRR" secondAttribute="bottom" id="ano-wG-SIK"/>
                             <constraint firstItem="GBJ-cJ-hq1" firstAttribute="trailing" secondItem="06l-0M-Hoj" secondAttribute="trailing" id="ep4-0h-O7Z"/>
+                            <constraint firstItem="dW0-bn-ZRR" firstAttribute="top" secondItem="GBJ-cJ-hq1" secondAttribute="top" id="nc9-gg-uM9"/>
+                            <constraint firstItem="dW0-bn-ZRR" firstAttribute="width" secondItem="Vl3-7E-xhp" secondAttribute="width" id="qtZ-93-6mq"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="GBJ-cJ-hq1"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="My Games" image="bulleted-list.png" id="Tu4-rP-UB1"/>
                     <navigationItem key="navigationItem" title="My Games" id="pBL-gt-QZc"/>
                     <connections>
+                        <outlet property="loadingImage" destination="dW0-bn-ZRR" id="3ze-TI-ZtO"/>
                         <outlet property="tableView" destination="06l-0M-Hoj" id="eck-Jb-tle"/>
                         <segue destination="dzd-8i-Ijl" kind="show" identifier="requireSignIn" id="09k-mF-JFN"/>
                     </connections>
@@ -645,8 +655,18 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="mo5-gI-o4Y">
+                                <rect key="frame" x="0.0" y="64" width="320" height="56"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </searchBar>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="4xL-W1-MXD">
+                                <rect key="frame" x="0.0" y="120" width="320" height="2"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="2" id="kxq-mC-rQh"/>
+                                </constraints>
+                            </imageView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="pTg-81-Txs">
-                                <rect key="frame" x="0.0" y="120" width="320" height="311"/>
+                                <rect key="frame" x="0.0" y="122" width="320" height="309"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" textLabel="zEo-E8-Uhg" detailTextLabel="ZUJ-aQ-eMZ" style="IBUITableViewCellStyleSubtitle" id="77k-p5-Zj1">
@@ -681,26 +701,26 @@
                                     <outlet property="dataSource" destination="sv4-Wb-agr" id="8WR-IV-987"/>
                                 </connections>
                             </tableView>
-                            <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="mo5-gI-o4Y">
-                                <rect key="frame" x="0.0" y="64" width="320" height="56"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </searchBar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="4xL-W1-MXD" firstAttribute="width" secondItem="wrt-Xe-E76" secondAttribute="width" id="6lp-fP-UVh"/>
                             <constraint firstItem="pTg-81-Txs" firstAttribute="bottom" secondItem="2Ca-os-QK7" secondAttribute="bottom" id="80R-nn-E0X"/>
                             <constraint firstItem="mo5-gI-o4Y" firstAttribute="leading" secondItem="2Ca-os-QK7" secondAttribute="leading" id="G0A-x9-Xxe"/>
                             <constraint firstItem="mo5-gI-o4Y" firstAttribute="width" secondItem="2Ca-os-QK7" secondAttribute="width" id="cWG-i1-z9F"/>
                             <constraint firstItem="2Ca-os-QK7" firstAttribute="trailing" secondItem="pTg-81-Txs" secondAttribute="trailing" id="ccU-Oe-Ek8"/>
                             <constraint firstItem="mo5-gI-o4Y" firstAttribute="top" secondItem="2Ca-os-QK7" secondAttribute="top" id="euz-kS-ylf"/>
+                            <constraint firstItem="4xL-W1-MXD" firstAttribute="centerX" secondItem="2Ca-os-QK7" secondAttribute="centerX" id="gDd-MN-IYq"/>
                             <constraint firstItem="pTg-81-Txs" firstAttribute="leading" secondItem="2Ca-os-QK7" secondAttribute="leading" id="hDf-ou-MjM"/>
-                            <constraint firstItem="pTg-81-Txs" firstAttribute="top" secondItem="mo5-gI-o4Y" secondAttribute="bottom" id="vns-RF-3d4"/>
+                            <constraint firstItem="pTg-81-Txs" firstAttribute="top" secondItem="4xL-W1-MXD" secondAttribute="bottom" id="vns-RF-3d4"/>
+                            <constraint firstItem="4xL-W1-MXD" firstAttribute="top" secondItem="mo5-gI-o4Y" secondAttribute="bottom" id="xk9-Xt-wqc"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="2Ca-os-QK7"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="Search" image="search.png" id="eOv-BZ-lLq"/>
                     <navigationItem key="navigationItem" title="Search" id="oCK-kl-0ie"/>
                     <connections>
+                        <outlet property="loadingImage" destination="4xL-W1-MXD" id="aa5-zP-4bh"/>
                         <outlet property="searchBar" destination="mo5-gI-o4Y" id="5qy-52-QNx"/>
                         <outlet property="tableView" destination="pTg-81-Txs" id="RbV-CH-mL0"/>
                     </connections>
@@ -971,8 +991,8 @@
         <image name="star-empty-medium.png" width="40" height="40"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="4c7-5c-r8U"/>
-        <segue reference="oqx-vY-9wK"/>
+        <segue reference="oUA-SR-sUQ"/>
+        <segue reference="09k-mF-JFN"/>
         <segue reference="Cu6-IW-o67"/>
     </inferredMetricsTieBreakers>
 </document>

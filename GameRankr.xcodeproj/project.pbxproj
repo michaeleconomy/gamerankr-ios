@@ -206,17 +206,17 @@
 			isa = PBXGroup;
 			children = (
 				4C42E4F31FE1BC72003F1C68 /* Shared */,
-				4CD1C9DC1FDF6B62001A0B8D /* UpdatesViewController.swift */,
-				4CD1C9DE1FDF6B62001A0B8D /* SearchViewController.swift */,
 				4C42E4F01FE1BC58003F1C68 /* MyGamesViewController.swift */,
-				4C7CF64D1FE4937800E7B32A /* GameViewController.swift */,
-				4CBD0F7C1FE627FB00230771 /* SignInViewController.swift */,
-				4CBD0F8A1FE6F4EC00230771 /* UserViewController.swift */,
-				4CBD0F921FE6FC8500230771 /* FriendsController.swift */,
-				4C2E1BBB1FE9EB4400C048BC /* ShelveGameController.swift */,
-				4C2E1BBD1FE9ED3900C048BC /* RankingViewController.swift */,
 				4CAA416C1FEAE74D007EBB7C /* EditReviewViewController.swift */,
+				4CBD0F921FE6FC8500230771 /* FriendsController.swift */,
+				4C7CF64D1FE4937800E7B32A /* GameViewController.swift */,
 				4CAA41761FEC186A007EBB7C /* PortChooserViewController.swift */,
+				4CBD0F7C1FE627FB00230771 /* SignInViewController.swift */,
+				4C2E1BBD1FE9ED3900C048BC /* RankingViewController.swift */,
+				4C2E1BBB1FE9EB4400C048BC /* ShelveGameController.swift */,
+				4CD1C9DE1FDF6B62001A0B8D /* SearchViewController.swift */,
+				4CBD0F8A1FE6F4EC00230771 /* UserViewController.swift */,
+				4CD1C9DC1FDF6B62001A0B8D /* UpdatesViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";

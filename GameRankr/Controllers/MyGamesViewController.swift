@@ -2,9 +2,12 @@ import UIKit
 
 class MyGamesViewController: UIViewController, UITableViewDataSource, UITableViewDelegate,  APIMyGamesManagerDelegate, AlertAPIErrorDelegate {
     
+    @IBOutlet weak var loadingImage: UIImageView!
     @IBOutlet weak var tableView: UITableView!
     
     override func viewDidLoad() {
+        super.viewDidLoad()
+        loadingImage.image = PlaceholderImages.loadingBar
         MyGamesManager.sharedInstance.registerDelegate(delegate: self)
     }
     
@@ -40,6 +43,7 @@ class MyGamesViewController: UIViewController, UITableViewDataSource, UITableVie
     
     func handleUpdates() {
         DispatchQueue.main.async(execute: {
+            self.loadingImage.isHidden = !MyGamesManager.sharedInstance.loading()
             self.tableView.reloadData()
         })
     }

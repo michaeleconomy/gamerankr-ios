@@ -3,21 +3,18 @@ import UIKit
 class SearchViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, APISearchResultsDelegate, AlertAPIErrorDelegate {
     
     @IBOutlet weak var searchBar: UISearchBar!
+    @IBOutlet weak var loadingImage: UIImageView!
     @IBOutlet weak var tableView: UITableView!
     
     var results: [SearchQuery.Data.Game] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        
         searchBar.delegate = self
+        loadingImage.image = PlaceholderImages.loadingBar
+        loadingImage.isHidden = true
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return results.count
@@ -47,6 +44,7 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         self.results = []
         self.tableView.reloadData()
+        self.loadingImage.isHidden = false
         api.search(query: searchBar.text!, delegate: self)
         searchBar.endEditing(true)
     }
@@ -55,6 +53,7 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
         self.results = results
         DispatchQueue.main.async(execute: {
             self.tableView.reloadData()
+            self.loadingImage.isHidden = true
         })
     }
     

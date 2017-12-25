@@ -3,7 +3,6 @@ import Apollo
 
 class GameViewController : UIViewController, APIGameDetailDelegate, APIMyGamesManagerDelegate, AlertAPIErrorDelegate, UITableViewDataSource {
     
-    
     @IBOutlet weak var loadingImage: UIImageView!
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var platformLabel: UILabel!
@@ -74,9 +73,12 @@ class GameViewController : UIViewController, APIGameDetailDelegate, APIMyGamesMa
         return gameDetail!.ports.first!
     }
     
+    func isLoading() -> Bool {
+        return MyGamesManager.sharedInstance.loading() && gameDetail != nil
+    }
+    
     func configureView() {
-        loadingImage.image = UIImage.animatedImageNamed("loading-bar-", duration: 1.0)
-        loadingImage.isHidden = !MyGamesManager.sharedInstance.loading()
+        loadingImage.isHidden = !isLoading()
         if (game != nil) {
             let port = selectedPort()
             self.title = game!.title
@@ -147,6 +149,7 @@ class GameViewController : UIViewController, APIGameDetailDelegate, APIMyGamesMa
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        loadingImage.image = PlaceholderImages.loadingBar
         MyGamesManager.sharedInstance.registerDelegate(delegate: self)
         shelveButton.layer.borderColor = UIColor.lightGray.cgColor
         shelveButton.layer.borderWidth = 2
