@@ -28,6 +28,9 @@ PODS:
   - FBSDKShareKit (4.29.0):
     - FBSDKCoreKit
   - Kingfisher (4.5.0)
+  - SQLite.swift (0.11.4):
+    - SQLite.swift/standard (= 0.11.4)
+  - SQLite.swift/standard (0.11.4)
 
 DEPENDENCIES:
   - Apollo
@@ -35,6 +38,7 @@ DEPENDENCIES:
   - FacebookLogin
   - FacebookShare
   - Kingfisher
+  - SQLite.swift
 
 SPEC CHECKSUMS:
   Apollo: d6649ac06168660e70c6226c4eadfc0770791ba5
@@ -46,7 +50,8 @@ SPEC CHECKSUMS:
   FBSDKLoginKit: 56a057ca6822535ea0faa25f57a7c41edb697fd4
   FBSDKShareKit: 18a2cd118aef11dd657fe7e8b64bae5c719088b2
   Kingfisher: 26ae0473102b77b575da51960c932431e3745407
+  SQLite.swift: 3e3bee21da701b5b9f87c4a672cb54f233505692
 
-PODFILE CHECKSUM: a54746efffdd9af31a69b7e34caaf7c3266fa81d
+PODFILE CHECKSUM: 2a1f54b7c672708382fdce1c69aa0ebd2c80070a
 
 COCOAPODS: 1.3.1

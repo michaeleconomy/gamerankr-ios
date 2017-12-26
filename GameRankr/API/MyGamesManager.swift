@@ -8,11 +8,22 @@ protocol APIMyGamesManagerDelegate : APIErrorDelegate {
 class MyGamesManager : APIMyGamesDelegate, APIRankDelegate, APIDestroyRankingDelegate {
     static let sharedInstance = MyGamesManager()
     
-    var rankings : [RankingBasic] = []
+    var rankings : [RankingBasic]
+    var rankingsLoading : [RankingBasic]?
     var rankingsByGameId = [GraphQLID:RankingBasic]()
     
     var delegates = [APIMyGamesManagerDelegate]()
     var loadingCount = 0
+    
+    init() {
+        do {
+            rankings = try LocalSQLiteManager.sharedInstance.getRankings()
+        }
+        catch {
+            NSLog("error getting rankings from sql lite")
+            rankings = []
+        }
+    }
     
     func load() {
         if (loading()) {
@@ -24,6 +35,7 @@ class MyGamesManager : APIMyGamesDelegate, APIRankDelegate, APIDestroyRankingDel
             return
         }
         self.loadingCount += 1
+        rankingsLoading = [RankingBasic]()
         api.myGames(delegate: self)
     }
     
@@ -60,14 +72,23 @@ class MyGamesManager : APIMyGamesDelegate, APIRankDelegate, APIDestroyRankingDel
     func handleAPIMyGames(response: MyGamesQuery.Data.MyGame) {
         let additionalRankings = response.edges?.map({$0?.ranking?.fragments.rankingBasic}) as! [RankingBasic]
         if (!additionalRankings.isEmpty) {
-            additionalRankings.forEach{ addRanking($0) }
+            rankingsLoading!.append(contentsOf: additionalRankings)
             if (response.pageInfo.hasNextPage){
                 api.myGames(after: response.pageInfo.endCursor, delegate: self)
             }
-            notifyDelegates()
         }
         if (!response.pageInfo.hasNextPage) {
             loadingCount -= 1
+            var rankingsByGameIdLoading = [GraphQLID: RankingBasic]()
+            rankingsLoading!.forEach({ ranking in
+                rankingsByGameIdLoading[ranking.game.id] = ranking
+            })
+            
+            rankings = rankingsLoading!
+            rankingsLoading = nil
+            rankingsByGameId = rankingsByGameIdLoading
+            LocalSQLiteManager.sharedInstance.persistRankings(rankings: rankings)
+            notifyDelegates()
         }
     }
     
@@ -108,5 +129,4 @@ class MyGamesManager : APIMyGamesDelegate, APIRankDelegate, APIDestroyRankingDel
         deleteRankingFor(gameId: gameId)
         notifyDelegates()
     }
-    
 }

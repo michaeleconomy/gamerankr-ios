@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4C2CF8151FF2E7F700A464AA /* LocalSQLiteManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C2CF8141FF2E7F700A464AA /* LocalSQLiteManager.swift */; };
 		4C2E1BB11FE9CD1F00C048BC /* star-full.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C2E1BAF1FE9CD1D00C048BC /* star-full.png */; };
 		4C2E1BB21FE9CD1F00C048BC /* star-empty.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C2E1BB01FE9CD1E00C048BC /* star-empty.png */; };
 		4C2E1BB41FE9D26300C048BC /* star-empty-large.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C2E1BB31FE9D26100C048BC /* star-empty-large.png */; };
@@ -92,6 +93,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4C2CF8141FF2E7F700A464AA /* LocalSQLiteManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalSQLiteManager.swift; sourceTree = "<group>"; };
 		4C2E1BAF1FE9CD1D00C048BC /* star-full.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "star-full.png"; sourceTree = "<group>"; };
 		4C2E1BB01FE9CD1E00C048BC /* star-empty.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "star-empty.png"; sourceTree = "<group>"; };
 		4C2E1BB31FE9D26100C048BC /* star-empty-large.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "star-empty-large.png"; sourceTree = "<group>"; };
@@ -264,6 +266,7 @@
 				4C57FC141FDF7D9600A04E57 /* GamerankrAPI.swift */,
 				4CBD0F981FE88EA600230771 /* MyGamesManager.swift */,
 				4CAA41721FEAFFFC007EBB7C /* MyShelvesManager.swift */,
+				4C2CF8141FF2E7F700A464AA /* LocalSQLiteManager.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -560,6 +563,7 @@
 				"${BUILT_PRODUCTS_DIR}/FacebookLogin/FacebookLogin.framework",
 				"${BUILT_PRODUCTS_DIR}/FacebookShare/FacebookShare.framework",
 				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
+				"${BUILT_PRODUCTS_DIR}/SQLite.swift/SQLite.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
@@ -572,6 +576,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FacebookLogin.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FacebookShare.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SQLite.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -610,6 +615,7 @@
 				4C7CF64E1FE4937800E7B32A /* GameViewController.swift in Sources */,
 				4CAA416F1FEAF639007EBB7C /* ShelveGameCell.swift in Sources */,
 				4C42E4F11FE1BC58003F1C68 /* MyGamesViewController.swift in Sources */,
+				4C2CF8151FF2E7F700A464AA /* LocalSQLiteManager.swift in Sources */,
 				4CAA41731FEAFFFC007EBB7C /* MyShelvesManager.swift in Sources */,
 				4C4FC9D91FE23C9F002F6428 /* API.swift in Sources */,
 				4CBD0F951FE7801F00230771 /* IntrinsicTableView.swift in Sources */,

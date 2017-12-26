@@ -11,4 +11,5 @@ target 'GameRankr' do
   
   pod 'Apollo'
   pod 'Kingfisher'
+  pod 'SQLite.swift'
 end
