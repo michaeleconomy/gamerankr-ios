@@ -25,7 +25,6 @@ class GameViewController : UIViewController, APIGameDetailDelegate, APIMyGamesMa
                     self.gameDetail = nil
                 }
                 else {
-                    self.rankings = gameDetail!.rankings.edges!.map{$0!.node!}
                     DispatchQueue.main.async(execute: {
                         self.configureView()
                     })
@@ -53,7 +52,7 @@ class GameViewController : UIViewController, APIGameDetailDelegate, APIMyGamesMa
         }
     }
     var ranking: RankingBasic?
-    var rankings: [GameQuery.Data.Game.Ranking.Edge.Node]?
+    var rankings: [RankingForGame]?
     var portId: GraphQLID?
     
     func selectPort(portId: GraphQLID) {
@@ -165,11 +164,6 @@ class GameViewController : UIViewController, APIGameDetailDelegate, APIMyGamesMa
         MyGamesManager.sharedInstance.register(delegate: self)
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        MyGamesManager.sharedInstance.unregister(delegate: self)
-    }
-    
     @objc func switchEditions(sender: UIButton) {
         switchEditionButton.isHidden = true
         rankPort(portId: selectedPort().id)
@@ -215,8 +209,9 @@ class GameViewController : UIViewController, APIGameDetailDelegate, APIMyGamesMa
         })
     }
     
-    func handleAPI(gameDetail: GameQuery.Data.Game) {
+    func handleAPI(gameDetail: GameQuery.Data.Game, rankings: [RankingForGame], nextPage: String?) {
         self.gameDetail = gameDetail
+        self.rankings = rankings
     }
     
     func handleUpdates() {

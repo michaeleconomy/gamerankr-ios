@@ -27,12 +27,6 @@ class ShelveGameController : UIViewController, UITableViewDataSource, APIMyShelv
         configureView()
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        MyShelvesManager.sharedInstance.unregister(delegate: self)
-        MyGamesManager.sharedInstance.unregister(delegate: self)
-    }
-    
     func configureView() {
         loadingImage.isHidden = !MyGamesManager.sharedInstance.loading() || !MyShelvesManager.sharedInstance.loading
         if (game == nil) {
@@ -52,7 +46,6 @@ class ShelveGameController : UIViewController, UITableViewDataSource, APIMyShelv
     @objc func doneButtonClick(sender: UIButton) {
         self.dismiss(animated: true)
     }
-    
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return MyShelvesManager.sharedInstance.count()

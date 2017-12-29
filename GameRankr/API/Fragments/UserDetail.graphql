@@ -1,10 +1,14 @@
 fragment UserDetail on User {
     ...UserBasic
-    rankings(first: 5) {
+    rankings(first: 10) {
         edges {
             ranking : node {
                 ...RankingBasic
             }
+        }
+        pageInfo {
+            endCursor
+            hasNextPage
         }
     }
     shelves {

@@ -1,0 +1,15 @@
+query UserRankings($id: ID!, $after: String) {
+    user(id: $id) {
+        rankings(first: 30, after: $after) {
+            edges {
+                ranking : node {
+                    ...RankingBasic
+                }
+            }
+            pageInfo {
+                endCursor
+                hasNextPage
+            }
+        }
+    }
+}

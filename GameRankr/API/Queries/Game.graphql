@@ -1,26 +1,18 @@
-query Game($id: ID!, $limit: Int) {
+query Game($id: ID!) {
     game(id: $id) {
         ...GameBasic
         ports {
             medium_image_url
         }
-        rankings(first: $limit) {
+        rankings(first: 30) {
             edges {
                 node {
-                    id
-                    ranking
-                    review
-                    verb
-                    shelves {
-                        name
-                    }
-                    port {
-                        id
-                    }
-                    user {
-                        ...UserBasic
-                    }
+                    ...RankingForGame
                 }
+            }
+            pageInfo {
+                endCursor
+                hasNextPage
             }
         }
     }

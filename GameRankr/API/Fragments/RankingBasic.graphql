@@ -18,5 +18,3 @@ fragment RankingBasic on Ranking {
         name
     }
 }
-
-

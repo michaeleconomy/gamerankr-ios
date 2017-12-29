@@ -11,7 +11,7 @@ protocol AuthenticatedAPIErrorDelegate : APIErrorDelegate {
     func handleAPIAuthenticationError()
 }
 protocol APISearchResultsDelegate : AuthenticatedAPIErrorDelegate {
-    func handleAPISearch(results: [SearchQuery.Data.Game])
+    func handleAPISearch(results: [GameBasic], nextPage: String?)
 }
 
 protocol APIMyGamesDelegate : AuthenticatedAPIErrorDelegate {
@@ -19,19 +19,31 @@ protocol APIMyGamesDelegate : AuthenticatedAPIErrorDelegate {
 }
 
 protocol APIGameDetailDelegate : AuthenticatedAPIErrorDelegate {
-    func handleAPI(gameDetail: GameQuery.Data.Game)
+    func handleAPI(gameDetail: GameQuery.Data.Game, rankings: [RankingForGame], nextPage: String?)
+}
+
+protocol APIGameRankingsDelegate : AuthenticatedAPIErrorDelegate {
+    func handleAPI(rankings: [RankingForGame], nextPage: String?)
 }
 
 protocol APIUserDetailDelegate : AuthenticatedAPIErrorDelegate {
-    func handleAPI(userDetail: UserDetail)
+    func handleAPI(userDetail: UserDetail, rankings: [RankingBasic], nextPage: String?)
+}
+
+protocol APIUserRankingDelegate : AuthenticatedAPIErrorDelegate {
+    func handleAPI(rankings: [RankingBasic], nextPage: String?)
+}
+
+protocol APIUserRankingsDelegate : AuthenticatedAPIErrorDelegate {
+    func handleAPI(rankings: [RankingBasic], nextPage: String?)
 }
 
 protocol APIUpdatesDelegate : AuthenticatedAPIErrorDelegate {
-    func handleAPI(updates: [RankingWithUser])
+    func handleAPI(updates: [RankingWithUser], nextPage: String?)
 }
 
 protocol APIFriendsDelegate : AuthenticatedAPIErrorDelegate {
-    func handleAPI(friends: [UserBasic])
+    func handleAPI(friends: [UserBasic], nextPage: String?)
 }
 
 protocol APIRankDelegate : AuthenticatedAPIErrorDelegate {
@@ -58,8 +70,8 @@ protocol APIAuthenticationDelegate {
 class GamerankrAPI {
     
     public private(set) var signed_in = false
-    let base_url = "http://localhost:3000"
-//    let base_url = "https://www.gamerankr.com"
+//    let base_url = "http://localhost:3000"
+    let base_url = "https://www.gamerankr.com"
     private let apollo: ApolloClient
     private var authDelegates = [APIAuthenticationDelegate]()
     public private(set) var token: String?
@@ -119,28 +131,82 @@ class GamerankrAPI {
     func search(query: String, delegate: APISearchResultsDelegate) {
         apollo.fetch(query: SearchQuery(query: query)) { (result, error) in
             if (!self.handleApolloApiErrors(result, error, delegate: delegate)) { return }
-            delegate.handleAPISearch(results: result!.data!.games)
+            let games = result!.data!.search
+            var nextPage : String?
+            if (games.pageInfo.hasNextPage){
+                nextPage = games.pageInfo.endCursor
+            }
+            let results = games.edges!.map{$0!.game!.fragments.gameBasic}
+            delegate.handleAPISearch(results: results, nextPage: nextPage)
         }
     }
     
-    func gameDetail(id: String, delegate: APIGameDetailDelegate) {
+    func gameDetail(id: GraphQLID, delegate: APIGameDetailDelegate) {
         apollo.fetch(query: GameQuery(id: id)) { (result, error) in
             if (!self.handleApolloApiErrors(result, error, delegate: delegate)) { return }
-            delegate.handleAPI(gameDetail: result!.data!.game)
+            let game = result!.data!.game
+            let rankingEdges = game.rankings
+            
+            var nextPage : String?
+            if (rankingEdges.pageInfo.hasNextPage){
+                nextPage = rankingEdges.pageInfo.endCursor
+            }
+            let rankings = rankingEdges.edges!.map{$0!.node!.fragments.rankingForGame}
+            delegate.handleAPI(gameDetail: game, rankings: rankings, nextPage: nextPage)
         }
     }
     
-    func userDetail(id: String, delegate: APIUserDetailDelegate) {
+    func gameRankings(id: GraphQLID, after: String? = nil, delegate: APIGameRankingsDelegate) {
+        apollo.fetch(query: GameRankingsQuery(id: id, after: after)) { (result, error) in
+            if (!self.handleApolloApiErrors(result, error, delegate: delegate)) { return }
+            let rankingEdges = result!.data!.game.rankings
+            var nextPage : String?
+            if (rankingEdges.pageInfo.hasNextPage){
+                nextPage = rankingEdges.pageInfo.endCursor
+            }
+            let rankings = rankingEdges.edges!.map{$0!.ranking!.fragments.rankingForGame}
+            delegate.handleAPI(rankings: rankings, nextPage: nextPage)
+        }
+    }
+    
+    func userDetail(id: GraphQLID, delegate: APIUserDetailDelegate) {
         apollo.fetch(query: UserQuery(id: id)) { (result, error) in
             if (!self.handleApolloApiErrors(result, error, delegate: delegate)) { return }
-            delegate.handleAPI(userDetail: result!.data!.user.fragments.userDetail)
+            let user = result!.data!.user
+            let rankingEdges = user.rankings
+            var nextPage : String?
+            if (rankingEdges.pageInfo.hasNextPage){
+                nextPage = rankingEdges.pageInfo.endCursor
+            }
+            let rankings = rankingEdges.edges!.map{$0!.ranking!.fragments.rankingBasic}
+            delegate.handleAPI(userDetail: user.fragments.userDetail, rankings: rankings, nextPage: nextPage)
+        }
+    }
+
+    func userRankings(id: String, after: String?, delegate: APIUserRankingDelegate) {
+        apollo.fetch(query: UserRankingsQuery(id: id, after: after)) { (result, error) in
+            if (!self.handleApolloApiErrors(result, error, delegate: delegate)) { return }
+            let rankingEdges = result!.data!.user.rankings
+            var nextPage : String?
+            if (rankingEdges.pageInfo.hasNextPage){
+                nextPage = rankingEdges.pageInfo.endCursor
+            }
+            let rankings = rankingEdges.edges!.map{$0!.ranking!.fragments.rankingBasic}
+            delegate.handleAPI(rankings: rankings, nextPage: nextPage)
         }
     }
     
     func me(delegate: APIUserDetailDelegate) {
         apollo.fetch(query: MeQuery()) { (result, error) in
             if (!self.handleApolloApiErrors(result, error, delegate: delegate)) { return }
-            delegate.handleAPI(userDetail: result!.data!.user.fragments.userDetail)
+            let user = result!.data!.user
+            let rankingEdges = user.rankings
+            var nextPage : String?
+            if (rankingEdges.pageInfo.hasNextPage){
+                nextPage = rankingEdges.pageInfo.endCursor
+            }
+            let rankings = rankingEdges.edges!.map{$0!.ranking!.fragments.rankingBasic}
+            delegate.handleAPI(userDetail: user.fragments.userDetail, rankings: rankings, nextPage: nextPage)
         }
     }
     
@@ -160,17 +226,27 @@ class GamerankrAPI {
         }
     }
     
-    func updates(delegate: APIUpdatesDelegate) {
-        apollo.fetch(query: UpdatesQuery()) { (result, error) in
+    func updates(after: String? = nil, delegate: APIUpdatesDelegate) {
+        apollo.fetch(query: UpdatesQuery(after: after)) { (result, error) in
             if (!self.handleApolloApiErrors(result, error, delegate: delegate)) { return }
-            delegate.handleAPI(updates: result!.data!.updates.edges!.map{$0!.ranking!.fragments.rankingWithUser})
+            let updates = result!.data!.updates
+            var nextPage : String?
+            if (updates.pageInfo.hasNextPage){
+                nextPage = updates.pageInfo.endCursor
+            }
+            delegate.handleAPI(updates: updates.edges!.map{$0!.ranking!.fragments.rankingWithUser}, nextPage: nextPage)
         }
     }
     
-    func friends(delegate: APIFriendsDelegate) {
-        apollo.fetch(query: FriendsQuery()) { (result, error) in
+    func friends(after: String? = nil, delegate: APIFriendsDelegate) {
+        apollo.fetch(query: FriendsQuery(after: after)) { (result, error) in
             if (!self.handleApolloApiErrors(result, error, delegate: delegate)) { return }
-            delegate.handleAPI(friends: result!.data!.friends.edges!.map{$0!.user!.fragments.userBasic})
+            let friends = result!.data!.friends
+            var nextPage : String?
+            if (friends.pageInfo.hasNextPage){
+                nextPage = friends.pageInfo.endCursor
+            }
+            delegate.handleAPI(friends: friends.edges!.map{$0!.user!.fragments.userBasic}, nextPage: nextPage)
         }
     }
     
@@ -188,11 +264,11 @@ class GamerankrAPI {
         }
     }
     
-    private func handleApolloApiErrors<Type>(_ result: GraphQLResult<Type>?, _ error: Error?, delegate: APIErrorDelegate) -> Bool {
+    private func handleApolloApiErrors<Type>(_ result: GraphQLResult<Type>?, _ error: Error?, delegate: AuthenticatedAPIErrorDelegate) -> Bool {
         if ((error as? GameRankrAuthenticationError) != nil) {
             NSLog("authentication error - signing user out")
             handleLogout()
-            
+            delegate.handleAPIAuthenticationError()
             return false
         }
         if (result?.data == nil) {

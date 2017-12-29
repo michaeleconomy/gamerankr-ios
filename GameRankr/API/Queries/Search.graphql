@@ -1,5 +1,13 @@
-query Search($query: String!) {
-    games : search(query: $query) {
-        ...GameBasic
+query Search($query: String!, $after: String) {
+    search(query: $query, first: 30, after: $after) {
+        edges {
+            game : node {
+                ...GameBasic
+            }
+        }
+        pageInfo {
+            endCursor
+            hasNextPage
+        }
     }
 }

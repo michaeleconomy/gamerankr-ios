@@ -6,7 +6,7 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
     @IBOutlet weak var loadingImage: UIImageView!
     @IBOutlet weak var tableView: UITableView!
     
-    var results: [SearchQuery.Data.Game] = []
+    var results: [GameBasic] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -49,7 +49,7 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
         searchBar.endEditing(true)
     }
     
-    func handleAPISearch(results: [SearchQuery.Data.Game]) {
+    func handleAPISearch(results: [GameBasic], nextPage: String?) {
         self.results = results
         DispatchQueue.main.async(execute: {
             self.tableView.reloadData()
@@ -68,7 +68,7 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
         if segue.identifier == "showDetail" {
             if let indexPath = tableView.indexPathForSelectedRow {
                 let controller = segue.destination as! GameViewController
-                controller.game = results[indexPath.row].fragments.gameBasic
+                controller.game = results[indexPath.row]
             }
         }
     }

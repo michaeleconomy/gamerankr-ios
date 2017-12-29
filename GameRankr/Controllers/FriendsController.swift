@@ -45,7 +45,7 @@ class FriendsController : UIViewController, APIFriendsDelegate, AlertAPIErrorDel
     }
     
     
-    func handleAPI(friends: [UserBasic]) {
+    func handleAPI(friends: [UserBasic], nextPage: String?) {
         self.friends = friends
         DispatchQueue.main.async(execute: {
             self.tableView.reloadData()

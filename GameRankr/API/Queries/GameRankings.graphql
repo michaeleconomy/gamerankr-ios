@@ -1,0 +1,15 @@
+query GameRankings($id: ID!, $after: String) {
+    game(id: $id) {
+        rankings(first: 30, after: $after) {
+            edges {
+                ranking : node {
+                    ...RankingForGame
+                }
+            }
+            pageInfo {
+                endCursor
+                hasNextPage
+            }
+        }
+    }
+}

@@ -1,12 +1,15 @@
-fragment RankingSlim on Ranking {
+fragment RankingForGame on Ranking {
     id
     ranking
     review
     verb
+    shelves {
+        name
+    }
     port {
         id
     }
-    shelves {
-        name
+    user {
+        ...UserBasic
     }
 }

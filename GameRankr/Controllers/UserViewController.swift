@@ -11,7 +11,6 @@ class UserViewController : UIViewController, APIUserDetailDelegate, AlertAPIErro
     var userDetail: UserDetail? {
         didSet {
             if (userDetail != nil) {
-                self.rankings = userDetail!.rankings.edges!.map{$0!.ranking!.fragments.rankingBasic}
                 if (user == nil) {
                     self.user = userDetail!.fragments.userBasic
                 }
@@ -85,8 +84,9 @@ class UserViewController : UIViewController, APIUserDetailDelegate, AlertAPIErro
     }
     
     
-    func handleAPI(userDetail: UserDetail) {
+    func handleAPI(userDetail: UserDetail, rankings: [RankingBasic], nextPage: String?) {
         self.userDetail = userDetail
+        self.rankings = rankings
         
         DispatchQueue.main.async(execute: {
             self.configureView()

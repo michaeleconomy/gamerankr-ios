@@ -31,7 +31,7 @@ class UpdatesViewController: UIViewController, AlertAPIErrorDelegate, UITableVie
         }
     }
     
-    func handleAPI(updates: [RankingWithUser]) {
+    func handleAPI(updates: [RankingWithUser], nextPage: String?) {
         self.updates = updates
         
         DispatchQueue.main.async(execute: {

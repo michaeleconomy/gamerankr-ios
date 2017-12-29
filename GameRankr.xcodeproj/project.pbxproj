@@ -22,6 +22,10 @@
 		4C42E4EF1FE1BB92003F1C68 /* bulleted-list.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C42E4EE1FE1BB92003F1C68 /* bulleted-list.png */; };
 		4C42E4F11FE1BC58003F1C68 /* MyGamesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C42E4F01FE1BC58003F1C68 /* MyGamesViewController.swift */; };
 		4C47F02C1FF402FC00E5FD92 /* GameRankrNetworkTransport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C47F02B1FF402FC00E5FD92 /* GameRankrNetworkTransport.swift */; };
+		4C47F02E1FF5D10100E5FD92 /* loading_photos.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C47F02D1FF5D10100E5FD92 /* loading_photos.png */; };
+		4C47F0321FF6A12B00E5FD92 /* GameRankings.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 4C47F0311FF6A12B00E5FD92 /* GameRankings.graphql */; };
+		4C47F0341FF6A15E00E5FD92 /* RankingForGame.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 4C47F0331FF6A15E00E5FD92 /* RankingForGame.graphql */; };
+		4C47F0361FF6A57500E5FD92 /* UserRankings.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 4C47F0351FF6A57500E5FD92 /* UserRankings.graphql */; };
 		4C4FC9D91FE23C9F002F6428 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C4FC9D81FE23C9F002F6428 /* API.swift */; };
 		4C4FC9DB1FE23D42002F6428 /* MyGames.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 4C4FC9DA1FE23D42002F6428 /* MyGames.graphql */; };
 		4C57FC0B1FDF784F00A04E57 /* menu.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C57FC071FDF784F00A04E57 /* menu.png */; };
@@ -110,6 +114,10 @@
 		4C42E4EE1FE1BB92003F1C68 /* bulleted-list.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bulleted-list.png"; sourceTree = "<group>"; };
 		4C42E4F01FE1BC58003F1C68 /* MyGamesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyGamesViewController.swift; sourceTree = "<group>"; };
 		4C47F02B1FF402FC00E5FD92 /* GameRankrNetworkTransport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameRankrNetworkTransport.swift; sourceTree = "<group>"; };
+		4C47F02D1FF5D10100E5FD92 /* loading_photos.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = loading_photos.png; sourceTree = "<group>"; };
+		4C47F0311FF6A12B00E5FD92 /* GameRankings.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = GameRankings.graphql; sourceTree = "<group>"; };
+		4C47F0331FF6A15E00E5FD92 /* RankingForGame.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = RankingForGame.graphql; sourceTree = "<group>"; };
+		4C47F0351FF6A57500E5FD92 /* UserRankings.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = UserRankings.graphql; sourceTree = "<group>"; };
 		4C4FC9D81FE23C9F002F6428 /* API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		4C4FC9DA1FE23D42002F6428 /* MyGames.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = MyGames.graphql; sourceTree = "<group>"; };
 		4C57FC071FDF784F00A04E57 /* menu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = menu.png; sourceTree = "<group>"; };
@@ -246,6 +254,7 @@
 				4C2E1BB51FE9D2BD00C048BC /* star-empty-medium.png */,
 				4C2E1BB01FE9CD1E00C048BC /* star-empty.png */,
 				4C2E1BAF1FE9CD1D00C048BC /* star-full.png */,
+				4C47F02D1FF5D10100E5FD92 /* loading_photos.png */,
 				4CBD0F9A1FE9795900230771 /* down-arrow.png */,
 				4CBD0F881FE6F42000230771 /* game-controller.png */,
 				4C7CF6471FE465D200E7B32A /* picture.png */,
@@ -326,6 +335,7 @@
 				4CBD0F961FE834E900230771 /* RankingWithUser.graphql */,
 				4C91103D1FEC55F100DDEECC /* CommentBasic.graphql */,
 				4C91103F1FEC563B00DDEECC /* CommentWithUser.graphql */,
+				4C47F0331FF6A15E00E5FD92 /* RankingForGame.graphql */,
 			);
 			path = Fragments;
 			sourceTree = "<group>";
@@ -341,6 +351,8 @@
 				4CBD0F8C1FE6F57B00230771 /* User.graphql */,
 				4CBD0F901FE6F69200230771 /* Me.graphql */,
 				4CAA41701FEAFD85007EBB7C /* MyShelves.graphql */,
+				4C47F0311FF6A12B00E5FD92 /* GameRankings.graphql */,
+				4C47F0351FF6A57500E5FD92 /* UserRankings.graphql */,
 			);
 			path = Queries;
 			sourceTree = "<group>";
@@ -451,6 +463,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4C47F0321FF6A12B00E5FD92 /* GameRankings.graphql in Resources */,
 				4CA747E61FF0AD9C00C3BCE0 /* loading-bar-1.png in Resources */,
 				4C7CF6501FE4CF2200E7B32A /* GameBasic.graphql in Resources */,
 				4CA747ED1FF0AD9C00C3BCE0 /* loading-bar-11.png in Resources */,
@@ -460,11 +473,13 @@
 				4CA747E21FF0AD9C00C3BCE0 /* loading-bar-2.png in Resources */,
 				4CA747EF1FF0AD9C00C3BCE0 /* loading-bar-18.png in Resources */,
 				4C57FC0E1FDF784F00A04E57 /* people.png in Resources */,
+				4C47F0361FF6A57500E5FD92 /* UserRankings.graphql in Resources */,
 				4CBD0F811FE6DD7E00230771 /* Updates.graphql in Resources */,
 				4C4FC9DB1FE23D42002F6428 /* MyGames.graphql in Resources */,
 				4CBD0F8D1FE6F57B00230771 /* User.graphql in Resources */,
 				4CBD0F911FE6F69200230771 /* Me.graphql in Resources */,
 				4CA747EE1FF0AD9C00C3BCE0 /* loading-bar-3.png in Resources */,
+				4C47F0341FF6A15E00E5FD92 /* RankingForGame.graphql in Resources */,
 				4C57FC121FDF799300A04E57 /* search.png in Resources */,
 				4CBD0F871FE6DF9D00230771 /* Friends.graphql in Resources */,
 				4CA747F81FF0AD9C00C3BCE0 /* loading-bar-16.png in Resources */,
@@ -492,6 +507,7 @@
 				4CA747F11FF0AD9C00C3BCE0 /* loading-bar-14.png in Resources */,
 				4CA747F21FF0AD9C00C3BCE0 /* loading-bar-19.png in Resources */,
 				4CA747E31FF0AD9C00C3BCE0 /* loading-bar-6.png in Resources */,
+				4C47F02E1FF5D10100E5FD92 /* loading_photos.png in Resources */,
 				4C57FC0D1FDF784F00A04E57 /* news.png in Resources */,
 				4CBD0F8F1FE6F5D200230771 /* UserDetail.graphql in Resources */,
 				4C42E4EF1FE1BB92003F1C68 /* bulleted-list.png in Resources */,
