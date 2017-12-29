@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+apollo-codegen download-schema https://www.gamerankr.com/graphql --output GameRankr/schema.json

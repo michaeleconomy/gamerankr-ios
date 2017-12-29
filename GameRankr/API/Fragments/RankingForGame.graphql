@@ -1,0 +1,12 @@
+fragment RankingSlim on Ranking {
+    id
+    ranking
+    review
+    verb
+    port {
+        id
+    }
+    shelves {
+        name
+    }
+}
