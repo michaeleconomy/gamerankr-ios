@@ -150,7 +150,6 @@ class GameViewController : UIViewController, APIGameDetailDelegate, APIMyGamesMa
     override func viewDidLoad() {
         super.viewDidLoad()
         loadingImage.image = PlaceholderImages.loadingBar
-        MyGamesManager.sharedInstance.registerDelegate(delegate: self)
         shelveButton.layer.borderColor = UIColor.lightGray.cgColor
         shelveButton.layer.borderWidth = 2
         stars.arrangedSubviews.forEach({ subview in
@@ -163,6 +162,12 @@ class GameViewController : UIViewController, APIGameDetailDelegate, APIMyGamesMa
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         configureView()
+        MyGamesManager.sharedInstance.register(delegate: self)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        MyGamesManager.sharedInstance.unregister(delegate: self)
     }
     
     @objc func switchEditions(sender: UIButton) {
@@ -287,5 +292,12 @@ class GameViewController : UIViewController, APIGameDetailDelegate, APIMyGamesMa
         default:
             NSLog("unknown segue from game view: \(segue.identifier!)")
         }
+    }
+    
+    func handleAPIAuthenticationError() {
+        DispatchQueue.main.async(execute: {
+            self.easyAlert("Session expired, please sign in and try again.")
+            self.configureView()
+        })
     }
 }

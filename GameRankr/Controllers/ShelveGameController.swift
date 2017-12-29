@@ -14,20 +14,27 @@ class ShelveGameController : UIViewController, UITableViewDataSource, APIMyShelv
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        MyShelvesManager.sharedInstance.load()
         loadingImage.image = PlaceholderImages.loadingBar
         doneButton.addTarget(self, action:#selector(doneButtonClick(sender:)), for: .touchUpInside)
-        MyShelvesManager.sharedInstance.registerDelegate(delegate: self)
-        MyGamesManager.sharedInstance.registerDelegate(delegate: self)
         removeButton.addTarget(self, action: #selector(removeButtonTap(sender:)), for: .touchUpInside)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        MyShelvesManager.sharedInstance.register(delegate: self)
+        MyGamesManager.sharedInstance.register(delegate: self)
         configureView()
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        MyShelvesManager.sharedInstance.unregister(delegate: self)
+        MyGamesManager.sharedInstance.unregister(delegate: self)
+    }
+    
     func configureView() {
-        loadingImage.isHidden = !MyGamesManager.sharedInstance.loading()
+        loadingImage.isHidden = !MyGamesManager.sharedInstance.loading() || !MyShelvesManager.sharedInstance.loading
         if (game == nil) {
             easyAlert("game could not be found for ShelveGameViewController")
             return
@@ -106,6 +113,13 @@ class ShelveGameController : UIViewController, UITableViewDataSource, APIMyShelv
         ranking = MyGamesManager.sharedInstance.getRanking(gameId: game!.id)
         DispatchQueue.main.async(execute: {
             self.configureView()
+        })
+    }
+    
+    func handleAPIAuthenticationError() {
+        easyAlert("You've been signed out.")
+        DispatchQueue.main.async(execute: {
+            self.dismiss(animated: true)
         })
     }
 }

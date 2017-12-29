@@ -57,6 +57,13 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
         })
     }
     
+    func handleAPIAuthenticationError() {
+        easyAlert("Session Expired, please try again.")
+        DispatchQueue.main.async(execute: {
+            self.loadingImage.isHidden = true
+        })
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showDetail" {
             if let indexPath = tableView.indexPathForSelectedRow {

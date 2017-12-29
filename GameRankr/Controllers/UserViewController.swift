@@ -11,11 +11,16 @@ class UserViewController : UIViewController, APIUserDetailDelegate, AlertAPIErro
     var userDetail: UserDetail? {
         didSet {
             if (userDetail != nil) {
-                if (userDetail?.id != user!.id) {
-                    self.userDetail = nil
-                    return
+                self.rankings = userDetail!.rankings.edges!.map{$0!.ranking!.fragments.rankingBasic}
+                if (user == nil) {
+                    self.user = userDetail!.fragments.userBasic
                 }
-                self.rankings = userDetail!.rankings.edges!.map({$0!.ranking!.fragments.rankingBasic})
+                else {
+                    if (userDetail!.id != user!.id) {
+                        self.userDetail = nil
+                        return
+                    }
+                }
             }
         }
     }
@@ -126,5 +131,12 @@ class UserViewController : UIViewController, APIUserDetailDelegate, AlertAPIErro
                 controller.selectPort(portId: ranking.port.id)
             }
         }
+    }
+    
+    
+    func handleAPIAuthenticationError() {
+        DispatchQueue.main.async(execute: {
+            self.performSegue(withIdentifier: "requireSignIn", sender: nil)
+        })
     }
 }

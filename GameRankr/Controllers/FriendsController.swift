@@ -22,7 +22,7 @@ class FriendsController : UIViewController, APIFriendsDelegate, AlertAPIErrorDel
             return
         }
         
-        if(!fetchedFriends) {
+        if (!fetchedFriends) {
             fetchedFriends = true
             loadingImage.isHidden = false
             api.friends(delegate: self)
@@ -54,6 +54,11 @@ class FriendsController : UIViewController, APIFriendsDelegate, AlertAPIErrorDel
         })
     }
     
+    func handleAPIAuthenticationError() {
+        DispatchQueue.main.async(execute: {
+            self.performSegue(withIdentifier: "requireSignIn", sender: nil)
+        })
+    }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showDetail" {

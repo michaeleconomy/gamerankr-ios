@@ -8,7 +8,6 @@ class MyGamesViewController: UIViewController, UITableViewDataSource, UITableVie
     override func viewDidLoad() {
         super.viewDidLoad()
         loadingImage.image = PlaceholderImages.loadingBar
-        MyGamesManager.sharedInstance.registerDelegate(delegate: self)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -18,6 +17,13 @@ class MyGamesViewController: UIViewController, UITableViewDataSource, UITableVie
             performSegue(withIdentifier: "requireSignIn", sender: nil)
         }
         self.loadingImage.isHidden = !MyGamesManager.sharedInstance.loading()
+        MyGamesManager.sharedInstance.register(delegate: self)
+        self.tableView.reloadData()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        MyGamesManager.sharedInstance.unregister(delegate: self)
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -49,7 +55,6 @@ class MyGamesViewController: UIViewController, UITableViewDataSource, UITableVie
         })
     }
     
-    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showDetail" {
             if let indexPath = tableView.indexPathForSelectedRow {
@@ -61,6 +66,9 @@ class MyGamesViewController: UIViewController, UITableViewDataSource, UITableVie
         }
     }
     
+    func handleAPIAuthenticationError() {
+        DispatchQueue.main.async(execute: {
+            self.performSegue(withIdentifier: "requireSignIn", sender: nil)
+        })
+    }
 }
-
-

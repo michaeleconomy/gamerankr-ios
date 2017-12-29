@@ -2,17 +2,18 @@ import UIKit
 import FacebookCore
 import FacebookLogin
 
-class UpdatesViewController: UIViewController, AlertAPIErrorDelegate, UITableViewDataSource, APIUpdatesDelegate {
+class UpdatesViewController: UIViewController, AlertAPIErrorDelegate, UITableViewDataSource, APIUpdatesDelegate, APIAuthenticationDelegate {
     
     @IBOutlet weak var loadingImage: UIImageView!
     @IBOutlet weak var tableView: UITableView!
-    var updates : [RankingWithUser] = []
+    var updates = [RankingWithUser]()
     var fetchedUpdates = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         loadingImage.image = PlaceholderImages.loadingBar
+        api.register(authenticationDelegate: self)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -72,6 +73,20 @@ class UpdatesViewController: UIViewController, AlertAPIErrorDelegate, UITableVie
             }
         }
     }
-
+    
+    
+    func handleAPILogin() {
+        //nothing for now
+    }
+    
+    func handleAPILogout() {
+        updates = []
+        fetchedUpdates = false
+    }
+    
+    func handleAPIAuthenticationError() {
+        DispatchQueue.main.async(execute: {
+            self.performSegue(withIdentifier: "requireSignIn", sender: nil)
+        })
+    }
 }
-

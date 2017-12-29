@@ -1,7 +1,7 @@
 import Foundation
 import Apollo
 
-protocol APIMyGamesManagerDelegate : APIErrorDelegate {
+protocol APIMyGamesManagerDelegate : AuthenticatedAPIErrorDelegate, AnyObject {
     func handleUpdates()
 }
 
@@ -18,10 +18,16 @@ class MyGamesManager : APIMyGamesDelegate, APIRankDelegate, APIDestroyRankingDel
     init() {
         do {
             rankings = try LocalSQLiteManager.sharedInstance.getRankings()
+            for ranking in rankings {
+                rankingsByGameId[ranking.game.id] = ranking
+            }
         }
         catch {
             NSLog("error getting rankings from sql lite")
             rankings = []
+        }
+        if (api.signed_in) {
+            load()
         }
     }
     
@@ -39,12 +45,25 @@ class MyGamesManager : APIMyGamesDelegate, APIRankDelegate, APIDestroyRankingDel
         api.myGames(delegate: self)
     }
     
+    func clear() {
+        rankings = [RankingBasic]()
+        LocalSQLiteManager.sharedInstance.clearRankings()
+        notifyDelegates()
+    }
+    
     func loading() -> Bool {
         return loadingCount > 0
     }
     
-    func registerDelegate(delegate: APIMyGamesManagerDelegate) {
+    
+    func register(delegate: APIMyGamesManagerDelegate) {
         self.delegates.append(delegate)
+    }
+    
+    func unregister(delegate: APIMyGamesManagerDelegate) {
+        if let index = self.delegates.index(where: {$0 === delegate}) {
+            self.delegates.remove(at: index)
+        }
     }
     
     subscript(index : Int) -> RankingBasic? {
@@ -70,7 +89,7 @@ class MyGamesManager : APIMyGamesDelegate, APIRankDelegate, APIDestroyRankingDel
     }
     
     func handleAPIMyGames(response: MyGamesQuery.Data.MyGame) {
-        let additionalRankings = response.edges?.map({$0?.ranking?.fragments.rankingBasic}) as! [RankingBasic]
+        let additionalRankings = response.edges!.map({$0!.ranking!.fragments.rankingBasic})
         if (!additionalRankings.isEmpty) {
             rankingsLoading!.append(contentsOf: additionalRankings)
             if (response.pageInfo.hasNextPage){
@@ -78,18 +97,22 @@ class MyGamesManager : APIMyGamesDelegate, APIRankDelegate, APIDestroyRankingDel
             }
         }
         if (!response.pageInfo.hasNextPage) {
-            loadingCount -= 1
-            var rankingsByGameIdLoading = [GraphQLID: RankingBasic]()
-            rankingsLoading!.forEach({ ranking in
-                rankingsByGameIdLoading[ranking.game.id] = ranking
-            })
-            
-            rankings = rankingsLoading!
-            rankingsLoading = nil
-            rankingsByGameId = rankingsByGameIdLoading
-            LocalSQLiteManager.sharedInstance.persistRankings(rankings: rankings)
-            notifyDelegates()
+            doneLoading()
         }
+    }
+    
+    private func doneLoading() {
+        loadingCount -= 1
+        var rankingsByGameIdLoading = [GraphQLID: RankingBasic]()
+        rankingsLoading!.forEach({ ranking in
+            rankingsByGameIdLoading[ranking.game.id] = ranking
+        })
+        
+        self.rankings = rankingsLoading!
+        self.rankingsLoading = nil
+        self.rankingsByGameId = rankingsByGameIdLoading
+        LocalSQLiteManager.sharedInstance.persistRankings(rankings: rankings)
+        notifyDelegates()
     }
     
     private func addRanking(_ ranking: RankingBasic) {
@@ -117,10 +140,18 @@ class MyGamesManager : APIMyGamesDelegate, APIRankDelegate, APIDestroyRankingDel
         delegates.forEach{$0.handleUpdates()}
     }
     
-    func handleApi(error: String) {
+    
+    func handleAPIAuthenticationError() {
+        for delegate in delegates {
+            delegate.handleAPIAuthenticationError()
+        }
+    }
+    
+    func handleAPI(error: String) {
         loadingCount -= 1 //yuck!
         //??? - if multiple delegates all try and pop alerts - is that a problem?
-        delegates.forEach{$0.handleApi(error: error)}
+        NSLog("MyGamesManager encountered API Error: \(error)")
+        delegates.forEach{$0.handleAPI(error: error)}
     }
     
     func handleAPIRankingDestruction(ranking: DestroyRankingMutation.Data.Ranking) {

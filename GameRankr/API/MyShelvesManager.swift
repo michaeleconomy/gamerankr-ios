@@ -1,16 +1,14 @@
 import Foundation
 
-protocol APIMyShelvesManagerDelegate : APIErrorDelegate {
+protocol APIMyShelvesManagerDelegate : AuthenticatedAPIErrorDelegate, AnyObject {
     func handleShelvesUpdates()
 }
 
 class MyShelvesManager : APIShelvesDelegate {
     static let sharedInstance = MyShelvesManager()
-    
-    var shelves: [MyShelvesQuery.Data.Shelf]?
+    private var shelves: [MyShelvesQuery.Data.Shelf]?
     
     var delegates = [APIMyShelvesManagerDelegate]()
-    
     var loading = false
     
     func load() {
@@ -48,13 +46,24 @@ class MyShelvesManager : APIShelvesDelegate {
         delegates.forEach{$0.handleShelvesUpdates()}
     }
     
-    func registerDelegate(delegate: APIMyShelvesManagerDelegate) {
+    func register(delegate: APIMyShelvesManagerDelegate) {
         self.delegates.append(delegate)
     }
     
-    func handleApi(error: String) {
+    func unregister(delegate: APIMyShelvesManagerDelegate) {
+        if let index = self.delegates.index(where: {$0 === delegate}) {
+            self.delegates.remove(at: index)
+        }
+    }
+    
+    func handleAPI(error: String) {
         // - if multiple delegates all try and pop alerts - is that a problem?
-        delegates.forEach{$0.handleApi(error: error)}
+        delegates.forEach{$0.handleAPI(error: error)}
+    }
+    
+    func handleAPIAuthenticationError() {
+        
+        delegates.forEach{$0.handleAPIAuthenticationError()}
     }
     
 }

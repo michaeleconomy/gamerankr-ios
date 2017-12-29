@@ -5,10 +5,13 @@ import Apollo
 class LocalSQLiteManager {
     static let sharedInstance = LocalSQLiteManager()
     
+    private let db : Connection
     
-    let rankingsTable = Table("rankings")
-    let serializedRanking = Expression<String>("serializedRanking")
-    let db : Connection
+    private let rankingsTable = Table("rankings")
+    private let serializedRanking = Expression<String>("serializedRanking")
+    private let miscTable = Table("misc")
+    private let miscKey = Expression<String>("key")
+    private let miscValue = Expression<String>("value")
     
     init() {
         let basePath = NSSearchPathForDirectoriesInDomains(
@@ -16,12 +19,18 @@ class LocalSQLiteManager {
         
         db = try! Connection("\(basePath)/gamerankr.sqlite3")
         
-        let createTableQuery = rankingsTable.create(ifNotExists: true) { table in
+        let createRankingTableQuery = rankingsTable.create(ifNotExists: true) { table in
             table.column(serializedRanking)
         }
-        try! db.run(createTableQuery)
+        try! db.run(createRankingTableQuery)
+        
+        
+        let createMiscTableQuery = miscTable.create(ifNotExists: true) { table in
+            table.column(miscKey, unique: true)
+            table.column(miscValue)
+        }
+        try! db.run(createMiscTableQuery)
     }
-    
     
     func persistRankings(rankings: [RankingBasic]) {
         do {
@@ -32,6 +41,15 @@ class LocalSQLiteManager {
                 let insert = rankingsTable.insert(serializedRanking <- rankingString)
                 try db.run(insert)
             }
+        }
+        catch {
+            NSLog("error persisting rankings")
+        }
+    }
+    
+    func clearRankings() {
+        do {
+            try db.run(rankingsTable.delete())  // Delete all the existing records
         }
         catch {
             NSLog("error persisting rankings")
@@ -51,4 +69,35 @@ class LocalSQLiteManager {
         return rankings
     }
     
+    func persistToken(token: String) {
+        do {
+            try db.run(miscTable.insert(miscKey <- "token", miscValue <- token))
+        }
+        catch {
+            NSLog("error persisting token")
+        }
+    }
+    
+    func clearMisc() {
+        do {
+            try db.run(miscTable.delete())  // Delete all the existing records
+        }
+        catch {
+            NSLog("error persisting rankings")
+        }
+    }
+    
+    func getToken() -> String? {
+        do {
+            let rows = try db.prepare(miscTable.filter(miscKey == "token").select(miscValue))
+            for row in rows {
+                return row[miscValue]
+            }
+            return nil
+        }
+        catch {
+            NSLog("error getting token")
+            return nil
+        }
+    }
 }

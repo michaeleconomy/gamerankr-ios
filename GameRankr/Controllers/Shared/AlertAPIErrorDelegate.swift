@@ -10,7 +10,7 @@ extension UIViewController {
 }
 extension AlertAPIErrorDelegate where Self: UIViewController  {
     
-    func handleApi(error: String) {
+    func handleAPI(error: String) {
         easyAlert(error)
     }
     
