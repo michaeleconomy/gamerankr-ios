@@ -59,7 +59,13 @@ class GameRankrNetworkTransport: NetworkTransport {
         }
         
         let task = URLSession.shared.dataTask(with: request) { (data: Data?, response: URLResponse?, error: Error?) in
-            if error != nil {
+            if (error != nil) {
+                if let nsError = error as NSError? {
+                    if (nsError.code == NSURLErrorCancelled) {
+                        //api call cancelled - ignoring
+                        return
+                    }
+                }
                 completionHandler(nil, error)
                 return
             }

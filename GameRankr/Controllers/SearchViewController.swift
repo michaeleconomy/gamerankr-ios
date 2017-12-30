@@ -1,4 +1,5 @@
 import UIKit
+import Apollo
 
 class SearchViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, APISearchResultsDelegate, AlertAPIErrorDelegate {
     
@@ -6,7 +7,11 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
     @IBOutlet weak var loadingImage: UIImageView!
     @IBOutlet weak var tableView: UITableView!
     
-    var results: [GameBasic] = []
+    var results = [GameBasic]()
+    var nextPage: String?
+    var lastQuery: String?
+    var currentApiTask: Cancellable?
+    var shouldClearSearchOnResults = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,6 +26,9 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if (nextPage != nil && indexPath.row >= (results.count - 15)) {
+            doSearch(getNextPage: true)
+        }
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
         let game = results[indexPath.row]
         cell.textLabel!.text = game.title
@@ -36,21 +44,51 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
         return cell
     }
 
-    func searchBar(_: UISearchBar, textDidChange: String) {
-//        NSLog("searchText Changed: \(searchBar.text!)")
-        // TODO: search as you type
+    private func doSearch(query: String? = nil, getNextPage: Bool = false) {
+        if (currentApiTask != nil) {
+            currentApiTask!.cancel()
+            currentApiTask = nil
+        }
+        if (query != nil) {
+            self.shouldClearSearchOnResults = true
+            lastQuery = query
+        }
+        var nextPage: String?
+        if (getNextPage) {
+            nextPage = self.nextPage
+            self.nextPage = nil
+        }
+        currentApiTask = api.search(query: lastQuery!, after: nextPage, delegate: self)
+        
+        DispatchQueue.main.async(execute: {
+            self.loadingImage.isHidden = false
+        })
     }
     
+    
+    func searchBar(_: UISearchBar, textDidChange: String) {
+        if (searchBar.text?.underestimatedCount ?? 0 <= 2) {
+            return
+        }
+        doSearch(query: searchBar.text)
+    }
+    
+    
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        self.results = []
-        self.tableView.reloadData()
-        self.loadingImage.isHidden = false
-        api.search(query: searchBar.text!, delegate: self)
+        doSearch(query: searchBar.text)
         searchBar.endEditing(true)
+        DispatchQueue.main.async(execute: {
+            self.tableView.reloadData()
+        })
     }
     
     func handleAPISearch(results: [GameBasic], nextPage: String?) {
-        self.results = results
+        if (shouldClearSearchOnResults) {
+            shouldClearSearchOnResults = false
+            self.results.removeAll()
+        }
+        self.results.append(contentsOf: results)
+        self.nextPage = nextPage
         DispatchQueue.main.async(execute: {
             self.tableView.reloadData()
             self.loadingImage.isHidden = true

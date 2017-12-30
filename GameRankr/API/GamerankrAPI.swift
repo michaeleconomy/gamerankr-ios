@@ -127,8 +127,8 @@ class GamerankrAPI {
     }
     
 
-    func search(query: String, after: String? = nil, delegate: APISearchResultsDelegate) {
-        apollo.fetch(query: SearchQuery(query: query, after: after)) { (result, error) in
+    func search(query: String, after: String? = nil, delegate: APISearchResultsDelegate) -> Cancellable {
+        return apollo.fetch(query: SearchQuery(query: query, after: after)) { (result, error) in
             if (!self.handleApolloApiErrors(result, error, delegate: delegate)) { return }
             let games = result!.data!.search
             var nextPage : String?
