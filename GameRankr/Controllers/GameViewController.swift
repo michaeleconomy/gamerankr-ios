@@ -1,7 +1,7 @@
 import UIKit
 import Apollo
 
-class GameViewController : UIViewController, APIGameDetailDelegate, APIMyGamesManagerDelegate, AlertAPIErrorDelegate, UITableViewDataSource {
+class GameViewController : UIViewController, APIGameDetailDelegate, APIGameRankingsDelegate, APIMyGamesManagerDelegate, AlertAPIErrorDelegate, UITableViewDataSource, APIAuthenticationDelegate {
     
     @IBOutlet weak var loadingImage: UIImageView!
     @IBOutlet weak var imageView: UIImageView!
@@ -37,7 +37,7 @@ class GameViewController : UIViewController, APIGameDetailDelegate, APIMyGamesMa
             if(game != nil) {
                 if(gameDetail != nil && gameDetail!.id != game!.id) {
                     self.gameDetail = nil
-                    self.rankings = nil
+                    self.rankings.removeAll()
                 }
                 if (gameDetail == nil) {
                     api.gameDetail(id: game!.id, delegate: self)
@@ -51,8 +51,11 @@ class GameViewController : UIViewController, APIGameDetailDelegate, APIMyGamesMa
             })
         }
     }
+    
+    var nextPage: String?
     var ranking: RankingBasic?
-    var rankings: [RankingForGame]?
+    var rankings = [RankingForGame]()
+    var friendRankings = [RankingForGame]()
     var portId: GraphQLID?
     
     func selectPort(portId: GraphQLID) {
@@ -65,6 +68,7 @@ class GameViewController : UIViewController, APIGameDetailDelegate, APIMyGamesMa
         }
         return game!.ports.first!
     }
+    
     func selectedPortDetail() -> GameQuery.Data.Game.Port {
         if (portId != nil) {
             return gameDetail!.ports.first(where: {$0.id == portId!})!
@@ -156,6 +160,7 @@ class GameViewController : UIViewController, APIGameDetailDelegate, APIMyGamesMa
             star.addTarget(self, action: #selector(starTapped(sender:)), for: .touchUpInside)
         })
         switchEditionButton.addTarget(self, action: #selector(switchEditions(sender:)), for: .touchUpInside)
+        api.register(authenticationDelegate: self)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -209,9 +214,32 @@ class GameViewController : UIViewController, APIGameDetailDelegate, APIMyGamesMa
         })
     }
     
-    func handleAPI(gameDetail: GameQuery.Data.Game, rankings: [RankingForGame], nextPage: String?) {
+    func handleAPI(rankings: [RankingForGame], nextPage: String?) {
+        self.nextPage = nextPage
+        addNonFriendRankings(rankings)
+        DispatchQueue.main.async(execute: {
+            self.configureView()
+        })
+    }
+    
+    func handleAPI(gameDetail: GameQuery.Data.Game, rankings: [RankingForGame], friendRankings: [RankingForGame], nextPage: String?) {
         self.gameDetail = gameDetail
-        self.rankings = rankings
+        self.nextPage = nextPage
+        self.friendRankings.removeAll()
+        self.friendRankings.append(contentsOf: friendRankings)
+        self.rankings.removeAll()
+        self.rankings.append(contentsOf: friendRankings)
+        addNonFriendRankings(rankings)
+        DispatchQueue.main.async(execute: {
+            self.configureView()
+        })
+    }
+    
+    func addNonFriendRankings(_ rankings: [RankingForGame]) {
+        let nonFriendRankings = rankings.filter{ ranking in
+            return !friendRankings.contains(where: {$0.id == ranking.id})
+        }
+        self.rankings.append(contentsOf: nonFriendRankings)
     }
     
     func handleUpdates() {
@@ -225,15 +253,19 @@ class GameViewController : UIViewController, APIGameDetailDelegate, APIMyGamesMa
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if (rankings != nil) {
-            return rankings!.count
-        }
-        return 0
+        return rankings.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if (nextPage != nil && indexPath.row >= (rankings.count - 15)) {
+            DispatchQueue.main.async(execute: {
+                self.loadingImage.isHidden = false
+            })
+            api.gameRankings(id: game!.id, after: nextPage, delegate: self)
+            nextPage = nil
+        }
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
-        let ranking = rankings![indexPath.row]
+        let ranking = rankings[indexPath.row]
         let user = ranking.user
         
         if (ranking.ranking != nil) {
@@ -292,6 +324,24 @@ class GameViewController : UIViewController, APIGameDetailDelegate, APIMyGamesMa
     func handleAPIAuthenticationError() {
         DispatchQueue.main.async(execute: {
             self.easyAlert("Session expired, please sign in and try again.")
+            self.configureView()
+        })
+    }
+    
+    
+    func handleAPILogin() {
+        if (game != nil){
+            api.gameDetail(id: game!.id, delegate: self)
+        }
+        DispatchQueue.main.async(execute: {
+            self.configureView()
+        })
+    }
+    
+    func handleAPILogout() {
+        self.ranking = nil
+        self.friendRankings.removeAll()
+        DispatchQueue.main.async(execute: {
             self.configureView()
         })
     }

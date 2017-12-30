@@ -330,12 +330,12 @@
 			children = (
 				4C7CF64F1FE4CF2200E7B32A /* GameBasic.graphql */,
 				4CBD0F7E1FE6DD3F00230771 /* RankingBasic.graphql */,
+				4C47F0331FF6A15E00E5FD92 /* RankingForGame.graphql */,
+				4CBD0F961FE834E900230771 /* RankingWithUser.graphql */,
 				4CBD0F841FE6DE0C00230771 /* UserBasic.graphql */,
 				4CBD0F8E1FE6F5D200230771 /* UserDetail.graphql */,
-				4CBD0F961FE834E900230771 /* RankingWithUser.graphql */,
 				4C91103D1FEC55F100DDEECC /* CommentBasic.graphql */,
 				4C91103F1FEC563B00DDEECC /* CommentWithUser.graphql */,
-				4C47F0331FF6A15E00E5FD92 /* RankingForGame.graphql */,
 			);
 			path = Fragments;
 			sourceTree = "<group>";

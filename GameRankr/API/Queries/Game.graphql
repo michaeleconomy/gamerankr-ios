@@ -15,5 +15,8 @@ query Game($id: ID!) {
                 hasNextPage
             }
         }
+        friend_rankings {
+            ...RankingForGame
+        }
     }
 }

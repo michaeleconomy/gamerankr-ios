@@ -74,7 +74,6 @@ class GameRankrNetworkTransport: NetworkTransport {
                 fatalError("Response should be an HTTPURLResponse")
             }
             
-            
             if (httpResponse.statusCode == 401) {
                 completionHandler(nil, GameRankrAuthenticationError())
                 return

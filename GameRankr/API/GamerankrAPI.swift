@@ -18,7 +18,7 @@ protocol APIMyGamesDelegate : AuthenticatedAPIErrorDelegate {
 }
 
 protocol APIGameDetailDelegate : AuthenticatedAPIErrorDelegate {
-    func handleAPI(gameDetail: GameQuery.Data.Game, rankings: [RankingForGame], nextPage: String?)
+    func handleAPI(gameDetail: GameQuery.Data.Game, rankings: [RankingForGame], friendRankings: [RankingForGame], nextPage: String?)
 }
 
 protocol APIGameRankingsDelegate : AuthenticatedAPIErrorDelegate {
@@ -151,7 +151,8 @@ class GamerankrAPI {
                 nextPage = rankingEdges.pageInfo.endCursor
             }
             let rankings = rankingEdges.edges!.map{$0!.node!.fragments.rankingForGame}
-            delegate.handleAPI(gameDetail: game, rankings: rankings, nextPage: nextPage)
+            let friendRankings = game.friendRankings.map{$0.fragments.rankingForGame}
+            delegate.handleAPI(gameDetail: game, rankings: rankings, friendRankings: friendRankings, nextPage: nextPage)
         }
     }
     
