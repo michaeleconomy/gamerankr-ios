@@ -1,6 +1,5 @@
 import Foundation
 import Apollo
-import Dispatch
 
 let api = GamerankrAPI()
 
@@ -15,7 +14,7 @@ protocol APISearchResultsDelegate : AuthenticatedAPIErrorDelegate {
 }
 
 protocol APIMyGamesDelegate : AuthenticatedAPIErrorDelegate {
-    func handleAPIMyGames(response: MyGamesQuery.Data.MyGame)
+    func handleAPIMyGames(rankings: [RankingBasic], nextPage: String?)
 }
 
 protocol APIGameDetailDelegate : AuthenticatedAPIErrorDelegate {
@@ -128,8 +127,8 @@ class GamerankrAPI {
     }
     
 
-    func search(query: String, delegate: APISearchResultsDelegate) {
-        apollo.fetch(query: SearchQuery(query: query)) { (result, error) in
+    func search(query: String, after: String? = nil, delegate: APISearchResultsDelegate) {
+        apollo.fetch(query: SearchQuery(query: query, after: after)) { (result, error) in
             if (!self.handleApolloApiErrors(result, error, delegate: delegate)) { return }
             let games = result!.data!.search
             var nextPage : String?
@@ -183,7 +182,7 @@ class GamerankrAPI {
         }
     }
 
-    func userRankings(id: String, after: String?, delegate: APIUserRankingDelegate) {
+    func userRankings(id: String, after: String? = nil, delegate: APIUserRankingDelegate) {
         apollo.fetch(query: UserRankingsQuery(id: id, after: after)) { (result, error) in
             if (!self.handleApolloApiErrors(result, error, delegate: delegate)) { return }
             let rankingEdges = result!.data!.user.rankings
@@ -210,7 +209,6 @@ class GamerankrAPI {
         }
     }
     
-    
     func myShelves(delegate: APIShelvesDelegate) {
         apollo.fetch(query: MyShelvesQuery()) { (result, error) in
             if (!self.handleApolloApiErrors(result, error, delegate: delegate)) { return }
@@ -218,11 +216,17 @@ class GamerankrAPI {
         }
     }
     
-    
     func myGames(after: String? = nil, delegate: APIMyGamesDelegate) {
         apollo.fetch(query: MyGamesQuery(after: after)) { (result, error) in
             if (!self.handleApolloApiErrors(result, error, delegate: delegate)) { return }
-            delegate.handleAPIMyGames(response: result!.data!.myGames)
+            let myGames = result!.data!.myGames
+            
+            var nextPage : String?
+            if (myGames.pageInfo.hasNextPage){
+                nextPage = myGames.pageInfo.endCursor
+            }
+            let rankings = myGames.edges!.map{$0!.ranking!.fragments.rankingBasic}
+            delegate.handleAPIMyGames(rankings: rankings, nextPage: nextPage)
         }
     }
     
@@ -296,4 +300,3 @@ class GamerankrAPI {
         return true
     }
 }
-

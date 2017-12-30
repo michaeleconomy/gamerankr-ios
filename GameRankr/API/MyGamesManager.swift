@@ -88,15 +88,14 @@ class MyGamesManager : APIMyGamesDelegate, APIRankDelegate, APIDestroyRankingDel
         api.destroyRanking(portId: portId, delegate: self)
     }
     
-    func handleAPIMyGames(response: MyGamesQuery.Data.MyGame) {
-        let additionalRankings = response.edges!.map({$0!.ranking!.fragments.rankingBasic})
-        if (!additionalRankings.isEmpty) {
-            rankingsLoading!.append(contentsOf: additionalRankings)
-            if (response.pageInfo.hasNextPage){
-                api.myGames(after: response.pageInfo.endCursor, delegate: self)
+    func handleAPIMyGames(rankings: [RankingBasic], nextPage: String?) {
+        if (!rankings.isEmpty) {
+            rankingsLoading!.append(contentsOf: rankings)
+            if (nextPage != nil){
+                api.myGames(after: nextPage, delegate: self)
             }
         }
-        if (!response.pageInfo.hasNextPage) {
+        if (nextPage == nil) {
             doneLoading()
         }
     }

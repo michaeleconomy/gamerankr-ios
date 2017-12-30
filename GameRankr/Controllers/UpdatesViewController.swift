@@ -6,7 +6,8 @@ class UpdatesViewController: UIViewController, AlertAPIErrorDelegate, UITableVie
     
     @IBOutlet weak var loadingImage: UIImageView!
     @IBOutlet weak var tableView: UITableView!
-    var updates = [RankingWithUser]()
+    private var updates = [RankingWithUser]()
+    private var nextPage: String?
     var fetchedUpdates = false
     
     override func viewDidLoad() {
@@ -32,7 +33,9 @@ class UpdatesViewController: UIViewController, AlertAPIErrorDelegate, UITableVie
     }
     
     func handleAPI(updates: [RankingWithUser], nextPage: String?) {
-        self.updates = updates
+        self.updates.append(contentsOf: updates)
+        
+        self.nextPage = nextPage
         
         DispatchQueue.main.async(execute: {
             self.tableView.reloadData()
@@ -46,6 +49,15 @@ class UpdatesViewController: UIViewController, AlertAPIErrorDelegate, UITableVie
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
+        if (nextPage != nil && indexPath.row >= (updates.count - 15)) {
+            api.updates(after: nextPage, delegate: self)
+            self.nextPage = nil
+            
+            DispatchQueue.main.async(execute: {
+                self.loadingImage.isHidden = false
+            })
+        }
+        
         let ranking = updates[indexPath.row]
         let port = ranking.port
         let user = ranking.user
@@ -69,11 +81,9 @@ class UpdatesViewController: UIViewController, AlertAPIErrorDelegate, UITableVie
             if let indexPath = tableView.indexPathForSelectedRow {
                 let controller = segue.destination as! GameViewController
                 controller.game = updates[indexPath.row].game.fragments.gameBasic
-                
             }
         }
     }
-    
     
     func handleAPILogin() {
         //nothing for now
