@@ -44,7 +44,10 @@ class FriendsController : UIViewController, APIFriendsDelegate, AlertAPIErrorDel
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
         let user = friends[indexPath.row]
         cell.textLabel!.text = user.realName
-        cell.imageView?.kf.setImage(with: URL(string: user.photoUrl)!, placeholder: PlaceholderImages.user)
+        cell.imageView?.kf.setImage(with: URL(string: user.photoUrl)!, placeholder: PlaceholderImages.user, completionHandler: {
+            (image, error, cacheType, imageUrl) in
+            tableView.reloadRows(at: [indexPath], with: .automatic)
+        })
         return cell
     }
     

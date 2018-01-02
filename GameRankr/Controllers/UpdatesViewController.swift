@@ -78,7 +78,7 @@ class UpdatesViewController: UIViewController, AlertAPIErrorDelegate, UITableVie
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if (segue.identifier == nil) {
-            NSLog("nil segue from user view")
+            NSLog("nil segue from updatesView")
             return
         }
         switch segue.identifier! {
