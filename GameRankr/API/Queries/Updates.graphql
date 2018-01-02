@@ -2,7 +2,7 @@ query Updates($after: String) {
     updates(first: 30, after: $after) {
         edges {
             ranking : node {
-                ...RankingWithUser
+                ...RankingFull
             }
         }
         pageInfo {

@@ -1,0 +1,4 @@
+fragment ShelfBasic on Shelf {
+    id
+    name
+}

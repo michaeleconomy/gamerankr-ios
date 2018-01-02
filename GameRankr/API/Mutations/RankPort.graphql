@@ -1,5 +1,5 @@
 mutation RankPort($portId: ID!, $ranking : Int, $removeRanking : Boolean, $review : String, $addShelfId : ID, $removeShelfId : ID) {
     ranking : rank_port(port_id: $portId, ranking: $ranking, remove_ranking: $removeRanking, review: $review, add_shelf_id: $addShelfId, remove_shelf_id: $removeShelfId) {
-        ...RankingBasic
+        ...RankingWithGame
     }
 }

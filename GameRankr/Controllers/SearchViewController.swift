@@ -103,11 +103,18 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "showDetail" {
+        if (segue.identifier == nil) {
+            NSLog("nil segue from user view")
+            return
+        }
+        switch segue.identifier! {
+        case "gameDetail":
             if let indexPath = tableView.indexPathForSelectedRow {
                 let controller = segue.destination as! GameViewController
                 controller.game = results[indexPath.row]
             }
+        default:
+            NSLog("updates view: unhandled segue identifier: \(segue.identifier!)")
         }
     }
 }

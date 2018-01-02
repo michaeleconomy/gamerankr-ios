@@ -53,9 +53,9 @@ class GameViewController : UIViewController, APIGameDetailDelegate, APIGameRanki
     }
     
     var nextPage: String?
-    var ranking: RankingBasic?
-    var rankings = [RankingForGame]()
-    var friendRankings = [RankingForGame]()
+    var ranking: RankingWithGame?
+    var rankings = [RankingWithUser]()
+    var friendRankings = [RankingWithUser]()
     var portId: GraphQLID?
     
     func selectPort(portId: GraphQLID) {
@@ -81,7 +81,7 @@ class GameViewController : UIViewController, APIGameDetailDelegate, APIGameRanki
     }
     
     func configureView() {
-        loadingImage.isHidden = !isLoading()
+        loadingImage?.isHidden = !isLoading()
         if (game != nil) {
             let port = selectedPort()
             self.title = game!.title
@@ -94,7 +94,7 @@ class GameViewController : UIViewController, APIGameDetailDelegate, APIGameRanki
             else {
                 otherPlatformsButton?.isHidden = false
                 let otherPlatforms = remainingPorts.map{$0.platform.name}.joined(separator: ", ")
-                otherPlatformsButton.setTitle("Other Platforms: \(otherPlatforms)", for: .normal)
+                otherPlatformsButton?.setTitle("Other Platforms: \(otherPlatforms)", for: .normal)
             }
             
             if (gameDetail != nil) {
@@ -116,33 +116,33 @@ class GameViewController : UIViewController, APIGameDetailDelegate, APIGameRanki
             var starsToFill = 0
             if (ranking != nil) {
                 if (ranking!.port.id == selectedPort().id) {
-                    switchEditionButton.isHidden = true
+                    switchEditionButton?.isHidden = true
                 }
                 else {
-                    switchEditionButton.isHidden = false
+                    switchEditionButton?.isHidden = false
                 }
-                reviewStack.isHidden = false
+                reviewStack?.isHidden = false
                 if (ranking!.ranking != nil) {
                     starsToFill = ranking!.ranking!
                 }
                 let shelvesStr = ranking!.shelves.map{$0.name}.joined(separator: ", ")
-                shelveButton.setTitle("Shelved: \(shelvesStr)", for: .normal)
-                shelveButton.backgroundColor = UIColor.white
+                shelveButton?.setTitle("Shelved: \(shelvesStr)", for: .normal)
+                shelveButton?.backgroundColor = UIColor.white
                 if (ranking!.review != nil && ranking!.review != "") {
-                    reviewLabel.isHidden = false
-                    reviewLabel.text = "\"\(ranking!.review!)\""
-                    reviewButton.setTitle("Edit My Review", for: .normal)
+                    reviewLabel?.isHidden = false
+                    reviewLabel?.text = "\"\(ranking!.review!)\""
+                    reviewButton?.setTitle("Edit My Review", for: .normal)
                 }
                 else {
-                    reviewLabel.isHidden = true
-                    reviewButton.setTitle("Write a Review", for: .normal)
+                    reviewLabel?.isHidden = true
+                    reviewButton?.setTitle("Write a Review", for: .normal)
                 }
             }
             else {
-                switchEditionButton.isHidden = true
-                shelveButton.setTitle("Add to My Games", for: .normal)
-                shelveButton.backgroundColor = UIColor.lightGray
-                reviewStack.isHidden = true
+                switchEditionButton?.isHidden = true
+                shelveButton?.setTitle("Add to My Games", for: .normal)
+                shelveButton?.backgroundColor = UIColor.lightGray
+                reviewStack?.isHidden = true
             }
             
             setStars(starsToFill)
@@ -202,19 +202,21 @@ class GameViewController : UIViewController, APIGameDetailDelegate, APIGameRanki
     
     func setStars(_ value: Int) {
         var i = 1
-        stars.arrangedSubviews.forEach({subview in
-            let star = subview as! UIButton
-            if (i <= value) {
-                star.setImage(starFull, for: .normal)
+        if (stars != nil) {
+            for subview in stars!.arrangedSubviews {
+                let star = subview as! UIButton
+                if (i <= value) {
+                    star.setImage(starFull, for: .normal)
+                }
+                else {
+                    star.setImage(starEmpty, for: .normal)
+                }
+                i += 1
             }
-            else {
-                star.setImage(starEmpty, for: .normal)
-            }
-            i += 1
-        })
+        }
     }
     
-    func handleAPI(rankings: [RankingForGame], nextPage: String?) {
+    func handleAPI(rankings: [RankingWithUser], nextPage: String?) {
         self.nextPage = nextPage
         addNonFriendRankings(rankings)
         DispatchQueue.main.async(execute: {
@@ -222,7 +224,7 @@ class GameViewController : UIViewController, APIGameDetailDelegate, APIGameRanki
         })
     }
     
-    func handleAPI(gameDetail: GameQuery.Data.Game, rankings: [RankingForGame], friendRankings: [RankingForGame], nextPage: String?) {
+    func handleAPI(gameDetail: GameQuery.Data.Game, rankings: [RankingWithUser], friendRankings: [RankingWithUser], nextPage: String?) {
         self.gameDetail = gameDetail
         self.nextPage = nextPage
         self.friendRankings.removeAll()
@@ -235,7 +237,7 @@ class GameViewController : UIViewController, APIGameDetailDelegate, APIGameRanki
         })
     }
     
-    func addNonFriendRankings(_ rankings: [RankingForGame]) {
+    func addNonFriendRankings(_ rankings: [RankingWithUser]) {
         let nonFriendRankings = rankings.filter{ ranking in
             return !friendRankings.contains(where: {$0.id == ranking.id})
         }
@@ -308,9 +310,16 @@ class GameViewController : UIViewController, APIGameDetailDelegate, APIGameRanki
             controller.game = game
             controller.ranking = ranking
             controller.portId = ranking?.port.id ?? selectedPort().id
-        case "showRankingDetail":
+        case "rankingDetail":
+            guard let indexPath = self.reviewsTable?.indexPathForSelectedRow  else {
+                NSLog("GameViewController: could not get indexPath")
+                return
+            }
+            let selectedRanking = rankings[indexPath.row]
             let controller = segue.destination as! RankingViewController
-            controller.ranking = ranking
+            controller.ranking = selectedRanking.fragments.rankingBasic
+            controller.user = selectedRanking.user.fragments.userBasic
+            controller.game = game
         case "chooseEdition":
             let controller = segue.destination as! PortChooserViewController
             controller.game = game

@@ -1,6 +1,0 @@
-fragment CommentWithUser on Comment {
-    ...CommentBasic
-    user {
-        ...UserBasic
-    }
-}

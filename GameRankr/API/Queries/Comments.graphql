@@ -1,0 +1,13 @@
+query Comments($resourceId: ID!, $resourceType: String!, $after: String) {
+    comments(resource_id: $resourceId, resource_type: $resourceType, first: 30, after: $after) {
+        edges {
+            comment: node {
+                ...CommentBasic
+            }
+        }
+        pageInfo {
+            endCursor
+            hasNextPage
+        }
+    }
+}

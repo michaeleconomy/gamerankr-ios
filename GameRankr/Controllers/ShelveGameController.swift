@@ -9,7 +9,7 @@ class ShelveGameController : UIViewController, UITableViewDataSource, APIMyShelv
     @IBOutlet weak var removeButton: UIButton!
     
     var game: GameBasic?
-    var ranking: RankingBasic?
+    var ranking: RankingWithGame?
     var portId: GraphQLID?
     
     override func viewDidLoad() {
@@ -103,7 +103,7 @@ class ShelveGameController : UIViewController, UITableViewDataSource, APIMyShelv
     }
     
     func handleUpdates() {
-        ranking = MyGamesManager.sharedInstance.getRanking(gameId: game!.id)
+        self.ranking = MyGamesManager.sharedInstance.getRanking(gameId: game!.id)
         DispatchQueue.main.async(execute: {
             self.configureView()
         })

@@ -12,11 +12,10 @@ class PortChooserViewController : UITableViewController {
         
         let selectedRow = game?.ports.index(where: {$0.id == selected})
         if (selectedRow != nil) {
-            NSLog("choosing row: \(selectedRow!)")
             self.tableView.selectRow(at: IndexPath(row: selectedRow!, section: 0), animated: false, scrollPosition: .top)
         }
         else {
-            NSLog("could not fine seelcted: \(selected ?? "nil")")
+            NSLog("could not fine selected: \(selected ?? "nil")")
         }
     }
     

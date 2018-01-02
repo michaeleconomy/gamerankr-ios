@@ -2,7 +2,7 @@ query MyGames($after: String) {
     my_games(first: 30, after: $after) {
         edges {
             ranking : node {
-               ...RankingBasic
+               ...RankingWithGame
             }
         }
         pageInfo {

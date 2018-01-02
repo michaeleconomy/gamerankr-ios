@@ -1,7 +1,7 @@
 import UIKit
 
 class EditReviewViewController : UIViewController {
-    var ranking : RankingBasic?
+    var ranking : RankingWithGame?
     
     @IBOutlet weak var saveButton: UIBarButtonItem!
     @IBOutlet weak var reviewView: UITextView!

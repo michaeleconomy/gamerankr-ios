@@ -8,9 +8,9 @@ protocol APIMyGamesManagerDelegate : AuthenticatedAPIErrorDelegate, AnyObject {
 class MyGamesManager : APIMyGamesDelegate, APIRankDelegate, APIDestroyRankingDelegate {
     static let sharedInstance = MyGamesManager()
     
-    var rankings : [RankingBasic]
-    var rankingsLoading : [RankingBasic]?
-    var rankingsByGameId = [GraphQLID:RankingBasic]()
+    var rankings : [RankingWithGame]
+    var rankingsLoading : [RankingWithGame]?
+    var rankingsByGameId = [GraphQLID:RankingWithGame]()
     
     var delegates = [APIMyGamesManagerDelegate]()
     var loadingCount = 0
@@ -41,12 +41,12 @@ class MyGamesManager : APIMyGamesDelegate, APIRankDelegate, APIDestroyRankingDel
             return
         }
         self.loadingCount += 1
-        rankingsLoading = [RankingBasic]()
+        rankingsLoading = [RankingWithGame]()
         api.myGames(delegate: self)
     }
     
     func clear() {
-        rankings = [RankingBasic]()
+        rankings = [RankingWithGame]()
         LocalSQLiteManager.sharedInstance.clearRankings()
         notifyDelegates()
     }
@@ -54,7 +54,6 @@ class MyGamesManager : APIMyGamesDelegate, APIRankDelegate, APIDestroyRankingDel
     func loading() -> Bool {
         return loadingCount > 0
     }
-    
     
     func register(delegate: APIMyGamesManagerDelegate) {
         self.delegates.append(delegate)
@@ -66,7 +65,7 @@ class MyGamesManager : APIMyGamesDelegate, APIRankDelegate, APIDestroyRankingDel
         }
     }
     
-    subscript(index : Int) -> RankingBasic? {
+    subscript(index : Int) -> RankingWithGame? {
         return rankings[index]
     }
     
@@ -74,7 +73,7 @@ class MyGamesManager : APIMyGamesDelegate, APIRankDelegate, APIDestroyRankingDel
         return rankings.count
     }
     
-    func getRanking(gameId : GraphQLID) -> RankingBasic? {
+    func getRanking(gameId : GraphQLID) -> RankingWithGame? {
         return rankingsByGameId[gameId]
     }
     
@@ -88,7 +87,7 @@ class MyGamesManager : APIMyGamesDelegate, APIRankDelegate, APIDestroyRankingDel
         api.destroyRanking(portId: portId, delegate: self)
     }
     
-    func handleAPIMyGames(rankings: [RankingBasic], nextPage: String?) {
+    func handleAPIMyGames(rankings: [RankingWithGame], nextPage: String?) {
         if (!rankings.isEmpty) {
             rankingsLoading!.append(contentsOf: rankings)
             if (nextPage != nil){
@@ -102,10 +101,10 @@ class MyGamesManager : APIMyGamesDelegate, APIRankDelegate, APIDestroyRankingDel
     
     private func doneLoading() {
         loadingCount -= 1
-        var rankingsByGameIdLoading = [GraphQLID: RankingBasic]()
-        rankingsLoading!.forEach({ ranking in
+        var rankingsByGameIdLoading = [GraphQLID: RankingWithGame]()
+        for ranking in rankingsLoading! {
             rankingsByGameIdLoading[ranking.game.id] = ranking
-        })
+        }
         
         self.rankings = rankingsLoading!
         self.rankingsLoading = nil
@@ -114,13 +113,13 @@ class MyGamesManager : APIMyGamesDelegate, APIRankDelegate, APIDestroyRankingDel
         notifyDelegates()
     }
     
-    private func addRanking(_ ranking: RankingBasic) {
+    private func addRanking(_ ranking: RankingWithGame) {
         let gameId = ranking.game.id
         rankingsByGameId[gameId] = ranking
         rankings.insert(ranking, at: 0)
     }
     
-    func handleAPI(ranking: RankingBasic) {
+    func handleAPI(ranking: RankingWithGame) {
         deleteRankingFor(gameId: ranking.game.id)
         addRanking(ranking)
         loadingCount -= 1
@@ -138,7 +137,6 @@ class MyGamesManager : APIMyGamesDelegate, APIRankDelegate, APIDestroyRankingDel
     func notifyDelegates() {
         delegates.forEach{$0.handleUpdates()}
     }
-    
     
     func handleAPIAuthenticationError() {
         for delegate in delegates {

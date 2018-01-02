@@ -2,4 +2,7 @@ fragment CommentBasic on Comment {
     id
     comment
     created_at
+    user {
+        ...UserBasic
+    }
 }

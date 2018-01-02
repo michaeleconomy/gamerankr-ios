@@ -32,7 +32,7 @@ class LocalSQLiteManager {
         try! db.run(createMiscTableQuery)
     }
     
-    func persistRankings(rankings: [RankingBasic]) {
+    func persistRankings(rankings: [RankingWithGame]) {
         do {
             try db.run(rankingsTable.delete())  // Delete all the existing records
             for ranking in rankings {
@@ -56,14 +56,14 @@ class LocalSQLiteManager {
         }
     }
     
-    func getRankings() throws -> [RankingBasic] {
-        var rankings = [RankingBasic]()
+    func getRankings() throws -> [RankingWithGame] {
+        var rankings = [RankingWithGame]()
         let rows = try db.prepare(rankingsTable)
         
         for row in rows {
             let rankingData = row[serializedRanking].data(using: .utf8)!
             let rankingJson = try JSONSerialization.jsonObject(with: rankingData, options: []) as! JSONObject
-            let ranking = try RankingBasic(jsonObject: rankingJson)
+            let ranking = try RankingWithGame(jsonObject: rankingJson)
             rankings.append(ranking)
         }
         return rankings

@@ -1,0 +1,8 @@
+fragment RankingFull on Ranking {
+    ...RankingWithGame
+    user {
+        ...UserBasic
+    }
+}
+
+

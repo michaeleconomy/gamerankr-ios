@@ -1,9 +1,9 @@
-query GameRankings($id: ID!, $after: String) {
-    game(id: $id) {
+query Shelf($id: ID!, $after: String) {
+    shelf(id: $id) {
         rankings(first: 30, after: $after) {
             edges {
                 ranking : node {
-                    ...RankingWithUser
+                    ...RankingWithGame
                 }
             }
             pageInfo {
@@ -13,3 +13,4 @@ query GameRankings($id: ID!, $after: String) {
         }
     }
 }
+

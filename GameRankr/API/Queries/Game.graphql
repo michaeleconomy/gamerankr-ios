@@ -7,7 +7,7 @@ query Game($id: ID!) {
         rankings(first: 30) {
             edges {
                 node {
-                    ...RankingForGame
+                    ...RankingWithUser
                 }
             }
             pageInfo {
@@ -16,7 +16,7 @@ query Game($id: ID!) {
             }
         }
         friend_rankings {
-            ...RankingForGame
+            ...RankingWithUser
         }
     }
 }

@@ -3,6 +3,9 @@ fragment RankingBasic on Ranking {
     ranking
     review
     verb
+    shelves {
+        ...ShelfBasic
+    }
     port {
         id
         platform {
@@ -10,11 +13,5 @@ fragment RankingBasic on Ranking {
             name
         }
         small_image_url
-    }
-    game {
-        ...GameBasic
-    }
-    shelves {
-        name
     }
 }

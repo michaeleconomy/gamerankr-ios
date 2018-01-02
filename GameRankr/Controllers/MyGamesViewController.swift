@@ -55,13 +55,23 @@ class MyGamesViewController: UIViewController, UITableViewDataSource, UITableVie
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "showDetail" {
-            if let indexPath = tableView.indexPathForSelectedRow {
-                let controller = segue.destination as! GameViewController
-                let ranking = MyGamesManager.sharedInstance[indexPath.row]!
-                controller.game = ranking.game.fragments.gameBasic
-                controller.selectPort(portId: ranking.port.id)
+        if (segue.identifier == nil) {
+            NSLog("nil segue from user view")
+            return
+        }
+        switch segue.identifier! {
+        case "gameDetail":
+            guard let indexPath = tableView.indexPathForSelectedRow else {
+                NSLog("tableView.indexPathForSelectedRow was nil")
+                return
             }
+            
+            let controller = segue.destination as! GameViewController
+            let ranking = MyGamesManager.sharedInstance[indexPath.row]!
+            controller.game = ranking.game.fragments.gameBasic
+            controller.selectPort(portId: ranking.port.id)
+        default:
+            NSLog("updates view: unhandled segue identifier: \(segue.identifier!)")
         }
     }
     

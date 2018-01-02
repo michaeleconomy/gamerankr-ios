@@ -2,12 +2,13 @@ import UIKit
 
 class UserViewController : UIViewController, APIUserDetailDelegate, AlertAPIErrorDelegate, UITableViewDataSource {
     
+    @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var loadingImage: UIImageView!
     @IBOutlet weak var shelvesStack: UIStackView!
     @IBOutlet weak var reviewTable: UITableView!
     @IBOutlet weak var imageView: UIImageView!
     
-    var rankings: [RankingBasic]?
+    var rankings: [RankingWithGame]?
     var userDetail: UserDetail? {
         didSet {
             if (userDetail != nil) {
@@ -25,7 +26,7 @@ class UserViewController : UIViewController, APIUserDetailDelegate, AlertAPIErro
     }
     var user: UserBasic? {
         didSet {
-            if(user != nil) {
+            if (user != nil) {
                 if (userDetail?.id != user!.id) {
                     self.userDetail = nil
                     self.rankings = nil
@@ -45,20 +46,33 @@ class UserViewController : UIViewController, APIUserDetailDelegate, AlertAPIErro
         if (user != nil) {
             self.navigationItem.title = user!.realName
             loadingImage?.isHidden = userDetail != nil
-            
             imageView?.kf.setImage(with: largePhotoUrl(), placeholder: PlaceholderImages.user)
             
             if (userDetail != nil) {
                 shelvesStack?.subviews.forEach{ $0.removeFromSuperview()}
-                userDetail!.shelves.forEach { shelf in
-                    let shelfLabel = UILabel()
-                    shelfLabel.text = shelf.name
-                    shelvesStack?.addArrangedSubview(shelfLabel)
+                for shelf in userDetail!.shelves {
+                    let shelfButton = UIButton()
+                    shelfButton.setTitle(shelf.name, for: .normal)
+                    shelfButton.setTitleColor(.blue, for: .normal)
+                    shelfButton.contentHorizontalAlignment = .left
+                    shelfButton.addTarget(self, action: #selector(shelfButtonTap(sender:)), for: .touchUpInside)
+                    shelvesStack?.addArrangedSubview(shelfButton)
                 }
+                self.scrollView?.isHidden = false
+            }
+            else {
+                self.scrollView?.isHidden = true
             }
             
             self.reviewTable?.reloadData()
         }
+        else {
+            self.scrollView?.isHidden = true
+        }
+    }
+    
+    @objc func shelfButtonTap(sender: UIButton) {
+        performSegue(withIdentifier: "shelfDetail", sender: sender)
     }
     
     func largePhotoUrl() -> URL {
@@ -84,7 +98,7 @@ class UserViewController : UIViewController, APIUserDetailDelegate, AlertAPIErro
     }
     
     
-    func handleAPI(userDetail: UserDetail, rankings: [RankingBasic], nextPage: String?) {
+    func handleAPI(userDetail: UserDetail, rankings: [RankingWithGame], nextPage: String?) {
         self.userDetail = userDetail
         self.rankings = rankings
         
@@ -122,15 +136,32 @@ class UserViewController : UIViewController, APIUserDetailDelegate, AlertAPIErro
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "showDetail" {
-            if let indexPath = reviewTable.indexPathForSelectedRow {
-                let ranking = rankings![indexPath.row]
-                let controller = segue.destination as! GameViewController
-                let game = ranking.game.fragments.gameBasic
-                controller.game = game
-                controller.selectPort(portId: ranking.port.id)
-            }
+        if (segue.identifier == nil) {
+            NSLog("nil segue from user view")
+            return
         }
+        switch segue.identifier! {
+        case "rankingDetail":
+            guard let indexPath = reviewTable.indexPathForSelectedRow else {
+                NSLog("indexPath was nil")
+                return
+            }
+            let ranking = rankings![indexPath.row]
+            let controller = segue.destination as! RankingViewController
+            controller.ranking = ranking.fragments.rankingBasic
+            controller.game = ranking.game.fragments.gameBasic
+            controller.user = user
+        case "shelfDetail":
+            let button = sender as! UIButton
+            let shelfIndex = shelvesStack.arrangedSubviews.index(where: {$0 === button})!
+            let shelf = userDetail!.shelves[shelfIndex].fragments.shelfBasic
+            let controller = segue.destination as! ShelfViewController
+            controller.shelf = shelf
+            controller.user = user
+        default:
+            NSLog("unknown segue: \(segue.identifier!)")
+        }
+        
     }
     
     

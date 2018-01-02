@@ -3,7 +3,7 @@ query UserRankings($id: ID!, $after: String) {
         rankings(first: 30, after: $after) {
             edges {
                 ranking : node {
-                    ...RankingBasic
+                    ...RankingWithGame
                 }
             }
             pageInfo {

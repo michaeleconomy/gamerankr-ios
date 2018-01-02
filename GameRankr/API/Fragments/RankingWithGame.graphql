@@ -1,0 +1,6 @@
+fragment RankingWithGame on Ranking {
+    ...RankingBasic
+    game {
+        ...GameBasic
+    }
+}

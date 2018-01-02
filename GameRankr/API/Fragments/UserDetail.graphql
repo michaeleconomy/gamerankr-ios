@@ -3,7 +3,7 @@ fragment UserDetail on User {
     rankings(first: 10) {
         edges {
             ranking : node {
-                ...RankingBasic
+                ...RankingWithGame
             }
         }
         pageInfo {
@@ -12,7 +12,6 @@ fragment UserDetail on User {
         }
     }
     shelves {
-        id
-        name
+        ...ShelfBasic
     }
 }

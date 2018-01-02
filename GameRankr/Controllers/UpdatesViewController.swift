@@ -6,7 +6,7 @@ class UpdatesViewController: UIViewController, AlertAPIErrorDelegate, UITableVie
     
     @IBOutlet weak var loadingImage: UIImageView!
     @IBOutlet weak var tableView: UITableView!
-    private var updates = [RankingWithUser]()
+    private var updates = [RankingFull]()
     private var nextPage: String?
     var fetchedUpdates = false
     
@@ -32,7 +32,7 @@ class UpdatesViewController: UIViewController, AlertAPIErrorDelegate, UITableVie
         }
     }
     
-    func handleAPI(updates: [RankingWithUser], nextPage: String?) {
+    func handleAPI(updates: [RankingFull], nextPage: String?) {
         self.updates.append(contentsOf: updates)
         
         self.nextPage = nextPage
@@ -77,11 +77,23 @@ class UpdatesViewController: UIViewController, AlertAPIErrorDelegate, UITableVie
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "showDetail" {
-            if let indexPath = tableView.indexPathForSelectedRow {
-                let controller = segue.destination as! GameViewController
-                controller.game = updates[indexPath.row].game.fragments.gameBasic
+        if (segue.identifier == nil) {
+            NSLog("nil segue from user view")
+            return
+        }
+        switch segue.identifier! {
+        case "rankingDetail":
+            guard let indexPath = tableView.indexPathForSelectedRow else {
+                NSLog("tableView.indexPathForSelectedRow was nil")
+                return
             }
+            let controller = segue.destination as! RankingViewController
+            let ranking = updates[indexPath.row]
+            controller.ranking = ranking.fragments.rankingBasic
+            controller.user = ranking.user.fragments.userBasic
+            controller.game = ranking.game.fragments.gameBasic
+        default:
+            NSLog("updates view: unhandled segue identifier: \(segue.identifier!)")
         }
     }
     
