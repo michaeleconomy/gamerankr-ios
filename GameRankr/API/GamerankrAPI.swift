@@ -232,14 +232,14 @@ class GamerankrAPI {
     }
     
     func myShelves(delegate: APIShelvesDelegate) {
-        apollo.fetch(query: MyShelvesQuery()) { (result, error) in
+        apollo.fetch(query: MyShelvesQuery(), cachePolicy: .fetchIgnoringCacheData) { (result, error) in
             if (!self.handleApolloApiErrors(result, error, delegate: delegate)) { return }
             delegate.handleAPI(shelves: result!.data!.shelves)
         }
     }
     
     func myGames(after: String? = nil, delegate: APIMyGamesDelegate) {
-        apollo.fetch(query: MyGamesQuery(after: after)) { (result, error) in
+        apollo.fetch(query: MyGamesQuery(after: after), cachePolicy: .fetchIgnoringCacheData) { (result, error) in
             if (!self.handleApolloApiErrors(result, error, delegate: delegate)) { return }
             let myGames = result!.data!.myGames
             
@@ -278,7 +278,7 @@ class GamerankrAPI {
     
     func comments(resourceId: GraphQLID, resourceType: String, after: String? = nil, delegate: APICommentsDelegate) {
         
-        apollo.fetch(query: CommentsQuery(resourceId: resourceId, resourceType: resourceType, after: after)) { (result, error) in
+        apollo.fetch(query: CommentsQuery(resourceId: resourceId, resourceType: resourceType, after: after), cachePolicy: .fetchIgnoringCacheData) { (result, error) in
             if (!self.handleApolloApiErrors(result, error, delegate: delegate)) { return }
             let comments = result!.data!.comments
             var nextPage : String?

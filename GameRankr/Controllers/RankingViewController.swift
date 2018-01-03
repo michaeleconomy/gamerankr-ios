@@ -150,6 +150,7 @@ class RankingViewController : UIViewController, UITableViewDataSource, APICommen
     }
     
     func loadComments(getNextPage: Bool = false) {
+        NSLog("loadComments called")
         if (!getNextPage) {
             self.nextPage = nil
             comments.removeAll()
