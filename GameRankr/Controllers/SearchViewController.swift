@@ -36,7 +36,10 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
         let port = game.ports.first
         if (port != nil && port?.smallImageUrl != nil) {
             cell.imageView?.kf.indicatorType = .activity
-            cell.imageView?.kf.setImage(with: URL(string: port!.smallImageUrl!)!, placeholder: PlaceholderImages.game)
+            cell.imageView?.kf.setImage(with: URL(string: port!.smallImageUrl!)!, placeholder: PlaceholderImages.game, completionHandler: {
+                (image, error, cacheType, imageUrl) in
+                cell.layoutSubviews()
+            })
         }
         else {
             cell.imageView?.image = PlaceholderImages.game

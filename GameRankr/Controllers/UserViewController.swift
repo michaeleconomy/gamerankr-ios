@@ -127,7 +127,10 @@ class UserViewController : UIViewController, APIUserDetailDelegate, AlertAPIErro
         
         if (ranking.port.smallImageUrl != nil) {
             cell.imageView?.kf.indicatorType = .activity
-            cell.imageView?.kf.setImage(with: URL(string: port.smallImageUrl!)!, placeholder: PlaceholderImages.game)
+            cell.imageView?.kf.setImage(with: URL(string: port.smallImageUrl!)!, placeholder: PlaceholderImages.game, completionHandler: {
+                (image, error, cacheType, imageUrl) in
+                cell.layoutSubviews()
+            })
         }
         else {
             cell.imageView?.image = PlaceholderImages.game

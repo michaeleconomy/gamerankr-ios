@@ -46,7 +46,7 @@ class FriendsController : UIViewController, APIFriendsDelegate, AlertAPIErrorDel
         cell.textLabel!.text = user.realName
         cell.imageView?.kf.setImage(with: URL(string: user.photoUrl)!, placeholder: PlaceholderImages.user, completionHandler: {
             (image, error, cacheType, imageUrl) in
-            tableView.reloadRows(at: [indexPath], with: .automatic)
+            cell.layoutSubviews()
         })
         return cell
     }

@@ -41,7 +41,10 @@ class MyGamesViewController: UIViewController, UITableViewDataSource, UITableVie
         cell.imageView?.image = PlaceholderImages.game
         if (ranking.port.smallImageUrl != nil) {
             cell.imageView?.kf.indicatorType = .activity
-            cell.imageView?.kf.setImage(with: URL(string: ranking.port.smallImageUrl!)!, placeholder: PlaceholderImages.game)
+            cell.imageView?.kf.setImage(with: URL(string: ranking.port.smallImageUrl!)!, placeholder: PlaceholderImages.game, completionHandler: {
+                (image, error, cacheType, imageUrl) in
+                cell.layoutSubviews()
+            })
         }
         return cell
     }
