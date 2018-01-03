@@ -89,6 +89,9 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
         if (shouldClearSearchOnResults) {
             shouldClearSearchOnResults = false
             self.results.removeAll()
+            DispatchQueue.main.async(execute: {
+                self.tableView.setContentOffset(CGPoint.zero, animated:false)
+            })
         }
         self.results.append(contentsOf: results)
         self.nextPage = nextPage
