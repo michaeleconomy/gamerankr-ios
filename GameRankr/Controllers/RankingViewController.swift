@@ -1,7 +1,6 @@
 import UIKit
 
-class RankingViewController : UIViewController, UITableViewDataSource, APICommentsDelegate, AlertAPIErrorDelegate, UITextViewDelegate {
-    
+class RankingViewController : UIViewController, UITableViewDataSource, APICommentsDelegate, AlertAPIErrorDelegate, UITextViewDelegate, APICommentDelegate {
     @IBOutlet weak var loadingImage: UIImageView!
     @IBOutlet weak var userButton: UIButton!
     @IBOutlet weak var verbLabel: UILabel!
@@ -56,6 +55,7 @@ class RankingViewController : UIViewController, UITableViewDataSource, APICommen
         commentField.delegate = self
         commentField.layer.borderColor = UIColor.gray.cgColor
         commentField.layer.borderWidth = 2
+        commentButton.addTarget(self, action: #selector(postComment), for: .touchUpInside)
         defaultComment()
     }
     
@@ -103,8 +103,7 @@ class RankingViewController : UIViewController, UITableViewDataSource, APICommen
         
         self.gameImage?.kf.indicatorType = .activity
         self.gameImage?.kf.setImage(with: URL(string: ranking!.port.smallImageUrl!)!)
-//        self.gameImage?.kf.setImage(with: URL(string: portDetail.mediumImageUrl!)!, options: [.keepCurrentImageWhileLoading])
-        
+
         self.gameTitleButton?.setTitle(game!.title, for: .normal)
     }
     
@@ -139,6 +138,17 @@ class RankingViewController : UIViewController, UITableViewDataSource, APICommen
         commentBottomContraint.constant = 0
     }
     
+    @objc func postComment() {
+        if (commentField.text == nil || commentField.text == "") {
+            //dont' post empty comment
+            return
+        }
+        loadingImage.isHidden = false
+        api.comment(resourceId: ranking!.id, resourceType: "Ranking", comment: commentField.text, delegate: self)
+        commentField.endEditing(true)
+        defaultComment()
+    }
+    
     func loadComments(getNextPage: Bool = false) {
         if (!getNextPage) {
             self.nextPage = nil
@@ -157,7 +167,6 @@ class RankingViewController : UIViewController, UITableViewDataSource, APICommen
     }
     
     func handleAPI(comments: [CommentBasic], nextPage: String?) {
-        NSLog("got comments: \(comments.count)")
         self.comments.append(contentsOf: comments)
         self.nextPage = nextPage
         
@@ -167,11 +176,21 @@ class RankingViewController : UIViewController, UITableViewDataSource, APICommen
         })
     }
     
+    func handleAPI(comment: CommentBasic) {
+        handleAPI(comments: [comment], nextPage: nil)
+        //NOTE: this is a bug that prevents comments from continuing to load - but... we don't show duplicate comments
+    }
+    
+    
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return comments.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if (nextPage != nil && indexPath.row > comments.count - 15) {
+            loadComments(getNextPage: true)
+        }
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
         let comment = comments[indexPath.row]
         let user = comment.user

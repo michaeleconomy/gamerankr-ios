@@ -4,27 +4,29 @@ import Apollo
 
 public final class CommentMutation: GraphQLMutation {
   public static let operationString =
-    "mutation Comment($resourceId: ID!, $comment: String!) {\n  comment(resource_id: $resourceId, resource_type: \"Ranking\", comment: $comment) {\n    __typename\n    ...CommentBasic\n  }\n}"
+    "mutation Comment($resourceId: ID!, $resourceType: String!, $comment: String!) {\n  comment(resource_id: $resourceId, resource_type: $resourceType, comment: $comment) {\n    __typename\n    ...CommentBasic\n  }\n}"
 
   public static var requestString: String { return operationString.appending(CommentBasic.fragmentString).appending(UserBasic.fragmentString) }
 
   public var resourceId: GraphQLID
+  public var resourceType: String
   public var comment: String
 
-  public init(resourceId: GraphQLID, comment: String) {
+  public init(resourceId: GraphQLID, resourceType: String, comment: String) {
     self.resourceId = resourceId
+    self.resourceType = resourceType
     self.comment = comment
   }
 
   public var variables: GraphQLMap? {
-    return ["resourceId": resourceId, "comment": comment]
+    return ["resourceId": resourceId, "resourceType": resourceType, "comment": comment]
   }
 
   public struct Data: GraphQLSelectionSet {
     public static let possibleTypes = ["Mutation"]
 
     public static let selections: [GraphQLSelection] = [
-      GraphQLField("comment", arguments: ["resource_id": GraphQLVariable("resourceId"), "resource_type": "Ranking", "comment": GraphQLVariable("comment")], type: .nonNull(.object(Comment.selections))),
+      GraphQLField("comment", arguments: ["resource_id": GraphQLVariable("resourceId"), "resource_type": GraphQLVariable("resourceType"), "comment": GraphQLVariable("comment")], type: .nonNull(.object(Comment.selections))),
     ]
 
     public var snapshot: Snapshot

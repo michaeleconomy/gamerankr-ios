@@ -61,6 +61,10 @@ protocol APICommentsDelegate: AuthenticatedAPIErrorDelegate {
     func handleAPI(comments: [CommentBasic], nextPage: String?)
 }
 
+protocol APICommentDelegate: AuthenticatedAPIErrorDelegate {
+    func handleAPI(comment: CommentBasic)
+}
+
 protocol APILoginDelegate: APIErrorDelegate {
     func handleAPILogin()
 }
@@ -296,6 +300,14 @@ class GamerankrAPI {
         apollo.perform(mutation: DestroyRankingMutation(portId: portId)) { (result, error) in
             if (!self.handleApolloApiErrors(result, error, delegate: delegate)) { return }
             delegate.handleAPIRankingDestruction(ranking: result!.data!.ranking)
+        }
+    }
+    
+    func comment(resourceId: GraphQLID, resourceType: String, comment: String, delegate: APICommentDelegate) {
+        
+        apollo.perform(mutation: CommentMutation(resourceId: resourceId, resourceType: resourceType, comment: comment)) { (result, error) in
+            if (!self.handleApolloApiErrors(result, error, delegate: delegate)) { return }
+            delegate.handleAPI(comment: result!.data!.comment.fragments.commentBasic)
         }
     }
     
