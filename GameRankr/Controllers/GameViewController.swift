@@ -269,9 +269,9 @@ class GameViewController : UIViewController, APIGameDetailDelegate, APIGameRanki
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
         let ranking = rankings[indexPath.row]
         let user = ranking.user
-        
         if (ranking.ranking != nil) {
-            cell.textLabel!.text = "\(user.realName) \(ranking.verb) - \(ranking.ranking!) stars"
+            let starsStr = String(repeating: "\u{2605}", count: ranking.ranking!)
+            cell.textLabel!.text = "\(user.realName) \(ranking.verb) \(starsStr)"
         }
         else {
             cell.textLabel!.text = "\(user.realName) \(ranking.verb)"
