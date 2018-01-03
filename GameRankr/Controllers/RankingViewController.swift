@@ -177,7 +177,11 @@ class RankingViewController : UIViewController, UITableViewDataSource, APICommen
         let user = comment.user
 
         cell.textLabel!.text = user.realName
-        cell.detailTextLabel!.text = comment.comment
+        cell.imageView?.kf.setImage(with: URL(string: user.photoUrl)!, placeholder: PlaceholderImages.user, completionHandler: {
+            (image, error, cacheType, imageUrl) in
+            cell.layoutSubviews()
+        })
+        cell.detailTextLabel!.text = "\"\(comment.comment)\""
         return cell
     }
     
