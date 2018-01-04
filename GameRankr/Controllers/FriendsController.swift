@@ -2,6 +2,7 @@ import UIKit
 
 class FriendsController : UIViewController, APIFriendsDelegate, AlertAPIErrorDelegate, UITableViewDataSource {
     @IBOutlet weak var loadingImage: UIImageView!
+    @IBOutlet weak var noFriendsLabel: UILabel!
     @IBOutlet weak var tableView: UITableView!
     
     var friends = [UserBasic]()
@@ -55,8 +56,9 @@ class FriendsController : UIViewController, APIFriendsDelegate, AlertAPIErrorDel
         self.friends.append(contentsOf: friends)
         self.nextPage = nextPage
         DispatchQueue.main.async(execute: {
-            self.tableView.reloadData()
-            self.loadingImage.isHidden = true
+            self.noFriendsLabel?.isHidden = !self.friends.isEmpty
+            self.tableView?.reloadData()
+            self.loadingImage?.isHidden = true
         })
     }
     

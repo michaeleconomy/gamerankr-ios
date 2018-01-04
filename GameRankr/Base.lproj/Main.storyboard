@@ -117,12 +117,26 @@ Add more friends to see more updates.</string>
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Dlh-C9-j60">
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="G0Q-pi-o7W">
                                 <rect key="frame" x="0.0" y="64" width="320" height="2"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Dlh-C9-j60">
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="2"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="2" id="8JI-no-8Vl"/>
+                                        </constraints>
+                                    </imageView>
+                                    <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You have no friends on GameRankr, you should try adding some." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vET-sz-M04">
+                                        <rect key="frame" x="0.0" y="-64" width="320" height="0.0"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="2" id="8JI-no-8Vl"/>
+                                    <constraint firstItem="Dlh-C9-j60" firstAttribute="width" secondItem="G0Q-pi-o7W" secondAttribute="width" id="4Mh-DH-HGj"/>
                                 </constraints>
-                            </imageView>
+                            </stackView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="v0P-Hj-hfX">
                                 <rect key="frame" x="0.0" y="66" width="320" height="365"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -159,18 +173,19 @@ Add more friends to see more updates.</string>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="G0Q-pi-o7W" firstAttribute="bottom" secondItem="v0P-Hj-hfX" secondAttribute="top" id="3ko-Oz-WYu"/>
+                            <constraint firstItem="G0Q-pi-o7W" firstAttribute="leading" secondItem="vCU-PY-gVJ" secondAttribute="leading" id="853-qq-LC9"/>
                             <constraint firstItem="v0P-Hj-hfX" firstAttribute="bottom" secondItem="Xmf-En-GZG" secondAttribute="bottom" id="8b0-BV-o01"/>
-                            <constraint firstItem="Dlh-C9-j60" firstAttribute="top" secondItem="Xmf-En-GZG" secondAttribute="top" id="CmD-UL-DmT"/>
-                            <constraint firstItem="Dlh-C9-j60" firstAttribute="width" secondItem="vCU-PY-gVJ" secondAttribute="width" id="MhM-FA-gHN"/>
                             <constraint firstItem="v0P-Hj-hfX" firstAttribute="leading" secondItem="Xmf-En-GZG" secondAttribute="leading" id="QPh-bv-erx"/>
                             <constraint firstItem="Xmf-En-GZG" firstAttribute="trailing" secondItem="v0P-Hj-hfX" secondAttribute="trailing" id="q5D-k9-tu4"/>
-                            <constraint firstItem="v0P-Hj-hfX" firstAttribute="top" secondItem="Dlh-C9-j60" secondAttribute="bottom" id="s6a-5U-319"/>
-                            <constraint firstItem="Dlh-C9-j60" firstAttribute="centerX" secondItem="Xmf-En-GZG" secondAttribute="centerX" id="wIY-qM-wUy"/>
+                            <constraint firstAttribute="trailing" secondItem="G0Q-pi-o7W" secondAttribute="trailing" id="tLC-Ug-IJg"/>
+                            <constraint firstItem="G0Q-pi-o7W" firstAttribute="top" secondItem="Xmf-En-GZG" secondAttribute="top" id="yW4-nS-gcp"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Xmf-En-GZG"/>
                     </view>
                     <connections>
                         <outlet property="loadingImage" destination="Dlh-C9-j60" id="bGh-mx-FL9"/>
+                        <outlet property="noFriendsLabel" destination="vET-sz-M04" id="h57-W5-Dk2"/>
                         <outlet property="tableView" destination="v0P-Hj-hfX" id="1bq-lS-wTA"/>
                         <segue destination="dzd-8i-Ijl" kind="show" identifier="requireSignIn" id="tfh-hU-DDF"/>
                     </connections>
@@ -1420,9 +1435,9 @@ Add more friends to see more updates.</string>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="PEt-s8-htz"/>
-        <segue reference="int-zW-xEI"/>
+        <segue reference="tfh-hU-DDF"/>
         <segue reference="VWN-eB-v21"/>
         <segue reference="fDH-8H-Obl"/>
-        <segue reference="Jh0-oY-Vq9"/>
+        <segue reference="Cu6-IW-o67"/>
     </inferredMetricsTieBreakers>
 </document>
