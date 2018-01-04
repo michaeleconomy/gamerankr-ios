@@ -222,23 +222,25 @@ public final class CommentMutation: GraphQLMutation {
 
 public final class DestroyCommentMutation: GraphQLMutation {
   public static let operationString =
-    "mutation DestroyComment($commentId: ID!) {\n  comment: destroy_comment(id: $commentId) {\n    __typename\n    id\n  }\n}"
+    "mutation DestroyComment($id: ID!) {\n  comment: destroy_comment(id: $id) {\n    __typename\n    ...CommentBasic\n  }\n}"
 
-  public var commentId: GraphQLID
+  public static var requestString: String { return operationString.appending(CommentBasic.fragmentString).appending(UserBasic.fragmentString) }
 
-  public init(commentId: GraphQLID) {
-    self.commentId = commentId
+  public var id: GraphQLID
+
+  public init(id: GraphQLID) {
+    self.id = id
   }
 
   public var variables: GraphQLMap? {
-    return ["commentId": commentId]
+    return ["id": id]
   }
 
   public struct Data: GraphQLSelectionSet {
     public static let possibleTypes = ["Mutation"]
 
     public static let selections: [GraphQLSelection] = [
-      GraphQLField("destroy_comment", alias: "comment", arguments: ["id": GraphQLVariable("commentId")], type: .nonNull(.object(Comment.selections))),
+      GraphQLField("destroy_comment", alias: "comment", arguments: ["id": GraphQLVariable("id")], type: .nonNull(.object(Comment.selections))),
     ]
 
     public var snapshot: Snapshot
@@ -265,7 +267,11 @@ public final class DestroyCommentMutation: GraphQLMutation {
 
       public static let selections: [GraphQLSelection] = [
         GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+        GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
         GraphQLField("id", type: .nonNull(.scalar(GraphQLID.self))),
+        GraphQLField("comment", type: .nonNull(.scalar(String.self))),
+        GraphQLField("created_at", type: .nonNull(.scalar(String.self))),
+        GraphQLField("user", type: .nonNull(.object(User.selections))),
       ]
 
       public var snapshot: Snapshot
@@ -274,8 +280,8 @@ public final class DestroyCommentMutation: GraphQLMutation {
         self.snapshot = snapshot
       }
 
-      public init(id: GraphQLID) {
-        self.init(snapshot: ["__typename": "Comment", "id": id])
+      public init(id: GraphQLID, comment: String, createdAt: String, user: User) {
+        self.init(snapshot: ["__typename": "Comment", "id": id, "comment": comment, "created_at": createdAt, "user": user.snapshot])
       }
 
       public var __typename: String {
@@ -293,6 +299,135 @@ public final class DestroyCommentMutation: GraphQLMutation {
         }
         set {
           snapshot.updateValue(newValue, forKey: "id")
+        }
+      }
+
+      public var comment: String {
+        get {
+          return snapshot["comment"]! as! String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "comment")
+        }
+      }
+
+      public var createdAt: String {
+        get {
+          return snapshot["created_at"]! as! String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "created_at")
+        }
+      }
+
+      public var user: User {
+        get {
+          return User(snapshot: snapshot["user"]! as! Snapshot)
+        }
+        set {
+          snapshot.updateValue(newValue.snapshot, forKey: "user")
+        }
+      }
+
+      public var fragments: Fragments {
+        get {
+          return Fragments(snapshot: snapshot)
+        }
+        set {
+          snapshot += newValue.snapshot
+        }
+      }
+
+      public struct Fragments {
+        public var snapshot: Snapshot
+
+        public var commentBasic: CommentBasic {
+          get {
+            return CommentBasic(snapshot: snapshot)
+          }
+          set {
+            snapshot += newValue.snapshot
+          }
+        }
+      }
+
+      public struct User: GraphQLSelectionSet {
+        public static let possibleTypes = ["User"]
+
+        public static let selections: [GraphQLSelection] = [
+          GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+          GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+          GraphQLField("id", type: .nonNull(.scalar(GraphQLID.self))),
+          GraphQLField("real_name", type: .nonNull(.scalar(String.self))),
+          GraphQLField("photo_url", type: .nonNull(.scalar(String.self))),
+        ]
+
+        public var snapshot: Snapshot
+
+        public init(snapshot: Snapshot) {
+          self.snapshot = snapshot
+        }
+
+        public init(id: GraphQLID, realName: String, photoUrl: String) {
+          self.init(snapshot: ["__typename": "User", "id": id, "real_name": realName, "photo_url": photoUrl])
+        }
+
+        public var __typename: String {
+          get {
+            return snapshot["__typename"]! as! String
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "__typename")
+          }
+        }
+
+        public var id: GraphQLID {
+          get {
+            return snapshot["id"]! as! GraphQLID
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "id")
+          }
+        }
+
+        public var realName: String {
+          get {
+            return snapshot["real_name"]! as! String
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "real_name")
+          }
+        }
+
+        public var photoUrl: String {
+          get {
+            return snapshot["photo_url"]! as! String
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "photo_url")
+          }
+        }
+
+        public var fragments: Fragments {
+          get {
+            return Fragments(snapshot: snapshot)
+          }
+          set {
+            snapshot += newValue.snapshot
+          }
+        }
+
+        public struct Fragments {
+          public var snapshot: Snapshot
+
+          public var userBasic: UserBasic {
+            get {
+              return UserBasic(snapshot: snapshot)
+            }
+            set {
+              snapshot += newValue.snapshot
+            }
+          }
         }
       }
     }

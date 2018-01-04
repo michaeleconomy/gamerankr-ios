@@ -1,6 +1,7 @@
 import UIKit
 
-class RankingViewController : UIViewController, UITableViewDataSource, APICommentsDelegate, AlertAPIErrorDelegate, UITextViewDelegate, APICommentDelegate {
+class RankingViewController : UIViewController, UITableViewDataSource, APICommentsDelegate, AlertAPIErrorDelegate, UITextViewDelegate, APICommentDelegate, APIDestroyCommentDelegate {
+    
     @IBOutlet weak var loadingImage: UIImageView!
     @IBOutlet weak var userButton: UIButton!
     @IBOutlet weak var verbLabel: UILabel!
@@ -150,7 +151,6 @@ class RankingViewController : UIViewController, UITableViewDataSource, APICommen
     }
     
     func loadComments(getNextPage: Bool = false) {
-        NSLog("loadComments called")
         if (!getNextPage) {
             self.nextPage = nil
             comments.removeAll()
@@ -161,7 +161,6 @@ class RankingViewController : UIViewController, UITableViewDataSource, APICommen
         api.comments(resourceId: ranking!.id, resourceType: "Ranking", after: self.nextPage, delegate: self)
         self.nextPage = nil
     }
-    
     
     func handleAPIAuthenticationError() {
         easyAlert("You've been signed out, sorry for the inconvience")
@@ -182,7 +181,11 @@ class RankingViewController : UIViewController, UITableViewDataSource, APICommen
         //NOTE: this is a bug that prevents comments from continuing to load - but... we don't show duplicate comments
     }
     
-    
+    func handleAPICommentDestruction(ranking: CommentBasic) {
+        DispatchQueue.main.async(execute: {
+            self.loadingImage?.isHidden = true
+        })
+    }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return comments.count
@@ -203,6 +206,26 @@ class RankingViewController : UIViewController, UITableViewDataSource, APICommen
         })
         cell.detailTextLabel!.text = "\"\(comment.comment)\""
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        if (user!.id == api.currentUserId) {
+            return true
+        }
+        let comment = comments[indexPath.row]
+        return comment.user.id == api.currentUserId
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        if (editingStyle == .delete) {
+            let comment = comments[indexPath.row]
+            DispatchQueue.main.async(execute: {
+                self.loadingImage?.isHidden = false
+            })
+            comments.remove(at: indexPath.row)
+            commentsTable.deleteRows(at: [indexPath], with: .automatic)
+            api.destroyComment(id: comment.id, delegate: self)
+        }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

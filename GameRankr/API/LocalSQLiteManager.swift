@@ -69,9 +69,9 @@ class LocalSQLiteManager {
         return rankings
     }
     
-    func persistToken(token: String) {
+    func putMisc(key: String, value: String) {
         do {
-            try db.run(miscTable.insert(miscKey <- "token", miscValue <- token))
+            try db.run(miscTable.insert(miscKey <- key, miscValue <- value))
         }
         catch {
             NSLog("error persisting token")
@@ -87,9 +87,9 @@ class LocalSQLiteManager {
         }
     }
     
-    func getToken() -> String? {
+    func getMisc(key: String) -> String? {
         do {
-            let rows = try db.prepare(miscTable.filter(miscKey == "token").select(miscValue))
+            let rows = try db.prepare(miscTable.filter(miscKey == key).select(miscValue))
             for row in rows {
                 return row[miscValue]
             }

@@ -53,6 +53,10 @@ protocol APIDestroyRankingDelegate: AuthenticatedAPIErrorDelegate {
     func handleAPIRankingDestruction(ranking: DestroyRankingMutation.Data.Ranking)
 }
 
+protocol APIDestroyCommentDelegate: AuthenticatedAPIErrorDelegate {
+    func handleAPICommentDestruction(ranking: CommentBasic)
+}
+
 protocol APIShelvesDelegate: AuthenticatedAPIErrorDelegate {
     func handleAPI(shelves: [MyShelvesQuery.Data.Shelf])
 }
@@ -82,11 +86,21 @@ class GamerankrAPI {
     private let apollo: ApolloClient
     private var authDelegates = [APIAuthenticationDelegate]()
     public private(set) var token: String?
+    public private(set) var currentUserId: GraphQLID?
     
     init() {
-        self.token = LocalSQLiteManager.sharedInstance.getToken()
-        if token != nil {
+        let token = LocalSQLiteManager.sharedInstance.getMisc(key: "token")
+        let currentUserId = LocalSQLiteManager.sharedInstance.getMisc(key: "currentUserId")
+        self.token = token
+        self.currentUserId = currentUserId
+        if (token != nil && currentUserId != nil) {
             self.signed_in = true
+        }
+        else {
+            self.token = nil
+            self.currentUserId = nil
+            LocalSQLiteManager.sharedInstance.clearRankings()
+            LocalSQLiteManager.sharedInstance.clearMisc()
         }
         apollo = ApolloClient(networkTransport: GameRankrNetworkTransport())
     }
@@ -105,19 +119,27 @@ class GamerankrAPI {
             if !(self.handleAPIErrorsBasic(data: data, response: response, error: error, apiErrorDelegate: delegate)) {
                 return
             }
-            let json = try! JSONSerialization.jsonObject(with: data!) as! [String: String]
-            self.handleLogin(token: json["token"]!)
+            do {
+                let json = try JSONSerialization.jsonObject(with: data!) as! [String: String]
+                self.handleLogin(currentUserId: json["current_user_id"]!,token: json["token"]!)
+            }
+            catch {
+                delegate.handleAPI(error: "parse error on login")
+                return
+            }
             
             delegate.handleAPILogin()
         }
         task.resume()
     }
     
-    private func handleLogin(token: String) {
+    private func handleLogin(currentUserId: GraphQLID, token: String) {
         NSLog("login was successful.")
         self.signed_in = true
         self.token = token
-        LocalSQLiteManager.sharedInstance.persistToken(token: token)
+        self.currentUserId = currentUserId
+        LocalSQLiteManager.sharedInstance.putMisc(key: "token", value: token)
+        LocalSQLiteManager.sharedInstance.putMisc(key: "currentUserId", value: currentUserId)
         
         MyGamesManager.sharedInstance.load()
         for authDelegate in authDelegates {
@@ -134,7 +156,6 @@ class GamerankrAPI {
         }
     }
     
-
     func search(query: String, after: String? = nil, delegate: APISearchResultsDelegate) -> Cancellable {
         return apollo.fetch(query: SearchQuery(query: query, after: after)) { (result, error) in
             if (!self.handleApolloApiErrors(result, error, delegate: delegate)) { return }
@@ -308,6 +329,13 @@ class GamerankrAPI {
         apollo.perform(mutation: CommentMutation(resourceId: resourceId, resourceType: resourceType, comment: comment)) { (result, error) in
             if (!self.handleApolloApiErrors(result, error, delegate: delegate)) { return }
             delegate.handleAPI(comment: result!.data!.comment.fragments.commentBasic)
+        }
+    }
+    
+    func destroyComment(id: GraphQLID, delegate: APIDestroyCommentDelegate) {
+        apollo.perform(mutation: DestroyCommentMutation(id: id)) { (result, error) in
+            if (!self.handleApolloApiErrors(result, error, delegate: delegate)) { return }
+            delegate.handleAPICommentDestruction(ranking: result!.data!.comment.fragments.commentBasic)
         }
     }
     
