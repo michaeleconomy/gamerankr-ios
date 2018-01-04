@@ -4,11 +4,13 @@ class UserViewController : UIViewController, APIUserDetailDelegate, AlertAPIErro
     
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var loadingImage: UIImageView!
+    @IBOutlet weak var shelvesTitle: UILabel!
     @IBOutlet weak var shelvesStack: UIStackView!
+    @IBOutlet weak var noGamesLabel: UILabel!
     @IBOutlet weak var reviewTable: UITableView!
     @IBOutlet weak var imageView: UIImageView!
     
-    var rankings: [RankingWithGame]?
+    var rankings = [RankingWithGame]()
     var userDetail: UserDetail? {
         didSet {
             if (userDetail != nil) {
@@ -29,7 +31,7 @@ class UserViewController : UIViewController, APIUserDetailDelegate, AlertAPIErro
             if (user != nil) {
                 if (userDetail?.id != user!.id) {
                     self.userDetail = nil
-                    self.rankings = nil
+                    self.rankings.removeAll()
                 }
                 if (userDetail == nil) {
                     api.userDetail(id: user!.id, delegate: self)
@@ -43,32 +45,44 @@ class UserViewController : UIViewController, APIUserDetailDelegate, AlertAPIErro
     }
     
     func configureView() {
-        if (user != nil) {
-            self.navigationItem.title = user!.realName
-            loadingImage?.isHidden = userDetail != nil
-            imageView?.kf.setImage(with: largePhotoUrl(), placeholder: PlaceholderImages.user)
-            
-            if (userDetail != nil) {
-                shelvesStack?.subviews.forEach{ $0.removeFromSuperview()}
-                for shelf in userDetail!.shelves {
-                    let shelfButton = UIButton()
-                    shelfButton.setTitle(shelf.name, for: .normal)
-                    shelfButton.setTitleColor(.blue, for: .normal)
-                    shelfButton.contentHorizontalAlignment = .left
-                    shelfButton.addTarget(self, action: #selector(shelfButtonTap(sender:)), for: .touchUpInside)
-                    shelvesStack?.addArrangedSubview(shelfButton)
-                }
-                self.scrollView?.isHidden = false
-            }
-            else {
-                self.scrollView?.isHidden = true
-            }
-            
-            self.reviewTable?.reloadData()
+        if (user == nil) {
+            loadingImage?.isHidden = false
+            scrollView?.isHidden = true
+            return
+        }
+        
+        self.navigationItem.title = user!.realName
+        
+        imageView?.kf.setImage(with: largePhotoUrl(), placeholder: PlaceholderImages.user)
+        if (userDetail == nil) {
+            loadingImage?.isHidden = false
+            self.scrollView?.isHidden = true
+            return
+        }
+        loadingImage?.isHidden = true
+        self.scrollView?.isHidden = false
+        
+        if (userDetail!.shelves.isEmpty) {
+            shelvesTitle?.isHidden = true
+            shelvesStack?.isHidden = true
         }
         else {
-            self.scrollView?.isHidden = true
+            shelvesTitle?.isHidden = false
+            shelvesStack?.isHidden = false
+            shelvesStack?.subviews.forEach{ $0.removeFromSuperview()}
+            for shelf in userDetail!.shelves {
+                let shelfButton = UIButton()
+                shelfButton.setTitle(shelf.name, for: .normal)
+                shelfButton.setTitleColor(.blue, for: .normal)
+                shelfButton.contentHorizontalAlignment = .left
+                shelfButton.addTarget(self, action: #selector(shelfButtonTap(sender:)), for: .touchUpInside)
+                shelvesStack?.addArrangedSubview(shelfButton)
+            }
         }
+        
+        noGamesLabel?.isHidden = !rankings.isEmpty
+        
+        self.reviewTable?.reloadData()
     }
     
     @objc func shelfButtonTap(sender: UIButton) {
@@ -97,7 +111,6 @@ class UserViewController : UIViewController, APIUserDetailDelegate, AlertAPIErro
         configureView()
     }
     
-    
     func handleAPI(userDetail: UserDetail, rankings: [RankingWithGame], nextPage: String?) {
         self.userDetail = userDetail
         self.rankings = rankings
@@ -107,18 +120,14 @@ class UserViewController : UIViewController, APIUserDetailDelegate, AlertAPIErro
         })
     }
     
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if (rankings != nil) {
-            return rankings!.count
-        }
-        return 0
+        return rankings.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
         
-        let ranking = rankings![indexPath.row]
+        let ranking = rankings[indexPath.row]
         let game = ranking.game
         let port = ranking.port
         
@@ -149,7 +158,7 @@ class UserViewController : UIViewController, APIUserDetailDelegate, AlertAPIErro
                 NSLog("indexPath was nil")
                 return
             }
-            let ranking = rankings![indexPath.row]
+            let ranking = rankings[indexPath.row]
             let controller = segue.destination as! RankingViewController
             controller.ranking = ranking.fragments.rankingBasic
             controller.game = ranking.game.fragments.gameBasic

@@ -278,16 +278,16 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Faa-c1-zXX">
-                                <rect key="frame" x="0.0" y="64" width="320" height="2"/>
+                                <rect key="frame" x="0.0" y="20" width="320" height="2"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="2" id="ALQ-Je-iBv"/>
                                 </constraints>
                             </imageView>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iAR-5e-ZsC">
-                                <rect key="frame" x="0.0" y="66" width="320" height="365"/>
+                                <rect key="frame" x="0.0" y="22" width="320" height="458"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="OhB-K1-xei">
-                                        <rect key="frame" x="0.0" y="0.0" width="320" height="411.5"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="440"/>
                                         <subviews>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Te4-LU-eGU">
                                                 <rect key="frame" x="0.0" y="0.0" width="320" height="160"/>
@@ -295,7 +295,7 @@
                                                     <constraint firstAttribute="width" secondItem="Te4-LU-eGU" secondAttribute="height" multiplier="2:1" id="4aQ-B7-Cw1"/>
                                                 </constraints>
                                             </imageView>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Shelves" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3Ft-5P-TYQ">
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Shelves" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3Ft-5P-TYQ">
                                                 <rect key="frame" x="0.0" y="168" width="320" height="21"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="21" id="N2c-51-a6l"/>
@@ -304,10 +304,10 @@
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" translatesAutoresizingMaskIntoConstraints="NO" id="ilI-mk-acY" userLabel="ShelvesStack">
+                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="ilI-mk-acY" userLabel="ShelvesStack">
                                                 <rect key="frame" x="0.0" y="197" width="320" height="50"/>
                                             </stackView>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Games" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0aX-hh-ryj">
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Games" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0aX-hh-ryj">
                                                 <rect key="frame" x="0.0" y="255" width="320" height="20.5"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="20.5" id="tbM-vr-qvD"/>
@@ -316,8 +316,14 @@
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Nothing added yet." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="q9g-wx-t0h">
+                                                <rect key="frame" x="0.0" y="283.5" width="320" height="20.5"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
                                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="KqN-X4-lvV" customClass="IntrinsicTableView" customModule="GameRankr" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="283.5" width="320" height="128"/>
+                                                <rect key="frame" x="0.0" y="312" width="320" height="128"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <prototypes>
                                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" textLabel="HQ8-qR-z3Q" detailTextLabel="KWk-yU-h51" style="IBUITableViewCellStyleSubtitle" id="hWW-qZ-dtY">
@@ -380,9 +386,11 @@
                     <connections>
                         <outlet property="imageView" destination="Te4-LU-eGU" id="DNz-Dt-ViK"/>
                         <outlet property="loadingImage" destination="Faa-c1-zXX" id="lZc-S0-SCu"/>
+                        <outlet property="noGamesLabel" destination="q9g-wx-t0h" id="gic-zw-jAz"/>
                         <outlet property="reviewTable" destination="KqN-X4-lvV" id="XVW-gb-rMU"/>
                         <outlet property="scrollView" destination="iAR-5e-ZsC" id="f9p-Pv-nUg"/>
                         <outlet property="shelvesStack" destination="ilI-mk-acY" id="Gj1-it-qZq"/>
+                        <outlet property="shelvesTitle" destination="3Ft-5P-TYQ" id="lxa-sY-UcT"/>
                         <segue destination="dzd-8i-Ijl" kind="show" identifier="requireSignIn" id="KF3-s5-Q5U"/>
                         <segue destination="nT7-jx-D3W" kind="show" identifier="shelfDetail" id="fDH-8H-Obl"/>
                     </connections>
@@ -400,13 +408,13 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="oeC-ri-Tws">
-                                <rect key="frame" x="0.0" y="64" width="320" height="2"/>
+                                <rect key="frame" x="0.0" y="20" width="320" height="2"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="2" id="BVR-Oc-tSz"/>
                                 </constraints>
                             </imageView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="gA1-0c-Skg">
-                                <rect key="frame" x="0.0" y="66" width="320" height="365"/>
+                                <rect key="frame" x="0.0" y="22" width="320" height="458"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" textLabel="gvX-63-ZOV" detailTextLabel="Pz4-Uw-5KA" style="IBUITableViewCellStyleSubtitle" id="fGb-aI-NPw">
@@ -698,13 +706,13 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="XdX-d5-Hbs">
-                                <rect key="frame" x="0.0" y="64" width="320" height="2"/>
+                                <rect key="frame" x="0.0" y="20" width="320" height="2"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="2" id="S9f-FG-ysC"/>
                                 </constraints>
                             </imageView>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" keyboardDismissMode="onDrag" translatesAutoresizingMaskIntoConstraints="NO" id="wak-eB-NNO">
-                                <rect key="frame" x="0.0" y="66" width="320" height="515"/>
+                                <rect key="frame" x="0.0" y="22" width="320" height="608"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="G4d-F0-hAm">
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="499"/>
@@ -871,7 +879,7 @@
                                 </constraints>
                             </scrollView>
                             <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ywu-1g-3FL" userLabel="CommentContainer">
-                                <rect key="frame" x="0.0" y="581" width="320" height="50"/>
+                                <rect key="frame" x="0.0" y="630" width="320" height="50"/>
                                 <subviews>
                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" horizontalCompressionResistancePriority="752" text="Write a comment..." textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="gPC-cN-bm9">
                                         <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
@@ -941,19 +949,19 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="nQI-Bf-vHK">
-                                <rect key="frame" x="0.0" y="64" width="320" height="2"/>
+                                <rect key="frame" x="0.0" y="20" width="320" height="2"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="2" id="rbt-rX-CmQ"/>
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="GameRankr" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wej-fc-5KO">
-                                <rect key="frame" x="0.0" y="81" width="320" height="30"/>
+                                <rect key="frame" x="0.0" y="37" width="320" height="30"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="25"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="To track your games, and see friends you must first connect to facebook." textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="46w-28-Tln">
-                                <rect key="frame" x="46" y="119" width="228" height="123"/>
+                                <rect key="frame" x="46" y="75" width="228" height="123"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="123" id="Fub-hv-hff"/>
                                 </constraints>
@@ -962,7 +970,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uoR-Ay-Jxx">
-                                <rect key="frame" x="0.0" y="387" width="320" height="44"/>
+                                <rect key="frame" x="0.0" y="436" width="320" height="44"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="o4E-3b-WKZ"/>
                                 </constraints>
@@ -1388,9 +1396,9 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="PEt-s8-htz"/>
-        <segue reference="09k-mF-JFN"/>
-        <segue reference="HJh-98-qdS"/>
-        <segue reference="FoV-qj-9o7"/>
+        <segue reference="KF3-s5-Q5U"/>
+        <segue reference="vIV-Ha-3XY"/>
+        <segue reference="fDH-8H-Obl"/>
         <segue reference="Jh0-oY-Vq9"/>
     </inferredMetricsTieBreakers>
 </document>
