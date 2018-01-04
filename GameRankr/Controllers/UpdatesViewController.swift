@@ -85,6 +85,7 @@ class UpdatesViewController: UIViewController, AlertAPIErrorDelegate, UITableVie
             return
         }
         switch segue.identifier! {
+        case "requireSignIn": ()
         case "rankingDetail":
             guard let indexPath = tableView.indexPathForSelectedRow else {
                 NSLog("tableView.indexPathForSelectedRow was nil")
