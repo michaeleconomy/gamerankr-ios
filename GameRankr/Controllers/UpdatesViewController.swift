@@ -4,8 +4,10 @@ import FacebookLogin
 
 class UpdatesViewController: UIViewController, AlertAPIErrorDelegate, UITableViewDataSource, APIUpdatesDelegate, APIAuthenticationDelegate {
     
+    @IBOutlet weak var noUpdatesLabel: UILabel!
     @IBOutlet weak var loadingImage: UIImageView!
     @IBOutlet weak var tableView: UITableView!
+    
     private var updates = [RankingFull]()
     private var nextPage: String?
     var fetchedUpdates = false
@@ -37,6 +39,7 @@ class UpdatesViewController: UIViewController, AlertAPIErrorDelegate, UITableVie
         self.nextPage = nextPage
         
         DispatchQueue.main.async(execute: {
+            self.noUpdatesLabel.isHidden = !self.updates.isEmpty
             self.tableView.reloadData()
             self.loadingImage.isHidden = true
         })

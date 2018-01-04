@@ -19,12 +19,28 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="QJX-dO-MY5">
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="gtP-6f-HAW">
                                 <rect key="frame" x="0.0" y="64" width="320" height="2"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="QJX-dO-MY5">
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="2"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="2" id="Ysg-CW-ga9"/>
+                                        </constraints>
+                                    </imageView>
+                                    <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pjr-3s-z9b">
+                                        <rect key="frame" x="0.0" y="-64" width="320" height="0.0"/>
+                                        <string key="text">There are no updates from friends.
+Add more friends to see more updates.</string>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="2" id="Ysg-CW-ga9"/>
+                                    <constraint firstItem="QJX-dO-MY5" firstAttribute="width" secondItem="gtP-6f-HAW" secondAttribute="width" id="F94-aW-Kak"/>
                                 </constraints>
-                            </imageView>
+                            </stackView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="ZXN-PD-Rbm">
                                 <rect key="frame" x="0.0" y="66" width="320" height="365"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -64,13 +80,13 @@
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="ZXN-PD-Rbm" firstAttribute="top" secondItem="QJX-dO-MY5" secondAttribute="bottom" id="4Jc-Eh-Z5F"/>
-                            <constraint firstItem="QJX-dO-MY5" firstAttribute="centerX" secondItem="PQr-Ze-W5v" secondAttribute="centerX" id="63V-4x-Zbd"/>
+                            <constraint firstItem="gtP-6f-HAW" firstAttribute="top" secondItem="PQr-Ze-W5v" secondAttribute="top" id="6Du-tp-l0N"/>
                             <constraint firstItem="ZXN-PD-Rbm" firstAttribute="bottom" secondItem="PQr-Ze-W5v" secondAttribute="bottom" id="BMn-9X-EhT"/>
                             <constraint firstItem="ZXN-PD-Rbm" firstAttribute="leading" secondItem="PQr-Ze-W5v" secondAttribute="leading" id="Dv9-0t-yHl"/>
-                            <constraint firstItem="QJX-dO-MY5" firstAttribute="top" secondItem="PQr-Ze-W5v" secondAttribute="top" id="ZHc-nG-dOc"/>
+                            <constraint firstItem="gtP-6f-HAW" firstAttribute="bottom" secondItem="ZXN-PD-Rbm" secondAttribute="top" id="ffS-nz-inh"/>
+                            <constraint firstAttribute="trailing" secondItem="gtP-6f-HAW" secondAttribute="trailing" id="qtm-gJ-p4B"/>
                             <constraint firstItem="PQr-Ze-W5v" firstAttribute="trailing" secondItem="ZXN-PD-Rbm" secondAttribute="trailing" id="rDA-20-0zN"/>
-                            <constraint firstItem="QJX-dO-MY5" firstAttribute="width" secondItem="tsR-hK-woN" secondAttribute="width" id="wtn-Yj-BeU"/>
+                            <constraint firstItem="gtP-6f-HAW" firstAttribute="leading" secondItem="tsR-hK-woN" secondAttribute="leading" id="uOC-6F-xBr"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="PQr-Ze-W5v"/>
                     </view>
@@ -84,6 +100,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="loadingImage" destination="QJX-dO-MY5" id="vPz-ET-PDP"/>
+                        <outlet property="noUpdatesLabel" destination="pjr-3s-z9b" id="k2J-eH-Ln5"/>
                         <outlet property="tableView" destination="ZXN-PD-Rbm" id="xOZ-ym-WBJ"/>
                         <segue destination="dzd-8i-Ijl" kind="show" identifier="requireSignIn" id="int-zW-xEI"/>
                     </connections>
@@ -1403,8 +1420,8 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="PEt-s8-htz"/>
-        <segue reference="oqx-vY-9wK"/>
-        <segue reference="nf6-rL-y31"/>
+        <segue reference="int-zW-xEI"/>
+        <segue reference="VWN-eB-v21"/>
         <segue reference="fDH-8H-Obl"/>
         <segue reference="Jh0-oY-Vq9"/>
     </inferredMetricsTieBreakers>
