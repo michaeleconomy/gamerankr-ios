@@ -431,25 +431,39 @@ Add more friends to see more updates.</string>
             </objects>
             <point key="canvasLocation" x="1909" y="1895"/>
         </scene>
-        <!--Shelf View Controller-->
+        <!--Shelf: Foo-->
         <scene sceneID="KBt-5l-02n">
             <objects>
-                <viewController id="nT7-jx-D3W" customClass="ShelfViewController" customModule="GameRankr" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Shelf: Foo" id="nT7-jx-D3W" customClass="ShelfViewController" customModule="GameRankr" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="OMb-m0-DD7">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="oeC-ri-Tws">
-                                <rect key="frame" x="0.0" y="64" width="320" height="2"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="sTL-Pt-v40">
+                                <rect key="frame" x="0.0" y="64" width="320" height="22.5"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="oeC-ri-Tws">
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="2"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="2" id="BVR-Oc-tSz"/>
+                                        </constraints>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No games are on this shelf." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="X32-l6-Zbp">
+                                        <rect key="frame" x="0.0" y="2" width="320" height="20.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="2" id="BVR-Oc-tSz"/>
+                                    <constraint firstItem="oeC-ri-Tws" firstAttribute="width" secondItem="sTL-Pt-v40" secondAttribute="width" id="3Ya-5G-xeh"/>
                                 </constraints>
-                            </imageView>
+                            </stackView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="gA1-0c-Skg">
-                                <rect key="frame" x="0.0" y="66" width="320" height="365"/>
+                                <rect key="frame" x="0.0" y="86.5" width="320" height="344.5"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" textLabel="gvX-63-ZOV" detailTextLabel="Pz4-Uw-5KA" style="IBUITableViewCellStyleSubtitle" id="fGb-aI-NPw">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" textLabel="gvX-63-ZOV" detailTextLabel="Pz4-Uw-5KA" imageView="NwM-iS-upP" style="IBUITableViewCellStyleSubtitle" id="fGb-aI-NPw">
                                         <rect key="frame" x="0.0" y="28" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="fGb-aI-NPw" id="aEp-0j-WFd">
@@ -457,19 +471,23 @@ Add more friends to see more updates.</string>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="gvX-63-ZOV">
-                                                    <rect key="frame" x="15" y="5" width="33.5" height="20.5"/>
+                                                    <rect key="frame" x="74" y="5" width="33.5" height="20.5"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Subtitle" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Pz4-Uw-5KA">
-                                                    <rect key="frame" x="15" y="25.5" width="44" height="14.5"/>
+                                                    <rect key="frame" x="74" y="25.5" width="44" height="14.5"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" image="picture.png" id="NwM-iS-upP">
+                                                    <rect key="frame" x="15" y="0.0" width="44" height="43.5"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                </imageView>
                                             </subviews>
                                         </tableViewCellContentView>
                                         <connections>
@@ -484,18 +502,19 @@ Add more friends to see more updates.</string>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="oeC-ri-Tws" firstAttribute="width" secondItem="OMb-m0-DD7" secondAttribute="width" id="2NU-rE-la0"/>
                             <constraint firstItem="xPf-g2-HGk" firstAttribute="trailing" secondItem="gA1-0c-Skg" secondAttribute="trailing" id="8K3-bH-F75"/>
-                            <constraint firstItem="oeC-ri-Tws" firstAttribute="centerX" secondItem="xPf-g2-HGk" secondAttribute="centerX" id="B4h-al-Jgg"/>
-                            <constraint firstItem="gA1-0c-Skg" firstAttribute="top" secondItem="oeC-ri-Tws" secondAttribute="bottom" id="W1W-Y4-Cwb"/>
-                            <constraint firstItem="oeC-ri-Tws" firstAttribute="top" secondItem="xPf-g2-HGk" secondAttribute="top" id="bGV-9W-Q6x"/>
+                            <constraint firstItem="sTL-Pt-v40" firstAttribute="top" secondItem="xPf-g2-HGk" secondAttribute="top" id="Lbp-BU-Dgz"/>
+                            <constraint firstItem="sTL-Pt-v40" firstAttribute="leading" secondItem="OMb-m0-DD7" secondAttribute="leading" id="Sfp-AL-ZOt"/>
                             <constraint firstItem="xPf-g2-HGk" firstAttribute="bottom" secondItem="gA1-0c-Skg" secondAttribute="bottom" id="jRG-5i-vGW"/>
+                            <constraint firstItem="sTL-Pt-v40" firstAttribute="bottom" secondItem="gA1-0c-Skg" secondAttribute="top" id="myO-Df-d1X"/>
+                            <constraint firstAttribute="trailing" secondItem="sTL-Pt-v40" secondAttribute="trailing" id="pT5-Ba-UpU"/>
                             <constraint firstItem="gA1-0c-Skg" firstAttribute="leading" secondItem="xPf-g2-HGk" secondAttribute="leading" id="v2a-tq-Bvx"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="xPf-g2-HGk"/>
                     </view>
                     <connections>
                         <outlet property="loadingImage" destination="oeC-ri-Tws" id="T5Y-ql-DKN"/>
+                        <outlet property="noRankingsLabel" destination="X32-l6-Zbp" id="R5I-Rg-N1b"/>
                         <outlet property="tableView" destination="gA1-0c-Skg" id="hdZ-U1-yvw"/>
                     </connections>
                 </viewController>
@@ -1436,6 +1455,7 @@ Add more friends to see more updates.</string>
         <image name="news.png" width="25" height="25"/>
         <image name="people.png" width="25" height="25"/>
         <image name="person.png" width="25" height="25"/>
+        <image name="picture.png" width="50" height="50"/>
         <image name="search.png" width="25" height="25"/>
         <image name="star-empty-medium.png" width="40" height="40"/>
         <image name="star-full.png" width="25" height="25"/>
@@ -1443,7 +1463,7 @@ Add more friends to see more updates.</string>
     <inferredMetricsTieBreakers>
         <segue reference="PEt-s8-htz"/>
         <segue reference="tfh-hU-DDF"/>
-        <segue reference="VWN-eB-v21"/>
+        <segue reference="SzE-66-241"/>
         <segue reference="fDH-8H-Obl"/>
         <segue reference="Cu6-IW-o67"/>
     </inferredMetricsTieBreakers>

@@ -291,8 +291,11 @@ class RankingViewController : UIViewController, UITableViewDataSource, APICommen
         case "requireSignIn": ()
         case "shelfDetail":
             let button = sender as! UIButton
-            let shelfIndex = shelvesStack.arrangedSubviews.index(where: {$0 === button})!
-            let shelf = ranking!.shelves[shelfIndex].fragments.shelfBasic
+            guard let shelfIndex = shelvesStack.arrangedSubviews.index(where: {$0 === button}) else {
+                NSLog("RankingViewController - could not find button in shelvesStack")
+                return
+            }
+            let shelf = ranking!.shelves[shelfIndex - 1].fragments.shelfBasic
             let controller = segue.destination as! ShelfViewController
             controller.shelf = shelf
         default:

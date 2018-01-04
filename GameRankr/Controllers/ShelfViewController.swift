@@ -17,6 +17,7 @@ class ShelfViewController: UIViewController, UITableViewDataSource, APIShelfDele
     
     @IBOutlet weak var loadingImage: UIImageView!
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var noRankingsLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,6 +27,7 @@ class ShelfViewController: UIViewController, UITableViewDataSource, APIShelfDele
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.title = "Shelf: \(shelf!.name)"
+        noRankingsLabel.isHidden = true
     }
     
     
@@ -38,6 +40,7 @@ class ShelfViewController: UIViewController, UITableViewDataSource, APIShelfDele
         self.nextPage = nextPage
         DispatchQueue.main.async(execute: {
             self.loadingImage.isHidden = true
+            self.noRankingsLabel.isHidden = !self.rankings.isEmpty
             self.tableView.reloadData()
         })
     }
