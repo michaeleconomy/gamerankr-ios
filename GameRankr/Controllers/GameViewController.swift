@@ -14,6 +14,7 @@ class GameViewController : UIViewController, APIGameDetailDelegate, APIGameRanki
     @IBOutlet weak var reviewLabel: UILabel!
     @IBOutlet weak var reviewButton: UIButton!
     @IBOutlet weak var commentsButton: UIButton!
+    @IBOutlet weak var noRankingsLabel: UILabel!
     @IBOutlet weak var reviewsTable: IntrinsicTableView!
     
     let starFull = UIImage(named: "star-full-medium.png")
@@ -83,40 +84,46 @@ class GameViewController : UIViewController, APIGameDetailDelegate, APIGameRanki
     
     func configureView() {
         loadingImage?.isHidden = !isLoading()
-        if (game != nil) {
-            let port = selectedPort()
-            self.title = game!.title
-            platformLabel?.text = "Platform: \(port.platform.name)"
-            
-            let remainingPorts = game!.ports.filter({$0.id != port.id})
-            if (remainingPorts.isEmpty) {
-                otherPlatformsButton?.isHidden = true
-            }
-            else {
-                otherPlatformsButton?.isHidden = false
-                let otherPlatforms = remainingPorts.map{$0.platform.name}.joined(separator: ", ")
-                otherPlatformsButton?.setTitle("Other Platforms: \(otherPlatforms)", for: .normal)
-            }
-            
-            if (gameDetail != nil) {
-                let portDetail = selectedPortDetail()
-                if (portDetail.mediumImageUrl != nil) {
-                    self.imageView?.kf.indicatorType = .activity
-                    self.imageView?.kf.setImage(with: URL(string: portDetail.mediumImageUrl!)!, options: [.keepCurrentImageWhileLoading])
-                }
-            }
-            else {
-                if (port.smallImageUrl != nil) {
-                    self.imageView?.kf.setImage(with: URL(string: port.smallImageUrl!)!)
-                }
-                else {
-                    self.imageView?.image = PlaceholderImages.game
-                }
-            }
-            
-            configureViewWithRanking()
-        }
         self.reviewsTable?.reloadData()
+        if (game == nil) {
+            NSLog("GameViewController - game was not set!")
+            return
+        }
+    
+        let port = selectedPort()
+        self.title = game!.title
+        platformLabel?.text = "Platform: \(port.platform.name)"
+        
+        let remainingPorts = game!.ports.filter({$0.id != port.id})
+        if (remainingPorts.isEmpty) {
+            otherPlatformsButton?.isHidden = true
+        }
+        else {
+            otherPlatformsButton?.isHidden = false
+            let otherPlatforms = remainingPorts.map{$0.platform.name}.joined(separator: ", ")
+            otherPlatformsButton?.setTitle("Other Platforms: \(otherPlatforms)", for: .normal)
+        }
+        
+        if (gameDetail != nil) {
+            let portDetail = selectedPortDetail()
+            if (portDetail.mediumImageUrl != nil) {
+                self.imageView?.kf.indicatorType = .activity
+                self.imageView?.kf.setImage(with: URL(string: portDetail.mediumImageUrl!)!, options: [.keepCurrentImageWhileLoading])
+            }
+            
+            noRankingsLabel?.isHidden = !rankings.isEmpty
+        }
+        else {
+            if (port.smallImageUrl != nil) {
+                self.imageView?.kf.setImage(with: URL(string: port.smallImageUrl!)!)
+            }
+            else {
+                self.imageView?.image = PlaceholderImages.game
+            }
+            noRankingsLabel?.isHidden = true
+        }
+        
+        configureViewWithRanking()
     }
     
     private func configureViewWithRanking() {
