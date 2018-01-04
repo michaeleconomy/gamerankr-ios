@@ -623,6 +623,7 @@ public final class RankPortMutation: GraphQLMutation {
         GraphQLField("ranking", type: .scalar(Int.self)),
         GraphQLField("review", type: .scalar(String.self)),
         GraphQLField("verb", type: .nonNull(.scalar(String.self))),
+        GraphQLField("comments_count", type: .nonNull(.scalar(Int.self))),
         GraphQLField("shelves", type: .nonNull(.list(.nonNull(.object(Shelf.selections))))),
         GraphQLField("port", type: .nonNull(.object(Port.selections))),
         GraphQLField("game", type: .nonNull(.object(Game.selections))),
@@ -634,8 +635,8 @@ public final class RankPortMutation: GraphQLMutation {
         self.snapshot = snapshot
       }
 
-      public init(id: GraphQLID, ranking: Int? = nil, review: String? = nil, verb: String, shelves: [Shelf], port: Port, game: Game) {
-        self.init(snapshot: ["__typename": "Ranking", "id": id, "ranking": ranking, "review": review, "verb": verb, "shelves": shelves.map { $0.snapshot }, "port": port.snapshot, "game": game.snapshot])
+      public init(id: GraphQLID, ranking: Int? = nil, review: String? = nil, verb: String, commentsCount: Int, shelves: [Shelf], port: Port, game: Game) {
+        self.init(snapshot: ["__typename": "Ranking", "id": id, "ranking": ranking, "review": review, "verb": verb, "comments_count": commentsCount, "shelves": shelves.map { $0.snapshot }, "port": port.snapshot, "game": game.snapshot])
       }
 
       public var __typename: String {
@@ -680,6 +681,15 @@ public final class RankPortMutation: GraphQLMutation {
         }
         set {
           snapshot.updateValue(newValue, forKey: "verb")
+        }
+      }
+
+      public var commentsCount: Int {
+        get {
+          return snapshot["comments_count"]! as! Int
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "comments_count")
         }
       }
 
@@ -2069,6 +2079,7 @@ public final class GameQuery: GraphQLQuery {
               GraphQLField("ranking", type: .scalar(Int.self)),
               GraphQLField("review", type: .scalar(String.self)),
               GraphQLField("verb", type: .nonNull(.scalar(String.self))),
+              GraphQLField("comments_count", type: .nonNull(.scalar(Int.self))),
               GraphQLField("shelves", type: .nonNull(.list(.nonNull(.object(Shelf.selections))))),
               GraphQLField("port", type: .nonNull(.object(Port.selections))),
               GraphQLField("user", type: .nonNull(.object(User.selections))),
@@ -2080,8 +2091,8 @@ public final class GameQuery: GraphQLQuery {
               self.snapshot = snapshot
             }
 
-            public init(id: GraphQLID, ranking: Int? = nil, review: String? = nil, verb: String, shelves: [Shelf], port: Port, user: User) {
-              self.init(snapshot: ["__typename": "Ranking", "id": id, "ranking": ranking, "review": review, "verb": verb, "shelves": shelves.map { $0.snapshot }, "port": port.snapshot, "user": user.snapshot])
+            public init(id: GraphQLID, ranking: Int? = nil, review: String? = nil, verb: String, commentsCount: Int, shelves: [Shelf], port: Port, user: User) {
+              self.init(snapshot: ["__typename": "Ranking", "id": id, "ranking": ranking, "review": review, "verb": verb, "comments_count": commentsCount, "shelves": shelves.map { $0.snapshot }, "port": port.snapshot, "user": user.snapshot])
             }
 
             public var __typename: String {
@@ -2126,6 +2137,15 @@ public final class GameQuery: GraphQLQuery {
               }
               set {
                 snapshot.updateValue(newValue, forKey: "verb")
+              }
+            }
+
+            public var commentsCount: Int {
+              get {
+                return snapshot["comments_count"]! as! Int
+              }
+              set {
+                snapshot.updateValue(newValue, forKey: "comments_count")
               }
             }
 
@@ -2504,6 +2524,7 @@ public final class GameQuery: GraphQLQuery {
           GraphQLField("ranking", type: .scalar(Int.self)),
           GraphQLField("review", type: .scalar(String.self)),
           GraphQLField("verb", type: .nonNull(.scalar(String.self))),
+          GraphQLField("comments_count", type: .nonNull(.scalar(Int.self))),
           GraphQLField("shelves", type: .nonNull(.list(.nonNull(.object(Shelf.selections))))),
           GraphQLField("port", type: .nonNull(.object(Port.selections))),
           GraphQLField("user", type: .nonNull(.object(User.selections))),
@@ -2515,8 +2536,8 @@ public final class GameQuery: GraphQLQuery {
           self.snapshot = snapshot
         }
 
-        public init(id: GraphQLID, ranking: Int? = nil, review: String? = nil, verb: String, shelves: [Shelf], port: Port, user: User) {
-          self.init(snapshot: ["__typename": "Ranking", "id": id, "ranking": ranking, "review": review, "verb": verb, "shelves": shelves.map { $0.snapshot }, "port": port.snapshot, "user": user.snapshot])
+        public init(id: GraphQLID, ranking: Int? = nil, review: String? = nil, verb: String, commentsCount: Int, shelves: [Shelf], port: Port, user: User) {
+          self.init(snapshot: ["__typename": "Ranking", "id": id, "ranking": ranking, "review": review, "verb": verb, "comments_count": commentsCount, "shelves": shelves.map { $0.snapshot }, "port": port.snapshot, "user": user.snapshot])
         }
 
         public var __typename: String {
@@ -2561,6 +2582,15 @@ public final class GameQuery: GraphQLQuery {
           }
           set {
             snapshot.updateValue(newValue, forKey: "verb")
+          }
+        }
+
+        public var commentsCount: Int {
+          get {
+            return snapshot["comments_count"]! as! Int
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "comments_count")
           }
         }
 
@@ -3056,6 +3086,7 @@ public final class GameRankingsQuery: GraphQLQuery {
               GraphQLField("ranking", type: .scalar(Int.self)),
               GraphQLField("review", type: .scalar(String.self)),
               GraphQLField("verb", type: .nonNull(.scalar(String.self))),
+              GraphQLField("comments_count", type: .nonNull(.scalar(Int.self))),
               GraphQLField("shelves", type: .nonNull(.list(.nonNull(.object(Shelf.selections))))),
               GraphQLField("port", type: .nonNull(.object(Port.selections))),
               GraphQLField("user", type: .nonNull(.object(User.selections))),
@@ -3067,8 +3098,8 @@ public final class GameRankingsQuery: GraphQLQuery {
               self.snapshot = snapshot
             }
 
-            public init(id: GraphQLID, ranking: Int? = nil, review: String? = nil, verb: String, shelves: [Shelf], port: Port, user: User) {
-              self.init(snapshot: ["__typename": "Ranking", "id": id, "ranking": ranking, "review": review, "verb": verb, "shelves": shelves.map { $0.snapshot }, "port": port.snapshot, "user": user.snapshot])
+            public init(id: GraphQLID, ranking: Int? = nil, review: String? = nil, verb: String, commentsCount: Int, shelves: [Shelf], port: Port, user: User) {
+              self.init(snapshot: ["__typename": "Ranking", "id": id, "ranking": ranking, "review": review, "verb": verb, "comments_count": commentsCount, "shelves": shelves.map { $0.snapshot }, "port": port.snapshot, "user": user.snapshot])
             }
 
             public var __typename: String {
@@ -3113,6 +3144,15 @@ public final class GameRankingsQuery: GraphQLQuery {
               }
               set {
                 snapshot.updateValue(newValue, forKey: "verb")
+              }
+            }
+
+            public var commentsCount: Int {
+              get {
+                return snapshot["comments_count"]! as! Int
+              }
+              set {
+                snapshot.updateValue(newValue, forKey: "comments_count")
               }
             }
 
@@ -3723,6 +3763,7 @@ public final class MeQuery: GraphQLQuery {
               GraphQLField("ranking", type: .scalar(Int.self)),
               GraphQLField("review", type: .scalar(String.self)),
               GraphQLField("verb", type: .nonNull(.scalar(String.self))),
+              GraphQLField("comments_count", type: .nonNull(.scalar(Int.self))),
               GraphQLField("shelves", type: .nonNull(.list(.nonNull(.object(Shelf.selections))))),
               GraphQLField("port", type: .nonNull(.object(Port.selections))),
               GraphQLField("game", type: .nonNull(.object(Game.selections))),
@@ -3734,8 +3775,8 @@ public final class MeQuery: GraphQLQuery {
               self.snapshot = snapshot
             }
 
-            public init(id: GraphQLID, ranking: Int? = nil, review: String? = nil, verb: String, shelves: [Shelf], port: Port, game: Game) {
-              self.init(snapshot: ["__typename": "Ranking", "id": id, "ranking": ranking, "review": review, "verb": verb, "shelves": shelves.map { $0.snapshot }, "port": port.snapshot, "game": game.snapshot])
+            public init(id: GraphQLID, ranking: Int? = nil, review: String? = nil, verb: String, commentsCount: Int, shelves: [Shelf], port: Port, game: Game) {
+              self.init(snapshot: ["__typename": "Ranking", "id": id, "ranking": ranking, "review": review, "verb": verb, "comments_count": commentsCount, "shelves": shelves.map { $0.snapshot }, "port": port.snapshot, "game": game.snapshot])
             }
 
             public var __typename: String {
@@ -3780,6 +3821,15 @@ public final class MeQuery: GraphQLQuery {
               }
               set {
                 snapshot.updateValue(newValue, forKey: "verb")
+              }
+            }
+
+            public var commentsCount: Int {
+              get {
+                return snapshot["comments_count"]! as! Int
+              }
+              set {
+                snapshot.updateValue(newValue, forKey: "comments_count")
               }
             }
 
@@ -4463,6 +4513,7 @@ public final class MyGamesQuery: GraphQLQuery {
             GraphQLField("ranking", type: .scalar(Int.self)),
             GraphQLField("review", type: .scalar(String.self)),
             GraphQLField("verb", type: .nonNull(.scalar(String.self))),
+            GraphQLField("comments_count", type: .nonNull(.scalar(Int.self))),
             GraphQLField("shelves", type: .nonNull(.list(.nonNull(.object(Shelf.selections))))),
             GraphQLField("port", type: .nonNull(.object(Port.selections))),
             GraphQLField("game", type: .nonNull(.object(Game.selections))),
@@ -4474,8 +4525,8 @@ public final class MyGamesQuery: GraphQLQuery {
             self.snapshot = snapshot
           }
 
-          public init(id: GraphQLID, ranking: Int? = nil, review: String? = nil, verb: String, shelves: [Shelf], port: Port, game: Game) {
-            self.init(snapshot: ["__typename": "Ranking", "id": id, "ranking": ranking, "review": review, "verb": verb, "shelves": shelves.map { $0.snapshot }, "port": port.snapshot, "game": game.snapshot])
+          public init(id: GraphQLID, ranking: Int? = nil, review: String? = nil, verb: String, commentsCount: Int, shelves: [Shelf], port: Port, game: Game) {
+            self.init(snapshot: ["__typename": "Ranking", "id": id, "ranking": ranking, "review": review, "verb": verb, "comments_count": commentsCount, "shelves": shelves.map { $0.snapshot }, "port": port.snapshot, "game": game.snapshot])
           }
 
           public var __typename: String {
@@ -4520,6 +4571,15 @@ public final class MyGamesQuery: GraphQLQuery {
             }
             set {
               snapshot.updateValue(newValue, forKey: "verb")
+            }
+          }
+
+          public var commentsCount: Int {
+            get {
+              return snapshot["comments_count"]! as! Int
+            }
+            set {
+              snapshot.updateValue(newValue, forKey: "comments_count")
             }
           }
 
@@ -5618,6 +5678,7 @@ public final class ShelfQuery: GraphQLQuery {
               GraphQLField("ranking", type: .scalar(Int.self)),
               GraphQLField("review", type: .scalar(String.self)),
               GraphQLField("verb", type: .nonNull(.scalar(String.self))),
+              GraphQLField("comments_count", type: .nonNull(.scalar(Int.self))),
               GraphQLField("shelves", type: .nonNull(.list(.nonNull(.object(Shelf.selections))))),
               GraphQLField("port", type: .nonNull(.object(Port.selections))),
               GraphQLField("game", type: .nonNull(.object(Game.selections))),
@@ -5629,8 +5690,8 @@ public final class ShelfQuery: GraphQLQuery {
               self.snapshot = snapshot
             }
 
-            public init(id: GraphQLID, ranking: Int? = nil, review: String? = nil, verb: String, shelves: [Shelf], port: Port, game: Game) {
-              self.init(snapshot: ["__typename": "Ranking", "id": id, "ranking": ranking, "review": review, "verb": verb, "shelves": shelves.map { $0.snapshot }, "port": port.snapshot, "game": game.snapshot])
+            public init(id: GraphQLID, ranking: Int? = nil, review: String? = nil, verb: String, commentsCount: Int, shelves: [Shelf], port: Port, game: Game) {
+              self.init(snapshot: ["__typename": "Ranking", "id": id, "ranking": ranking, "review": review, "verb": verb, "comments_count": commentsCount, "shelves": shelves.map { $0.snapshot }, "port": port.snapshot, "game": game.snapshot])
             }
 
             public var __typename: String {
@@ -5675,6 +5736,15 @@ public final class ShelfQuery: GraphQLQuery {
               }
               set {
                 snapshot.updateValue(newValue, forKey: "verb")
+              }
+            }
+
+            public var commentsCount: Int {
+              get {
+                return snapshot["comments_count"]! as! Int
+              }
+              set {
+                snapshot.updateValue(newValue, forKey: "comments_count")
               }
             }
 
@@ -6288,6 +6358,7 @@ public final class UpdatesQuery: GraphQLQuery {
             GraphQLField("ranking", type: .scalar(Int.self)),
             GraphQLField("review", type: .scalar(String.self)),
             GraphQLField("verb", type: .nonNull(.scalar(String.self))),
+            GraphQLField("comments_count", type: .nonNull(.scalar(Int.self))),
             GraphQLField("shelves", type: .nonNull(.list(.nonNull(.object(Shelf.selections))))),
             GraphQLField("port", type: .nonNull(.object(Port.selections))),
             GraphQLField("game", type: .nonNull(.object(Game.selections))),
@@ -6300,8 +6371,8 @@ public final class UpdatesQuery: GraphQLQuery {
             self.snapshot = snapshot
           }
 
-          public init(id: GraphQLID, ranking: Int? = nil, review: String? = nil, verb: String, shelves: [Shelf], port: Port, game: Game, user: User) {
-            self.init(snapshot: ["__typename": "Ranking", "id": id, "ranking": ranking, "review": review, "verb": verb, "shelves": shelves.map { $0.snapshot }, "port": port.snapshot, "game": game.snapshot, "user": user.snapshot])
+          public init(id: GraphQLID, ranking: Int? = nil, review: String? = nil, verb: String, commentsCount: Int, shelves: [Shelf], port: Port, game: Game, user: User) {
+            self.init(snapshot: ["__typename": "Ranking", "id": id, "ranking": ranking, "review": review, "verb": verb, "comments_count": commentsCount, "shelves": shelves.map { $0.snapshot }, "port": port.snapshot, "game": game.snapshot, "user": user.snapshot])
           }
 
           public var __typename: String {
@@ -6346,6 +6417,15 @@ public final class UpdatesQuery: GraphQLQuery {
             }
             set {
               snapshot.updateValue(newValue, forKey: "verb")
+            }
+          }
+
+          public var commentsCount: Int {
+            get {
+              return snapshot["comments_count"]! as! Int
+            }
+            set {
+              snapshot.updateValue(newValue, forKey: "comments_count")
             }
           }
 
@@ -7164,6 +7244,7 @@ public final class UserQuery: GraphQLQuery {
               GraphQLField("ranking", type: .scalar(Int.self)),
               GraphQLField("review", type: .scalar(String.self)),
               GraphQLField("verb", type: .nonNull(.scalar(String.self))),
+              GraphQLField("comments_count", type: .nonNull(.scalar(Int.self))),
               GraphQLField("shelves", type: .nonNull(.list(.nonNull(.object(Shelf.selections))))),
               GraphQLField("port", type: .nonNull(.object(Port.selections))),
               GraphQLField("game", type: .nonNull(.object(Game.selections))),
@@ -7175,8 +7256,8 @@ public final class UserQuery: GraphQLQuery {
               self.snapshot = snapshot
             }
 
-            public init(id: GraphQLID, ranking: Int? = nil, review: String? = nil, verb: String, shelves: [Shelf], port: Port, game: Game) {
-              self.init(snapshot: ["__typename": "Ranking", "id": id, "ranking": ranking, "review": review, "verb": verb, "shelves": shelves.map { $0.snapshot }, "port": port.snapshot, "game": game.snapshot])
+            public init(id: GraphQLID, ranking: Int? = nil, review: String? = nil, verb: String, commentsCount: Int, shelves: [Shelf], port: Port, game: Game) {
+              self.init(snapshot: ["__typename": "Ranking", "id": id, "ranking": ranking, "review": review, "verb": verb, "comments_count": commentsCount, "shelves": shelves.map { $0.snapshot }, "port": port.snapshot, "game": game.snapshot])
             }
 
             public var __typename: String {
@@ -7221,6 +7302,15 @@ public final class UserQuery: GraphQLQuery {
               }
               set {
                 snapshot.updateValue(newValue, forKey: "verb")
+              }
+            }
+
+            public var commentsCount: Int {
+              get {
+                return snapshot["comments_count"]! as! Int
+              }
+              set {
+                snapshot.updateValue(newValue, forKey: "comments_count")
               }
             }
 
@@ -7941,6 +8031,7 @@ public final class UserRankingsQuery: GraphQLQuery {
               GraphQLField("ranking", type: .scalar(Int.self)),
               GraphQLField("review", type: .scalar(String.self)),
               GraphQLField("verb", type: .nonNull(.scalar(String.self))),
+              GraphQLField("comments_count", type: .nonNull(.scalar(Int.self))),
               GraphQLField("shelves", type: .nonNull(.list(.nonNull(.object(Shelf.selections))))),
               GraphQLField("port", type: .nonNull(.object(Port.selections))),
               GraphQLField("game", type: .nonNull(.object(Game.selections))),
@@ -7952,8 +8043,8 @@ public final class UserRankingsQuery: GraphQLQuery {
               self.snapshot = snapshot
             }
 
-            public init(id: GraphQLID, ranking: Int? = nil, review: String? = nil, verb: String, shelves: [Shelf], port: Port, game: Game) {
-              self.init(snapshot: ["__typename": "Ranking", "id": id, "ranking": ranking, "review": review, "verb": verb, "shelves": shelves.map { $0.snapshot }, "port": port.snapshot, "game": game.snapshot])
+            public init(id: GraphQLID, ranking: Int? = nil, review: String? = nil, verb: String, commentsCount: Int, shelves: [Shelf], port: Port, game: Game) {
+              self.init(snapshot: ["__typename": "Ranking", "id": id, "ranking": ranking, "review": review, "verb": verb, "comments_count": commentsCount, "shelves": shelves.map { $0.snapshot }, "port": port.snapshot, "game": game.snapshot])
             }
 
             public var __typename: String {
@@ -7998,6 +8089,15 @@ public final class UserRankingsQuery: GraphQLQuery {
               }
               set {
                 snapshot.updateValue(newValue, forKey: "verb")
+              }
+            }
+
+            public var commentsCount: Int {
+              get {
+                return snapshot["comments_count"]! as! Int
+              }
+              set {
+                snapshot.updateValue(newValue, forKey: "comments_count")
               }
             }
 
@@ -8788,7 +8888,7 @@ public struct GameBasic: GraphQLFragment {
 
 public struct RankingBasic: GraphQLFragment {
   public static let fragmentString =
-    "fragment RankingBasic on Ranking {\n  __typename\n  id\n  ranking\n  review\n  verb\n  shelves {\n    __typename\n    ...ShelfBasic\n  }\n  port {\n    __typename\n    id\n    platform {\n      __typename\n      id\n      name\n    }\n    small_image_url\n  }\n}"
+    "fragment RankingBasic on Ranking {\n  __typename\n  id\n  ranking\n  review\n  verb\n  comments_count\n  shelves {\n    __typename\n    ...ShelfBasic\n  }\n  port {\n    __typename\n    id\n    platform {\n      __typename\n      id\n      name\n    }\n    small_image_url\n  }\n}"
 
   public static let possibleTypes = ["Ranking"]
 
@@ -8798,6 +8898,7 @@ public struct RankingBasic: GraphQLFragment {
     GraphQLField("ranking", type: .scalar(Int.self)),
     GraphQLField("review", type: .scalar(String.self)),
     GraphQLField("verb", type: .nonNull(.scalar(String.self))),
+    GraphQLField("comments_count", type: .nonNull(.scalar(Int.self))),
     GraphQLField("shelves", type: .nonNull(.list(.nonNull(.object(Shelf.selections))))),
     GraphQLField("port", type: .nonNull(.object(Port.selections))),
   ]
@@ -8808,8 +8909,8 @@ public struct RankingBasic: GraphQLFragment {
     self.snapshot = snapshot
   }
 
-  public init(id: GraphQLID, ranking: Int? = nil, review: String? = nil, verb: String, shelves: [Shelf], port: Port) {
-    self.init(snapshot: ["__typename": "Ranking", "id": id, "ranking": ranking, "review": review, "verb": verb, "shelves": shelves.map { $0.snapshot }, "port": port.snapshot])
+  public init(id: GraphQLID, ranking: Int? = nil, review: String? = nil, verb: String, commentsCount: Int, shelves: [Shelf], port: Port) {
+    self.init(snapshot: ["__typename": "Ranking", "id": id, "ranking": ranking, "review": review, "verb": verb, "comments_count": commentsCount, "shelves": shelves.map { $0.snapshot }, "port": port.snapshot])
   }
 
   public var __typename: String {
@@ -8854,6 +8955,15 @@ public struct RankingBasic: GraphQLFragment {
     }
     set {
       snapshot.updateValue(newValue, forKey: "verb")
+    }
+  }
+
+  public var commentsCount: Int {
+    get {
+      return snapshot["comments_count"]! as! Int
+    }
+    set {
+      snapshot.updateValue(newValue, forKey: "comments_count")
     }
   }
 
@@ -9064,6 +9174,7 @@ public struct RankingFull: GraphQLFragment {
     GraphQLField("ranking", type: .scalar(Int.self)),
     GraphQLField("review", type: .scalar(String.self)),
     GraphQLField("verb", type: .nonNull(.scalar(String.self))),
+    GraphQLField("comments_count", type: .nonNull(.scalar(Int.self))),
     GraphQLField("shelves", type: .nonNull(.list(.nonNull(.object(Shelf.selections))))),
     GraphQLField("port", type: .nonNull(.object(Port.selections))),
     GraphQLField("game", type: .nonNull(.object(Game.selections))),
@@ -9076,8 +9187,8 @@ public struct RankingFull: GraphQLFragment {
     self.snapshot = snapshot
   }
 
-  public init(id: GraphQLID, ranking: Int? = nil, review: String? = nil, verb: String, shelves: [Shelf], port: Port, game: Game, user: User) {
-    self.init(snapshot: ["__typename": "Ranking", "id": id, "ranking": ranking, "review": review, "verb": verb, "shelves": shelves.map { $0.snapshot }, "port": port.snapshot, "game": game.snapshot, "user": user.snapshot])
+  public init(id: GraphQLID, ranking: Int? = nil, review: String? = nil, verb: String, commentsCount: Int, shelves: [Shelf], port: Port, game: Game, user: User) {
+    self.init(snapshot: ["__typename": "Ranking", "id": id, "ranking": ranking, "review": review, "verb": verb, "comments_count": commentsCount, "shelves": shelves.map { $0.snapshot }, "port": port.snapshot, "game": game.snapshot, "user": user.snapshot])
   }
 
   public var __typename: String {
@@ -9122,6 +9233,15 @@ public struct RankingFull: GraphQLFragment {
     }
     set {
       snapshot.updateValue(newValue, forKey: "verb")
+    }
+  }
+
+  public var commentsCount: Int {
+    get {
+      return snapshot["comments_count"]! as! Int
+    }
+    set {
+      snapshot.updateValue(newValue, forKey: "comments_count")
     }
   }
 
@@ -9644,6 +9764,7 @@ public struct RankingWithGame: GraphQLFragment {
     GraphQLField("ranking", type: .scalar(Int.self)),
     GraphQLField("review", type: .scalar(String.self)),
     GraphQLField("verb", type: .nonNull(.scalar(String.self))),
+    GraphQLField("comments_count", type: .nonNull(.scalar(Int.self))),
     GraphQLField("shelves", type: .nonNull(.list(.nonNull(.object(Shelf.selections))))),
     GraphQLField("port", type: .nonNull(.object(Port.selections))),
     GraphQLField("game", type: .nonNull(.object(Game.selections))),
@@ -9655,8 +9776,8 @@ public struct RankingWithGame: GraphQLFragment {
     self.snapshot = snapshot
   }
 
-  public init(id: GraphQLID, ranking: Int? = nil, review: String? = nil, verb: String, shelves: [Shelf], port: Port, game: Game) {
-    self.init(snapshot: ["__typename": "Ranking", "id": id, "ranking": ranking, "review": review, "verb": verb, "shelves": shelves.map { $0.snapshot }, "port": port.snapshot, "game": game.snapshot])
+  public init(id: GraphQLID, ranking: Int? = nil, review: String? = nil, verb: String, commentsCount: Int, shelves: [Shelf], port: Port, game: Game) {
+    self.init(snapshot: ["__typename": "Ranking", "id": id, "ranking": ranking, "review": review, "verb": verb, "comments_count": commentsCount, "shelves": shelves.map { $0.snapshot }, "port": port.snapshot, "game": game.snapshot])
   }
 
   public var __typename: String {
@@ -9701,6 +9822,15 @@ public struct RankingWithGame: GraphQLFragment {
     }
     set {
       snapshot.updateValue(newValue, forKey: "verb")
+    }
+  }
+
+  public var commentsCount: Int {
+    get {
+      return snapshot["comments_count"]! as! Int
+    }
+    set {
+      snapshot.updateValue(newValue, forKey: "comments_count")
     }
   }
 
@@ -10125,6 +10255,7 @@ public struct RankingWithUser: GraphQLFragment {
     GraphQLField("ranking", type: .scalar(Int.self)),
     GraphQLField("review", type: .scalar(String.self)),
     GraphQLField("verb", type: .nonNull(.scalar(String.self))),
+    GraphQLField("comments_count", type: .nonNull(.scalar(Int.self))),
     GraphQLField("shelves", type: .nonNull(.list(.nonNull(.object(Shelf.selections))))),
     GraphQLField("port", type: .nonNull(.object(Port.selections))),
     GraphQLField("user", type: .nonNull(.object(User.selections))),
@@ -10136,8 +10267,8 @@ public struct RankingWithUser: GraphQLFragment {
     self.snapshot = snapshot
   }
 
-  public init(id: GraphQLID, ranking: Int? = nil, review: String? = nil, verb: String, shelves: [Shelf], port: Port, user: User) {
-    self.init(snapshot: ["__typename": "Ranking", "id": id, "ranking": ranking, "review": review, "verb": verb, "shelves": shelves.map { $0.snapshot }, "port": port.snapshot, "user": user.snapshot])
+  public init(id: GraphQLID, ranking: Int? = nil, review: String? = nil, verb: String, commentsCount: Int, shelves: [Shelf], port: Port, user: User) {
+    self.init(snapshot: ["__typename": "Ranking", "id": id, "ranking": ranking, "review": review, "verb": verb, "comments_count": commentsCount, "shelves": shelves.map { $0.snapshot }, "port": port.snapshot, "user": user.snapshot])
   }
 
   public var __typename: String {
@@ -10182,6 +10313,15 @@ public struct RankingWithUser: GraphQLFragment {
     }
     set {
       snapshot.updateValue(newValue, forKey: "verb")
+    }
+  }
+
+  public var commentsCount: Int {
+    get {
+      return snapshot["comments_count"]! as! Int
+    }
+    set {
+      snapshot.updateValue(newValue, forKey: "comments_count")
     }
   }
 
@@ -10797,6 +10937,7 @@ public struct UserDetail: GraphQLFragment {
           GraphQLField("ranking", type: .scalar(Int.self)),
           GraphQLField("review", type: .scalar(String.self)),
           GraphQLField("verb", type: .nonNull(.scalar(String.self))),
+          GraphQLField("comments_count", type: .nonNull(.scalar(Int.self))),
           GraphQLField("shelves", type: .nonNull(.list(.nonNull(.object(Shelf.selections))))),
           GraphQLField("port", type: .nonNull(.object(Port.selections))),
           GraphQLField("game", type: .nonNull(.object(Game.selections))),
@@ -10808,8 +10949,8 @@ public struct UserDetail: GraphQLFragment {
           self.snapshot = snapshot
         }
 
-        public init(id: GraphQLID, ranking: Int? = nil, review: String? = nil, verb: String, shelves: [Shelf], port: Port, game: Game) {
-          self.init(snapshot: ["__typename": "Ranking", "id": id, "ranking": ranking, "review": review, "verb": verb, "shelves": shelves.map { $0.snapshot }, "port": port.snapshot, "game": game.snapshot])
+        public init(id: GraphQLID, ranking: Int? = nil, review: String? = nil, verb: String, commentsCount: Int, shelves: [Shelf], port: Port, game: Game) {
+          self.init(snapshot: ["__typename": "Ranking", "id": id, "ranking": ranking, "review": review, "verb": verb, "comments_count": commentsCount, "shelves": shelves.map { $0.snapshot }, "port": port.snapshot, "game": game.snapshot])
         }
 
         public var __typename: String {
@@ -10854,6 +10995,15 @@ public struct UserDetail: GraphQLFragment {
           }
           set {
             snapshot.updateValue(newValue, forKey: "verb")
+          }
+        }
+
+        public var commentsCount: Int {
+          get {
+            return snapshot["comments_count"]! as! Int
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "comments_count")
           }
         }
 

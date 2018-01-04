@@ -3,6 +3,7 @@ fragment RankingBasic on Ranking {
     ranking
     review
     verb
+    comments_count
     shelves {
         ...ShelfBasic
     }
