@@ -13,6 +13,7 @@ class GameViewController : UIViewController, APIGameDetailDelegate, APIGameRanki
     @IBOutlet weak var reviewStack: UIStackView!
     @IBOutlet weak var reviewLabel: UILabel!
     @IBOutlet weak var reviewButton: UIButton!
+    @IBOutlet weak var commentsButton: UIButton!
     @IBOutlet weak var reviewsTable: IntrinsicTableView!
     
     let starFull = UIImage(named: "star-full-medium.png")
@@ -113,41 +114,52 @@ class GameViewController : UIViewController, APIGameDetailDelegate, APIGameRanki
                 }
             }
             
-            var starsToFill = 0
-            if (ranking != nil) {
-                if (ranking!.port.id == selectedPort().id) {
-                    switchEditionButton?.isHidden = true
-                }
-                else {
-                    switchEditionButton?.isHidden = false
-                }
-                reviewStack?.isHidden = false
-                if (ranking!.ranking != nil) {
-                    starsToFill = ranking!.ranking!
-                }
-                let shelvesStr = ranking!.shelves.map{$0.name}.joined(separator: ", ")
-                shelveButton?.setTitle("Shelved: \(shelvesStr)", for: .normal)
-                shelveButton?.backgroundColor = UIColor.white
-                if (ranking!.review != nil && ranking!.review != "") {
-                    reviewLabel?.isHidden = false
-                    reviewLabel?.text = "\"\(ranking!.review!)\""
-                    reviewButton?.setTitle("Edit My Review", for: .normal)
-                }
-                else {
-                    reviewLabel?.isHidden = true
-                    reviewButton?.setTitle("Write a Review", for: .normal)
-                }
-            }
-            else {
-                switchEditionButton?.isHidden = true
-                shelveButton?.setTitle("Add to My Games", for: .normal)
-                shelveButton?.backgroundColor = UIColor.lightGray
-                reviewStack?.isHidden = true
-            }
-            
-            setStars(starsToFill)
+            configureViewWithRanking()
         }
         self.reviewsTable?.reloadData()
+    }
+    
+    private func configureViewWithRanking() {
+        var starsToFill = 0
+        if (ranking != nil) {
+            if (ranking!.port.id == selectedPort().id) {
+                switchEditionButton?.isHidden = true
+            }
+            else {
+                switchEditionButton?.isHidden = false
+            }
+            reviewStack?.isHidden = false
+            if (ranking!.ranking != nil) {
+                starsToFill = ranking!.ranking!
+            }
+            let shelvesStr = ranking!.shelves.map{$0.name}.joined(separator: ", ")
+            shelveButton?.setTitle("Shelved: \(shelvesStr)", for: .normal)
+            shelveButton?.backgroundColor = UIColor.white
+            if (ranking!.review != nil && ranking!.review != "") {
+                reviewLabel?.isHidden = false
+                reviewLabel?.text = "\"\(ranking!.review!)\""
+                reviewButton?.setTitle("Edit My Review", for: .normal)
+            }
+            else {
+                reviewLabel?.isHidden = true
+                reviewButton?.setTitle("Write a Review", for: .normal)
+            }
+            if (ranking!.commentsCount > 0) {
+                commentsButton.setTitle("\(ranking!.commentsCount) Comments", for: .normal)
+                commentsButton.isHidden = false
+            }
+            else {
+                commentsButton.isHidden = true
+            }
+        }
+        else {
+            switchEditionButton?.isHidden = true
+            shelveButton?.setTitle("Add to My Games", for: .normal)
+            shelveButton?.backgroundColor = UIColor.lightGray
+            reviewStack?.isHidden = true
+        }
+        
+        setStars(starsToFill)
     }
 
     override func viewDidLoad() {
@@ -319,6 +331,11 @@ class GameViewController : UIViewController, APIGameDetailDelegate, APIGameRanki
             let controller = segue.destination as! RankingViewController
             controller.ranking = selectedRanking.fragments.rankingBasic
             controller.user = selectedRanking.user.fragments.userBasic
+            controller.game = game
+        case "primaryRankingDetail":
+            let controller = segue.destination as! RankingViewController
+            controller.ranking = ranking?.fragments.rankingBasic
+            controller.loadCurrentUser()
             controller.game = game
         case "chooseEdition":
             let controller = segue.destination as! PortChooserViewController

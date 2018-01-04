@@ -1,8 +1,9 @@
 import UIKit
 
-class RankingViewController : UIViewController, UITableViewDataSource, APICommentsDelegate, AlertAPIErrorDelegate, UITextViewDelegate, APICommentDelegate, APIDestroyCommentDelegate {
+class RankingViewController : UIViewController, UITableViewDataSource, APICommentsDelegate, AlertAPIErrorDelegate, UITextViewDelegate, APICommentDelegate, APIDestroyCommentDelegate, APIUserDetailDelegate {
     
     @IBOutlet weak var loadingImage: UIImageView!
+    @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var userButton: UIButton!
     @IBOutlet weak var verbLabel: UILabel!
     @IBOutlet weak var gameImage: UIImageView!
@@ -13,11 +14,13 @@ class RankingViewController : UIViewController, UITableViewDataSource, APICommen
     @IBOutlet weak var reviewLabel: UILabel!
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var commentsTable: IntrinsicTableView!
+    
+    @IBOutlet weak var commentContainer: UIStackView!
     @IBOutlet weak var commentField: UITextView!
     @IBOutlet weak var commentButton: UIButton!
     
     @IBOutlet weak var commentBottomContraint: NSLayoutConstraint!
-    let defaultText = "Write a comment..."
+    let defaultCommentText = "Write a comment..."
     
     var ranking: RankingBasic? {
         didSet {
@@ -47,6 +50,7 @@ class RankingViewController : UIViewController, UITableViewDataSource, APICommen
     
     var comments = [CommentBasic]()
     var nextPage: String?
+    var loadingCount = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -66,9 +70,14 @@ class RankingViewController : UIViewController, UITableViewDataSource, APICommen
     }
     
     func configureView() {
+        self.loadingImage?.isHidden = loadingCount <= 0
         if (user == nil || ranking == nil || game == nil) {
+            scrollView?.isHidden = true
+            commentContainer?.isHidden = true
             return
         }
+        scrollView?.isHidden = false
+        commentContainer.isHidden = false
         self.title = "Comments"
         userButton?.setTitle(user?.realName, for: .normal)
         verbLabel?.text = ranking!.verb
@@ -109,7 +118,7 @@ class RankingViewController : UIViewController, UITableViewDataSource, APICommen
     }
     
     func defaultComment() {
-        self.commentField?.text = self.defaultText
+        self.commentField?.text = defaultCommentText
         self.commentField?.textColor = UIColor.lightGray
     }
     
@@ -118,7 +127,7 @@ class RankingViewController : UIViewController, UITableViewDataSource, APICommen
             performSegue(withIdentifier: "requireSignIn", sender: nil)
             return
         }
-        if (textView.text == defaultText) {
+        if (textView.text == defaultCommentText) {
             textView.text = ""
             textView.textColor = UIColor.black
         }
@@ -148,7 +157,7 @@ class RankingViewController : UIViewController, UITableViewDataSource, APICommen
             //dont' post empty comment
             return
         }
-        loadingImage.isHidden = false
+        updateLoadingBar(+1)
         api.comment(resourceId: ranking!.id, resourceType: "Ranking", comment: commentField.text, delegate: self)
         commentField.endEditing(true)
         defaultComment()
@@ -159,14 +168,25 @@ class RankingViewController : UIViewController, UITableViewDataSource, APICommen
             self.nextPage = nil
             comments.removeAll()
         }
-        DispatchQueue.main.async(execute: {
-            self.loadingImage.isHidden = false
-        })
+        updateLoadingBar(+1)
         api.comments(resourceId: ranking!.id, resourceType: "Ranking", after: self.nextPage, delegate: self)
         self.nextPage = nil
     }
     
+    func loadCurrentUser() {
+        updateLoadingBar(+1)
+        api.me(delegate: self)
+    }
+    
+    func updateLoadingBar(_ loadingDiff: Int) {
+        loadingCount += loadingDiff
+        DispatchQueue.main.async(execute: {
+            self.loadingImage?.isHidden = self.loadingCount <= 0
+        })
+    }
+    
     func handleAPIAuthenticationError() {
+        updateLoadingBar(-1)
         easyAlert("You've been signed out, sorry for the inconvience")
     }
     
@@ -174,8 +194,8 @@ class RankingViewController : UIViewController, UITableViewDataSource, APICommen
         self.comments.append(contentsOf: comments)
         self.nextPage = nextPage
         
+        updateLoadingBar(-1)
         DispatchQueue.main.async(execute: {
-            self.loadingImage?.isHidden = true
             self.commentsTable?.reloadData()
         })
     }
@@ -185,10 +205,17 @@ class RankingViewController : UIViewController, UITableViewDataSource, APICommen
         //NOTE: this is a bug that prevents comments from continuing to load - but... we don't show duplicate comments
     }
     
-    func handleAPICommentDestruction(ranking: CommentBasic) {
+    
+    func handleAPI(userDetail: UserDetail, rankings: [RankingWithGame], nextPage: String?) {
+        user = userDetail.fragments.userBasic
+        updateLoadingBar(-1)
         DispatchQueue.main.async(execute: {
-            self.loadingImage?.isHidden = true
+            self.configureView()
         })
+    }
+    
+    func handleAPICommentDestruction(ranking: CommentBasic) {
+        updateLoadingBar(-1)
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -213,6 +240,9 @@ class RankingViewController : UIViewController, UITableViewDataSource, APICommen
     }
     
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        if (user == nil) {
+            return false
+        }
         if (user!.id == api.currentUserId) {
             return true
         }
@@ -228,6 +258,7 @@ class RankingViewController : UIViewController, UITableViewDataSource, APICommen
             })
             comments.remove(at: indexPath.row)
             commentsTable.deleteRows(at: [indexPath], with: .automatic)
+            updateLoadingBar(+1)
             api.destroyComment(id: comment.id, delegate: self)
         }
     }
