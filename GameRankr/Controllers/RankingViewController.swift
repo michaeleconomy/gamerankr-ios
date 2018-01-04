@@ -114,6 +114,10 @@ class RankingViewController : UIViewController, UITableViewDataSource, APICommen
     }
     
     func textViewDidBeginEditing(_ textView: UITextView) {
+        if (api.signedOut) {
+            performSegue(withIdentifier: "requireSignIn", sender: nil)
+            return
+        }
         if (textView.text == defaultText) {
             textView.text = ""
             textView.textColor = UIColor.black
@@ -249,6 +253,7 @@ class RankingViewController : UIViewController, UITableViewDataSource, APICommen
             let controller = segue.destination as! GameViewController
             controller.game = game
             controller.selectPort(portId: ranking!.port.id)
+        case "requireSignIn": ()
         case "shelfDetail":
             let button = sender as! UIButton
             let shelfIndex = shelvesStack.arrangedSubviews.index(where: {$0 === button})!

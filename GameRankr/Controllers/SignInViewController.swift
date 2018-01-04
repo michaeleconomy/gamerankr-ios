@@ -18,7 +18,7 @@ class SignInViewController : UIViewController, APILoginDelegate, AlertAPIErrorDe
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        if(api.signed_in) {
+        if(api.signedIn) {
             handleLogin()
         }
     }

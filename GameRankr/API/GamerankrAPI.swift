@@ -80,7 +80,13 @@ protocol APIAuthenticationDelegate {
 
 class GamerankrAPI {
     
-    public private(set) var signed_in = false
+    public private(set) var signedIn = false
+    var signedOut: Bool {
+        get {
+            return !signedIn
+        }
+    }
+    
 //    let base_url = "http://localhost:3000"
     let base_url = "https://www.gamerankr.com"
     private let apollo: ApolloClient
@@ -94,7 +100,7 @@ class GamerankrAPI {
         self.token = token
         self.currentUserId = currentUserId
         if (token != nil && currentUserId != nil) {
-            self.signed_in = true
+            self.signedIn = true
         }
         else {
             self.token = nil
@@ -135,7 +141,7 @@ class GamerankrAPI {
     
     private func handleLogin(currentUserId: GraphQLID, token: String) {
         NSLog("login was successful.")
-        self.signed_in = true
+        self.signedIn = true
         self.token = token
         self.currentUserId = currentUserId
         LocalSQLiteManager.sharedInstance.putMisc(key: "token", value: token)
@@ -148,7 +154,7 @@ class GamerankrAPI {
     }
     
     private func handleLogout() {
-        self.signed_in = false
+        self.signedIn = false
         MyGamesManager.sharedInstance.clear()
         LocalSQLiteManager.sharedInstance.clearMisc()
         for authDelegate in authDelegates {

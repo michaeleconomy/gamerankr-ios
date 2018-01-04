@@ -20,7 +20,7 @@ class MyShelvesManager : APIShelvesDelegate {
             NSLog("MyShelvesManager is already loaded")
             return
         }
-        if (!api.signed_in) {
+        if (api.signedOut) {
             NSLog("MyShelvesManager - cannot load, not signed in yet")
             return
         }

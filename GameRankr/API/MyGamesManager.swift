@@ -26,7 +26,7 @@ class MyGamesManager : APIMyGamesDelegate, APIRankDelegate, APIDestroyRankingDel
             NSLog("error getting rankings from sql lite")
             rankings = []
         }
-        if (api.signed_in) {
+        if (api.signedIn) {
             load()
         }
     }
@@ -36,7 +36,7 @@ class MyGamesManager : APIMyGamesDelegate, APIRankDelegate, APIDestroyRankingDel
             NSLog("MyGamesManager was already loading")
             return
         }
-        if (!api.signed_in) {
+        if (api.signedOut) {
             NSLog("MyGamesManager - cannot load, not signed in yet")
             return
         }

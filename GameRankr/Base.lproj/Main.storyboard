@@ -908,11 +908,12 @@
                         <outlet property="userButton" destination="csP-8X-bVu" id="bE4-fh-82b"/>
                         <outlet property="verbLabel" destination="uio-aR-Xgn" id="pWb-ti-VHs"/>
                         <segue destination="nT7-jx-D3W" kind="show" identifier="shelfDetail" id="FoV-qj-9o7"/>
+                        <segue destination="dzd-8i-Ijl" kind="show" identifier="requireSignIn" id="hVB-Ik-XWC"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nbd-2u-5n6" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4230" y="1304"/>
+            <point key="canvasLocation" x="4266" y="1325"/>
         </scene>
         <!--Sign In View Controller-->
         <scene sceneID="zF8-5n-0It">
@@ -1342,7 +1343,7 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="ZSa-xZ-YtK"/>
-        <segue reference="oqx-vY-9wK"/>
+        <segue reference="hVB-Ik-XWC"/>
         <segue reference="nf6-rL-y31"/>
         <segue reference="FoV-qj-9o7"/>
         <segue reference="Jh0-oY-Vq9"/>

@@ -175,7 +175,7 @@ class GameViewController : UIViewController, APIGameDetailDelegate, APIGameRanki
     }
     
     @objc func starTapped(sender: UIButton) {
-        if (!api.signed_in) {
+        if (api.signedOut) {
             performSegue(withIdentifier: "requireSignIn", sender: nil)
             return
         }
@@ -287,7 +287,7 @@ class GameViewController : UIViewController, APIGameDetailDelegate, APIGameRanki
     }
     
     override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
-        if (!api.signed_in) {
+        if (api.signedOut) {
             if (identifier == "editReview" || identifier == "shelveGame") {
                 performSegue(withIdentifier: "requireSignIn", sender: nil)
                 return false

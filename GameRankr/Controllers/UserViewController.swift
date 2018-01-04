@@ -88,7 +88,7 @@ class UserViewController : UIViewController, APIUserDetailDelegate, AlertAPIErro
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         if (user == nil) {
-            if (!api.signed_in) {
+            if (api.signedOut) {
                 performSegue(withIdentifier: "requireSignIn", sender: nil)
                 return
             }

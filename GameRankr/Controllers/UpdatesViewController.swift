@@ -19,8 +19,7 @@ class UpdatesViewController: UIViewController, AlertAPIErrorDelegate, UITableVie
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
-        if (!api.signed_in) {
+        if (api.signedOut) {
             performSegue(withIdentifier: "requireSignIn", sender: nil)
             return
         }
