@@ -187,14 +187,28 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="dW0-bn-ZRR">
-                                <rect key="frame" x="0.0" y="64" width="320" height="2"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="s3T-2C-w7F">
+                                <rect key="frame" x="0.0" y="64" width="320" height="22.5"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="dW0-bn-ZRR">
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="2"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="2" id="hBW-z3-Gx5"/>
+                                        </constraints>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You have not yet added any games." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0FL-md-bYv">
+                                        <rect key="frame" x="0.0" y="2" width="320" height="20.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="2" id="hBW-z3-Gx5"/>
+                                    <constraint firstItem="dW0-bn-ZRR" firstAttribute="width" secondItem="s3T-2C-w7F" secondAttribute="width" id="blr-F2-Amd"/>
                                 </constraints>
-                            </imageView>
+                            </stackView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="06l-0M-Hoj">
-                                <rect key="frame" x="0.0" y="66" width="320" height="365"/>
+                                <rect key="frame" x="0.0" y="86.5" width="320" height="344.5"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" textLabel="Y2p-es-g8v" detailTextLabel="0oq-qO-JAC" style="IBUITableViewCellStyleSubtitle" id="sou-7i-7Jy">
@@ -233,12 +247,12 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="06l-0M-Hoj" firstAttribute="leading" secondItem="GBJ-cJ-hq1" secondAttribute="leading" id="31s-SS-8qK"/>
+                            <constraint firstItem="s3T-2C-w7F" firstAttribute="top" secondItem="GBJ-cJ-hq1" secondAttribute="top" id="BUF-3c-mye"/>
                             <constraint firstItem="GBJ-cJ-hq1" firstAttribute="bottom" secondItem="06l-0M-Hoj" secondAttribute="bottom" id="GdR-Yk-5lZ"/>
-                            <constraint firstItem="dW0-bn-ZRR" firstAttribute="centerX" secondItem="GBJ-cJ-hq1" secondAttribute="centerX" id="MBB-Ks-fKD"/>
-                            <constraint firstItem="06l-0M-Hoj" firstAttribute="top" secondItem="dW0-bn-ZRR" secondAttribute="bottom" id="ano-wG-SIK"/>
+                            <constraint firstItem="s3T-2C-w7F" firstAttribute="bottom" secondItem="06l-0M-Hoj" secondAttribute="top" id="HYZ-xz-6Tm"/>
                             <constraint firstItem="GBJ-cJ-hq1" firstAttribute="trailing" secondItem="06l-0M-Hoj" secondAttribute="trailing" id="ep4-0h-O7Z"/>
-                            <constraint firstItem="dW0-bn-ZRR" firstAttribute="top" secondItem="GBJ-cJ-hq1" secondAttribute="top" id="nc9-gg-uM9"/>
-                            <constraint firstItem="dW0-bn-ZRR" firstAttribute="width" secondItem="Vl3-7E-xhp" secondAttribute="width" id="qtZ-93-6mq"/>
+                            <constraint firstAttribute="trailing" secondItem="s3T-2C-w7F" secondAttribute="trailing" id="ngo-KO-dyA"/>
+                            <constraint firstItem="s3T-2C-w7F" firstAttribute="leading" secondItem="Vl3-7E-xhp" secondAttribute="leading" id="rdS-fX-yCn"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="GBJ-cJ-hq1"/>
                     </view>
@@ -246,6 +260,7 @@
                     <navigationItem key="navigationItem" title="My Games" id="pBL-gt-QZc"/>
                     <connections>
                         <outlet property="loadingImage" destination="dW0-bn-ZRR" id="3ze-TI-ZtO"/>
+                        <outlet property="noGamesLabel" destination="0FL-md-bYv" id="Gkx-hg-Boz"/>
                         <outlet property="tableView" destination="06l-0M-Hoj" id="eck-Jb-tle"/>
                         <segue destination="dzd-8i-Ijl" kind="show" identifier="requireSignIn" id="09k-mF-JFN"/>
                     </connections>

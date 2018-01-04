@@ -11,6 +11,7 @@ class MyGamesManager : APIMyGamesDelegate, APIRankDelegate, APIDestroyRankingDel
     var rankings : [RankingWithGame]
     var rankingsLoading : [RankingWithGame]?
     var rankingsByGameId = [GraphQLID:RankingWithGame]()
+    var rankingsWasUnpopulated = false
     
     var delegates = [APIMyGamesManagerDelegate]()
     var loadingCount = 0
@@ -25,6 +26,7 @@ class MyGamesManager : APIMyGamesDelegate, APIRankDelegate, APIDestroyRankingDel
         catch {
             NSLog("error getting rankings from sql lite")
             rankings = []
+            rankingsWasUnpopulated = true
         }
         if (api.signedIn) {
             load()
@@ -90,6 +92,13 @@ class MyGamesManager : APIMyGamesDelegate, APIRankDelegate, APIDestroyRankingDel
     func handleAPIMyGames(rankings: [RankingWithGame], nextPage: String?) {
         if (!rankings.isEmpty) {
             rankingsLoading!.append(contentsOf: rankings)
+            if (rankingsWasUnpopulated) {
+                self.rankings.append(contentsOf: rankings)
+                for ranking in rankings {
+                    rankingsByGameId[ranking.game.id] = ranking
+                }
+                notifyDelegates()
+            }
             if (nextPage != nil){
                 api.myGames(after: nextPage, delegate: self)
             }
@@ -101,14 +110,18 @@ class MyGamesManager : APIMyGamesDelegate, APIRankDelegate, APIDestroyRankingDel
     
     private func doneLoading() {
         loadingCount -= 1
-        var rankingsByGameIdLoading = [GraphQLID: RankingWithGame]()
-        for ranking in rankingsLoading! {
-            rankingsByGameIdLoading[ranking.game.id] = ranking
+        if (!rankingsWasUnpopulated) {
+            var rankingsByGameIdLoading = [GraphQLID: RankingWithGame]()
+            for ranking in rankingsLoading! {
+                rankingsByGameIdLoading[ranking.game.id] = ranking
+            }
+            self.rankings = rankingsLoading!
+            self.rankingsByGameId = rankingsByGameIdLoading
         }
         
-        self.rankings = rankingsLoading!
+        rankingsWasUnpopulated = false
+        
         self.rankingsLoading = nil
-        self.rankingsByGameId = rankingsByGameIdLoading
         LocalSQLiteManager.sharedInstance.persistRankings(rankings: rankings)
         notifyDelegates()
     }

@@ -3,6 +3,7 @@ import UIKit
 class MyGamesViewController: UIViewController, UITableViewDataSource, UITableViewDelegate,  APIMyGamesManagerDelegate, AlertAPIErrorDelegate {
     
     @IBOutlet weak var loadingImage: UIImageView!
+    @IBOutlet weak var noGamesLabel: UILabel!
     @IBOutlet weak var tableView: UITableView!
     
     override func viewDidLoad() {
@@ -16,9 +17,15 @@ class MyGamesViewController: UIViewController, UITableViewDataSource, UITableVie
         if (api.signedOut) {
             performSegue(withIdentifier: "requireSignIn", sender: nil)
         }
-        self.loadingImage.isHidden = !MyGamesManager.sharedInstance.loading()
         MyGamesManager.sharedInstance.register(delegate: self)
-        self.tableView.reloadData()
+        configureView()
+    }
+    
+    func configureView() {
+        loadingImage?.isHidden = !MyGamesManager.sharedInstance.loading()
+        
+        noGamesLabel?.isHidden = MyGamesManager.sharedInstance.count() > 0 || MyGamesManager.sharedInstance.loading()
+        tableView.reloadData()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -49,11 +56,9 @@ class MyGamesViewController: UIViewController, UITableViewDataSource, UITableVie
         return cell
     }
     
-    
     func handleUpdates() {
         DispatchQueue.main.async(execute: {
-            self.loadingImage.isHidden = !MyGamesManager.sharedInstance.loading()
-            self.tableView.reloadData()
+            self.configureView()
         })
     }
     
