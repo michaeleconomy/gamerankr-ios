@@ -856,6 +856,12 @@ Add more friends to see more updates.</string>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
+                                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No comments yet." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="evD-SY-Udt">
+                                                <rect key="frame" x="90" y="366" width="140" height="0.0"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
                                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Z47-xa-Dcl" customClass="IntrinsicTableView" customModule="GameRankr" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="371" width="320" height="128"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -957,6 +963,7 @@ Add more friends to see more updates.</string>
                         <outlet property="gameImage" destination="dJO-Vy-GJm" id="90C-IU-gjX"/>
                         <outlet property="gameTitleButton" destination="4Qg-7g-zkV" id="GsB-mu-D6u"/>
                         <outlet property="loadingImage" destination="XdX-d5-Hbs" id="ER7-UL-zAq"/>
+                        <outlet property="noCommentsLabel" destination="evD-SY-Udt" id="IC0-Bl-G8H"/>
                         <outlet property="platformLabel" destination="f70-lC-X7o" id="bx0-ub-wuv"/>
                         <outlet property="reviewLabel" destination="miW-tN-Pc9" id="mg3-pP-8sz"/>
                         <outlet property="scrollView" destination="wak-eB-NNO" id="Ot5-rN-6JU"/>

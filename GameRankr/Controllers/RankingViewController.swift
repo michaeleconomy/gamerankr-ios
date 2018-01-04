@@ -13,6 +13,7 @@ class RankingViewController : UIViewController, UITableViewDataSource, APICommen
     @IBOutlet weak var starsStack: UIStackView!
     @IBOutlet weak var reviewLabel: UILabel!
     @IBOutlet weak var dateLabel: UILabel!
+    @IBOutlet weak var noCommentsLabel: UILabel!
     @IBOutlet weak var commentsTable: IntrinsicTableView!
     
     @IBOutlet weak var commentContainer: UIStackView!
@@ -167,6 +168,9 @@ class RankingViewController : UIViewController, UITableViewDataSource, APICommen
         if (!getNextPage) {
             self.nextPage = nil
             comments.removeAll()
+            DispatchQueue.main.async(execute: {
+                self.noCommentsLabel.isHidden = true
+            })
         }
         updateLoadingBar(+1)
         api.comments(resourceId: ranking!.id, resourceType: "Ranking", after: self.nextPage, delegate: self)
@@ -197,6 +201,7 @@ class RankingViewController : UIViewController, UITableViewDataSource, APICommen
         updateLoadingBar(-1)
         DispatchQueue.main.async(execute: {
             self.commentsTable?.reloadData()
+            self.noCommentsLabel.isHidden = !self.comments.isEmpty
         })
     }
     
@@ -204,7 +209,6 @@ class RankingViewController : UIViewController, UITableViewDataSource, APICommen
         handleAPI(comments: [comment], nextPage: nil)
         //NOTE: this is a bug that prevents comments from continuing to load - but... we don't show duplicate comments
     }
-    
     
     func handleAPI(userDetail: UserDetail, rankings: [RankingWithGame], nextPage: String?) {
         user = userDetail.fragments.userBasic
