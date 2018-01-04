@@ -91,13 +91,7 @@ Add more friends to see more updates.</string>
                         <viewLayoutGuide key="safeArea" id="PQr-Ze-W5v"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="Updates" image="news.png" id="acW-dT-cKf"/>
-                    <navigationItem key="navigationItem" title="Updates" id="Djh-Yt-nVv">
-                        <barButtonItem key="rightBarButtonItem" image="people.png" id="ZcB-yE-0C9">
-                            <connections>
-                                <segue destination="4AC-YC-uTn" kind="show" id="BdR-LE-u6n"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="Updates" id="Djh-Yt-nVv"/>
                     <connections>
                         <outlet property="loadingImage" destination="QJX-dO-MY5" id="vPz-ET-PDP"/>
                         <outlet property="noUpdatesLabel" destination="pjr-3s-z9b" id="k2J-eH-Ln5"/>
@@ -108,6 +102,23 @@ Add more friends to see more updates.</string>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="W5J-7L-Pyd" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1909.5999999999999" y="-423.23838080959524"/>
+        </scene>
+        <!--Friends-->
+        <scene sceneID="Ofk-zZ-v3l">
+            <objects>
+                <navigationController id="sQU-Ad-aBX" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Friends" image="people.png" id="1Ac-h3-PhQ"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="ENV-Xq-8l4">
+                        <rect key="frame" x="0.0" y="20" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="4AC-YC-uTn" kind="relationship" relationship="rootViewController" id="aCb-7a-SfI"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="qdu-PN-xJY" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1041" y="2668"/>
         </scene>
         <!--Friends-->
         <scene sceneID="Wa7-eW-cSq">
@@ -183,6 +194,7 @@ Add more friends to see more updates.</string>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Xmf-En-GZG"/>
                     </view>
+                    <navigationItem key="navigationItem" title="Friends" id="Lhc-UC-U0p"/>
                     <connections>
                         <outlet property="loadingImage" destination="Dlh-C9-j60" id="bGh-mx-FL9"/>
                         <outlet property="noFriendsLabel" destination="vET-sz-M04" id="h57-W5-Dk2"/>
@@ -192,7 +204,7 @@ Add more friends to see more updates.</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="htI-x9-JLu" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2869" y="-425"/>
+            <point key="canvasLocation" x="1909" y="2668"/>
         </scene>
         <!--Updates-->
         <scene sceneID="0GT-gz-gCX">
@@ -522,11 +534,11 @@ Add more friends to see more updates.</string>
             </objects>
             <point key="canvasLocation" x="2869" y="1895"/>
         </scene>
-        <!--Profile-->
+        <!--My Profile-->
         <scene sceneID="Quz-eV-fsw">
             <objects>
                 <navigationController id="PR9-Vd-CNs" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Profile" image="person.png" id="Odj-36-0sp"/>
+                    <tabBarItem key="tabBarItem" title="My Profile" image="person.png" id="Odj-36-0sp"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="ryH-3y-w8B">
                         <rect key="frame" x="0.0" y="20" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -1441,6 +1453,7 @@ Add more friends to see more updates.</string>
                         <segue destination="rJB-QW-iAR" kind="relationship" relationship="viewControllers" id="kEh-yA-kV9"/>
                         <segue destination="WRn-8S-dnY" kind="relationship" relationship="viewControllers" id="iP0-7Q-Jc0"/>
                         <segue destination="PR9-Vd-CNs" kind="relationship" relationship="viewControllers" id="YJz-lI-vB5"/>
+                        <segue destination="sQU-Ad-aBX" kind="relationship" relationship="viewControllers" id="zhJ-WJ-QTE"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HuB-VB-40B" sceneMemberID="firstResponder"/>
@@ -1463,8 +1476,8 @@ Add more friends to see more updates.</string>
     <inferredMetricsTieBreakers>
         <segue reference="PEt-s8-htz"/>
         <segue reference="tfh-hU-DDF"/>
-        <segue reference="SzE-66-241"/>
+        <segue reference="VWN-eB-v21"/>
         <segue reference="fDH-8H-Obl"/>
-        <segue reference="Cu6-IW-o67"/>
+        <segue reference="rqJ-zV-U89"/>
     </inferredMetricsTieBreakers>
 </document>
