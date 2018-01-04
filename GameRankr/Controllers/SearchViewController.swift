@@ -5,6 +5,7 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
     
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var loadingImage: UIImageView!
+    @IBOutlet weak var noGamesLabel: UILabel!
     @IBOutlet weak var tableView: UITableView!
     
     var results = [GameBasic]()
@@ -90,12 +91,13 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
             shouldClearSearchOnResults = false
             self.results.removeAll()
             DispatchQueue.main.async(execute: {
-                self.tableView.setContentOffset(CGPoint.zero, animated:false)
+                self.tableView?.setContentOffset(CGPoint.zero, animated:false)
             })
         }
         self.results.append(contentsOf: results)
         self.nextPage = nextPage
         DispatchQueue.main.async(execute: {
+            self.noGamesLabel?.isHidden = !self.results.isEmpty
             self.tableView.reloadData()
             self.loadingImage.isHidden = true
         })
