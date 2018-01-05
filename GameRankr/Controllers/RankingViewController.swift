@@ -2,6 +2,7 @@ import UIKit
 
 class RankingViewController : UIViewController, UITableViewDataSource, APICommentsDelegate, AlertAPIErrorDelegate, UITextViewDelegate, APICommentDelegate, APIDestroyCommentDelegate, APIUserDetailDelegate {
     
+    @IBOutlet weak var shareButton: UIBarButtonItem!
     @IBOutlet weak var loadingImage: UIImageView!
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var userButton: UIButton!
@@ -63,6 +64,9 @@ class RankingViewController : UIViewController, UITableViewDataSource, APICommen
         commentField.layer.borderWidth = 2
         commentButton.addTarget(self, action: #selector(postComment), for: .touchUpInside)
         defaultComment()
+        
+        shareButton.target = self
+        shareButton.action = #selector(shareRanking)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -132,6 +136,10 @@ class RankingViewController : UIViewController, UITableViewDataSource, APICommen
             textView.text = ""
             textView.textColor = UIColor.black
         }
+    }
+    
+    @objc func shareRanking() {
+        share(message: "\(user!.realName)'s review of \(game!.title) - GameRankr", link: ranking!.url)
     }
     
     @objc func shelfButtonTap(sender: UIButton) {

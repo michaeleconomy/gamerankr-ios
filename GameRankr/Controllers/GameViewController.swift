@@ -3,6 +3,7 @@ import Apollo
 
 class GameViewController : UIViewController, APIGameDetailDelegate, APIGameRankingsDelegate, APIMyGamesManagerDelegate, AlertAPIErrorDelegate, UITableViewDataSource, APIAuthenticationDelegate {
     
+    @IBOutlet weak var shareButton: UIBarButtonItem!
     @IBOutlet weak var loadingImage: UIImageView!
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var platformLabel: UILabel!
@@ -180,12 +181,19 @@ class GameViewController : UIViewController, APIGameDetailDelegate, APIGameRanki
         })
         switchEditionButton.addTarget(self, action: #selector(switchEditions(sender:)), for: .touchUpInside)
         api.register(authenticationDelegate: self)
+        shareButton.target = self
+        shareButton.action = #selector(shareGame)
     }
+    
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         configureView()
         MyGamesManager.sharedInstance.register(delegate: self)
+    }
+    
+    @objc func shareGame() {
+        share(message: "\(game!.title) - GameRankr", link: game!.url)
     }
     
     @objc func switchEditions(sender: UIButton) {

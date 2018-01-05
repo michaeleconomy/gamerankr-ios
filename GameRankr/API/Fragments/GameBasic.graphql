@@ -1,6 +1,7 @@
 fragment GameBasic on Game {
     id
     title
+    url
     ports {
         id
         platform {

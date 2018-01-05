@@ -951,13 +951,13 @@ Add more friends to see more updates.</string>
                                 <rect key="frame" x="0.0" y="581" width="320" height="50"/>
                                 <subviews>
                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" horizontalCompressionResistancePriority="752" text="Write a comment..." textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="gPC-cN-bm9">
-                                        <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="242" height="50"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                     </textView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aQ2-bI-CDt">
-                                        <rect key="frame" x="50" y="0.0" width="270" height="50"/>
+                                        <rect key="frame" x="242" y="0.0" width="78" height="50"/>
                                         <inset key="contentEdgeInsets" minX="10" minY="0.0" maxX="10" maxY="0.0"/>
                                         <state key="normal" title="Post"/>
                                     </button>
@@ -983,6 +983,9 @@ Add more friends to see more updates.</string>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="b0F-7O-7OG"/>
                     </view>
+                    <navigationItem key="navigationItem" title="Title" id="ls0-vc-ePg">
+                        <barButtonItem key="rightBarButtonItem" title="Share" image="share.png" id="HtX-X3-Ruw"/>
+                    </navigationItem>
                     <size key="freeformSize" width="320" height="680"/>
                     <connections>
                         <outlet property="commentBottomContraint" destination="1G5-FU-YOn" id="nRp-eZ-2M8"/>
@@ -998,6 +1001,7 @@ Add more friends to see more updates.</string>
                         <outlet property="platformLabel" destination="f70-lC-X7o" id="bx0-ub-wuv"/>
                         <outlet property="reviewLabel" destination="miW-tN-Pc9" id="mg3-pP-8sz"/>
                         <outlet property="scrollView" destination="wak-eB-NNO" id="Ot5-rN-6JU"/>
+                        <outlet property="shareButton" destination="HtX-X3-Ruw" id="41E-oA-sIl"/>
                         <outlet property="shelvesStack" destination="DjG-LG-fb4" id="2DT-TH-Hox"/>
                         <outlet property="starsStack" destination="G3D-Th-VKE" id="VMP-yO-EDo"/>
                         <outlet property="userButton" destination="csP-8X-bVu" id="bE4-fh-82b"/>
@@ -1008,7 +1012,7 @@ Add more friends to see more updates.</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nbd-2u-5n6" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4266" y="1325"/>
+            <point key="canvasLocation" x="4265.625" y="1325"/>
         </scene>
         <!--Sign In View Controller-->
         <scene sceneID="zF8-5n-0It">
@@ -1189,7 +1193,7 @@ Add more friends to see more updates.</string>
             </objects>
             <point key="canvasLocation" x="1908.75" y="355.98591549295776"/>
         </scene>
-        <!--Game View Controller-->
+        <!--Title-->
         <scene sceneID="NxY-yD-0wW">
             <objects>
                 <viewController id="IYP-Yd-OuH" customClass="GameViewController" customModule="GameRankr" customModuleProvider="target" sceneMemberID="viewController">
@@ -1399,6 +1403,9 @@ Add more friends to see more updates.</string>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="DGm-6w-jHv"/>
                     </view>
+                    <navigationItem key="navigationItem" title="Title" id="m82-Ar-OwR">
+                        <barButtonItem key="rightBarButtonItem" title="Item" image="share.png" id="dxr-98-deW"/>
+                    </navigationItem>
                     <size key="freeformSize" width="320" height="800"/>
                     <connections>
                         <outlet property="commentsButton" destination="WsT-35-0So" id="jJj-21-fsB"/>
@@ -1411,6 +1418,7 @@ Add more friends to see more updates.</string>
                         <outlet property="reviewLabel" destination="th2-0k-46i" id="Kk8-VT-LHf"/>
                         <outlet property="reviewStack" destination="RcW-cg-5Tc" id="s8t-BS-3QJ"/>
                         <outlet property="reviewsTable" destination="pnO-MZ-4bf" id="RIN-31-BTd"/>
+                        <outlet property="shareButton" destination="dxr-98-deW" id="apI-fr-LYD"/>
                         <outlet property="shelveButton" destination="dIt-TI-B90" id="dip-9F-Cu0"/>
                         <outlet property="stars" destination="vUG-EV-Acs" id="eQO-Td-ZMf"/>
                         <outlet property="switchEditionButton" destination="5RC-Do-Mp1" id="GvU-FE-MaC"/>
@@ -1470,6 +1478,7 @@ Add more friends to see more updates.</string>
         <image name="person.png" width="25" height="25"/>
         <image name="picture.png" width="50" height="50"/>
         <image name="search.png" width="25" height="25"/>
+        <image name="share.png" width="25" height="25"/>
         <image name="star-empty-medium.png" width="40" height="40"/>
         <image name="star-full.png" width="25" height="25"/>
     </resources>
