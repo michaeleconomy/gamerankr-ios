@@ -1,6 +1,6 @@
 import UIKit
 
-class ShelveGameCell : UITableViewCell {
+class UITableViewCellWithSwitch : UITableViewCell {
     @IBOutlet weak var `switch`: UISwitch!
     
 }

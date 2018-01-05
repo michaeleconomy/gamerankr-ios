@@ -6,6 +6,16 @@ class MyGamesViewController: UIViewController, UITableViewDataSource, UITableVie
     @IBOutlet weak var noGamesLabel: UILabel!
     @IBOutlet weak var tableView: UITableView!
     
+    @IBOutlet weak var filterButton: UIBarButtonItem!
+    
+    var filter: RankingFilter? {
+        didSet {
+            applyFilter()
+        }
+    }
+    
+    var filteredRankings: [RankingWithGame]?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         loadingImage.image = PlaceholderImages.loadingBar
@@ -26,19 +36,44 @@ class MyGamesViewController: UIViewController, UITableViewDataSource, UITableVie
         
         noGamesLabel?.isHidden = MyGamesManager.sharedInstance.count() > 0 || MyGamesManager.sharedInstance.loading()
         tableView.reloadData()
+        if (filter == nil) {
+            filterButton.tintColor = .gray
+        }
+        else {
+            filterButton.tintColor = .blue
+        }
+    }
+    
+    private func applyFilter() {
+        if (filter != nil) {
+            filteredRankings = filter?.apply(rankings:  MyGamesManager.sharedInstance.rankings)
+        }
+        else {
+            filteredRankings = nil
+        }
+        DispatchQueue.main.async(execute: {
+            self.configureView()
+        })
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
     }
     
+    func getCurrentRankingArray() -> [RankingWithGame] {
+        if (filter == nil) {
+            return MyGamesManager.sharedInstance.rankings
+        }
+        return filteredRankings!
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return MyGamesManager.sharedInstance.count()
+        return getCurrentRankingArray().count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
-        let ranking = MyGamesManager.sharedInstance[indexPath.row]!
+        let ranking = getCurrentRankingArray()[indexPath.row]
         let game = ranking.game
         let port = ranking.port
         
@@ -57,9 +92,7 @@ class MyGamesViewController: UIViewController, UITableViewDataSource, UITableVie
     }
     
     func handleUpdates() {
-        DispatchQueue.main.async(execute: {
-            self.configureView()
-        })
+        applyFilter()
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -73,11 +106,14 @@ class MyGamesViewController: UIViewController, UITableViewDataSource, UITableVie
                 NSLog("tableView.indexPathForSelectedRow was nil")
                 return
             }
-            
             let controller = segue.destination as! GameViewController
-            let ranking = MyGamesManager.sharedInstance[indexPath.row]!
+            let ranking = getCurrentRankingArray()[indexPath.row]
             controller.game = ranking.game.fragments.gameBasic
             controller.selectPort(portId: ranking.port.id)
+        case "filter":
+            let controller = segue.destination as! MyGamesFilterViewController
+            controller.filter = filter ?? RankingFilter()
+            controller.callingController = self
         default:
             NSLog("updates view: unhandled segue identifier: \(segue.identifier!)")
         }

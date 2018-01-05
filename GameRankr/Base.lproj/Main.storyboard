@@ -301,8 +301,15 @@ Add more friends to see more updates.</string>
                         <viewLayoutGuide key="safeArea" id="GBJ-cJ-hq1"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="My Games" image="bulleted-list.png" id="Tu4-rP-UB1"/>
-                    <navigationItem key="navigationItem" title="My Games" id="pBL-gt-QZc"/>
+                    <navigationItem key="navigationItem" title="My Games" id="pBL-gt-QZc">
+                        <barButtonItem key="rightBarButtonItem" title="Item" image="filter.png" id="8Nk-jt-TA6">
+                            <connections>
+                                <segue destination="Gox-q6-yG2" kind="presentation" identifier="filter" id="wbW-ZM-mBA"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
+                        <outlet property="filterButton" destination="8Nk-jt-TA6" id="LKF-Lc-aI9"/>
                         <outlet property="loadingImage" destination="dW0-bn-ZRR" id="3ze-TI-ZtO"/>
                         <outlet property="noGamesLabel" destination="0FL-md-bYv" id="Gkx-hg-Boz"/>
                         <outlet property="tableView" destination="06l-0M-Hoj" id="eck-Jb-tle"/>
@@ -313,6 +320,124 @@ Add more friends to see more updates.</string>
             </objects>
             <point key="canvasLocation" x="1908.75" y="1128.1690140845071"/>
         </scene>
+        <!--My Games Filter View Controller-->
+        <scene sceneID="hYT-Kv-0wb">
+            <objects>
+                <viewController id="Gox-q6-yG2" customClass="MyGamesFilterViewController" customModule="GameRankr" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="TAt-HR-eJG">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HML-Bo-XyE">
+                                <rect key="frame" x="0.0" y="20" width="320" height="44"/>
+                                <items>
+                                    <navigationItem title="Filter My Games" id="qQk-6z-dtn">
+                                        <barButtonItem key="leftBarButtonItem" title="Cancel" id="FgG-BN-8Cu"/>
+                                        <barButtonItem key="rightBarButtonItem" title="Done" id="G5T-9r-Hdi"/>
+                                    </navigationItem>
+                                </items>
+                            </navigationBar>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="vua-3u-nxh">
+                                <rect key="frame" x="0.0" y="64" width="320" height="2"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Dno-J4-wwH">
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="2"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="2" id="S8o-35-QWy"/>
+                                        </constraints>
+                                    </imageView>
+                                </subviews>
+                            </stackView>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="N1t-kp-mxM">
+                                <rect key="frame" x="0.0" y="66" width="320" height="414"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="center" axis="vertical" distribution="equalSpacing" alignment="center" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="SYJ-5a-spz">
+                                        <rect key="frame" x="0.0" y="10" width="320" height="202.5"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Shelves" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dup-iu-q1S">
+                                                <rect key="frame" x="128" y="0.0" width="64.5" height="20.5"/>
+                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="mnI-lS-Ehh" customClass="IntrinsicTableView" customModule="GameRankr" customModuleProvider="target">
+                                                <rect key="frame" x="0.0" y="32.5" width="320" height="128"/>
+                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <prototypes>
+                                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" id="UOo-c4-wgH" customClass="UITableViewCellWithSwitch" customModule="GameRankr" customModuleProvider="target">
+                                                        <rect key="frame" x="0.0" y="28" width="320" height="44"/>
+                                                        <autoresizingMask key="autoresizingMask"/>
+                                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="UOo-c4-wgH" id="1rZ-qv-K8O">
+                                                            <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
+                                                            <autoresizingMask key="autoresizingMask"/>
+                                                            <subviews>
+                                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="g4i-F8-RXb">
+                                                                    <rect key="frame" x="255" y="6.5" width="51" height="31"/>
+                                                                </switch>
+                                                            </subviews>
+                                                            <constraints>
+                                                                <constraint firstItem="g4i-F8-RXb" firstAttribute="centerY" secondItem="1rZ-qv-K8O" secondAttribute="centerY" id="KXo-Pd-fy1"/>
+                                                                <constraint firstAttribute="trailing" secondItem="g4i-F8-RXb" secondAttribute="trailing" constant="16" id="wg0-uX-gcA"/>
+                                                            </constraints>
+                                                        </tableViewCellContentView>
+                                                        <connections>
+                                                            <outlet property="switch" destination="g4i-F8-RXb" id="PQQ-YW-1bu"/>
+                                                        </connections>
+                                                    </tableViewCell>
+                                                </prototypes>
+                                                <connections>
+                                                    <outlet property="dataSource" destination="Gox-q6-yG2" id="xe9-UU-3xe"/>
+                                                </connections>
+                                            </tableView>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="m6E-Ov-OCn">
+                                                <rect key="frame" x="92" y="172.5" width="136" height="30"/>
+                                                <state key="normal" title="Clear existing filters">
+                                                    <color key="titleColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                </state>
+                                            </button>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstItem="mnI-lS-Ehh" firstAttribute="width" secondItem="SYJ-5a-spz" secondAttribute="width" id="FO7-qo-Teo"/>
+                                        </constraints>
+                                    </stackView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="SYJ-5a-spz" firstAttribute="top" secondItem="N1t-kp-mxM" secondAttribute="top" constant="10" id="NQi-kF-Sv3"/>
+                                    <constraint firstAttribute="trailing" secondItem="SYJ-5a-spz" secondAttribute="trailing" id="Qbu-2L-C23"/>
+                                    <constraint firstItem="SYJ-5a-spz" firstAttribute="width" secondItem="N1t-kp-mxM" secondAttribute="width" id="cY8-Ym-Xog"/>
+                                    <constraint firstItem="SYJ-5a-spz" firstAttribute="leading" secondItem="N1t-kp-mxM" secondAttribute="leading" id="lWk-pF-ic0"/>
+                                    <constraint firstAttribute="bottom" secondItem="SYJ-5a-spz" secondAttribute="bottom" id="nD8-uC-gJ3"/>
+                                </constraints>
+                            </scrollView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="HML-Bo-XyE" firstAttribute="leading" secondItem="lXJ-pK-1GZ" secondAttribute="leading" id="6Kf-l5-dey"/>
+                            <constraint firstItem="HML-Bo-XyE" firstAttribute="trailing" secondItem="lXJ-pK-1GZ" secondAttribute="trailing" id="B1H-ZQ-4hH"/>
+                            <constraint firstItem="vua-3u-nxh" firstAttribute="leading" secondItem="TAt-HR-eJG" secondAttribute="leading" id="D9g-1a-FaO"/>
+                            <constraint firstItem="lXJ-pK-1GZ" firstAttribute="trailing" secondItem="N1t-kp-mxM" secondAttribute="trailing" id="DUt-Mq-sg5"/>
+                            <constraint firstItem="N1t-kp-mxM" firstAttribute="width" secondItem="lXJ-pK-1GZ" secondAttribute="width" id="EDb-Kt-zOi"/>
+                            <constraint firstAttribute="trailing" secondItem="vua-3u-nxh" secondAttribute="trailing" id="SKH-CP-Iz8"/>
+                            <constraint firstItem="lXJ-pK-1GZ" firstAttribute="bottom" secondItem="N1t-kp-mxM" secondAttribute="bottom" id="bin-5l-Lrx"/>
+                            <constraint firstItem="N1t-kp-mxM" firstAttribute="top" secondItem="vua-3u-nxh" secondAttribute="bottom" id="dfE-aB-tSe"/>
+                            <constraint firstItem="N1t-kp-mxM" firstAttribute="leading" secondItem="lXJ-pK-1GZ" secondAttribute="leading" id="ouI-p8-XF1"/>
+                            <constraint firstItem="vua-3u-nxh" firstAttribute="top" secondItem="HML-Bo-XyE" secondAttribute="bottom" id="sKa-J7-NBd"/>
+                            <constraint firstItem="HML-Bo-XyE" firstAttribute="top" secondItem="lXJ-pK-1GZ" secondAttribute="top" id="vQn-Tx-gIS"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="lXJ-pK-1GZ"/>
+                    </view>
+                    <connections>
+                        <outlet property="cancelButton" destination="FgG-BN-8Cu" id="f1S-Su-Rtj"/>
+                        <outlet property="clearFiltersButton" destination="m6E-Ov-OCn" id="Ujm-Ud-4Ef"/>
+                        <outlet property="doneButton" destination="G5T-9r-Hdi" id="53M-dc-YJu"/>
+                        <outlet property="loadingImage" destination="Dno-J4-wwH" id="6TS-RX-Cyz"/>
+                        <outlet property="shelvesTable" destination="mnI-lS-Ehh" id="8hf-ED-lCf"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="gGf-F5-bED" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2869" y="1128"/>
+        </scene>
         <!--UserViewController-->
         <scene sceneID="Z6j-2Y-aOV">
             <objects>
@@ -322,13 +447,13 @@ Add more friends to see more updates.</string>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Faa-c1-zXX">
-                                <rect key="frame" x="0.0" y="64" width="320" height="2"/>
+                                <rect key="frame" x="0.0" y="20" width="320" height="2"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="2" id="ALQ-Je-iBv"/>
                                 </constraints>
                             </imageView>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iAR-5e-ZsC">
-                                <rect key="frame" x="0.0" y="66" width="320" height="365"/>
+                                <rect key="frame" x="0.0" y="22" width="320" height="458"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="OhB-K1-xei">
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="440"/>
@@ -452,7 +577,7 @@ Add more friends to see more updates.</string>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="sTL-Pt-v40">
-                                <rect key="frame" x="0.0" y="64" width="320" height="22.5"/>
+                                <rect key="frame" x="0.0" y="20" width="320" height="22.5"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="oeC-ri-Tws">
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="2"/>
@@ -472,7 +597,7 @@ Add more friends to see more updates.</string>
                                 </constraints>
                             </stackView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="gA1-0c-Skg">
-                                <rect key="frame" x="0.0" y="86.5" width="320" height="344.5"/>
+                                <rect key="frame" x="0.0" y="42.5" width="320" height="437.5"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" textLabel="gvX-63-ZOV" detailTextLabel="Pz4-Uw-5KA" imageView="NwM-iS-upP" style="IBUITableViewCellStyleSubtitle" id="fGb-aI-NPw">
@@ -634,7 +759,7 @@ Add more friends to see more updates.</string>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="t6o-9h-Zbq">
-                                <rect key="frame" x="0.0" y="64" width="320" height="416"/>
+                                <rect key="frame" x="0.0" y="20" width="320" height="460"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
@@ -695,7 +820,7 @@ Add more friends to see more updates.</string>
                                 <rect key="frame" x="0.0" y="64" width="320" height="386"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" id="d7O-Fy-HPl" customClass="ShelveGameCell" customModule="GameRankr" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" id="d7O-Fy-HPl" customClass="UITableViewCellWithSwitch" customModule="GameRankr" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="d7O-Fy-HPl" id="wYI-ZC-nKn">
@@ -769,13 +894,13 @@ Add more friends to see more updates.</string>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="XdX-d5-Hbs">
-                                <rect key="frame" x="0.0" y="64" width="320" height="2"/>
+                                <rect key="frame" x="0.0" y="20" width="320" height="2"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="2" id="S9f-FG-ysC"/>
                                 </constraints>
                             </imageView>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" keyboardDismissMode="onDrag" translatesAutoresizingMaskIntoConstraints="NO" id="wak-eB-NNO">
-                                <rect key="frame" x="0.0" y="66" width="320" height="515"/>
+                                <rect key="frame" x="0.0" y="22" width="320" height="608"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="G4d-F0-hAm">
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="499"/>
@@ -948,7 +1073,7 @@ Add more friends to see more updates.</string>
                                 </constraints>
                             </scrollView>
                             <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ywu-1g-3FL" userLabel="CommentContainer">
-                                <rect key="frame" x="0.0" y="581" width="320" height="50"/>
+                                <rect key="frame" x="0.0" y="630" width="320" height="50"/>
                                 <subviews>
                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" horizontalCompressionResistancePriority="752" text="Write a comment..." textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="gPC-cN-bm9">
                                         <rect key="frame" x="0.0" y="0.0" width="242" height="50"/>
@@ -1012,7 +1137,7 @@ Add more friends to see more updates.</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nbd-2u-5n6" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4265.625" y="1325"/>
+            <point key="canvasLocation" x="3964" y="1686"/>
         </scene>
         <!--Sign In View Controller-->
         <scene sceneID="zF8-5n-0It">
@@ -1023,19 +1148,19 @@ Add more friends to see more updates.</string>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="nQI-Bf-vHK">
-                                <rect key="frame" x="0.0" y="64" width="320" height="2"/>
+                                <rect key="frame" x="0.0" y="20" width="320" height="2"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="2" id="rbt-rX-CmQ"/>
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="GameRankr" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wej-fc-5KO">
-                                <rect key="frame" x="0.0" y="81" width="320" height="30"/>
+                                <rect key="frame" x="0.0" y="37" width="320" height="30"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="25"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="To track your games, and see friends you must first connect to facebook." textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="46w-28-Tln">
-                                <rect key="frame" x="46" y="119" width="228" height="123"/>
+                                <rect key="frame" x="46" y="75" width="228" height="123"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="123" id="Fub-hv-hff"/>
                                 </constraints>
@@ -1044,7 +1169,7 @@ Add more friends to see more updates.</string>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uoR-Ay-Jxx">
-                                <rect key="frame" x="0.0" y="387" width="320" height="44"/>
+                                <rect key="frame" x="0.0" y="436" width="320" height="44"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="o4E-3b-WKZ"/>
                                 </constraints>
@@ -1202,16 +1327,16 @@ Add more friends to see more updates.</string>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="zb3-dZ-srK">
-                                <rect key="frame" x="0.0" y="64" width="320" height="2"/>
+                                <rect key="frame" x="0.0" y="20" width="320" height="2"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="2" id="emE-VT-NRQ"/>
                                 </constraints>
                             </imageView>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="acZ-JB-V7n">
-                                <rect key="frame" x="0.0" y="66" width="320" height="685"/>
+                                <rect key="frame" x="0.0" y="22" width="320" height="778"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="center" axis="vertical" distribution="equalSpacing" alignment="center" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="U4K-Ug-BNO">
-                                        <rect key="frame" x="0.0" y="0.0" width="320" height="632.5"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="662.5"/>
                                         <subviews>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="EeY-ft-ro8">
                                                 <rect key="frame" x="0.0" y="0.0" width="320" height="160"/>
@@ -1292,7 +1417,7 @@ Add more friends to see more updates.</string>
                                                 </subviews>
                                             </stackView>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="RcW-cg-5Tc">
-                                                <rect key="frame" x="0.0" y="350.5" width="320" height="71"/>
+                                                <rect key="frame" x="0.0" y="350.5" width="320" height="101"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="this is a long string for testing wowowowo owowo ow owo owow ow" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="th2-0k-46i">
                                                         <rect key="frame" x="0.0" y="0.0" width="320" height="41"/>
@@ -1301,17 +1426,17 @@ Add more friends to see more updates.</string>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="NOM-S4-j1c">
-                                                        <rect key="frame" x="60.5" y="41" width="199" height="30"/>
+                                                        <rect key="frame" x="60.5" y="41" width="199" height="60"/>
                                                         <subviews>
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8iI-hI-wM2">
-                                                                <rect key="frame" x="0.0" y="0.0" width="101" height="30"/>
+                                                                <rect key="frame" x="0.0" y="15" width="101" height="30"/>
                                                                 <state key="normal" title="Write a Review"/>
                                                                 <connections>
                                                                     <segue destination="4WY-Uh-9bf" kind="show" identifier="editReview" id="gDx-Ht-Qqd"/>
                                                                 </connections>
                                                             </button>
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WsT-35-0So">
-                                                                <rect key="frame" x="111" y="0.0" width="88" height="30"/>
+                                                                <rect key="frame" x="111" y="15" width="88" height="30"/>
                                                                 <state key="normal" title="5 Comments"/>
                                                                 <connections>
                                                                     <segue destination="SWv-hS-tjw" kind="show" identifier="primaryRankingDetail" id="HJh-98-qdS"/>
@@ -1325,19 +1450,19 @@ Add more friends to see more updates.</string>
                                                 </constraints>
                                             </stackView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Reviews" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OOq-CZ-h3l">
-                                                <rect key="frame" x="117" y="433.5" width="86.5" height="26.5"/>
+                                                <rect key="frame" x="117" y="463.5" width="86.5" height="26.5"/>
                                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="22"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No one has added this game yet." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BFL-dQ-f3y">
-                                                <rect key="frame" x="34.5" y="472" width="251.5" height="20.5"/>
+                                                <rect key="frame" x="34.5" y="502" width="251.5" height="20.5"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="pnO-MZ-4bf" customClass="IntrinsicTableView" customModule="GameRankr" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="504.5" width="320" height="128"/>
+                                                <rect key="frame" x="0.0" y="534.5" width="320" height="128"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <prototypes>
                                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" textLabel="TyD-S1-ZLl" detailTextLabel="9U0-qo-kX2" style="IBUITableViewCellStyleSubtitle" id="c58-ez-anF">
@@ -1427,7 +1552,7 @@ Add more friends to see more updates.</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QZv-bM-d79" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2869" y="555"/>
+            <point key="canvasLocation" x="2869" y="100"/>
         </scene>
         <!--Search-->
         <scene sceneID="JM0-0l-get">
@@ -1472,6 +1597,7 @@ Add more friends to see more updates.</string>
     <resources>
         <image name="bulleted-list.png" width="25" height="25"/>
         <image name="down-arrow.png" width="25" height="25"/>
+        <image name="filter.png" width="25" height="25"/>
         <image name="game-controller.png" width="25" height="25"/>
         <image name="news.png" width="25" height="25"/>
         <image name="people.png" width="25" height="25"/>
@@ -1483,10 +1609,10 @@ Add more friends to see more updates.</string>
         <image name="star-full.png" width="25" height="25"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="PEt-s8-htz"/>
-        <segue reference="tfh-hU-DDF"/>
-        <segue reference="VWN-eB-v21"/>
-        <segue reference="fDH-8H-Obl"/>
-        <segue reference="rqJ-zV-U89"/>
+        <segue reference="ZSa-xZ-YtK"/>
+        <segue reference="hVB-Ik-XWC"/>
+        <segue reference="nf6-rL-y31"/>
+        <segue reference="FoV-qj-9o7"/>
+        <segue reference="Jh0-oY-Vq9"/>
     </inferredMetricsTieBreakers>
 </document>

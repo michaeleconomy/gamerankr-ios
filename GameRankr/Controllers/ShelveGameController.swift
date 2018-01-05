@@ -52,7 +52,7 @@ class ShelveGameController : UIViewController, UITableViewDataSource, APIMyShelv
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! ShelveGameCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! UITableViewCellWithSwitch
         let shelf = MyShelvesManager.sharedInstance[indexPath.row]
         if (shelf == nil) {
             easyAlert("Couldn't locate shelf: \(indexPath.row)")
@@ -74,7 +74,7 @@ class ShelveGameController : UIViewController, UITableViewDataSource, APIMyShelv
     
     
     @objc func shelfToggled(sender: UISwitch) {
-        let cell = sender.superview!.superview as! ShelveGameCell
+        let cell = sender.superview!.superview as! UITableViewCellWithSwitch
         let indexForCell = tableView.indexPath(for: cell)!
         let shelf = MyShelvesManager.sharedInstance[indexForCell.row]!
         if (sender.isOn) {

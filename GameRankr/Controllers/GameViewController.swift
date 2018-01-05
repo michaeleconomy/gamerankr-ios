@@ -185,7 +185,6 @@ class GameViewController : UIViewController, APIGameDetailDelegate, APIGameRanki
         shareButton.action = #selector(shareGame)
     }
     
-    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         configureView()
