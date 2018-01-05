@@ -387,6 +387,7 @@ Add more friends to see more updates.</string>
                                                 </prototypes>
                                                 <connections>
                                                     <outlet property="dataSource" destination="Gox-q6-yG2" id="xe9-UU-3xe"/>
+                                                    <outlet property="delegate" destination="Gox-q6-yG2" id="mGd-iC-k0t"/>
                                                 </connections>
                                             </tableView>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="m6E-Ov-OCn">

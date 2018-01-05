@@ -1,6 +1,6 @@
 import UIKit
 
-class MyGamesFilterViewController: UIViewController, APIMyShelvesManagerDelegate, UITableViewDataSource, AlertAPIErrorDelegate {
+class MyGamesFilterViewController: UIViewController, APIMyShelvesManagerDelegate, UITableViewDataSource, AlertAPIErrorDelegate, UITableViewDelegate {
     
     @IBOutlet weak var loadingImage: UIImageView!
     @IBOutlet weak var doneButton: UIBarButtonItem!
@@ -77,6 +77,15 @@ class MyGamesFilterViewController: UIViewController, APIMyShelvesManagerDelegate
         filter.shelves.remove(shelf.name)
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let cell = tableView.cellForRow(at: indexPath)
+        if (tableView === shelvesTable) {
+            let switchCell = cell as! UITableViewCellWithSwitch
+            switchCell.switch.isOn = !switchCell.switch.isOn
+            shelfToggled(sender: switchCell.switch)
+        }
+    }
+    
     @objc func doneButtonTouch(sender: UIButton) {
         if (filter.shelves.isEmpty) {
             easyAlert("must select at least one shelf")
@@ -94,5 +103,6 @@ class MyGamesFilterViewController: UIViewController, APIMyShelvesManagerDelegate
         callingController!.filter = nil
         dismiss(animated: true)
     }
+    
     
 }
