@@ -587,7 +587,7 @@ Add more friends to see more updates.</string>
                                     </stackView>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstAttribute="bottom" secondItem="OhB-K1-xei" secondAttribute="bottom" id="K7h-9Z-Ddm"/>
+                                    <constraint firstAttribute="bottom" secondItem="OhB-K1-xei" secondAttribute="bottom" constant="5" id="K7h-9Z-Ddm"/>
                                     <constraint firstItem="OhB-K1-xei" firstAttribute="top" secondItem="iAR-5e-ZsC" secondAttribute="top" id="Sb9-Iv-ssW"/>
                                     <constraint firstAttribute="trailing" secondItem="OhB-K1-xei" secondAttribute="trailing" id="ZN1-LD-6hM"/>
                                     <constraint firstItem="OhB-K1-xei" firstAttribute="width" secondItem="iAR-5e-ZsC" secondAttribute="width" id="jRU-vT-c3B"/>

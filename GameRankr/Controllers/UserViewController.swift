@@ -136,7 +136,7 @@ class UserViewController : UIViewController, APIUserDetailDelegate, AlertAPIErro
         let ranking = rankings[indexPath.row]
         let game = ranking.game
         let port = ranking.port
-        cell.primaryLabel.text = "\(ranking.verb.capitalizingFirstLetter()) \(game.title)"
+        cell.primaryLabel.text = "\(ranking.verb.capitalizingFirstLetter()) \(game.title) (\(port.platform.name))"
         
         var secondLine = ""
         if (ranking.ranking != nil) {
