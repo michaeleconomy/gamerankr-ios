@@ -50,7 +50,7 @@ class UpdatesViewController: UIViewController, AlertAPIErrorDelegate, UITableVie
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! FixedImageSizeTableCell
         if (nextPage != nil && indexPath.row >= (updates.count - 15)) {
             api.updates(after: nextPage, delegate: self)
             self.nextPage = nil
@@ -65,18 +65,30 @@ class UpdatesViewController: UIViewController, AlertAPIErrorDelegate, UITableVie
         let user = ranking.user
         let game = ranking.game
         
-        cell.textLabel!.text = "\(user.realName) \(ranking.verb) \(game.title)"
-        cell.detailTextLabel!.text = port.platform.name
+        cell.primaryLabel.text = "\(user.realName) \(ranking.verb)"
+        var secondLabelText = "\(game.title) (\(port.platform.name))"
+        let hasReview = ranking.review != nil && ranking.review! != ""
+        if (hasReview || ranking.ranking != nil) {
+            secondLabelText += "\n"
+            if (ranking.ranking != nil) {
+                let starsStr = String(repeating: "\u{2605}", count: ranking.ranking!)
+                secondLabelText += "\(starsStr) "
+            }
+            if (hasReview) {
+                secondLabelText += "\"\(ranking.review!)\""
+            }
+        }
+        cell.secondaryLabel.text = secondLabelText
         
         if (port.smallImageUrl != nil) {
-            cell.imageView?.kf.indicatorType = .activity
-            cell.imageView?.kf.setImage(with: URL(string: port.smallImageUrl!)!, placeholder: PlaceholderImages.game, completionHandler: {
+            cell.fixedSizeImageView.kf.indicatorType = .activity
+            cell.fixedSizeImageView.kf.setImage(with: URL(string: port.smallImageUrl!)!, placeholder: PlaceholderImages.game, completionHandler: {
                 (image, error, cacheType, imageUrl) in
                 cell.layoutSubviews()
             })
         }
         else {
-            cell.imageView?.image = PlaceholderImages.game
+            cell.fixedSizeImageView.image = PlaceholderImages.game
         }
         return cell
     }

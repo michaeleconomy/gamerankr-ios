@@ -45,31 +45,54 @@ Add more friends to see more updates.</string>
                                 <rect key="frame" x="0.0" y="66" width="320" height="365"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" textLabel="gLi-TW-ObN" detailTextLabel="cNL-M2-EIQ" style="IBUITableViewCellStyleSubtitle" id="hB7-TC-tG6">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" id="PLZ-i2-8tc" customClass="FixedImageSizeTableCell" customModule="GameRankr" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="hB7-TC-tG6" id="JMO-7t-uVa">
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="PLZ-i2-8tc" id="Mri-HQ-lN3">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="gLi-TW-ObN">
-                                                    <rect key="frame" x="15" y="5" width="33.5" height="20.5"/>
-                                                    <autoresizingMask key="autoresizingMask"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Subtitle" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="cNL-M2-EIQ">
-                                                    <rect key="frame" x="15" y="25.5" width="44" height="14.5"/>
-                                                    <autoresizingMask key="autoresizingMask"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="picture.png" translatesAutoresizingMaskIntoConstraints="NO" id="hcm-zj-106">
+                                                    <rect key="frame" x="10" y="-8.5" width="60" height="60.5"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="60" id="1YO-ag-oUU"/>
+                                                        <constraint firstAttribute="height" constant="60" id="Ilb-9F-a2X"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Dcp-jU-F4m">
+                                                    <rect key="frame" x="80" y="4.5" width="230" height="35"/>
+                                                    <subviews>
+                                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7ul-gP-Uu2">
+                                                            <rect key="frame" x="0.0" y="0.0" width="230" height="20.5"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" verticalCompressionResistancePriority="749" insetsLayoutMarginsFromSafeArea="NO" text="Subtitle" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="5" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iJg-UR-iWv">
+                                                            <rect key="frame" x="0.0" y="20.5" width="230" height="14.5"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                    </subviews>
+                                                </stackView>
                                             </subviews>
+                                            <constraints>
+                                                <constraint firstItem="hcm-zj-106" firstAttribute="top" relation="greaterThanOrEqual" secondItem="Mri-HQ-lN3" secondAttribute="top" priority="999" constant="1" id="5Lu-PL-saX"/>
+                                                <constraint firstItem="hcm-zj-106" firstAttribute="centerY" secondItem="Mri-HQ-lN3" secondAttribute="centerY" id="D0D-La-zpp"/>
+                                                <constraint firstItem="hcm-zj-106" firstAttribute="leading" secondItem="Mri-HQ-lN3" secondAttribute="leading" constant="10" id="F1d-3A-Prw"/>
+                                                <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="Dcp-jU-F4m" secondAttribute="bottom" constant="1" id="I9v-as-mkJ"/>
+                                                <constraint firstItem="Dcp-jU-F4m" firstAttribute="centerY" secondItem="Mri-HQ-lN3" secondAttribute="centerY" id="OQH-cf-bWF"/>
+                                                <constraint firstAttribute="trailing" secondItem="Dcp-jU-F4m" secondAttribute="trailing" constant="10" id="W3z-42-iv5"/>
+                                                <constraint firstItem="Dcp-jU-F4m" firstAttribute="leading" secondItem="hcm-zj-106" secondAttribute="trailing" constant="10" id="gYg-6W-Yfl"/>
+                                                <constraint firstItem="Dcp-jU-F4m" firstAttribute="top" relation="greaterThanOrEqual" secondItem="Mri-HQ-lN3" secondAttribute="top" constant="1" id="pOi-Dz-sf9"/>
+                                            </constraints>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <segue destination="SWv-hS-tjw" kind="show" identifier="rankingDetail" id="VWN-eB-v21"/>
+                                            <outlet property="fixedSizeImageView" destination="hcm-zj-106" id="iXd-jQ-S6g"/>
+                                            <outlet property="imageView" destination="hcm-zj-106" id="yv6-ds-nRT"/>
+                                            <outlet property="primaryLabel" destination="7ul-gP-Uu2" id="E4H-x5-w1M"/>
+                                            <outlet property="secondaryLabel" destination="iJg-UR-iWv" id="ae6-tP-9wk"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -101,7 +124,7 @@ Add more friends to see more updates.</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="W5J-7L-Pyd" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1909.5999999999999" y="-423.23838080959524"/>
+            <point key="canvasLocation" x="1908.75" y="-423.75"/>
         </scene>
         <!--Friends-->
         <scene sceneID="Ofk-zZ-v3l">
