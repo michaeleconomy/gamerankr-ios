@@ -1,8 +1,7 @@
 import UIKit
 import Apollo
 
-class ShelfViewController: UIViewController, UITableViewDataSource, APIShelfDelegate, AlertAPIErrorDelegate {
-    
+class ShelfViewController: UIViewController, UITableViewDataSource, APIShelfDelegate, APIUserRankingsDelegate, AlertAPIErrorDelegate {
     
     var shelf: ShelfBasic? {
         didSet {
@@ -26,10 +25,14 @@ class ShelfViewController: UIViewController, UITableViewDataSource, APIShelfDele
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.title = "Shelf: \(shelf!.name)"
+        if (shelf == nil) {
+            self.title = "Games"
+        }
+        else {
+            self.title = "Shelf: \(shelf!.name)"
+        }
         noRankingsLabel.isHidden = true
     }
-    
     
     func handleAPIAuthenticationError() {
         //nothing for now
@@ -49,13 +52,19 @@ class ShelfViewController: UIViewController, UITableViewDataSource, APIShelfDele
         if (!getNextPage) {
             self.nextPage = nil
             rankings.removeAll()
+            DispatchQueue.main.async(execute: {
+                self.tableView?.reloadData()
+            })
         }
-        
-        api.shelf(id: shelf!.id, after: nextPage, delegate: self)
+        if (shelf != nil) {
+            api.shelf(id: shelf!.id, after: nextPage, delegate: self)
+        }
+        else {
+            api.userRankings(id: user!.id, after: nextPage, delegate: self)
+        }
         self.nextPage = nil
         DispatchQueue.main.async(execute: {
             self.loadingImage?.isHidden = false
-            self.tableView?.reloadData()
         })
     }
     

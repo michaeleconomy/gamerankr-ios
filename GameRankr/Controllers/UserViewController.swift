@@ -2,6 +2,7 @@ import UIKit
 
 class UserViewController : UIViewController, APIUserDetailDelegate, AlertAPIErrorDelegate, UITableViewDataSource {
     
+    
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var loadingImage: UIImageView!
     @IBOutlet weak var shelvesTitle: UILabel!
@@ -9,8 +10,10 @@ class UserViewController : UIViewController, APIUserDetailDelegate, AlertAPIErro
     @IBOutlet weak var noGamesLabel: UILabel!
     @IBOutlet weak var reviewTable: UITableView!
     @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var moreReviewsButton: UIButton!
     
     var rankings = [RankingWithGame]()
+    var nextPage: String?
     var userDetail: UserDetail? {
         didSet {
             if (userDetail != nil) {
@@ -37,11 +40,31 @@ class UserViewController : UIViewController, APIUserDetailDelegate, AlertAPIErro
                     api.userDetail(id: user!.id, delegate: self)
                 }
             }
-            
-            DispatchQueue.main.async(execute: {
-                self.configureView()
-            })
+            asyncConfigureView()
         }
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        loadingImage.image = PlaceholderImages.loadingBar
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if (user == nil) {
+            if (api.signedOut) {
+                performSegue(withIdentifier: "requireSignIn", sender: nil)
+                return
+            }
+            api.me(delegate: self)
+        }
+        configureView()
+    }
+    
+    func asyncConfigureView() {
+        DispatchQueue.main.async(execute: {
+            self.configureView()
+        })
     }
     
     func configureView() {
@@ -82,7 +105,8 @@ class UserViewController : UIViewController, APIUserDetailDelegate, AlertAPIErro
         
         noGamesLabel?.isHidden = !rankings.isEmpty
         
-        self.reviewTable?.reloadData()
+        reviewTable?.reloadData()
+        moreReviewsButton?.isHidden = nextPage == nil
     }
     
     @objc func shelfButtonTap(sender: UIButton) {
@@ -93,31 +117,13 @@ class UserViewController : UIViewController, APIUserDetailDelegate, AlertAPIErro
         return URL(string: "\(user!.photoUrl)?type=large")!
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        loadingImage.image = PlaceholderImages.loadingBar
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        if (user == nil) {
-            if (api.signedOut) {
-                performSegue(withIdentifier: "requireSignIn", sender: nil)
-                return
-            }
-            api.me(delegate: self)
-        }
-        configureView()
-    }
     
     func handleAPI(userDetail: UserDetail, rankings: [RankingWithGame], nextPage: String?) {
         self.userDetail = userDetail
         self.rankings = rankings
+        self.nextPage = nextPage
         
-        DispatchQueue.main.async(execute: {
-            self.configureView()
-        })
+        asyncConfigureView()
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -178,11 +184,16 @@ class UserViewController : UIViewController, APIUserDetailDelegate, AlertAPIErro
             let controller = segue.destination as! ShelfViewController
             controller.shelf = shelf
             controller.user = user
+        case "moreShelfDetail":
+            let controller = segue.destination as! ShelfViewController
+            controller.shelf = nil
+            controller.user = user
+            controller.rankings = rankings
+            controller.nextPage = nextPage
         default:
             NSLog("unknown segue: \(segue.identifier!)")
         }
     }
-    
     
     func handleAPIAuthenticationError() {
         DispatchQueue.main.async(execute: {

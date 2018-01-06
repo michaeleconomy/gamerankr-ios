@@ -3628,7 +3628,7 @@ public final class MeQuery: GraphQLQuery {
         GraphQLField("id", type: .nonNull(.scalar(GraphQLID.self))),
         GraphQLField("real_name", type: .nonNull(.scalar(String.self))),
         GraphQLField("photo_url", type: .nonNull(.scalar(String.self))),
-        GraphQLField("rankings", arguments: ["first": 10], type: .nonNull(.object(Ranking.selections))),
+        GraphQLField("rankings", arguments: ["first": 20], type: .nonNull(.object(Ranking.selections))),
         GraphQLField("shelves", type: .nonNull(.list(.nonNull(.object(Shelf.selections))))),
       ]
 
@@ -7199,7 +7199,7 @@ public final class UserQuery: GraphQLQuery {
         GraphQLField("id", type: .nonNull(.scalar(GraphQLID.self))),
         GraphQLField("real_name", type: .nonNull(.scalar(String.self))),
         GraphQLField("photo_url", type: .nonNull(.scalar(String.self))),
-        GraphQLField("rankings", arguments: ["first": 10], type: .nonNull(.object(Ranking.selections))),
+        GraphQLField("rankings", arguments: ["first": 20], type: .nonNull(.object(Ranking.selections))),
         GraphQLField("shelves", type: .nonNull(.list(.nonNull(.object(Shelf.selections))))),
       ]
 
@@ -11001,7 +11001,7 @@ public struct UserBasic: GraphQLFragment {
 
 public struct UserDetail: GraphQLFragment {
   public static let fragmentString =
-    "fragment UserDetail on User {\n  __typename\n  ...UserBasic\n  rankings(first: 10) {\n    __typename\n    edges {\n      __typename\n      ranking: node {\n        __typename\n        ...RankingWithGame\n      }\n    }\n    pageInfo {\n      __typename\n      endCursor\n      hasNextPage\n    }\n  }\n  shelves {\n    __typename\n    ...ShelfBasic\n  }\n}"
+    "fragment UserDetail on User {\n  __typename\n  ...UserBasic\n  rankings(first: 20) {\n    __typename\n    edges {\n      __typename\n      ranking: node {\n        __typename\n        ...RankingWithGame\n      }\n    }\n    pageInfo {\n      __typename\n      endCursor\n      hasNextPage\n    }\n  }\n  shelves {\n    __typename\n    ...ShelfBasic\n  }\n}"
 
   public static let possibleTypes = ["User"]
 
@@ -11011,7 +11011,7 @@ public struct UserDetail: GraphQLFragment {
     GraphQLField("id", type: .nonNull(.scalar(GraphQLID.self))),
     GraphQLField("real_name", type: .nonNull(.scalar(String.self))),
     GraphQLField("photo_url", type: .nonNull(.scalar(String.self))),
-    GraphQLField("rankings", arguments: ["first": 10], type: .nonNull(.object(Ranking.selections))),
+    GraphQLField("rankings", arguments: ["first": 20], type: .nonNull(.object(Ranking.selections))),
     GraphQLField("shelves", type: .nonNull(.list(.nonNull(.object(Shelf.selections))))),
   ]
 
