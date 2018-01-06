@@ -496,30 +496,50 @@ Add more friends to see more updates.</string>
                                                 <rect key="frame" x="0.0" y="312" width="320" height="128"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <prototypes>
-                                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" textLabel="HQ8-qR-z3Q" detailTextLabel="KWk-yU-h51" style="IBUITableViewCellStyleSubtitle" id="hWW-qZ-dtY">
+                                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" id="hWW-qZ-dtY" customClass="FixedImageSizeTableCell" customModule="GameRankr" customModuleProvider="target">
                                                         <rect key="frame" x="0.0" y="28" width="320" height="44"/>
                                                         <autoresizingMask key="autoresizingMask"/>
                                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="hWW-qZ-dtY" id="2WA-Rz-cmb">
                                                             <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
                                                             <autoresizingMask key="autoresizingMask"/>
                                                             <subviews>
-                                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="HQ8-qR-z3Q">
-                                                                    <rect key="frame" x="15" y="5" width="33.5" height="20.5"/>
-                                                                    <autoresizingMask key="autoresizingMask"/>
+                                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="picture.png" translatesAutoresizingMaskIntoConstraints="NO" id="IYB-Jp-uby">
+                                                                    <rect key="frame" x="10" y="0.0" width="60" height="60"/>
+                                                                    <constraints>
+                                                                        <constraint firstAttribute="height" constant="60" id="P2C-xE-5pQ"/>
+                                                                        <constraint firstAttribute="width" constant="60" id="RKW-hF-cyh"/>
+                                                                    </constraints>
+                                                                </imageView>
+                                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="d7B-im-U4L">
+                                                                    <rect key="frame" x="80" y="10" width="230" height="18.5"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                     <nil key="textColor"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
-                                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Subtitle" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="KWk-yU-h51">
-                                                                    <rect key="frame" x="15" y="25.5" width="44" height="14.5"/>
-                                                                    <autoresizingMask key="autoresizingMask"/>
+                                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" verticalCompressionResistancePriority="749" insetsLayoutMarginsFromSafeArea="NO" text="Subtitle" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="5" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9FP-VY-xOD">
+                                                                    <rect key="frame" x="80" y="33.5" width="230" height="0.0"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                                     <nil key="textColor"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                             </subviews>
+                                                            <constraints>
+                                                                <constraint firstAttribute="trailing" secondItem="9FP-VY-xOD" secondAttribute="trailing" constant="10" id="9iQ-ky-Tc1"/>
+                                                                <constraint firstItem="9FP-VY-xOD" firstAttribute="leading" secondItem="IYB-Jp-uby" secondAttribute="trailing" constant="10" id="P4c-SA-U8x"/>
+                                                                <constraint firstAttribute="trailing" secondItem="d7B-im-U4L" secondAttribute="trailing" constant="10" id="QJj-kK-MLj"/>
+                                                                <constraint firstItem="IYB-Jp-uby" firstAttribute="top" secondItem="2WA-Rz-cmb" secondAttribute="top" id="aMx-eP-Kip"/>
+                                                                <constraint firstItem="9FP-VY-xOD" firstAttribute="top" secondItem="d7B-im-U4L" secondAttribute="bottom" constant="5" id="lFF-My-Cht"/>
+                                                                <constraint firstItem="d7B-im-U4L" firstAttribute="leading" secondItem="IYB-Jp-uby" secondAttribute="trailing" constant="10" id="rq1-3h-DeJ"/>
+                                                                <constraint firstItem="d7B-im-U4L" firstAttribute="top" secondItem="2WA-Rz-cmb" secondAttribute="top" constant="10" id="tZo-Ck-v2i"/>
+                                                                <constraint firstItem="IYB-Jp-uby" firstAttribute="leading" secondItem="2WA-Rz-cmb" secondAttribute="leading" constant="10" id="wbg-XS-D2i"/>
+                                                                <constraint firstAttribute="bottom" secondItem="9FP-VY-xOD" secondAttribute="bottom" constant="10" id="yW2-vd-8l1"/>
+                                                            </constraints>
                                                         </tableViewCellContentView>
                                                         <connections>
+                                                            <outlet property="fixedSizeImageView" destination="IYB-Jp-uby" id="z01-xd-Jtc"/>
+                                                            <outlet property="imageView" destination="IYB-Jp-uby" id="B4P-wL-4p3"/>
+                                                            <outlet property="primaryLabel" destination="d7B-im-U4L" id="QlG-5j-sIB"/>
+                                                            <outlet property="secondaryLabel" destination="9FP-VY-xOD" id="Klc-Yr-emv"/>
                                                             <segue destination="SWv-hS-tjw" kind="show" identifier="rankingDetail" id="vIV-Ha-3XY"/>
                                                         </connections>
                                                     </tableViewCell>
@@ -532,7 +552,7 @@ Add more friends to see more updates.</string>
                                     </stackView>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstAttribute="bottom" secondItem="OhB-K1-xei" secondAttribute="bottom" constant="-15" id="K7h-9Z-Ddm"/>
+                                    <constraint firstAttribute="bottom" secondItem="OhB-K1-xei" secondAttribute="bottom" id="K7h-9Z-Ddm"/>
                                     <constraint firstItem="OhB-K1-xei" firstAttribute="top" secondItem="iAR-5e-ZsC" secondAttribute="top" id="Sb9-Iv-ssW"/>
                                     <constraint firstAttribute="trailing" secondItem="OhB-K1-xei" secondAttribute="trailing" id="ZN1-LD-6hM"/>
                                     <constraint firstItem="OhB-K1-xei" firstAttribute="width" secondItem="iAR-5e-ZsC" secondAttribute="width" id="jRU-vT-c3B"/>
@@ -567,7 +587,7 @@ Add more friends to see more updates.</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wwj-Uk-6sN" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1909" y="1895"/>
+            <point key="canvasLocation" x="1908.75" y="1895"/>
         </scene>
         <!--Shelf: Foo-->
         <scene sceneID="KBt-5l-02n">
@@ -1611,9 +1631,9 @@ Add more friends to see more updates.</string>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="ZSa-xZ-YtK"/>
-        <segue reference="hVB-Ik-XWC"/>
-        <segue reference="nf6-rL-y31"/>
-        <segue reference="FoV-qj-9o7"/>
+        <segue reference="KF3-s5-Q5U"/>
+        <segue reference="vIV-Ha-3XY"/>
+        <segue reference="fDH-8H-Obl"/>
         <segue reference="Jh0-oY-Vq9"/>
     </inferredMetricsTieBreakers>
 </document>

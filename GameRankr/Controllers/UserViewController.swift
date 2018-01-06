@@ -125,24 +125,32 @@ class UserViewController : UIViewController, APIUserDetailDelegate, AlertAPIErro
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! FixedImageSizeTableCell
         
         let ranking = rankings[indexPath.row]
         let game = ranking.game
         let port = ranking.port
+        cell.primaryLabel.text = "\(ranking.verb.capitalizingFirstLetter()) \(game.title)"
         
-        cell.textLabel!.text = "\(user!.realName) \(ranking.verb) \(game.title)"
-        cell.detailTextLabel!.text = port.platform.name
+        var secondLine = ""
+        if (ranking.ranking != nil) {
+            let starsStr = String(repeating: "\u{2605}", count: ranking.ranking!)
+            secondLine += "\(starsStr) "
+        }
+        if (ranking.review != nil && ranking.review != "") {
+            secondLine += "\"\(ranking.review!)\""
+        }
+        cell.secondaryLabel.text = secondLine
         
         if (ranking.port.smallImageUrl != nil) {
-            cell.imageView?.kf.indicatorType = .activity
-            cell.imageView?.kf.setImage(with: URL(string: port.smallImageUrl!)!, placeholder: PlaceholderImages.game, completionHandler: {
+            cell.fixedSizeImageView.kf.indicatorType = .activity
+            cell.fixedSizeImageView.kf.setImage(with: URL(string: port.smallImageUrl!)!, placeholder: PlaceholderImages.game, completionHandler: {
                 (image, error, cacheType, imageUrl) in
                 cell.layoutSubviews()
             })
         }
         else {
-            cell.imageView?.image = PlaceholderImages.game
+            cell.fixedSizeImageView.image = PlaceholderImages.game
         }
         return cell
     }
@@ -173,7 +181,6 @@ class UserViewController : UIViewController, APIUserDetailDelegate, AlertAPIErro
         default:
             NSLog("unknown segue: \(segue.identifier!)")
         }
-        
     }
     
     

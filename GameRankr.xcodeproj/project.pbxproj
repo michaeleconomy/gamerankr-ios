@@ -26,6 +26,8 @@
 		4C430E4E1FFFF1C600CAC150 /* filter.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C430E4D1FFFF1C500CAC150 /* filter.png */; };
 		4C430E511FFFF7B500CAC150 /* RankingFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C430E501FFFF7B500CAC150 /* RankingFilter.swift */; };
 		4C430E532000109500CAC150 /* MyGamesFilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C430E522000109500CAC150 /* MyGamesFilterViewController.swift */; };
+		4C430E56200036EA00CAC150 /* StringExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C430E55200036EA00CAC150 /* StringExtensions.swift */; };
+		4C430E582000636C00CAC150 /* FixedImageSizeTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C430E572000636C00CAC150 /* FixedImageSizeTableCell.swift */; };
 		4C47F02C1FF402FC00E5FD92 /* GameRankrNetworkTransport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C47F02B1FF402FC00E5FD92 /* GameRankrNetworkTransport.swift */; };
 		4C47F02E1FF5D10100E5FD92 /* loading_photos.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C47F02D1FF5D10100E5FD92 /* loading_photos.png */; };
 		4C47F0321FF6A12B00E5FD92 /* GameRankings.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 4C47F0311FF6A12B00E5FD92 /* GameRankings.graphql */; };
@@ -127,6 +129,8 @@
 		4C430E4D1FFFF1C500CAC150 /* filter.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = filter.png; sourceTree = "<group>"; };
 		4C430E501FFFF7B500CAC150 /* RankingFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankingFilter.swift; sourceTree = "<group>"; };
 		4C430E522000109500CAC150 /* MyGamesFilterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyGamesFilterViewController.swift; sourceTree = "<group>"; };
+		4C430E55200036EA00CAC150 /* StringExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtensions.swift; sourceTree = "<group>"; };
+		4C430E572000636C00CAC150 /* FixedImageSizeTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FixedImageSizeTableCell.swift; sourceTree = "<group>"; };
 		4C47F02B1FF402FC00E5FD92 /* GameRankrNetworkTransport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameRankrNetworkTransport.swift; sourceTree = "<group>"; };
 		4C47F02D1FF5D10100E5FD92 /* loading_photos.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = loading_photos.png; sourceTree = "<group>"; };
 		4C47F0311FF6A12B00E5FD92 /* GameRankings.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = GameRankings.graphql; sourceTree = "<group>"; };
@@ -261,6 +265,7 @@
 				4CBD0F941FE7801F00230771 /* IntrinsicTableView.swift */,
 				4CAA416E1FEAF639007EBB7C /* UITableViewCellWithSwitch.swift */,
 				4C430E431FFED61F00CAC150 /* ShareExtension.swift */,
+				4C430E572000636C00CAC150 /* FixedImageSizeTableCell.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -271,6 +276,14 @@
 				4C430E501FFFF7B500CAC150 /* RankingFilter.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		4C430E54200036D200CAC150 /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				4C430E55200036EA00CAC150 /* StringExtensions.swift */,
+			);
+			path = Shared;
 			sourceTree = "<group>";
 		};
 		4C57FC061FDF775A00A04E57 /* Icons */ = {
@@ -412,6 +425,7 @@
 		4CD1C9D91FDF6B62001A0B8D /* GameRankr */ = {
 			isa = PBXGroup;
 			children = (
+				4C430E54200036D200CAC150 /* Shared */,
 				4C430E4F1FFFF78800CAC150 /* Models */,
 				4C4FC9D81FE23C9F002F6428 /* API.swift */,
 				4C57FC131FDF7D7600A04E57 /* API */,
@@ -682,9 +696,11 @@
 				4C4FC9D91FE23C9F002F6428 /* API.swift in Sources */,
 				4CBD0F951FE7801F00230771 /* IntrinsicTableView.swift in Sources */,
 				4C2E1BBC1FE9EB4400C048BC /* ShelveGameController.swift in Sources */,
+				4C430E582000636C00CAC150 /* FixedImageSizeTableCell.swift in Sources */,
 				4C57FC151FDF7D9600A04E57 /* GamerankrAPI.swift in Sources */,
 				4CAA416D1FEAE74D007EBB7C /* EditReviewViewController.swift in Sources */,
 				4CBD0F7D1FE627FB00230771 /* SignInViewController.swift in Sources */,
+				4C430E56200036EA00CAC150 /* StringExtensions.swift in Sources */,
 				4CAA41771FEC186A007EBB7C /* PortChooserViewController.swift in Sources */,
 				4C430E532000109500CAC150 /* MyGamesFilterViewController.swift in Sources */,
 				4CD1C9DD1FDF6B62001A0B8D /* UpdatesViewController.swift in Sources */,
