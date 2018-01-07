@@ -79,7 +79,6 @@ class BrowseViewController: UIViewController, FullRankingDataSource, APIPopularG
             controller.game = ranking.game.fragments.gameBasic
         case "moreRecentReviews":
             let controller = segue.destination as! RecentReviewsViewController
-            controller.rankings = rankings
             api.recentReviews(after: nextPage, delegate: controller)
         default:
             NSLog("updates view: unhandled segue identifier: \(segue.identifier!)")

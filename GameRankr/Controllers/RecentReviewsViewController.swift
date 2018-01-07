@@ -5,7 +5,7 @@ class RecentReviewsViewController: UIViewController, FullRankingDataSource, APIR
     @IBOutlet weak var loadingImage: UIImageView!
     @IBOutlet weak var tableView: UITableView!
     
-    var rankings: [RankingFull]?
+    var rankings = [RankingFull]()
     var nextPage: String?
     
     override func viewDidLoad() {
@@ -14,24 +14,23 @@ class RecentReviewsViewController: UIViewController, FullRankingDataSource, APIR
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return rankings!.count
+        return rankings.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if (nextPage != nil && indexPath.row >= (rankings!.count - 15)) {
+        if (nextPage != nil && indexPath.row >= (rankings.count - 15)) {
             api.recentReviews(after: nextPage, delegate: self)
             self.nextPage = nil
-            
             DispatchQueue.main.async(execute: {
                 self.loadingImage.isHidden = false
             })
         }
-        let ranking = rankings![indexPath.row]
+        let ranking = rankings[indexPath.row]
         return cellFor(ranking: ranking, tableView: tableView, indexPath: indexPath);
     }
     
     func handleAPI(rankings: [RankingFull], nextPage: String?) {
-        self.rankings!.append(contentsOf: rankings)
+        self.rankings.append(contentsOf: rankings)
         self.nextPage = nextPage
         DispatchQueue.main.async(execute: {
             self.loadingImage?.isHidden = true
@@ -51,7 +50,7 @@ class RecentReviewsViewController: UIViewController, FullRankingDataSource, APIR
                 return
             }
             let controller = segue.destination as! RankingViewController
-            let ranking = rankings![indexPath.row]
+            let ranking = rankings[indexPath.row]
             controller.ranking = ranking.fragments.rankingBasic
             controller.user = ranking.user.fragments.userBasic
             controller.game = ranking.game.fragments.gameBasic
