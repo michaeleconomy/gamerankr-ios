@@ -40,6 +40,7 @@
 		4C430E6C2001D19100CAC150 /* FullRankingDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C430E6B2001D19100CAC150 /* FullRankingDataSource.swift */; };
 		4C430E6E2001DFEB00CAC150 /* RecentReviewsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C430E6D2001DFEB00CAC150 /* RecentReviewsViewController.swift */; };
 		4C430E702002926700CAC150 /* GameCoverCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C430E6F2002926700CAC150 /* GameCoverCollectionCell.swift */; };
+		4C430E722002A6F100CAC150 /* IntrinsicCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C430E712002A6F100CAC150 /* IntrinsicCollectionView.swift */; };
 		4C47F02C1FF402FC00E5FD92 /* GameRankrNetworkTransport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C47F02B1FF402FC00E5FD92 /* GameRankrNetworkTransport.swift */; };
 		4C47F02E1FF5D10100E5FD92 /* loading_photos.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C47F02D1FF5D10100E5FD92 /* loading_photos.png */; };
 		4C47F0321FF6A12B00E5FD92 /* GameRankings.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 4C47F0311FF6A12B00E5FD92 /* GameRankings.graphql */; };
@@ -155,6 +156,7 @@
 		4C430E6B2001D19100CAC150 /* FullRankingDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullRankingDataSource.swift; sourceTree = "<group>"; };
 		4C430E6D2001DFEB00CAC150 /* RecentReviewsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentReviewsViewController.swift; sourceTree = "<group>"; };
 		4C430E6F2002926700CAC150 /* GameCoverCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameCoverCollectionCell.swift; sourceTree = "<group>"; };
+		4C430E712002A6F100CAC150 /* IntrinsicCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntrinsicCollectionView.swift; sourceTree = "<group>"; };
 		4C47F02B1FF402FC00E5FD92 /* GameRankrNetworkTransport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameRankrNetworkTransport.swift; sourceTree = "<group>"; };
 		4C47F02D1FF5D10100E5FD92 /* loading_photos.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = loading_photos.png; sourceTree = "<group>"; };
 		4C47F0311FF6A12B00E5FD92 /* GameRankings.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = GameRankings.graphql; sourceTree = "<group>"; };
@@ -294,6 +296,7 @@
 				4C430E572000636C00CAC150 /* FixedImageSizeTableCell.swift */,
 				4C430E6B2001D19100CAC150 /* FullRankingDataSource.swift */,
 				4C430E6F2002926700CAC150 /* GameCoverCollectionCell.swift */,
+				4C430E712002A6F100CAC150 /* IntrinsicCollectionView.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -753,6 +756,7 @@
 				4CD1C9DD1FDF6B62001A0B8D /* UpdatesViewController.swift in Sources */,
 				4C430E6C2001D19100CAC150 /* FullRankingDataSource.swift in Sources */,
 				4C47F03A1FF8331E00E5FD92 /* ShelfViewController.swift in Sources */,
+				4C430E722002A6F100CAC150 /* IntrinsicCollectionView.swift in Sources */,
 				4C2E1BBE1FE9ED3900C048BC /* RankingViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

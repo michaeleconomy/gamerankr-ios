@@ -769,61 +769,38 @@ Add more friends to see more updates.</string>
                                 <rect key="frame" x="0.0" y="66" width="320" height="365"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="IHW-eB-eM5">
-                                        <rect key="frame" x="0.0" y="0.0" width="320" height="367"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="299"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Popular Games" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pT9-rh-slT">
-                                                <rect key="frame" x="102" y="0.0" width="116.5" height="20.5"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <rect key="frame" x="98" y="0.0" width="124" height="20.5"/>
+                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Jl1-aL-SRn">
-                                                <rect key="frame" x="0.0" y="30.5" width="320" height="128"/>
-                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="MWD-Id-fug">
-                                                    <size key="itemSize" width="60" height="60"/>
-                                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                                </collectionViewFlowLayout>
-                                                <cells>
-                                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="cell" id="Rpl-Ej-OEz" customClass="GameCoverCollectionCell" customModule="GameRankr" customModuleProvider="target">
-                                                        <rect key="frame" x="0.0" y="34" width="60" height="60"/>
-                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
-                                                            <rect key="frame" x="0.0" y="0.0" width="60" height="60"/>
-                                                            <autoresizingMask key="autoresizingMask"/>
-                                                            <subviews>
-                                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Ysy-B2-xw5">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="60" height="60"/>
-                                                                    <constraints>
-                                                                        <constraint firstAttribute="height" constant="60" id="CLY-fX-vc1"/>
-                                                                        <constraint firstAttribute="width" constant="60" id="Gsf-k2-Qt5"/>
-                                                                    </constraints>
-                                                                </imageView>
-                                                            </subviews>
-                                                        </view>
-                                                        <constraints>
-                                                            <constraint firstItem="Ysy-B2-xw5" firstAttribute="centerX" secondItem="Rpl-Ej-OEz" secondAttribute="centerX" id="C2q-GM-9qo"/>
-                                                            <constraint firstItem="Ysy-B2-xw5" firstAttribute="centerY" secondItem="Rpl-Ej-OEz" secondAttribute="centerY" id="W8z-fZ-tg1"/>
-                                                        </constraints>
-                                                        <connections>
-                                                            <outlet property="imageView" destination="Ysy-B2-xw5" id="ukz-eh-lbG"/>
-                                                        </connections>
-                                                    </collectionViewCell>
-                                                </cells>
-                                                <connections>
-                                                    <outlet property="dataSource" destination="xLF-S7-YwW" id="h0Z-TD-nDr"/>
-                                                </connections>
-                                            </collectionView>
+                                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Wsh-co-T6x">
+                                                <rect key="frame" x="0.0" y="30.5" width="320" height="60"/>
+                                                <subviews>
+                                                    <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" distribution="equalSpacing" alignment="top" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="6XL-oQ-4jc">
+                                                        <rect key="frame" x="0.0" y="0.0" width="240" height="60"/>
+                                                    </stackView>
+                                                </subviews>
+                                                <constraints>
+                                                    <constraint firstAttribute="bottom" secondItem="6XL-oQ-4jc" secondAttribute="bottom" id="VJn-ML-tI2"/>
+                                                    <constraint firstItem="6XL-oQ-4jc" firstAttribute="height" secondItem="Wsh-co-T6x" secondAttribute="height" id="t8p-VV-j2r"/>
+                                                    <constraint firstAttribute="height" constant="60" id="uTD-Wx-2CH"/>
+                                                    <constraint firstItem="6XL-oQ-4jc" firstAttribute="leading" secondItem="Wsh-co-T6x" secondAttribute="leading" id="yGQ-b6-GXx"/>
+                                                    <constraint firstItem="6XL-oQ-4jc" firstAttribute="top" secondItem="Wsh-co-T6x" secondAttribute="top" id="z54-a9-hCl"/>
+                                                    <constraint firstAttribute="trailing" secondItem="6XL-oQ-4jc" secondAttribute="trailing" id="zgc-jD-g2S"/>
+                                                </constraints>
+                                            </scrollView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Recent Reviews" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7NJ-CB-1Qf">
-                                                <rect key="frame" x="99.5" y="168.5" width="121" height="20.5"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <rect key="frame" x="95.5" y="100.5" width="129" height="20.5"/>
+                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Ddf-su-K1f" customClass="IntrinsicTableView" customModule="GameRankr" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="199" width="320" height="128"/>
+                                                <rect key="frame" x="0.0" y="131" width="320" height="128"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <prototypes>
                                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" id="SMz-le-Tp6" customClass="FixedImageSizeTableCell" customModule="GameRankr" customModuleProvider="target">
@@ -883,7 +860,7 @@ Add more friends to see more updates.</string>
                                                 </connections>
                                             </tableView>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VLQ-Ak-TjM">
-                                                <rect key="frame" x="97" y="337" width="126" height="30"/>
+                                                <rect key="frame" x="97" y="269" width="126" height="30"/>
                                                 <state key="normal" title="See More Reviews"/>
                                                 <connections>
                                                     <segue destination="Bk1-Fc-TY9" kind="show" identifier="moreRecentReviews" id="vWy-oq-OLj"/>
@@ -891,8 +868,8 @@ Add more friends to see more updates.</string>
                                             </button>
                                         </subviews>
                                         <constraints>
-                                            <constraint firstItem="Jl1-aL-SRn" firstAttribute="width" secondItem="IHW-eB-eM5" secondAttribute="width" id="0oX-4w-fgT"/>
                                             <constraint firstItem="Ddf-su-K1f" firstAttribute="width" secondItem="IHW-eB-eM5" secondAttribute="width" id="Ybg-T7-adb"/>
+                                            <constraint firstItem="Wsh-co-T6x" firstAttribute="width" secondItem="IHW-eB-eM5" secondAttribute="width" id="xPN-Lk-294"/>
                                         </constraints>
                                     </stackView>
                                 </subviews>
@@ -919,17 +896,18 @@ Add more friends to see more updates.</string>
                     </view>
                     <navigationItem key="navigationItem" title="Browse" id="mYG-SL-EtU"/>
                     <connections>
+                        <outlet property="gamesStack" destination="6XL-oQ-4jc" id="OIl-sS-p4w"/>
                         <outlet property="loadingImage" destination="jUW-PI-ZHO" id="dHe-wF-tlM"/>
                         <outlet property="moreReviewsButton" destination="VLQ-Ak-TjM" id="9mO-xz-7E7"/>
-                        <outlet property="popularGamesCollection" destination="Jl1-aL-SRn" id="mFl-7x-ZU1"/>
                         <outlet property="reviewsLabel" destination="7NJ-CB-1Qf" id="38e-x4-qJm"/>
                         <outlet property="reviewsTable" destination="Ddf-su-K1f" id="ex3-Q7-zzJ"/>
                         <outlet property="scrollView" destination="D7p-ow-KT2" id="EhK-b2-6WG"/>
+                        <segue destination="IYP-Yd-OuH" kind="show" identifier="gameDetail" id="tHG-Aw-fPI"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pl6-5w-Yrd" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1908.75" y="-1136.25"/>
+            <point key="canvasLocation" x="1909" y="-1136"/>
         </scene>
         <!--Recent Reviews-->
         <scene sceneID="eHZ-4q-fn2">
@@ -1914,9 +1892,9 @@ Add more friends to see more updates.</string>
         <image name="star-full.png" width="25" height="25"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="ZSa-xZ-YtK"/>
+        <segue reference="tHG-Aw-fPI"/>
         <segue reference="int-zW-xEI"/>
-        <segue reference="ByG-H3-DuN"/>
+        <segue reference="KRW-Ul-cpT"/>
         <segue reference="FoV-qj-9o7"/>
         <segue reference="Jh0-oY-Vq9"/>
     </inferredMetricsTieBreakers>

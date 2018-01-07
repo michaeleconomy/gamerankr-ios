@@ -1,12 +1,10 @@
 import UIKit
-class BrowseViewController: UIViewController, FullRankingDataSource, APIPopularGamesDelegate, APIRecentReviewsDelegate, UICollectionViewDataSource {
+class BrowseViewController: UIViewController, FullRankingDataSource, APIPopularGamesDelegate, APIRecentReviewsDelegate {
     
     
     @IBOutlet weak var loadingImage: UIImageView!
     @IBOutlet weak var scrollView: UIScrollView!
-    
-    @IBOutlet weak var popularGamesCollection: UICollectionView!
-    
+    @IBOutlet weak var gamesStack: UIStackView!
     @IBOutlet weak var reviewsLabel: UILabel!
     @IBOutlet weak var reviewsTable: UITableView!
     @IBOutlet weak var moreReviewsButton: UIButton!
@@ -35,7 +33,6 @@ class BrowseViewController: UIViewController, FullRankingDataSource, APIPopularG
         loadingImage?.isHidden = false
         if (games == nil) {
             scrollView?.isHidden = true
-            popularGamesCollection.reloadData()
             return
         }
         scrollView?.isHidden = false
@@ -61,6 +58,35 @@ class BrowseViewController: UIViewController, FullRankingDataSource, APIPopularG
         return cellFor(ranking: ranking, tableView: tableView, indexPath: indexPath);
     }
     
+    func addGames() {
+        for game in games! {
+            let gameImage = UIButton()
+            let port = game.ports.first!
+            gameImage.addConstraint(gameImage.widthAnchor.constraint(equalToConstant: 60))
+            gameImage.addConstraint(gameImage.heightAnchor.constraint(equalToConstant: 60))
+            
+            if (port.smallImageUrl != nil) {
+                gameImage.kf.setImage(with: URL(string: port.smallImageUrl!)!, for: .normal, placeholder: PlaceholderImages.game
+//                    , completionHandler: {
+//                    (image, error, cacheType, imageUrl) in
+//                    gameImage.layoutSubviews()
+//                }
+                )
+            }
+            else {
+                gameImage.setImage(PlaceholderImages.game, for: .normal)
+            }
+            
+            gameImage.addTarget(self, action: #selector(gameImageTouch(sender:)), for: .touchUpInside)
+            
+            gamesStack.addArrangedSubview(gameImage)
+        }
+    }
+    
+    @objc func gameImageTouch(sender: UIButton) {
+         performSegue(withIdentifier: "gameDetail", sender: sender)
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if (segue.identifier == nil) {
             NSLog("nil segue from updatesView")
@@ -77,6 +103,16 @@ class BrowseViewController: UIViewController, FullRankingDataSource, APIPopularG
             controller.ranking = ranking.fragments.rankingBasic
             controller.user = ranking.user.fragments.userBasic
             controller.game = ranking.game.fragments.gameBasic
+            
+        case "gameDetail":
+            let button = sender as! UIButton
+            guard let index = gamesStack.arrangedSubviews.index(of: button) else {
+                NSLog("could not find button in gamesStack")
+                return
+            }
+            let controller = segue.destination as! GameViewController
+            let game = games![index]
+            controller.game = game
         case "moreRecentReviews":
             let controller = segue.destination as! RecentReviewsViewController
             api.recentReviews(after: nextPage, delegate: controller)
@@ -88,20 +124,17 @@ class BrowseViewController: UIViewController, FullRankingDataSource, APIPopularG
     func handleAPI(games: [GameBasic]) {
         self.games = games
         
-        asyncConfigureView()
+        DispatchQueue.main.async(execute: {
+            self.addGames()
+            self.configureView()
+        })
     }
     
     func handleAPI(rankings: [RankingFull], nextPage: String?) {
         self.rankings = rankings
-        NSLog("rankings.count: \(rankings.count)")
         self.nextPage = nextPage
         
         asyncConfigureView()
-    }
-    
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return games?.count ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -119,6 +152,8 @@ class BrowseViewController: UIViewController, FullRankingDataSource, APIPopularG
         else {
             cell.imageView.image = PlaceholderImages.game
         }
+        
+        cell.backgroundColor = UIColor(red: CGFloat(arc4random()) / CGFloat(UInt32.max), green: CGFloat(arc4random()) / CGFloat(UInt32.max), blue: CGFloat(arc4random()) / CGFloat(UInt32.max), alpha: 1.0)
         
         return cell
     }

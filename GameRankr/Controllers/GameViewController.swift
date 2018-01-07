@@ -153,11 +153,11 @@ class GameViewController : UIViewController, APIGameDetailDelegate, APIGameRanki
                 reviewButton?.setTitle("Write a Review", for: .normal)
             }
             if (ranking!.commentsCount > 0) {
-                commentsButton.setTitle("\(ranking!.commentsCount) Comments", for: .normal)
-                commentsButton.isHidden = false
+                commentsButton?.setTitle("\(ranking!.commentsCount) Comments", for: .normal)
+                commentsButton?.isHidden = false
             }
             else {
-                commentsButton.isHidden = true
+                commentsButton?.isHidden = true
             }
         }
         else {
