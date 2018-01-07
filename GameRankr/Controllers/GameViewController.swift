@@ -1,7 +1,7 @@
 import UIKit
 import Apollo
 
-class GameViewController : UIViewController, APIGameDetailDelegate, APIGameRankingsDelegate, APIMyGamesManagerDelegate, AlertAPIErrorDelegate, UITableViewDataSource, APIAuthenticationDelegate {
+class GameViewController : UIViewController, APIGameDetailDelegate, APIGameRankingsDelegate, APIMyGamesManagerDelegate, UITableViewDataSource, APIAuthenticationDelegate {
     
     @IBOutlet weak var shareButton: UIBarButtonItem!
     @IBOutlet weak var loadingImage: UIImageView!
@@ -273,7 +273,7 @@ class GameViewController : UIViewController, APIGameDetailDelegate, APIGameRanki
     func handleUpdates() {
         if (game != nil) {
             self.ranking = MyGamesManager.sharedInstance.getRanking(gameId: game!.id)
-            //TODO - this is maybe extra work, but is hard to figure out if ranking changed
+            //optimization - this is maybe extra work, but is hard to figure out if ranking changed
             DispatchQueue.main.async(execute: {
                 self.configureView()
             })

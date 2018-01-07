@@ -1,7 +1,7 @@
 import UIKit
 import Apollo
 
-class ShelveGameController : UIViewController, UITableViewDataSource, APIMyShelvesManagerDelegate, APIMyGamesManagerDelegate, AlertAPIErrorDelegate {
+class ShelveGameController : UIViewController, UITableViewDataSource, APIMyShelvesManagerDelegate, APIMyGamesManagerDelegate {
     
     @IBOutlet weak var loadingImage: UIImageView!
     @IBOutlet weak var doneButton: UIButton!

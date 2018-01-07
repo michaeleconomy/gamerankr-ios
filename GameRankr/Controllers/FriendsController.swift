@@ -1,6 +1,6 @@
 import UIKit
 
-class FriendsController : UIViewController, APIFriendsDelegate, AlertAPIErrorDelegate, UITableViewDataSource {
+class FriendsController : UIViewController, APIFriendsDelegate, UITableViewDataSource {
     @IBOutlet weak var loadingImage: UIImageView!
     @IBOutlet weak var noFriendsLabel: UILabel!
     @IBOutlet weak var tableView: UITableView!

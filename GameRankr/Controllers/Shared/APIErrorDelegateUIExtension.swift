@@ -1,6 +1,5 @@
 import UIKit
 
-protocol AlertAPIErrorDelegate : APIErrorDelegate {}
 extension UIViewController {
     func easyAlert(_ error: String) {
         let alert = UIAlertController(title: "Alert", message: error, preferredStyle: UIAlertControllerStyle.alert)
@@ -8,7 +7,7 @@ extension UIViewController {
         self.present(alert, animated: true, completion: nil)
     }
 }
-extension AlertAPIErrorDelegate where Self: UIViewController  {
+extension APIErrorDelegate where Self: UIViewController  {
     
     func handleAPI(error: String) {
         easyAlert(error)

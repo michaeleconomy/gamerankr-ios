@@ -18,7 +18,7 @@
 		4C2E1BBE1FE9ED3900C048BC /* RankingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C2E1BBD1FE9ED3900C048BC /* RankingViewController.swift */; };
 		4C3FC26A1FE322BC00299D7D /* Search.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 4C3FC2691FE322BC00299D7D /* Search.graphql */; };
 		4C3FC26E1FE4590A00299D7D /* Game.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 4C3FC26D1FE4590A00299D7D /* Game.graphql */; };
-		4C42E4ED1FE1B679003F1C68 /* AlertAPIErrorDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C42E4EC1FE1B679003F1C68 /* AlertAPIErrorDelegate.swift */; };
+		4C42E4ED1FE1B679003F1C68 /* APIErrorDelegateUIExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C42E4EC1FE1B679003F1C68 /* APIErrorDelegateUIExtension.swift */; };
 		4C42E4EF1FE1BB92003F1C68 /* bulleted-list.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C42E4EE1FE1BB92003F1C68 /* bulleted-list.png */; };
 		4C42E4F11FE1BC58003F1C68 /* MyGamesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C42E4F01FE1BC58003F1C68 /* MyGamesViewController.swift */; };
 		4C430E441FFED61F00CAC150 /* ShareExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C430E431FFED61F00CAC150 /* ShareExtension.swift */; };
@@ -28,6 +28,18 @@
 		4C430E532000109500CAC150 /* MyGamesFilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C430E522000109500CAC150 /* MyGamesFilterViewController.swift */; };
 		4C430E56200036EA00CAC150 /* StringExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C430E55200036EA00CAC150 /* StringExtensions.swift */; };
 		4C430E582000636C00CAC150 /* FixedImageSizeTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C430E572000636C00CAC150 /* FixedImageSizeTableCell.swift */; };
+		4C430E5A200163BB00CAC150 /* PopularGames.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 4C430E59200163BB00CAC150 /* PopularGames.graphql */; };
+		4C430E5C2001645500CAC150 /* FeaturedPlatforms.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 4C430E5B2001645500CAC150 /* FeaturedPlatforms.graphql */; };
+		4C430E5E2001648700CAC150 /* Platforms.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 4C430E5D2001648700CAC150 /* Platforms.graphql */; };
+		4C430E602001655500CAC150 /* RecentReviews.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 4C430E5F2001655500CAC150 /* RecentReviews.graphql */; };
+		4C430E622001A5A400CAC150 /* BrowseAPIs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C430E612001A5A400CAC150 /* BrowseAPIs.swift */; };
+		4C430E642001A7CF00CAC150 /* PlatformAPIs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C430E632001A7CF00CAC150 /* PlatformAPIs.swift */; };
+		4C430E662001A80900CAC150 /* PlatformBasic.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 4C430E652001A80900CAC150 /* PlatformBasic.graphql */; };
+		4C430E682001BD0700CAC150 /* CommentAPIs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C430E672001BD0700CAC150 /* CommentAPIs.swift */; };
+		4C430E6A2001C8AF00CAC150 /* BrowseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C430E692001C8AF00CAC150 /* BrowseViewController.swift */; };
+		4C430E6C2001D19100CAC150 /* FullRankingDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C430E6B2001D19100CAC150 /* FullRankingDataSource.swift */; };
+		4C430E6E2001DFEB00CAC150 /* RecentReviewsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C430E6D2001DFEB00CAC150 /* RecentReviewsViewController.swift */; };
+		4C430E702002926700CAC150 /* GameCoverCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C430E6F2002926700CAC150 /* GameCoverCollectionCell.swift */; };
 		4C47F02C1FF402FC00E5FD92 /* GameRankrNetworkTransport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C47F02B1FF402FC00E5FD92 /* GameRankrNetworkTransport.swift */; };
 		4C47F02E1FF5D10100E5FD92 /* loading_photos.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C47F02D1FF5D10100E5FD92 /* loading_photos.png */; };
 		4C47F0321FF6A12B00E5FD92 /* GameRankings.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 4C47F0311FF6A12B00E5FD92 /* GameRankings.graphql */; };
@@ -41,7 +53,7 @@
 		4C57FC0D1FDF784F00A04E57 /* news.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C57FC091FDF784F00A04E57 /* news.png */; };
 		4C57FC0E1FDF784F00A04E57 /* people.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C57FC0A1FDF784F00A04E57 /* people.png */; };
 		4C57FC121FDF799300A04E57 /* search.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C57FC111FDF799300A04E57 /* search.png */; };
-		4C57FC151FDF7D9600A04E57 /* GamerankrAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C57FC141FDF7D9600A04E57 /* GamerankrAPI.swift */; };
+		4C57FC151FDF7D9600A04E57 /* GameRankrAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C57FC141FDF7D9600A04E57 /* GameRankrAPI.swift */; };
 		4C7CF6481FE465D200E7B32A /* picture.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C7CF6471FE465D200E7B32A /* picture.png */; };
 		4C7CF64C1FE46A5400E7B32A /* PlaceholderImages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C7CF64B1FE46A5400E7B32A /* PlaceholderImages.swift */; };
 		4C7CF64E1FE4937800E7B32A /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C7CF64D1FE4937800E7B32A /* GameViewController.swift */; };
@@ -121,7 +133,7 @@
 		4C3FC2691FE322BC00299D7D /* Search.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = Search.graphql; sourceTree = "<group>"; };
 		4C3FC26D1FE4590A00299D7D /* Game.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = Game.graphql; sourceTree = "<group>"; };
 		4C42E4EA1FE0C935003F1C68 /* InfoPlistPreprocess.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = InfoPlistPreprocess.h; sourceTree = "<group>"; };
-		4C42E4EC1FE1B679003F1C68 /* AlertAPIErrorDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertAPIErrorDelegate.swift; sourceTree = "<group>"; };
+		4C42E4EC1FE1B679003F1C68 /* APIErrorDelegateUIExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIErrorDelegateUIExtension.swift; sourceTree = "<group>"; };
 		4C42E4EE1FE1BB92003F1C68 /* bulleted-list.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bulleted-list.png"; sourceTree = "<group>"; };
 		4C42E4F01FE1BC58003F1C68 /* MyGamesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyGamesViewController.swift; sourceTree = "<group>"; };
 		4C430E431FFED61F00CAC150 /* ShareExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareExtension.swift; sourceTree = "<group>"; };
@@ -131,6 +143,18 @@
 		4C430E522000109500CAC150 /* MyGamesFilterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyGamesFilterViewController.swift; sourceTree = "<group>"; };
 		4C430E55200036EA00CAC150 /* StringExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtensions.swift; sourceTree = "<group>"; };
 		4C430E572000636C00CAC150 /* FixedImageSizeTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FixedImageSizeTableCell.swift; sourceTree = "<group>"; };
+		4C430E59200163BB00CAC150 /* PopularGames.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = PopularGames.graphql; sourceTree = "<group>"; };
+		4C430E5B2001645500CAC150 /* FeaturedPlatforms.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = FeaturedPlatforms.graphql; sourceTree = "<group>"; };
+		4C430E5D2001648700CAC150 /* Platforms.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = Platforms.graphql; sourceTree = "<group>"; };
+		4C430E5F2001655500CAC150 /* RecentReviews.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = RecentReviews.graphql; sourceTree = "<group>"; };
+		4C430E612001A5A400CAC150 /* BrowseAPIs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowseAPIs.swift; sourceTree = "<group>"; };
+		4C430E632001A7CF00CAC150 /* PlatformAPIs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlatformAPIs.swift; sourceTree = "<group>"; };
+		4C430E652001A80900CAC150 /* PlatformBasic.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = PlatformBasic.graphql; sourceTree = "<group>"; };
+		4C430E672001BD0700CAC150 /* CommentAPIs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentAPIs.swift; sourceTree = "<group>"; };
+		4C430E692001C8AF00CAC150 /* BrowseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowseViewController.swift; sourceTree = "<group>"; };
+		4C430E6B2001D19100CAC150 /* FullRankingDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullRankingDataSource.swift; sourceTree = "<group>"; };
+		4C430E6D2001DFEB00CAC150 /* RecentReviewsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentReviewsViewController.swift; sourceTree = "<group>"; };
+		4C430E6F2002926700CAC150 /* GameCoverCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameCoverCollectionCell.swift; sourceTree = "<group>"; };
 		4C47F02B1FF402FC00E5FD92 /* GameRankrNetworkTransport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameRankrNetworkTransport.swift; sourceTree = "<group>"; };
 		4C47F02D1FF5D10100E5FD92 /* loading_photos.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = loading_photos.png; sourceTree = "<group>"; };
 		4C47F0311FF6A12B00E5FD92 /* GameRankings.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = GameRankings.graphql; sourceTree = "<group>"; };
@@ -144,7 +168,7 @@
 		4C57FC091FDF784F00A04E57 /* news.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = news.png; sourceTree = "<group>"; };
 		4C57FC0A1FDF784F00A04E57 /* people.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = people.png; sourceTree = "<group>"; };
 		4C57FC111FDF799300A04E57 /* search.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = search.png; sourceTree = "<group>"; };
-		4C57FC141FDF7D9600A04E57 /* GamerankrAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GamerankrAPI.swift; sourceTree = "<group>"; };
+		4C57FC141FDF7D9600A04E57 /* GameRankrAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameRankrAPI.swift; sourceTree = "<group>"; };
 		4C7CF6471FE465D200E7B32A /* picture.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = picture.png; sourceTree = "<group>"; };
 		4C7CF64B1FE46A5400E7B32A /* PlaceholderImages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceholderImages.swift; sourceTree = "<group>"; };
 		4C7CF64D1FE4937800E7B32A /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
@@ -253,6 +277,8 @@
 				4CBD0F7C1FE627FB00230771 /* SignInViewController.swift */,
 				4CBD0F8A1FE6F4EC00230771 /* UserViewController.swift */,
 				4CD1C9DC1FDF6B62001A0B8D /* UpdatesViewController.swift */,
+				4C430E692001C8AF00CAC150 /* BrowseViewController.swift */,
+				4C430E6D2001DFEB00CAC150 /* RecentReviewsViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -260,12 +286,14 @@
 		4C42E4F31FE1BC72003F1C68 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
-				4C42E4EC1FE1B679003F1C68 /* AlertAPIErrorDelegate.swift */,
+				4C42E4EC1FE1B679003F1C68 /* APIErrorDelegateUIExtension.swift */,
 				4C7CF64B1FE46A5400E7B32A /* PlaceholderImages.swift */,
 				4CBD0F941FE7801F00230771 /* IntrinsicTableView.swift */,
 				4CAA416E1FEAF639007EBB7C /* UITableViewCellWithSwitch.swift */,
 				4C430E431FFED61F00CAC150 /* ShareExtension.swift */,
 				4C430E572000636C00CAC150 /* FixedImageSizeTableCell.swift */,
+				4C430E6B2001D19100CAC150 /* FullRankingDataSource.swift */,
+				4C430E6F2002926700CAC150 /* GameCoverCollectionCell.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -315,14 +343,17 @@
 		4C57FC131FDF7D7600A04E57 /* API */ = {
 			isa = PBXGroup;
 			children = (
+				4CBD0F821FE6DD8500230771 /* Fragments */,
 				4C9110361FEC532D00DDEECC /* Mutations */,
 				4CBD0F831FE6DD9000230771 /* Queries */,
-				4CBD0F821FE6DD8500230771 /* Fragments */,
-				4C57FC141FDF7D9600A04E57 /* GamerankrAPI.swift */,
+				4C57FC141FDF7D9600A04E57 /* GameRankrAPI.swift */,
+				4C47F02B1FF402FC00E5FD92 /* GameRankrNetworkTransport.swift */,
+				4C2CF8141FF2E7F700A464AA /* LocalSQLiteManager.swift */,
 				4CBD0F981FE88EA600230771 /* MyGamesManager.swift */,
 				4CAA41721FEAFFFC007EBB7C /* MyShelvesManager.swift */,
-				4C2CF8141FF2E7F700A464AA /* LocalSQLiteManager.swift */,
-				4C47F02B1FF402FC00E5FD92 /* GameRankrNetworkTransport.swift */,
+				4C430E612001A5A400CAC150 /* BrowseAPIs.swift */,
+				4C430E632001A7CF00CAC150 /* PlatformAPIs.swift */,
+				4C430E672001BD0700CAC150 /* CommentAPIs.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -381,6 +412,7 @@
 				4CBD0F8E1FE6F5D200230771 /* UserDetail.graphql */,
 				4C91103D1FEC55F100DDEECC /* CommentBasic.graphql */,
 				4C86D4EA1FFB309D00264EDB /* ShelfBasic.graphql */,
+				4C430E652001A80900CAC150 /* PlatformBasic.graphql */,
 			);
 			path = Fragments;
 			sourceTree = "<group>";
@@ -388,7 +420,7 @@
 		4CBD0F831FE6DD9000230771 /* Queries */ = {
 			isa = PBXGroup;
 			children = (
-				4CBD0F801FE6DD7E00230771 /* Updates.graphql */,
+				4C86D4EC1FFB579200264EDB /* Comments.graphql */,
 				4C4FC9DA1FE23D42002F6428 /* MyGames.graphql */,
 				4C3FC2691FE322BC00299D7D /* Search.graphql */,
 				4C3FC26D1FE4590A00299D7D /* Game.graphql */,
@@ -399,7 +431,11 @@
 				4C47F0311FF6A12B00E5FD92 /* GameRankings.graphql */,
 				4C47F0351FF6A57500E5FD92 /* UserRankings.graphql */,
 				4C47F03B1FF8364C00E5FD92 /* Shelf.graphql */,
-				4C86D4EC1FFB579200264EDB /* Comments.graphql */,
+				4C430E59200163BB00CAC150 /* PopularGames.graphql */,
+				4C430E5B2001645500CAC150 /* FeaturedPlatforms.graphql */,
+				4C430E5D2001648700CAC150 /* Platforms.graphql */,
+				4C430E5F2001655500CAC150 /* RecentReviews.graphql */,
+				4CBD0F801FE6DD7E00230771 /* Updates.graphql */,
 			);
 			path = Queries;
 			sourceTree = "<group>";
@@ -515,6 +551,7 @@
 				4C47F0321FF6A12B00E5FD92 /* GameRankings.graphql in Resources */,
 				4CA747E61FF0AD9C00C3BCE0 /* loading-bar-1.png in Resources */,
 				4C7CF6501FE4CF2200E7B32A /* GameBasic.graphql in Resources */,
+				4C430E5A200163BB00CAC150 /* PopularGames.graphql in Resources */,
 				4CA747ED1FF0AD9C00C3BCE0 /* loading-bar-11.png in Resources */,
 				4CBD0F9B1FE9795A00230771 /* down-arrow.png in Resources */,
 				4CA747EB1FF0AD9C00C3BCE0 /* loading-bar-9.png in Resources */,
@@ -522,7 +559,9 @@
 				4CA747E21FF0AD9C00C3BCE0 /* loading-bar-2.png in Resources */,
 				4CA747EF1FF0AD9C00C3BCE0 /* loading-bar-18.png in Resources */,
 				4C57FC0E1FDF784F00A04E57 /* people.png in Resources */,
+				4C430E662001A80900CAC150 /* PlatformBasic.graphql in Resources */,
 				4C47F0361FF6A57500E5FD92 /* UserRankings.graphql in Resources */,
+				4C430E5E2001648700CAC150 /* Platforms.graphql in Resources */,
 				4CBD0F811FE6DD7E00230771 /* Updates.graphql in Resources */,
 				4C4FC9DB1FE23D42002F6428 /* MyGames.graphql in Resources */,
 				4C430E4C1FFF0FB600CAC150 /* share.png in Resources */,
@@ -557,12 +596,14 @@
 				4C2E1BB11FE9CD1F00C048BC /* star-full.png in Resources */,
 				4CA747F71FF0AD9C00C3BCE0 /* loading-bar-20.png in Resources */,
 				4CA747F11FF0AD9C00C3BCE0 /* loading-bar-14.png in Resources */,
+				4C430E5C2001645500CAC150 /* FeaturedPlatforms.graphql in Resources */,
 				4CA747F21FF0AD9C00C3BCE0 /* loading-bar-19.png in Resources */,
 				4CA747E31FF0AD9C00C3BCE0 /* loading-bar-6.png in Resources */,
 				4C47F02E1FF5D10100E5FD92 /* loading_photos.png in Resources */,
 				4C57FC0D1FDF784F00A04E57 /* news.png in Resources */,
 				4C47F03C1FF8364C00E5FD92 /* Shelf.graphql in Resources */,
 				4CBD0F8F1FE6F5D200230771 /* UserDetail.graphql in Resources */,
+				4C430E602001655500CAC150 /* RecentReviews.graphql in Resources */,
 				4C42E4EF1FE1BB92003F1C68 /* bulleted-list.png in Resources */,
 				4C3FC26A1FE322BC00299D7D /* Search.graphql in Resources */,
 				4CD1C9E41FDF6B62001A0B8D /* Assets.xcassets in Resources */,
@@ -678,11 +719,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4C42E4ED1FE1B679003F1C68 /* AlertAPIErrorDelegate.swift in Sources */,
+				4C42E4ED1FE1B679003F1C68 /* APIErrorDelegateUIExtension.swift in Sources */,
 				4CBD0F931FE6FC8500230771 /* FriendsController.swift in Sources */,
+				4C430E682001BD0700CAC150 /* CommentAPIs.swift in Sources */,
 				4CD1C9DF1FDF6B62001A0B8D /* SearchViewController.swift in Sources */,
 				4C47F02C1FF402FC00E5FD92 /* GameRankrNetworkTransport.swift in Sources */,
 				4CD1C9DB1FDF6B62001A0B8D /* AppDelegate.swift in Sources */,
+				4C430E6A2001C8AF00CAC150 /* BrowseViewController.swift in Sources */,
 				4CBD0F8B1FE6F4EC00230771 /* UserViewController.swift in Sources */,
 				4C430E511FFFF7B500CAC150 /* RankingFilter.swift in Sources */,
 				4CBD0F991FE88EA600230771 /* MyGamesManager.swift in Sources */,
@@ -693,17 +736,22 @@
 				4C42E4F11FE1BC58003F1C68 /* MyGamesViewController.swift in Sources */,
 				4C2CF8151FF2E7F700A464AA /* LocalSQLiteManager.swift in Sources */,
 				4CAA41731FEAFFFC007EBB7C /* MyShelvesManager.swift in Sources */,
+				4C430E6E2001DFEB00CAC150 /* RecentReviewsViewController.swift in Sources */,
 				4C4FC9D91FE23C9F002F6428 /* API.swift in Sources */,
 				4CBD0F951FE7801F00230771 /* IntrinsicTableView.swift in Sources */,
+				4C430E702002926700CAC150 /* GameCoverCollectionCell.swift in Sources */,
+				4C430E642001A7CF00CAC150 /* PlatformAPIs.swift in Sources */,
+				4C430E622001A5A400CAC150 /* BrowseAPIs.swift in Sources */,
 				4C2E1BBC1FE9EB4400C048BC /* ShelveGameController.swift in Sources */,
 				4C430E582000636C00CAC150 /* FixedImageSizeTableCell.swift in Sources */,
-				4C57FC151FDF7D9600A04E57 /* GamerankrAPI.swift in Sources */,
+				4C57FC151FDF7D9600A04E57 /* GameRankrAPI.swift in Sources */,
 				4CAA416D1FEAE74D007EBB7C /* EditReviewViewController.swift in Sources */,
 				4CBD0F7D1FE627FB00230771 /* SignInViewController.swift in Sources */,
 				4C430E56200036EA00CAC150 /* StringExtensions.swift in Sources */,
 				4CAA41771FEC186A007EBB7C /* PortChooserViewController.swift in Sources */,
 				4C430E532000109500CAC150 /* MyGamesFilterViewController.swift in Sources */,
 				4CD1C9DD1FDF6B62001A0B8D /* UpdatesViewController.swift in Sources */,
+				4C430E6C2001D19100CAC150 /* FullRankingDataSource.swift in Sources */,
 				4C47F03A1FF8331E00E5FD92 /* ShelfViewController.swift in Sources */,
 				4C2E1BBE1FE9ED3900C048BC /* RankingViewController.swift in Sources */,
 			);

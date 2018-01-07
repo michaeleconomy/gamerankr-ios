@@ -2,7 +2,7 @@ import UIKit
 import FacebookCore
 import FacebookLogin
 
-class SignInViewController : UIViewController, APILoginDelegate, AlertAPIErrorDelegate {
+class SignInViewController : UIViewController, APILoginDelegate {
     @IBOutlet weak var loadingImage: UIImageView!
     @IBOutlet weak var fbButton: UIButton!
     

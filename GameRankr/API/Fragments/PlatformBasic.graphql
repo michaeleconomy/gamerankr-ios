@@ -1,0 +1,4 @@
+fragment PlatformBasic on Platform {
+    id
+    name
+}

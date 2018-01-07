@@ -1,7 +1,7 @@
 import Foundation
 import Apollo
 
-let api = GamerankrAPI()
+let api = GameRankrAPI()
 
 protocol APIErrorDelegate {
     func handleAPI(error: String)
@@ -9,6 +9,13 @@ protocol APIErrorDelegate {
 protocol AuthenticatedAPIErrorDelegate : APIErrorDelegate {
     func handleAPIAuthenticationError()
 }
+
+extension AuthenticatedAPIErrorDelegate where Self: UIViewController {
+    func handleAPIAuthenticationError() {
+        easyAlert("Authentication Error!")
+    }
+}
+
 protocol APISearchResultsDelegate: AuthenticatedAPIErrorDelegate {
     func handleAPISearch(results: [GameBasic], nextPage: String?)
 }
@@ -53,20 +60,8 @@ protocol APIDestroyRankingDelegate: AuthenticatedAPIErrorDelegate {
     func handleAPIRankingDestruction(ranking: DestroyRankingMutation.Data.Ranking)
 }
 
-protocol APIDestroyCommentDelegate: AuthenticatedAPIErrorDelegate {
-    func handleAPICommentDestruction(ranking: CommentBasic)
-}
-
 protocol APIShelvesDelegate: AuthenticatedAPIErrorDelegate {
     func handleAPI(shelves: [MyShelvesQuery.Data.Shelf])
-}
-
-protocol APICommentsDelegate: AuthenticatedAPIErrorDelegate {
-    func handleAPI(comments: [CommentBasic], nextPage: String?)
-}
-
-protocol APICommentDelegate: AuthenticatedAPIErrorDelegate {
-    func handleAPI(comment: CommentBasic)
 }
 
 protocol APILoginDelegate: APIErrorDelegate {
@@ -78,7 +73,7 @@ protocol APIAuthenticationDelegate {
     func handleAPILogout()
 }
 
-class GamerankrAPI {
+class GameRankrAPI {
     
     public private(set) var signedIn = false
     var signedOut: Bool {
@@ -89,7 +84,7 @@ class GamerankrAPI {
     
 //    let base_url = "http://localhost:3000"
     let base_url = "https://www.gamerankr.com"
-    private let apollo: ApolloClient
+    internal let apollo: ApolloClient
     private var authDelegates = [APIAuthenticationDelegate]()
     public private(set) var token: String?
     public private(set) var currentUserId: GraphQLID?
@@ -303,19 +298,7 @@ class GamerankrAPI {
         }
     }
     
-    func comments(resourceId: GraphQLID, resourceType: String, after: String? = nil, delegate: APICommentsDelegate) {
-        
-        apollo.fetch(query: CommentsQuery(resourceId: resourceId, resourceType: resourceType, after: after), cachePolicy: .fetchIgnoringCacheData) { (result, error) in
-            if (!self.handleApolloApiErrors(result, error, delegate: delegate)) { return }
-            let comments = result!.data!.comments
-            var nextPage : String?
-            if (comments.pageInfo.hasNextPage){
-                nextPage = comments.pageInfo.endCursor
-            }
-            delegate.handleAPI(comments: comments.edges!.map{$0!.comment!.fragments.commentBasic}, nextPage: nextPage)
-        }
-    }
-    
+    // - mutations
     func rankPort(portId: GraphQLID, ranking: Int?, removeRanking: Bool, review: String?, addShelfId: GraphQLID?, removeShelfId: GraphQLID?, delegate: APIRankDelegate) {
         apollo.perform(mutation: RankPortMutation(portId: portId, ranking: ranking, removeRanking: removeRanking, review: review, addShelfId: addShelfId, removeShelfId: removeShelfId)) { (result, error) in
             if (!self.handleApolloApiErrors(result, error, delegate: delegate)) { return }
@@ -330,22 +313,7 @@ class GamerankrAPI {
         }
     }
     
-    func comment(resourceId: GraphQLID, resourceType: String, comment: String, delegate: APICommentDelegate) {
-        
-        apollo.perform(mutation: CommentMutation(resourceId: resourceId, resourceType: resourceType, comment: comment)) { (result, error) in
-            if (!self.handleApolloApiErrors(result, error, delegate: delegate)) { return }
-            delegate.handleAPI(comment: result!.data!.comment.fragments.commentBasic)
-        }
-    }
-    
-    func destroyComment(id: GraphQLID, delegate: APIDestroyCommentDelegate) {
-        apollo.perform(mutation: DestroyCommentMutation(id: id)) { (result, error) in
-            if (!self.handleApolloApiErrors(result, error, delegate: delegate)) { return }
-            delegate.handleAPICommentDestruction(ranking: result!.data!.comment.fragments.commentBasic)
-        }
-    }
-    
-    private func handleApolloApiErrors<Type>(_ result: GraphQLResult<Type>?, _ error: Error?, delegate: AuthenticatedAPIErrorDelegate) -> Bool {
+    internal func handleApolloApiErrors<Type>(_ result: GraphQLResult<Type>?, _ error: Error?, delegate: AuthenticatedAPIErrorDelegate) -> Bool {
         if ((error as? GameRankrAuthenticationError) != nil) {
             NSLog("authentication error - signing user out")
             handleLogout()

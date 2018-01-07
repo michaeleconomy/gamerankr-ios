@@ -1,6 +1,6 @@
 import UIKit
 
-class RankingViewController : UIViewController, UITableViewDataSource, APICommentsDelegate, AlertAPIErrorDelegate, UITextViewDelegate, APICommentDelegate, APIDestroyCommentDelegate, APIUserDetailDelegate {
+class RankingViewController : UIViewController, UITableViewDataSource, APICommentsDelegate, UITextViewDelegate, APICommentDelegate, APIDestroyCommentDelegate, APIUserDetailDelegate {
     
     @IBOutlet weak var shareButton: UIBarButtonItem!
     @IBOutlet weak var loadingImage: UIImageView!

@@ -2,15 +2,15 @@ import UIKit
 import FacebookCore
 import FacebookLogin
 
-class UpdatesViewController: UIViewController, AlertAPIErrorDelegate, UITableViewDataSource, APIUpdatesDelegate, APIAuthenticationDelegate {
+class UpdatesViewController: UIViewController, UITableViewDataSource, APIUpdatesDelegate, APIAuthenticationDelegate, FullRankingDataSource {
     
     @IBOutlet weak var noUpdatesLabel: UILabel!
     @IBOutlet weak var loadingImage: UIImageView!
     @IBOutlet weak var tableView: UITableView!
     
-    private var updates = [RankingFull]()
     private var nextPage: String?
     var fetchedUpdates = false
+    var rankings = [RankingFull]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,24 +34,23 @@ class UpdatesViewController: UIViewController, AlertAPIErrorDelegate, UITableVie
     }
     
     func handleAPI(updates: [RankingFull], nextPage: String?) {
-        self.updates.append(contentsOf: updates)
+        self.rankings.append(contentsOf: updates)
         
         self.nextPage = nextPage
         
         DispatchQueue.main.async(execute: {
-            self.noUpdatesLabel.isHidden = !self.updates.isEmpty
+            self.noUpdatesLabel.isHidden = !self.rankings.isEmpty
             self.tableView.reloadData()
             self.loadingImage.isHidden = true
         })
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return updates.count
+        return rankings.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! FixedImageSizeTableCell
-        if (nextPage != nil && indexPath.row >= (updates.count - 15)) {
+        if (nextPage != nil && indexPath.row >= (rankings.count - 15)) {
             api.updates(after: nextPage, delegate: self)
             self.nextPage = nil
             
@@ -59,38 +58,8 @@ class UpdatesViewController: UIViewController, AlertAPIErrorDelegate, UITableVie
                 self.loadingImage.isHidden = false
             })
         }
-        
-        let ranking = updates[indexPath.row]
-        let port = ranking.port
-        let user = ranking.user
-        let game = ranking.game
-        
-        cell.primaryLabel.text = "\(user.realName) \(ranking.verb)"
-        var secondLabelText = "\(game.title) (\(port.platform.name))"
-        let hasReview = ranking.review != nil && ranking.review! != ""
-        if (hasReview || ranking.ranking != nil) {
-            secondLabelText += "\n"
-            if (ranking.ranking != nil) {
-                let starsStr = String(repeating: "\u{2605}", count: ranking.ranking!)
-                secondLabelText += "\(starsStr) "
-            }
-            if (hasReview) {
-                secondLabelText += "\"\(ranking.review!)\""
-            }
-        }
-        cell.secondaryLabel.text = secondLabelText
-        
-        if (port.smallImageUrl != nil) {
-            cell.fixedSizeImageView.kf.indicatorType = .activity
-            cell.fixedSizeImageView.kf.setImage(with: URL(string: port.smallImageUrl!)!, placeholder: PlaceholderImages.game, completionHandler: {
-                (image, error, cacheType, imageUrl) in
-                cell.layoutSubviews()
-            })
-        }
-        else {
-            cell.fixedSizeImageView.image = PlaceholderImages.game
-        }
-        return cell
+        let ranking = rankings[indexPath.row]
+        return cellFor(ranking: ranking, tableView: tableView, indexPath: indexPath);
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -106,7 +75,7 @@ class UpdatesViewController: UIViewController, AlertAPIErrorDelegate, UITableVie
                 return
             }
             let controller = segue.destination as! RankingViewController
-            let ranking = updates[indexPath.row]
+            let ranking = rankings[indexPath.row]
             controller.ranking = ranking.fragments.rankingBasic
             controller.user = ranking.user.fragments.userBasic
             controller.game = ranking.game.fragments.gameBasic
@@ -120,7 +89,7 @@ class UpdatesViewController: UIViewController, AlertAPIErrorDelegate, UITableVie
     }
     
     func handleAPILogout() {
-        updates = []
+        rankings.removeAll()
         fetchedUpdates = false
     }
     

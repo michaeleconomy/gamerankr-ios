@@ -1,0 +1,13 @@
+query Platforms($after: String) {
+    platforms(first: 30, after: $after) {
+        edges {
+            platform: node{
+                ...PlatformBasic
+            }
+        }
+        pageInfo {
+            endCursor
+            hasNextPage
+        }
+    }
+}

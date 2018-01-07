@@ -7,6 +7,7 @@ class FixedImageSizeTableCell: UITableViewCell {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        fixedSizeImageView.frame = CGRect(x: 10, y: 0, width: 60, height: 60)
+        
+        fixedSizeImageView.frame =  CGRect(x: fixedSizeImageView.frame.minX, y: (self.frame.height / 2) - 30, width: 60, height: 60)
     }
 }

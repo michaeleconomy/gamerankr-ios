@@ -1,6 +1,6 @@
 import UIKit
 
-class MyGamesViewController: UIViewController, UITableViewDataSource, UITableViewDelegate,  APIMyGamesManagerDelegate, AlertAPIErrorDelegate {
+class MyGamesViewController: UIViewController, UITableViewDataSource, UITableViewDelegate,  APIMyGamesManagerDelegate {
     
     @IBOutlet weak var loadingImage: UIImageView!
     @IBOutlet weak var noGamesLabel: UILabel!

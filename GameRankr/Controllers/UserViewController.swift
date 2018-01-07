@@ -1,6 +1,6 @@
 import UIKit
 
-class UserViewController : UIViewController, APIUserDetailDelegate, AlertAPIErrorDelegate, UITableViewDataSource {
+class UserViewController : UIViewController, APIUserDetailDelegate, UITableViewDataSource {
     
     
     @IBOutlet weak var scrollView: UIScrollView!
@@ -148,7 +148,7 @@ class UserViewController : UIViewController, APIUserDetailDelegate, AlertAPIErro
         }
         cell.secondaryLabel.text = secondLine
         
-        if (ranking.port.smallImageUrl != nil) {
+        if (port.smallImageUrl != nil) {
             cell.fixedSizeImageView.kf.indicatorType = .activity
             cell.fixedSizeImageView.kf.setImage(with: URL(string: port.smallImageUrl!)!, placeholder: PlaceholderImages.game, completionHandler: {
                 (image, error, cacheType, imageUrl) in

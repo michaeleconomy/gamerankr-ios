@@ -1,7 +1,7 @@
 import UIKit
 import Apollo
 
-class ShelfViewController: UIViewController, UITableViewDataSource, APIShelfDelegate, APIUserRankingsDelegate, AlertAPIErrorDelegate {
+class ShelfViewController: UIViewController, UITableViewDataSource, APIShelfDelegate, APIUserRankingsDelegate {
     
     var shelf: ShelfBasic? {
         didSet {

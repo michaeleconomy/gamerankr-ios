@@ -1,0 +1,5 @@
+query PopularGames {
+    games: popular_games {
+        ...GameBasic
+    }
+}

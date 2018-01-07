@@ -1,6 +1,6 @@
 import UIKit
 
-class MyGamesFilterViewController: UIViewController, APIMyShelvesManagerDelegate, UITableViewDataSource, AlertAPIErrorDelegate, UITableViewDelegate {
+class MyGamesFilterViewController: UIViewController, APIMyShelvesManagerDelegate, UITableViewDataSource, UITableViewDelegate {
     
     @IBOutlet weak var loadingImage: UIImageView!
     @IBOutlet weak var doneButton: UIBarButtonItem!

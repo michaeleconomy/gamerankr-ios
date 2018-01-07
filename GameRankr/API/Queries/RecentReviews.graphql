@@ -1,0 +1,14 @@
+query RecentReviews($after: String) {
+    recent_reviews(first: 30, after: $after) {
+        edges {
+            ranking : node {
+                ...RankingFull
+            }
+        }
+        pageInfo {
+            endCursor
+            hasNextPage
+        }
+    }
+}
+
