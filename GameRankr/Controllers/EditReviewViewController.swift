@@ -1,29 +1,46 @@
 import UIKit
 
-class EditReviewViewController : UIViewController {
+class EditReviewViewController : UIViewController, UITextViewDelegate {
     var ranking : RankingWithGame?
     
     @IBOutlet weak var saveButton: UIBarButtonItem!
     @IBOutlet weak var reviewView: UITextView!
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        if (ranking != nil) {
-            reviewView.text = ranking?.review
-        }
-        else {
-            reviewView.text = ""
-            let alert = UIAlertController(title: "Alert", message: "Ranking is missing", preferredStyle: UIAlertControllerStyle.alert)
-            alert.addAction(UIAlertAction(title: "Click", style: UIAlertActionStyle.default, handler: nil))
-            self.present(alert, animated: true, completion: nil)
-        }
-    }
+    let defaultText = "Write a review..."
+    
     
     override func viewDidLoad() {
         saveButton.target = self
         saveButton.action = #selector(saveButtonClick(sender:))
+        
+        reviewView.delegate = self
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        if (ranking == nil) {
+            reviewView.text = ""
+            easyAlert("Ranking is missing")
+            return
+        }
+        
+        if (ranking!.review == nil || ranking!.review! == "") {
+            reviewView.text = defaultText
+            reviewView.textColor = .gray
+            return
+        }
+        reviewView.text = ranking?.review
+        
+    }
+    
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        if (textView.text == defaultText) {
+            textView.text = ""
+            textView.textColor = .black
+        }
+    }
+    
     
     @objc func saveButtonClick(sender: UIButton) {
         MyGamesManager.sharedInstance.rankPort(portId: ranking!.port.id, review: reviewView.text)
