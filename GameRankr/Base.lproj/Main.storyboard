@@ -218,8 +218,11 @@ Add more friends to see more updates.</string>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Xmf-En-GZG"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Friends" id="Lhc-UC-U0p"/>
+                    <navigationItem key="navigationItem" title="Friends" id="Lhc-UC-U0p">
+                        <barButtonItem key="rightBarButtonItem" title="➕" id="ALD-9g-tB6"/>
+                    </navigationItem>
                     <connections>
+                        <outlet property="addButton" destination="ALD-9g-tB6" id="Pou-h8-4dF"/>
                         <outlet property="loadingImage" destination="Dlh-C9-j60" id="bGh-mx-FL9"/>
                         <outlet property="noFriendsLabel" destination="vET-sz-M04" id="h57-W5-Dk2"/>
                         <outlet property="tableView" destination="v0P-Hj-hfX" id="1bq-lS-wTA"/>
@@ -1893,9 +1896,9 @@ Add more friends to see more updates.</string>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="tHG-Aw-fPI"/>
-        <segue reference="int-zW-xEI"/>
+        <segue reference="tfh-hU-DDF"/>
         <segue reference="KRW-Ul-cpT"/>
         <segue reference="FoV-qj-9o7"/>
-        <segue reference="Jh0-oY-Vq9"/>
+        <segue reference="Cu6-IW-o67"/>
     </inferredMetricsTieBreakers>
 </document>

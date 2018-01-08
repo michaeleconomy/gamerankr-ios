@@ -4,6 +4,7 @@ class FriendsController : UIViewController, APIFriendsDelegate, UITableViewDataS
     @IBOutlet weak var loadingImage: UIImageView!
     @IBOutlet weak var noFriendsLabel: UILabel!
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var addButton: UIBarButtonItem!
     
     var friends = [UserBasic]()
     var fetchedFriends = false
@@ -13,6 +14,8 @@ class FriendsController : UIViewController, APIFriendsDelegate, UITableViewDataS
         super.viewDidLoad()
         
         loadingImage.image = PlaceholderImages.loadingBar
+        addButton.target = self
+        addButton.action = #selector(addButtonTouch(sender:))
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -85,5 +88,9 @@ class FriendsController : UIViewController, APIFriendsDelegate, UITableViewDataS
         default:
             NSLog("updates view: unhandled segue identifier: \(segue.identifier!)")
         }
+    }
+    
+    @objc func addButtonTouch(sender: UIBarButtonItem) {
+        share(message: "Check out my games on GameRanker", link: "https://www.gamerankr.com/")
     }
 }
