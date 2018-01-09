@@ -23,12 +23,15 @@ class SignInViewController : UIViewController, APILoginDelegate {
         }
     }
     
-    func handleLogin() {
+    private func handleLogin() {
         loadingImage.isHidden = true
-        self.navigationController!.navigationBar.isUserInteractionEnabled = true
-        self.navigationController!.navigationBar.tintColor = UIColor.blue
         
-        self.navigationController!.popViewController(animated: true)
+        navigationController!.navigationBar.isUserInteractionEnabled = true
+        navigationController!.navigationBar.tintColor = UIColor.blue
+        
+        if (navigationController!.popViewController(animated: true) == nil) {
+            performSegue(withIdentifier: "updates", sender: nil)
+        }
     }
     
     // Once the button is clicked, show the login dialog
@@ -51,7 +54,6 @@ class SignInViewController : UIViewController, APILoginDelegate {
             }
         }
     }
-    
     
     func handleAPILogin() {
         DispatchQueue.main.async(execute: {

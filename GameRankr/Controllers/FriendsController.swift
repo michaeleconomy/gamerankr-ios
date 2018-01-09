@@ -1,6 +1,8 @@
 import UIKit
 
-class FriendsController : UIViewController, APIFriendsDelegate, UITableViewDataSource {
+class FriendsController : UIViewController, APIFriendsDelegate, UITableViewDataSource, APIAuthenticationDelegate {
+    
+    
     @IBOutlet weak var loadingImage: UIImageView!
     @IBOutlet weak var noFriendsLabel: UILabel!
     @IBOutlet weak var tableView: UITableView!
@@ -16,6 +18,7 @@ class FriendsController : UIViewController, APIFriendsDelegate, UITableViewDataS
         loadingImage.image = PlaceholderImages.loadingBar
         addButton.target = self
         addButton.action = #selector(addButtonTouch(sender:))
+        api.register(authenticationDelegate: self)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -65,6 +68,16 @@ class FriendsController : UIViewController, APIFriendsDelegate, UITableViewDataS
         })
     }
     
+    
+    func handleAPILogin() {
+    }
+    
+    func handleAPILogout() {
+        friends.removeAll()
+        fetchedFriends = false
+        nextPage = nil
+    }
+    
     func handleAPIAuthenticationError() {
         DispatchQueue.main.async(execute: {
             self.performSegue(withIdentifier: "requireSignIn", sender: nil)
@@ -77,6 +90,7 @@ class FriendsController : UIViewController, APIFriendsDelegate, UITableViewDataS
             return
         }
         switch segue.identifier! {
+        case "requireSignIn": ()
         case "userDetail":
             guard let indexPath = tableView.indexPathForSelectedRow else {
                 NSLog("tableView.indexPathForSelectedRow was nil")
@@ -86,7 +100,7 @@ class FriendsController : UIViewController, APIFriendsDelegate, UITableViewDataS
             let controller = segue.destination as! UserViewController
             controller.user = friends[indexPath.row]
         default:
-            NSLog("updates view: unhandled segue identifier: \(segue.identifier!)")
+            NSLog("friends view: unhandled segue identifier: \(segue.identifier!)")
         }
     }
     

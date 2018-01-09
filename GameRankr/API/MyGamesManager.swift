@@ -26,6 +26,9 @@ class MyGamesManager : APIMyGamesDelegate, APIRankDelegate, APIDestroyRankingDel
         catch {
             NSLog("error getting rankings from sql lite")
             rankings = []
+        }
+        
+        if (rankings.isEmpty) {
             rankingsWasUnpopulated = true
         }
         if (api.signedIn) {
@@ -51,6 +54,7 @@ class MyGamesManager : APIMyGamesDelegate, APIRankDelegate, APIDestroyRankingDel
         rankings = [RankingWithGame]()
         LocalSQLiteManager.sharedInstance.clearRankings()
         notifyDelegates()
+        rankingsWasUnpopulated = true
     }
     
     func loading() -> Bool {

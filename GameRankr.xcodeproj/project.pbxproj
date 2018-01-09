@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4C10838320053C730072C8CA /* AuthenticationAPIs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C10838220053C730072C8CA /* AuthenticationAPIs.swift */; };
 		4C2CF8151FF2E7F700A464AA /* LocalSQLiteManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C2CF8141FF2E7F700A464AA /* LocalSQLiteManager.swift */; };
 		4C2E1BB11FE9CD1F00C048BC /* star-full.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C2E1BAF1FE9CD1D00C048BC /* star-full.png */; };
 		4C2E1BB21FE9CD1F00C048BC /* star-empty.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C2E1BB01FE9CD1E00C048BC /* star-empty.png */; };
@@ -114,6 +115,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4C10838220053C730072C8CA /* AuthenticationAPIs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationAPIs.swift; sourceTree = "<group>"; };
 		4C2CF8141FF2E7F700A464AA /* LocalSQLiteManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalSQLiteManager.swift; sourceTree = "<group>"; };
 		4C2E1BAF1FE9CD1D00C048BC /* star-full.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "star-full.png"; sourceTree = "<group>"; };
 		4C2E1BB01FE9CD1E00C048BC /* star-empty.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "star-empty.png"; sourceTree = "<group>"; };
@@ -332,6 +334,7 @@
 				4C430E612001A5A400CAC150 /* BrowseAPIs.swift */,
 				4C430E632001A7CF00CAC150 /* PlatformAPIs.swift */,
 				4C430E672001BD0700CAC150 /* CommentAPIs.swift */,
+				4C10838220053C730072C8CA /* AuthenticationAPIs.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -698,6 +701,7 @@
 				4CD1C9DB1FDF6B62001A0B8D /* AppDelegate.swift in Sources */,
 				4C430E6A2001C8AF00CAC150 /* BrowseViewController.swift in Sources */,
 				4CBD0F8B1FE6F4EC00230771 /* UserViewController.swift in Sources */,
+				4C10838320053C730072C8CA /* AuthenticationAPIs.swift in Sources */,
 				4C430E511FFFF7B500CAC150 /* RankingFilter.swift in Sources */,
 				4CBD0F991FE88EA600230771 /* MyGamesManager.swift in Sources */,
 				4C430E441FFED61F00CAC150 /* ShareExtension.swift in Sources */,

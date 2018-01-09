@@ -55,7 +55,7 @@ class RecentReviewsViewController: UIViewController, FullRankingDataSource, APIR
             controller.user = ranking.user.fragments.userBasic
             controller.game = ranking.game.fragments.gameBasic
         default:
-            NSLog("updates view: unhandled segue identifier: \(segue.identifier!)")
+            NSLog("recent reviews view: unhandled segue identifier: \(segue.identifier!)")
         }
     }
 }

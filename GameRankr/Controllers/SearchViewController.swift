@@ -122,7 +122,7 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
                 controller.game = results[indexPath.row]
             }
         default:
-            NSLog("updates view: unhandled segue identifier: \(segue.identifier!)")
+            NSLog("search view: unhandled segue identifier: \(segue.identifier!)")
         }
     }
 }

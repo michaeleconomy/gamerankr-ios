@@ -110,12 +110,13 @@ class MyGamesViewController: UIViewController, UITableViewDataSource, UITableVie
             let ranking = getCurrentRankingArray()[indexPath.row]
             controller.game = ranking.game.fragments.gameBasic
             controller.selectPort(portId: ranking.port.id)
+        case "requireSignIn": ()
         case "filter":
             let controller = segue.destination as! MyGamesFilterViewController
             controller.filter = filter ?? RankingFilter()
             controller.callingController = self
         default:
-            NSLog("updates view: unhandled segue identifier: \(segue.identifier!)")
+            NSLog("my games view: unhandled segue identifier: \(segue.identifier!)")
         }
     }
     

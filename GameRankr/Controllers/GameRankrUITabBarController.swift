@@ -13,11 +13,17 @@ class GameRankrUITabBarController: UITabBarController, APIAuthenticationDelegate
     }
     
     func handleAPILogin() {
-        showHideLogout()
+        asyncShowHideLogout()
     }
     
     func handleAPILogout() {
-        showHideLogout()
+        asyncShowHideLogout()
+    }
+    
+    private func asyncShowHideLogout() {
+        DispatchQueue.main.async(execute: {
+            self.showHideLogout()
+        })
     }
     
     private func showHideLogout() {
