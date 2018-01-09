@@ -6,6 +6,7 @@ class GameViewController : UIViewController, APIGameDetailDelegate, APIGameRanki
     @IBOutlet weak var shareButton: UIBarButtonItem!
     @IBOutlet weak var loadingImage: UIImageView!
     @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var gameDescription: UILabel!
     @IBOutlet weak var platformLabel: UILabel!
     @IBOutlet weak var otherPlatformsButton: UIButton!
     @IBOutlet weak var switchEditionButton: UIButton!
@@ -111,10 +112,18 @@ class GameViewController : UIViewController, APIGameDetailDelegate, APIGameRanki
                 self.imageView?.kf.indicatorType = .activity
                 self.imageView?.kf.setImage(with: URL(string: portDetail.mediumImageUrl!)!, options: [.keepCurrentImageWhileLoading])
             }
+            if (portDetail.description != nil && portDetail.description != "") {
+                gameDescription.text = portDetail.description
+                gameDescription.isHidden = false
+            }
+            else {
+                gameDescription.isHidden = true
+            }
             
             noRankingsLabel?.isHidden = !rankings.isEmpty
         }
         else {
+            gameDescription.isHidden = true
             if (port.smallImageUrl != nil) {
                 self.imageView?.kf.setImage(with: URL(string: port.smallImageUrl!)!)
             }

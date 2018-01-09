@@ -1855,7 +1855,7 @@ public final class FriendsQuery: GraphQLQuery {
 
 public final class GameQuery: GraphQLQuery {
   public static let operationString =
-    "query Game($id: ID!) {\n  game(id: $id) {\n    __typename\n    ...GameBasic\n    ports {\n      __typename\n      medium_image_url\n    }\n    rankings(first: 30) {\n      __typename\n      edges {\n        __typename\n        node {\n          __typename\n          ...RankingWithUser\n        }\n      }\n      pageInfo {\n        __typename\n        endCursor\n        hasNextPage\n      }\n    }\n    friend_rankings {\n      __typename\n      ...RankingWithUser\n    }\n  }\n}"
+    "query Game($id: ID!) {\n  game(id: $id) {\n    __typename\n    ...GameBasic\n    ports {\n      __typename\n      medium_image_url\n      description\n    }\n    rankings(first: 30) {\n      __typename\n      edges {\n        __typename\n        node {\n          __typename\n          ...RankingWithUser\n        }\n      }\n      pageInfo {\n        __typename\n        endCursor\n        hasNextPage\n      }\n    }\n    friend_rankings {\n      __typename\n      ...RankingWithUser\n    }\n  }\n}"
 
   public static var requestString: String { return operationString.appending(GameBasic.fragmentString).appending(RankingWithUser.fragmentString).appending(RankingBasic.fragmentString).appending(ShelfBasic.fragmentString).appending(UserBasic.fragmentString) }
 
@@ -2015,6 +2015,7 @@ public final class GameQuery: GraphQLQuery {
           GraphQLField("small_image_url", type: .scalar(String.self)),
           GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
           GraphQLField("medium_image_url", type: .scalar(String.self)),
+          GraphQLField("description", type: .scalar(String.self)),
         ]
 
         public var snapshot: Snapshot
@@ -2023,8 +2024,8 @@ public final class GameQuery: GraphQLQuery {
           self.snapshot = snapshot
         }
 
-        public init(id: GraphQLID, platform: Platform, smallImageUrl: String? = nil, mediumImageUrl: String? = nil) {
-          self.init(snapshot: ["__typename": "Port", "id": id, "platform": platform.snapshot, "small_image_url": smallImageUrl, "medium_image_url": mediumImageUrl])
+        public init(id: GraphQLID, platform: Platform, smallImageUrl: String? = nil, mediumImageUrl: String? = nil, description: String? = nil) {
+          self.init(snapshot: ["__typename": "Port", "id": id, "platform": platform.snapshot, "small_image_url": smallImageUrl, "medium_image_url": mediumImageUrl, "description": description])
         }
 
         public var __typename: String {
@@ -2069,6 +2070,15 @@ public final class GameQuery: GraphQLQuery {
           }
           set {
             snapshot.updateValue(newValue, forKey: "medium_image_url")
+          }
+        }
+
+        public var description: String? {
+          get {
+            return snapshot["description"] as? String
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "description")
           }
         }
 
