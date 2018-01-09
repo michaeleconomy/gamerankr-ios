@@ -233,6 +233,66 @@ Add more friends to see more updates.</string>
             </objects>
             <point key="canvasLocation" x="1909" y="2668"/>
         </scene>
+        <!--Sign Out-->
+        <scene sceneID="z06-QX-76g">
+            <objects>
+                <viewController id="306-dv-1Xm" customClass="SignOutViewController" customModule="GameRankr" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="NeD-NG-MAA">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eGV-pe-qXH">
+                                <rect key="frame" x="10" y="351" width="300" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="8Xw-kx-5Vf"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <state key="normal" title="Sign out of GameRankr"/>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sign Out" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wbS-Gw-b3J">
+                                <rect key="frame" x="10" y="30" width="300" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="i2m-1R-lgm"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="are you sure you want to sign out?" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Nru-d7-DVd">
+                                <rect key="frame" x="10" y="71" width="300" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="JQ8-qD-vwG"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="aYI-t7-eyP" firstAttribute="trailing" secondItem="eGV-pe-qXH" secondAttribute="trailing" constant="10" id="4Mx-MU-Jsk"/>
+                            <constraint firstItem="Nru-d7-DVd" firstAttribute="leading" secondItem="aYI-t7-eyP" secondAttribute="leading" constant="10" id="Da4-cz-vM2"/>
+                            <constraint firstItem="Nru-d7-DVd" firstAttribute="top" secondItem="wbS-Gw-b3J" secondAttribute="bottom" constant="20" id="MMG-Ep-tGg"/>
+                            <constraint firstItem="wbS-Gw-b3J" firstAttribute="top" secondItem="aYI-t7-eyP" secondAttribute="top" constant="10" id="Woh-th-FGS"/>
+                            <constraint firstItem="aYI-t7-eyP" firstAttribute="bottom" secondItem="eGV-pe-qXH" secondAttribute="bottom" constant="50" id="dNj-QA-PGS"/>
+                            <constraint firstItem="wbS-Gw-b3J" firstAttribute="leading" secondItem="aYI-t7-eyP" secondAttribute="leading" constant="10" id="g7i-Ow-PzD"/>
+                            <constraint firstItem="eGV-pe-qXH" firstAttribute="leading" secondItem="aYI-t7-eyP" secondAttribute="leading" constant="10" id="gBY-Qg-DO4"/>
+                            <constraint firstItem="aYI-t7-eyP" firstAttribute="trailing" secondItem="Nru-d7-DVd" secondAttribute="trailing" constant="10" id="ijz-f1-7aU"/>
+                            <constraint firstItem="aYI-t7-eyP" firstAttribute="trailing" secondItem="wbS-Gw-b3J" secondAttribute="trailing" constant="10" id="xNr-QG-982"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="aYI-t7-eyP"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Sign Out" image="logout" id="cVg-PN-gHu"/>
+                    <navigationItem key="navigationItem" id="ZWQ-OK-IPG"/>
+                    <connections>
+                        <outlet property="signOutButton" destination="eGV-pe-qXH" id="ice-cl-Kkx"/>
+                        <segue destination="dzd-8i-Ijl" kind="show" identifier="requireSignIn" id="pGL-tg-XTN"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="9wL-rS-uCP" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1041" y="3444"/>
+        </scene>
         <!--Updates-->
         <scene sceneID="0GT-gz-gCX">
             <objects>
@@ -1419,7 +1479,7 @@ Add more friends to see more updates.</string>
             </objects>
             <point key="canvasLocation" x="3964" y="1686"/>
         </scene>
-        <!--Sign In View Controller-->
+        <!--Sign In-->
         <scene sceneID="zF8-5n-0It">
             <objects>
                 <viewController id="dzd-8i-Ijl" customClass="SignInViewController" customModule="GameRankr" customModuleProvider="target" sceneMemberID="viewController">
@@ -1428,19 +1488,19 @@ Add more friends to see more updates.</string>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="nQI-Bf-vHK">
-                                <rect key="frame" x="0.0" y="64" width="320" height="2"/>
+                                <rect key="frame" x="0.0" y="20" width="320" height="2"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="2" id="rbt-rX-CmQ"/>
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="GameRankr" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wej-fc-5KO">
-                                <rect key="frame" x="0.0" y="81" width="320" height="30"/>
+                                <rect key="frame" x="0.0" y="37" width="320" height="30"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="25"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="To track your games, and see friends you must first connect to facebook." textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="46w-28-Tln">
-                                <rect key="frame" x="46" y="119" width="228" height="123"/>
+                                <rect key="frame" x="46" y="75" width="228" height="123"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="123" id="Fub-hv-hff"/>
                                 </constraints>
@@ -1475,6 +1535,7 @@ Add more friends to see more updates.</string>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="gbE-WF-Yyg"/>
                     </view>
+                    <tabBarItem key="tabBarItem" title="Sign In" image="login" id="6Kt-Nm-WiI"/>
                     <connections>
                         <outlet property="fbButton" destination="uoR-Ay-Jxx" id="Nw8-na-Zas"/>
                         <outlet property="loadingImage" destination="nQI-Bf-vHK" id="3rr-HL-IsY"/>
@@ -1482,7 +1543,7 @@ Add more friends to see more updates.</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eJU-GW-sDE" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4808" y="2356"/>
+            <point key="canvasLocation" x="1041" y="4301"/>
         </scene>
         <!--My Games-->
         <scene sceneID="MiT-LG-ARN">
@@ -1851,10 +1912,10 @@ Add more friends to see more updates.</string>
             </objects>
             <point key="canvasLocation" x="1042" y="357"/>
         </scene>
-        <!--Tab Bar Controller-->
+        <!--Game RankrUI Tab Bar Controller-->
         <scene sceneID="yl2-sM-qoP">
             <objects>
-                <tabBarController id="49e-Tb-3d3" sceneMemberID="viewController">
+                <tabBarController id="49e-Tb-3d3" customClass="GameRankrUITabBarController" customModule="GameRankr" customModuleProvider="target" sceneMemberID="viewController">
                     <tabBar key="tabBar" contentMode="scaleToFill" id="W28-zg-YXA">
                         <rect key="frame" x="0.0" y="975" width="768" height="49"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
@@ -1867,6 +1928,8 @@ Add more friends to see more updates.</string>
                         <segue destination="WRn-8S-dnY" kind="relationship" relationship="viewControllers" id="iP0-7Q-Jc0"/>
                         <segue destination="PR9-Vd-CNs" kind="relationship" relationship="viewControllers" id="YJz-lI-vB5"/>
                         <segue destination="sQU-Ad-aBX" kind="relationship" relationship="viewControllers" id="zhJ-WJ-QTE"/>
+                        <segue destination="306-dv-1Xm" kind="relationship" relationship="viewControllers" id="oZy-aO-hLa"/>
+                        <segue destination="dzd-8i-Ijl" kind="relationship" relationship="viewControllers" id="5zu-9l-UDz"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HuB-VB-40B" sceneMemberID="firstResponder"/>
@@ -1880,6 +1943,8 @@ Add more friends to see more updates.</string>
         <image name="down-arrow.png" width="25" height="25"/>
         <image name="filter" width="25" height="25"/>
         <image name="list" width="25" height="25"/>
+        <image name="login" width="25" height="25"/>
+        <image name="logout" width="25" height="25"/>
         <image name="news" width="25" height="25"/>
         <image name="news.png" width="25" height="25"/>
         <image name="people" width="25" height="25"/>
@@ -1893,7 +1958,7 @@ Add more friends to see more updates.</string>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="oUA-SR-sUQ"/>
-        <segue reference="09k-mF-JFN"/>
+        <segue reference="5zu-9l-UDz"/>
         <segue reference="HJh-98-qdS"/>
         <segue reference="FoV-qj-9o7"/>
         <segue reference="Jh0-oY-Vq9"/>

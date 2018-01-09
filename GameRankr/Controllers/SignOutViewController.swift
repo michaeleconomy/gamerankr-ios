@@ -1,9 +1,16 @@
-//
-//  SignOutViewController.swift
-//  GameRankr
-//
-//  Created by Michael on 1/8/18.
-//  Copyright © 2018 Michael. All rights reserved.
-//
+import UIKit
 
-import Foundation
+class SignOutViewController: UIViewController {
+    @IBOutlet weak var signOutButton: UIButton!
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        signOutButton.addTarget(self, action: #selector(signOutTouch(sender:)), for: .touchUpInside)
+    }
+    
+    @objc func signOutTouch(sender: UIButton) {
+        api.logout()
+        performSegue(withIdentifier: "requireSignIn", sender: nil)
+    }
+}

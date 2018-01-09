@@ -134,6 +134,11 @@ class GameRankrAPI {
         task.resume()
     }
     
+    func logout() {
+        URLSession.shared.reset(completionHandler: {NSLog("URLSession has been cleared")})
+        handleLogout()
+    }
+    
     private func handleLogin(currentUserId: GraphQLID, token: String) {
         NSLog("login was successful.")
         self.signedIn = true
