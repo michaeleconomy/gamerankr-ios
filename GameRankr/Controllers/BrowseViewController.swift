@@ -66,12 +66,7 @@ class BrowseViewController: UIViewController, FullRankingDataSource, APIPopularG
             gameImage.addConstraint(gameImage.heightAnchor.constraint(equalToConstant: 60))
             
             if (port.smallImageUrl != nil) {
-                gameImage.kf.setImage(with: URL(string: port.smallImageUrl!)!, for: .normal, placeholder: PlaceholderImages.game
-//                    , completionHandler: {
-//                    (image, error, cacheType, imageUrl) in
-//                    gameImage.layoutSubviews()
-//                }
-                )
+                gameImage.kf.setImage(with: URL(string: port.smallImageUrl!)!, for: .normal, placeholder: PlaceholderImages.game)
             }
             else {
                 gameImage.setImage(PlaceholderImages.game, for: .normal)
@@ -135,26 +130,5 @@ class BrowseViewController: UIViewController, FullRankingDataSource, APIPopularG
         self.nextPage = nextPage
         
         asyncConfigureView()
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! GameCoverCollectionCell
-        let game = games![indexPath.row]
-        let port = game.ports.first!
-        
-        if (port.smallImageUrl != nil) {
-            cell.imageView.kf.indicatorType = .activity
-            cell.imageView.kf.setImage(with: URL(string: port.smallImageUrl!)!, placeholder: PlaceholderImages.game, completionHandler: {
-                (image, error, cacheType, imageUrl) in
-                cell.layoutSubviews()
-            })
-        }
-        else {
-            cell.imageView.image = PlaceholderImages.game
-        }
-        
-        cell.backgroundColor = UIColor(red: CGFloat(arc4random()) / CGFloat(UInt32.max), green: CGFloat(arc4random()) / CGFloat(UInt32.max), blue: CGFloat(arc4random()) / CGFloat(UInt32.max), alpha: 1.0)
-        
-        return cell
     }
 }

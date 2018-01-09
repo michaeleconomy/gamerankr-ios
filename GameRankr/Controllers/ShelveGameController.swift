@@ -3,8 +3,8 @@ import Apollo
 
 class ShelveGameController : UIViewController, UITableViewDataSource, APIMyShelvesManagerDelegate, APIMyGamesManagerDelegate {
     
+    @IBOutlet weak var doneButton: UIBarButtonItem!
     @IBOutlet weak var loadingImage: UIImageView!
-    @IBOutlet weak var doneButton: UIButton!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var removeButton: UIButton!
     
@@ -16,7 +16,8 @@ class ShelveGameController : UIViewController, UITableViewDataSource, APIMyShelv
         super.viewDidLoad()
         MyShelvesManager.sharedInstance.load()
         loadingImage.image = PlaceholderImages.loadingBar
-        doneButton.addTarget(self, action:#selector(doneButtonClick(sender:)), for: .touchUpInside)
+        doneButton.target = self
+        doneButton.action = #selector(doneButtonClick(sender:))
         removeButton.addTarget(self, action: #selector(removeButtonTap(sender:)), for: .touchUpInside)
     }
     
