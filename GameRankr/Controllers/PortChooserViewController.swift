@@ -36,12 +36,6 @@ class PortChooserViewController : UITableViewController {
         else {
             cell.accessoryType = .none
         }
-//        if (selected == port.id) {
-//            cell.isFocused = true
-//        }
-//        else {
-//            cell.isFocused = false
-//        }
         return cell
     }
     

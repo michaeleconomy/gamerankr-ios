@@ -99,13 +99,13 @@ class MyGamesViewController: UIViewController, UITableViewDataSource, UITableVie
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if (segue.identifier == nil) {
-            NSLog("nil segue from user view")
+            NSLog("nil segue from my games view")
             return
         }
         switch segue.identifier! {
         case "gameDetail":
             guard let indexPath = tableView.indexPathForSelectedRow else {
-                NSLog("tableView.indexPathForSelectedRow was nil")
+                NSLog("my games: tableView.indexPathForSelectedRow was nil")
                 return
             }
             let controller = segue.destination as! GameViewController

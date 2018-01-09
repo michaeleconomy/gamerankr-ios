@@ -164,7 +164,6 @@ class MyGamesManager : APIMyGamesDelegate, APIRankDelegate, APIDestroyRankingDel
     func handleAPI(error: String) {
         loadingCount -= 1 //yuck!
         //??? - if multiple delegates all try and pop alerts - is that a problem?
-        NSLog("MyGamesManager encountered API Error: \(error)")
         delegates.forEach{$0.handleAPI(error: error)}
     }
     

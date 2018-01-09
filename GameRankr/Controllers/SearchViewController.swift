@@ -69,14 +69,12 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
         })
     }
     
-    
     func searchBar(_: UISearchBar, textDidChange: String) {
         if (searchBar.text?.underestimatedCount ?? 0 <= 2) {
             return
         }
         doSearch(query: searchBar.text)
     }
-    
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         doSearch(query: searchBar.text)
@@ -112,7 +110,7 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if (segue.identifier == nil) {
-            NSLog("nil segue from user view")
+            NSLog("nil segue from search view")
             return
         }
         switch segue.identifier! {

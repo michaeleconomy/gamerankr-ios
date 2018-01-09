@@ -263,14 +263,17 @@ class GameRankrAPI {
         }
         if (result?.data == nil) {
             if let nsError = error as NSError? {
+                NSLog("error encountered: \(nsError.localizedDescription)")
                 delegate.handleAPI(error: nsError.localizedDescription)
                 return false
             }
+            NSLog("data was nil, error: \(String(describing: error))")
             delegate.handleAPI(error: "data was nil, error: \(String(describing: error))")
             return false
         }
         if (result?.errors != nil && result!.errors!.count > 0) {
             let errorsStr = result!.errors!.map{$0.message}.joined(separator: ", ")
+            NSLog("server side error(s): \(errorsStr)")
             delegate.handleAPI(error: "server side error(s): \(errorsStr)")
             return false
         }

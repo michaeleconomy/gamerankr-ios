@@ -71,11 +71,13 @@ extension GameRankrAPI {
     
     private func handleAPIErrorsBasic(data: Data?, response: URLResponse?, error: Error?, apiErrorDelegate: APIErrorDelegate) -> Bool {
         if let error = error {
+            NSLog("handleAPIErrorsBasic - error: \(error)")
             apiErrorDelegate.handleAPI(error: "error: \(error)")
             return false
         }
         guard let httpResponse = response as? HTTPURLResponse,
             (200...299).contains(httpResponse.statusCode) else {
+                NSLog("handleAPIErrorsBasic - server error, response: \(String(describing: response))")
                 apiErrorDelegate.handleAPI(error: "server error, response: \(String(describing: response))")
                 return false
         }

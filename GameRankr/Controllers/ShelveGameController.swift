@@ -31,7 +31,8 @@ class ShelveGameController : UIViewController, UITableViewDataSource, APIMyShelv
     func configureView() {
         loadingImage.isHidden = !MyGamesManager.sharedInstance.loading() || !MyShelvesManager.sharedInstance.loading
         if (game == nil) {
-            easyAlert("game could not be found for ShelveGameViewController")
+            NSLog("game could not be found")
+            easyAlert("Game could not be found for ShelveGameViewController")
             return
         }
         self.title = "Shelving: \(game!.title)"
@@ -85,7 +86,7 @@ class ShelveGameController : UIViewController, UITableViewDataSource, APIMyShelv
     
         if (ranking == nil) {
             sender.isOn = true
-            easyAlert("Game still saving, ")
+            easyAlert("Still saving, please try again soon")
             return
         }
         if (ranking!.shelves.count == 1) {

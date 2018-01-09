@@ -169,7 +169,7 @@ class UserViewController : UIViewController, APIUserDetailDelegate, UITableViewD
         switch segue.identifier! {
         case "rankingDetail":
             guard let indexPath = reviewTable.indexPathForSelectedRow else {
-                NSLog("indexPath was nil")
+                NSLog("user_view: indexPath was nil")
                 return
             }
             let ranking = rankings[indexPath.row]
@@ -191,7 +191,7 @@ class UserViewController : UIViewController, APIUserDetailDelegate, UITableViewD
             controller.rankings = rankings
             controller.nextPage = nextPage
         default:
-            NSLog("unknown segue: \(segue.identifier!)")
+            NSLog("unknown segue from user view: \(segue.identifier!)")
         }
     }
     

@@ -113,7 +113,7 @@ class ShelfViewController: UIViewController, UITableViewDataSource, APIShelfDele
             controller.user = user
             controller.game = ranking.game.fragments.gameBasic
         default:
-            NSLog("unknown segue from game view: \(segue.identifier!)")
+            NSLog("unknown segue from shelf view: \(segue.identifier!)")
         }
     }
 }

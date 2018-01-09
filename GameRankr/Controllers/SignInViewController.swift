@@ -42,6 +42,7 @@ class SignInViewController : UIViewController, APILoginDelegate {
             case .failed(let error):
                 DispatchQueue.main.async(execute: {
                     self.loadingImage.isHidden = true
+                    NSLog("failure with facebook sign in: \(error.localizedDescription)")
                     self.easyAlert(error.localizedDescription)
                 })
             case .cancelled:
