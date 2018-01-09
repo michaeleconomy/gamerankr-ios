@@ -113,17 +113,17 @@ class GameViewController : UIViewController, APIGameDetailDelegate, APIGameRanki
                 self.imageView?.kf.setImage(with: URL(string: portDetail.mediumImageUrl!)!, options: [.keepCurrentImageWhileLoading])
             }
             if (portDetail.description != nil && portDetail.description != "") {
-                gameDescription.text = portDetail.description
-                gameDescription.isHidden = false
+                gameDescription?.text = portDetail.description
+                gameDescription?.isHidden = false
             }
             else {
-                gameDescription.isHidden = true
+                gameDescription?.isHidden = true
             }
             
             noRankingsLabel?.isHidden = !rankings.isEmpty
         }
         else {
-            gameDescription.isHidden = true
+            gameDescription?.isHidden = true
             if (port.smallImageUrl != nil) {
                 self.imageView?.kf.setImage(with: URL(string: port.smallImageUrl!)!)
             }

@@ -46,7 +46,7 @@ Add more friends to see more updates.</string>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" id="PLZ-i2-8tc" customClass="FixedImageSizeTableCell" customModule="GameRankr" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="28" width="0.0" height="44"/>
+                                        <rect key="frame" x="0.0" y="28" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="PLZ-i2-8tc" id="Mri-HQ-lN3">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
@@ -1685,7 +1685,7 @@ Add more friends to see more updates.</string>
                                 <rect key="frame" x="0.0" y="22" width="320" height="778"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="center" axis="vertical" distribution="equalSpacing" alignment="center" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="U4K-Ug-BNO">
-                                        <rect key="frame" x="0.0" y="0.0" width="320" height="684.5"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="738.5"/>
                                         <subviews>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="EeY-ft-ro8">
                                                 <rect key="frame" x="0.0" y="0.0" width="320" height="160"/>
@@ -1693,21 +1693,28 @@ Add more friends to see more updates.</string>
                                                     <constraint firstAttribute="width" secondItem="EeY-ft-ro8" secondAttribute="height" multiplier="2:1" id="uZl-vL-heb"/>
                                                 </constraints>
                                             </imageView>
-                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="SUs-gH-yKn">
-                                                <rect key="frame" x="0.0" y="172" width="0.0" height="0.0"/>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hyQ-sh-ECh">
+                                                <rect key="frame" x="0.0" y="172" width="320" height="54"/>
                                                 <subviews>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="this is a long string for testing wowowowo owowo ow owo owow ow" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fi4-Mr-Tgl">
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="this is a long string for " textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fi4-Mr-Tgl">
+                                                        <rect key="frame" x="0.0" y="0.0" width="320" height="54"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                 </subviews>
+                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
-                                                    <constraint firstItem="Fi4-Mr-Tgl" firstAttribute="width" secondItem="SUs-gH-yKn" secondAttribute="width" id="A4x-t6-PH1"/>
+                                                    <constraint firstItem="Fi4-Mr-Tgl" firstAttribute="top" secondItem="hyQ-sh-ECh" secondAttribute="top" id="7GI-mm-GM0"/>
+                                                    <constraint firstAttribute="height" secondItem="Fi4-Mr-Tgl" secondAttribute="height" id="CeF-XT-udd"/>
+                                                    <constraint firstAttribute="trailing" secondItem="Fi4-Mr-Tgl" secondAttribute="trailing" id="HsZ-MX-7ty"/>
+                                                    <constraint firstAttribute="bottom" secondItem="Fi4-Mr-Tgl" secondAttribute="bottom" id="X7d-aT-UZn"/>
+                                                    <constraint firstItem="Fi4-Mr-Tgl" firstAttribute="width" secondItem="hyQ-sh-ECh" secondAttribute="width" id="cL4-MU-mF5"/>
+                                                    <constraint firstItem="Fi4-Mr-Tgl" firstAttribute="leading" secondItem="hyQ-sh-ECh" secondAttribute="leading" id="yOT-ck-e0V"/>
                                                 </constraints>
-                                            </stackView>
+                                            </view>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="VSf-fI-MMk">
-                                                <rect key="frame" x="42" y="184" width="236" height="80.5"/>
+                                                <rect key="frame" x="42" y="238" width="236" height="80.5"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Platform: TBD" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QLZ-5s-uw0">
                                                         <rect key="frame" x="64.5" y="0.0" width="107" height="20.5"/>
@@ -1729,7 +1736,7 @@ Add more friends to see more updates.</string>
                                                 </subviews>
                                             </stackView>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="Gje-2J-uxY">
-                                                <rect key="frame" x="0.0" y="276.5" width="320" height="84"/>
+                                                <rect key="frame" x="0.0" y="330.5" width="320" height="84"/>
                                                 <subviews>
                                                     <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vUG-EV-Acs">
                                                         <rect key="frame" x="35" y="0.0" width="250" height="50"/>
@@ -1779,7 +1786,7 @@ Add more friends to see more updates.</string>
                                                 </subviews>
                                             </stackView>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="RcW-cg-5Tc">
-                                                <rect key="frame" x="0.0" y="372.5" width="320" height="101"/>
+                                                <rect key="frame" x="0.0" y="426.5" width="320" height="101"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="this is a long string for testing wowowowo owowo ow owo owow ow" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="th2-0k-46i">
                                                         <rect key="frame" x="0.0" y="0.0" width="320" height="41"/>
@@ -1812,19 +1819,19 @@ Add more friends to see more updates.</string>
                                                 </constraints>
                                             </stackView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Reviews" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OOq-CZ-h3l">
-                                                <rect key="frame" x="117" y="485.5" width="86.5" height="26.5"/>
+                                                <rect key="frame" x="117" y="539.5" width="86.5" height="26.5"/>
                                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="22"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No one has added this game yet." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BFL-dQ-f3y">
-                                                <rect key="frame" x="34.5" y="524" width="251.5" height="20.5"/>
+                                                <rect key="frame" x="34.5" y="578" width="251.5" height="20.5"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="pnO-MZ-4bf" customClass="IntrinsicTableView" customModule="GameRankr" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="556.5" width="320" height="128"/>
+                                                <rect key="frame" x="0.0" y="610.5" width="320" height="128"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <prototypes>
                                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" textLabel="TyD-S1-ZLl" detailTextLabel="9U0-qo-kX2" style="IBUITableViewCellStyleSubtitle" id="c58-ez-anF">
@@ -1864,6 +1871,7 @@ Add more friends to see more updates.</string>
                                             <constraint firstItem="Gje-2J-uxY" firstAttribute="width" secondItem="EeY-ft-ro8" secondAttribute="width" id="FC4-av-Xaj"/>
                                             <constraint firstItem="pnO-MZ-4bf" firstAttribute="width" secondItem="U4K-Ug-BNO" secondAttribute="width" id="VSO-2t-EMF"/>
                                             <constraint firstAttribute="trailing" secondItem="EeY-ft-ro8" secondAttribute="trailing" id="jV5-Kw-ldC"/>
+                                            <constraint firstItem="hyQ-sh-ECh" firstAttribute="width" secondItem="U4K-Ug-BNO" secondAttribute="width" id="tC5-tB-rwF"/>
                                             <constraint firstItem="EeY-ft-ro8" firstAttribute="leading" secondItem="U4K-Ug-BNO" secondAttribute="leading" id="xiv-ho-qwt"/>
                                         </constraints>
                                     </stackView>
@@ -1915,7 +1923,7 @@ Add more friends to see more updates.</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QZv-bM-d79" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2869" y="100"/>
+            <point key="canvasLocation" x="2868.75" y="100"/>
         </scene>
         <!--Search-->
         <scene sceneID="JM0-0l-get">
