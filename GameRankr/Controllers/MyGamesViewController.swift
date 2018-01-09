@@ -4,6 +4,7 @@ class MyGamesViewController: UIViewController, UITableViewDataSource, UITableVie
     
     @IBOutlet weak var loadingImage: UIImageView!
     @IBOutlet weak var noGamesLabel: UILabel!
+    @IBOutlet weak var noFilterMatchesLabel: UILabel!
     @IBOutlet weak var tableView: UITableView!
     
     @IBOutlet weak var filterButton: UIBarButtonItem!
@@ -35,6 +36,7 @@ class MyGamesViewController: UIViewController, UITableViewDataSource, UITableVie
         loadingImage?.isHidden = !MyGamesManager.sharedInstance.loading()
         
         noGamesLabel?.isHidden = MyGamesManager.sharedInstance.count() > 0 || MyGamesManager.sharedInstance.loading()
+        noFilterMatchesLabel?.isHidden = MyGamesManager.sharedInstance.count() == 0 || filter == nil || !filteredRankings!.isEmpty
         tableView.reloadData()
         if (filter == nil) {
             filterButton.tintColor = .gray

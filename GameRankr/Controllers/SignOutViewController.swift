@@ -1,4 +1,5 @@
 import UIKit
+import FacebookLogin
 
 class SignOutViewController: UIViewController {
     @IBOutlet weak var signOutButton: UIButton!
@@ -10,6 +11,7 @@ class SignOutViewController: UIViewController {
     }
     
     @objc func signOutTouch(sender: UIButton) {
+        LoginManager().logOut()
         api.logout()
         performSegue(withIdentifier: "requireSignIn", sender: nil)
     }
