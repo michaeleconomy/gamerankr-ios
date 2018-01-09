@@ -9,12 +9,6 @@
 /* Begin PBXBuildFile section */
 		4C10838320053C730072C8CA /* AuthenticationAPIs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C10838220053C730072C8CA /* AuthenticationAPIs.swift */; };
 		4C2CF8151FF2E7F700A464AA /* LocalSQLiteManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C2CF8141FF2E7F700A464AA /* LocalSQLiteManager.swift */; };
-		4C2E1BB11FE9CD1F00C048BC /* star-full.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C2E1BAF1FE9CD1D00C048BC /* star-full.png */; };
-		4C2E1BB21FE9CD1F00C048BC /* star-empty.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C2E1BB01FE9CD1E00C048BC /* star-empty.png */; };
-		4C2E1BB41FE9D26300C048BC /* star-empty-large.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C2E1BB31FE9D26100C048BC /* star-empty-large.png */; };
-		4C2E1BB61FE9D2BF00C048BC /* star-empty-medium.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C2E1BB51FE9D2BD00C048BC /* star-empty-medium.png */; };
-		4C2E1BB91FE9D39400C048BC /* star-full-large.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C2E1BB71FE9D39200C048BC /* star-full-large.png */; };
-		4C2E1BBA1FE9D39400C048BC /* star-full-medium.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C2E1BB81FE9D39300C048BC /* star-full-medium.png */; };
 		4C2E1BBC1FE9EB4400C048BC /* ShelveGameController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C2E1BBB1FE9EB4400C048BC /* ShelveGameController.swift */; };
 		4C2E1BBE1FE9ED3900C048BC /* RankingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C2E1BBD1FE9ED3900C048BC /* RankingViewController.swift */; };
 		4C3FC26A1FE322BC00299D7D /* Search.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 4C3FC2691FE322BC00299D7D /* Search.graphql */; };
@@ -117,12 +111,6 @@
 /* Begin PBXFileReference section */
 		4C10838220053C730072C8CA /* AuthenticationAPIs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationAPIs.swift; sourceTree = "<group>"; };
 		4C2CF8141FF2E7F700A464AA /* LocalSQLiteManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalSQLiteManager.swift; sourceTree = "<group>"; };
-		4C2E1BAF1FE9CD1D00C048BC /* star-full.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "star-full.png"; sourceTree = "<group>"; };
-		4C2E1BB01FE9CD1E00C048BC /* star-empty.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "star-empty.png"; sourceTree = "<group>"; };
-		4C2E1BB31FE9D26100C048BC /* star-empty-large.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "star-empty-large.png"; sourceTree = "<group>"; };
-		4C2E1BB51FE9D2BD00C048BC /* star-empty-medium.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "star-empty-medium.png"; sourceTree = "<group>"; };
-		4C2E1BB71FE9D39200C048BC /* star-full-large.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "star-full-large.png"; sourceTree = "<group>"; };
-		4C2E1BB81FE9D39300C048BC /* star-full-medium.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "star-full-medium.png"; sourceTree = "<group>"; };
 		4C2E1BBB1FE9EB4400C048BC /* ShelveGameController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShelveGameController.swift; sourceTree = "<group>"; };
 		4C2E1BBD1FE9ED3900C048BC /* RankingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankingViewController.swift; sourceTree = "<group>"; };
 		4C3FC2691FE322BC00299D7D /* Search.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = Search.graphql; sourceTree = "<group>"; };
@@ -308,12 +296,6 @@
 			children = (
 				4C5F885520052DCD002D67F5 /* appIconOriginal.png */,
 				4CA747C81FF0AD3900C3BCE0 /* loading */,
-				4C2E1BB71FE9D39200C048BC /* star-full-large.png */,
-				4C2E1BB81FE9D39300C048BC /* star-full-medium.png */,
-				4C2E1BB31FE9D26100C048BC /* star-empty-large.png */,
-				4C2E1BB51FE9D2BD00C048BC /* star-empty-medium.png */,
-				4C2E1BB01FE9CD1E00C048BC /* star-empty.png */,
-				4C2E1BAF1FE9CD1D00C048BC /* star-full.png */,
 				4C47F02D1FF5D10100E5FD92 /* loading_photos.png */,
 				4CBD0F9A1FE9795900230771 /* down-arrow.png */,
 			);
@@ -552,8 +534,6 @@
 				4C86D4EB1FFB309D00264EDB /* ShelfBasic.graphql in Resources */,
 				4CA747F81FF0AD9C00C3BCE0 /* loading-bar-16.png in Resources */,
 				4CA747E81FF0AD9C00C3BCE0 /* loading-bar-8.png in Resources */,
-				4C2E1BB21FE9CD1F00C048BC /* star-empty.png in Resources */,
-				4C2E1BB91FE9D39400C048BC /* star-full-large.png in Resources */,
 				4C86D4ED1FFB579200264EDB /* Comments.graphql in Resources */,
 				4C5F885820052DE6002D67F5 /* loading.gif in Resources */,
 				4CA747E11FF0AD9C00C3BCE0 /* loading-bar-7.png in Resources */,
@@ -571,7 +551,6 @@
 				4CA747F61FF0AD9C00C3BCE0 /* loading-bar-23.png in Resources */,
 				4CA747F41FF0AD9C00C3BCE0 /* loading-bar-22.png in Resources */,
 				4C86D4E71FFB159C00264EDB /* RankingWithGame.graphql in Resources */,
-				4C2E1BB11FE9CD1F00C048BC /* star-full.png in Resources */,
 				4CA747F71FF0AD9C00C3BCE0 /* loading-bar-20.png in Resources */,
 				4CA747F11FF0AD9C00C3BCE0 /* loading-bar-14.png in Resources */,
 				4C430E5C2001645500CAC150 /* FeaturedPlatforms.graphql in Resources */,
@@ -587,15 +566,12 @@
 				4CA747F51FF0AD9C00C3BCE0 /* loading-bar-13.png in Resources */,
 				4C91103C1FEC552500DDEECC /* Comment.graphql in Resources */,
 				4CD1C9E21FDF6B62001A0B8D /* Main.storyboard in Resources */,
-				4C2E1BB61FE9D2BF00C048BC /* star-empty-medium.png in Resources */,
 				4CBD0F7F1FE6DD3F00230771 /* RankingBasic.graphql in Resources */,
 				4CA747E51FF0AD9C00C3BCE0 /* loading-bar-15.png in Resources */,
 				4CA747E91FF0AD9C00C3BCE0 /* loading-bar-12.png in Resources */,
 				4CA747E71FF0AD9C00C3BCE0 /* loading-bar-4.png in Resources */,
-				4C2E1BB41FE9D26300C048BC /* star-empty-large.png in Resources */,
 				4C86D4E91FFB164500264EDB /* RankingFull.graphql in Resources */,
 				4C9110381FEC535F00DDEECC /* RankPort.graphql in Resources */,
-				4C2E1BBA1FE9D39400C048BC /* star-full-medium.png in Resources */,
 				4CA747C51FEF089E00C3BCE0 /* DestroyComment.graphql in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

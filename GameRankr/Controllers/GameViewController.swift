@@ -18,8 +18,8 @@ class GameViewController : UIViewController, APIGameDetailDelegate, APIGameRanki
     @IBOutlet weak var noRankingsLabel: UILabel!
     @IBOutlet weak var reviewsTable: IntrinsicTableView!
     
-    let starFull = UIImage(named: "star-full-medium.png")
-    let starEmpty = UIImage(named: "star-empty-medium.png")
+    let starFull = UIImage(named: "star-large-full")
+    let starEmpty = UIImage(named: "star-large-empty")
     
     var gameDetail: GameQuery.Data.Game? {
         didSet {
