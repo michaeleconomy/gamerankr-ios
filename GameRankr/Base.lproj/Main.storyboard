@@ -1720,7 +1720,7 @@ Add more friends to see more updates.</string>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hyQ-sh-ECh">
                                                 <rect key="frame" x="0.0" y="172" width="320" height="54"/>
                                                 <subviews>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="this is a long string for " textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fi4-Mr-Tgl">
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="this is a long string for " textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fi4-Mr-Tgl">
                                                         <rect key="frame" x="0.0" y="0.0" width="320" height="54"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                         <nil key="textColor"/>
@@ -2009,8 +2009,8 @@ Add more friends to see more updates.</string>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="cnp-SU-sjW"/>
-        <segue reference="09k-mF-JFN"/>
-        <segue reference="ByG-H3-DuN"/>
+        <segue reference="oqx-vY-9wK"/>
+        <segue reference="HJh-98-qdS"/>
         <segue reference="FoV-qj-9o7"/>
         <segue reference="hUL-E4-77m"/>
         <segue reference="ay3-zF-T8n"/>

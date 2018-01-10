@@ -192,12 +192,15 @@ class GameViewController : UIViewController, APIGameDetailDelegate, APIGameRanki
         api.register(authenticationDelegate: self)
         shareButton.target = self
         shareButton.action = #selector(shareGame)
+        gameDescription.isUserInteractionEnabled = true
+        gameDescription.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(descriptionTouched)))
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         configureView()
         MyGamesManager.sharedInstance.register(delegate: self)
+        gameDescription.numberOfLines = 3
     }
     
     @objc func shareGame() {
@@ -217,6 +220,11 @@ class GameViewController : UIViewController, APIGameDetailDelegate, APIGameRanki
         
         let rankingValue = stars.arrangedSubviews.index(where: {$0 == sender})! + 1
         starRankPort(rankingValue: rankingValue)
+    }
+    
+    @objc func descriptionTouched() {
+        gameDescription.numberOfLines = gameDescription.numberOfLines == 3 ? 0 : 3
+        NSLog("foo")
     }
     
     func starRankPort(rankingValue: Int) {
