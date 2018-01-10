@@ -74,18 +74,34 @@ class MyGamesViewController: UIViewController, UITableViewDataSource, UITableVie
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! FixedImageSizeTableCell
         let ranking = getCurrentRankingArray()[indexPath.row]
         let game = ranking.game
         let port = ranking.port
         
-        cell.textLabel!.text = game.title
-        cell.detailTextLabel!.text = port.platform.name
+        cell.primaryLabel!.text = game.title
+        var secondaryText = ""
+        if (ranking.ranking != nil) {
+            secondaryText += String(repeating: "\u{2605}", count: ranking.ranking!) + " "
+        }
+        secondaryText += port.platform.name
+        if (ranking.review != nil && ranking.review != "") {
+            secondaryText += " - review"
+        }
+        secondaryText += "\nShelves: " + ranking.shelves.map{$0.name}.joined(separator: ", ")
         
-        cell.imageView?.image = PlaceholderImages.game
+        if (ranking.commentsCount > 0) {
+            secondaryText += "\n\(ranking.commentsCount) comment"
+            if (ranking.commentsCount > 1) {
+                secondaryText += "s"
+            }
+        }
+        cell.secondaryLabel!.text = secondaryText
+        
+        cell.fixedSizeImageView!.image = PlaceholderImages.game
         if (ranking.port.smallImageUrl != nil) {
-            cell.imageView?.kf.indicatorType = .activity
-            cell.imageView?.kf.setImage(with: URL(string: ranking.port.smallImageUrl!)!, placeholder: PlaceholderImages.game, completionHandler: {
+            cell.fixedSizeImageView!.kf.indicatorType = .activity
+            cell.fixedSizeImageView!.kf.setImage(with: URL(string: ranking.port.smallImageUrl!)!, placeholder: PlaceholderImages.game, completionHandler: {
                 (image, error, cacheType, imageUrl) in
                 cell.layoutSubviews()
             })
