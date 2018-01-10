@@ -55,6 +55,7 @@
 		4C91103A1FEC54CA00DDEECC /* DestroyRanking.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 4C9110391FEC54CA00DDEECC /* DestroyRanking.graphql */; };
 		4C91103C1FEC552500DDEECC /* Comment.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 4C91103B1FEC552500DDEECC /* Comment.graphql */; };
 		4C91103E1FEC55F100DDEECC /* CommentBasic.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 4C91103D1FEC55F100DDEECC /* CommentBasic.graphql */; };
+		4C9698522005A66A00B88A91 /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C9698512005A66A00B88A91 /* AboutViewController.swift */; };
 		4CA747C51FEF089E00C3BCE0 /* DestroyComment.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 4CA747C41FEF089E00C3BCE0 /* DestroyComment.graphql */; };
 		4CA747E11FF0AD9C00C3BCE0 /* loading-bar-7.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CA747C91FF0AD9300C3BCE0 /* loading-bar-7.png */; };
 		4CA747E21FF0AD9C00C3BCE0 /* loading-bar-2.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CA747CA1FF0AD9300C3BCE0 /* loading-bar-2.png */; };
@@ -158,6 +159,7 @@
 		4C9110391FEC54CA00DDEECC /* DestroyRanking.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = DestroyRanking.graphql; sourceTree = "<group>"; };
 		4C91103B1FEC552500DDEECC /* Comment.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = Comment.graphql; sourceTree = "<group>"; };
 		4C91103D1FEC55F100DDEECC /* CommentBasic.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = CommentBasic.graphql; sourceTree = "<group>"; };
+		4C9698512005A66A00B88A91 /* AboutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
 		4CA747C41FEF089E00C3BCE0 /* DestroyComment.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = DestroyComment.graphql; sourceTree = "<group>"; };
 		4CA747C91FF0AD9300C3BCE0 /* loading-bar-7.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "loading-bar-7.png"; sourceTree = "<group>"; };
 		4CA747CA1FF0AD9300C3BCE0 /* loading-bar-2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "loading-bar-2.png"; sourceTree = "<group>"; };
@@ -240,6 +242,7 @@
 			isa = PBXGroup;
 			children = (
 				4C42E4F31FE1BC72003F1C68 /* Shared */,
+				4C9698512005A66A00B88A91 /* AboutViewController.swift */,
 				4C430E692001C8AF00CAC150 /* BrowseViewController.swift */,
 				4CAA416C1FEAE74D007EBB7C /* EditReviewViewController.swift */,
 				4CBD0F921FE6FC8500230771 /* FriendsController.swift */,
@@ -697,6 +700,7 @@
 				4C430E582000636C00CAC150 /* FixedImageSizeTableCell.swift in Sources */,
 				4C57FC151FDF7D9600A04E57 /* GameRankrAPI.swift in Sources */,
 				4CAA416D1FEAE74D007EBB7C /* EditReviewViewController.swift in Sources */,
+				4C9698522005A66A00B88A91 /* AboutViewController.swift in Sources */,
 				4CBD0F7D1FE627FB00230771 /* SignInViewController.swift in Sources */,
 				4C430E56200036EA00CAC150 /* StringExtensions.swift in Sources */,
 				4C5F885220044D8D002D67F5 /* GameRankrUITabBarController.swift in Sources */,
