@@ -1,7 +1,7 @@
 import UIKit
 import Apollo
 
-class ShelveGameController : UIViewController, UITableViewDataSource, APIMyShelvesManagerDelegate, APIMyGamesManagerDelegate {
+class ShelveGameController : UIViewController, UITableViewDataSource, APIMyShelvesManagerDelegate, APIMyGamesManagerDelegate, UITableViewDelegate {
     
     @IBOutlet weak var doneButton: UIBarButtonItem!
     @IBOutlet weak var loadingImage: UIImageView!
@@ -95,6 +95,13 @@ class ShelveGameController : UIViewController, UITableViewDataSource, APIMyShelv
             return
         }
         MyGamesManager.sharedInstance.rankPort(portId: portId!, removeShelfId: shelf.id)
+    }
+    
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let cell = tableView.cellForRow(at: indexPath) as! UITableViewCellWithSwitch
+        cell.switch.isOn = !cell.switch.isOn
+        shelfToggled(sender: cell.switch)
     }
     
     

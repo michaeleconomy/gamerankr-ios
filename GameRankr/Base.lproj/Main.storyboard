@@ -1314,6 +1314,7 @@ Add more friends to see more updates.</string>
                                 </prototypes>
                                 <connections>
                                     <outlet property="dataSource" destination="qeM-Qj-MYO" id="ydo-df-xsk"/>
+                                    <outlet property="delegate" destination="qeM-Qj-MYO" id="OIe-Y6-nzG"/>
                                 </connections>
                             </tableView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="w7T-RT-6L8">
