@@ -6,7 +6,7 @@ protocol APIMyShelvesManagerDelegate : AuthenticatedAPIErrorDelegate, AnyObject 
 
 class MyShelvesManager : APIShelvesDelegate {
     static let sharedInstance = MyShelvesManager()
-    private var shelves: [MyShelvesQuery.Data.Shelf]?
+    var shelves: [MyShelvesQuery.Data.Shelf]?
     
     var delegates = [APIMyShelvesManagerDelegate]()
     var loading = false

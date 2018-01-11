@@ -5,6 +5,7 @@ class MyGamesFilterViewController: UIViewController, APIMyShelvesManagerDelegate
     @IBOutlet weak var loadingImage: UIImageView!
     @IBOutlet weak var doneButton: UIBarButtonItem!
     @IBOutlet weak var cancelButton: UIBarButtonItem!
+    @IBOutlet weak var searchField: UITextField!
     @IBOutlet weak var clearFiltersButton: UIButton!
     @IBOutlet weak var shelvesTable: UITableView!
     
@@ -29,10 +30,12 @@ class MyGamesFilterViewController: UIViewController, APIMyShelvesManagerDelegate
         cancelButton.target = self
         cancelButton.action = #selector(cancelButtonTouch(sender:))
         clearFiltersButton.addTarget(self, action: #selector(clearFiltersButtonTouch(sender:)), for: .touchUpInside)
+        searchField.addTarget(self, action: #selector(searchChanged(sender:)), for: .editingChanged)
         configureView()
     }
     
     func configureView() {
+        searchField.text = filter.text
         loadingImage?.isHidden = !MyShelvesManager.sharedInstance.loading
         shelvesTable?.reloadData()
     }
@@ -56,6 +59,7 @@ class MyGamesFilterViewController: UIViewController, APIMyShelvesManagerDelegate
     }
     
     func handleShelvesUpdates() {
+        addAllShelves()
         DispatchQueue.main.async(execute: {
             self.configureView()
         })
@@ -66,6 +70,10 @@ class MyGamesFilterViewController: UIViewController, APIMyShelvesManagerDelegate
         dismiss(animated: true)
     }
     
+    @objc func searchChanged(sender: UITextField) {
+        filter.text = sender.text
+    }
+    
     @objc func shelfToggled(sender: UISwitch) {
         let cell = sender.superview!.superview as! UITableViewCellWithSwitch
         let indexForCell = shelvesTable.indexPath(for: cell)!
@@ -73,6 +81,9 @@ class MyGamesFilterViewController: UIViewController, APIMyShelvesManagerDelegate
         if (sender.isOn) {
             filter.shelves.insert(shelf.name)
             return
+        }
+        if (filter.shelves.isEmpty) {
+            addAllShelves()
         }
         filter.shelves.remove(shelf.name)
     }
@@ -86,13 +97,30 @@ class MyGamesFilterViewController: UIViewController, APIMyShelvesManagerDelegate
         }
     }
     
+    func addAllShelves() {
+        for shelf in MyShelvesManager.sharedInstance.shelves! {
+            filter.shelves.insert(shelf.name)
+        }
+    }
+    
     @objc func doneButtonTouch(sender: UIButton) {
         if (filter.shelves.isEmpty) {
-            easyAlert("must select at least one shelf")
+            easyAlert("Must select at least one shelf")
             return
         }
         callingController!.filter = filter.copy()
+        callingController!.searchBar.text = filter.text
         dismiss(animated: true)
+    }
+    
+    @IBAction func allShelvesTouch() {
+        addAllShelves()
+        shelvesTable.reloadData()
+    }
+    
+    @IBAction func noShelvesTouch() {
+        filter.shelves.removeAll()
+        shelvesTable.reloadData()
     }
     
     @objc func cancelButtonTouch(sender: UIButton) {
@@ -101,8 +129,7 @@ class MyGamesFilterViewController: UIViewController, APIMyShelvesManagerDelegate
     
     @objc func clearFiltersButtonTouch(sender: UIButton) {
         callingController!.filter = nil
+        callingController!.searchBar.text = ""
         dismiss(animated: true)
     }
-    
-    
 }

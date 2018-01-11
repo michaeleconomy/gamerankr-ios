@@ -1,10 +1,11 @@
 import UIKit
 
-class MyGamesViewController: UIViewController, UITableViewDataSource, UITableViewDelegate,  APIMyGamesManagerDelegate {
+class MyGamesViewController: UIViewController, UITableViewDataSource, APIMyGamesManagerDelegate, UISearchBarDelegate {
     
     @IBOutlet weak var loadingImage: UIImageView!
     @IBOutlet weak var noGamesLabel: UILabel!
     @IBOutlet weak var noFilterMatchesLabel: UILabel!
+    @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var tableView: UITableView!
     
     @IBOutlet weak var filterButton: UIBarButtonItem!
@@ -20,6 +21,7 @@ class MyGamesViewController: UIViewController, UITableViewDataSource, UITableVie
     override func viewDidLoad() {
         super.viewDidLoad()
         loadingImage.image = PlaceholderImages.loadingBar
+        self.tableView.contentOffset = CGPoint(x: 0.0, y: 44.0)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -110,6 +112,15 @@ class MyGamesViewController: UIViewController, UITableViewDataSource, UITableVie
     }
     
     func handleUpdates() {
+        applyFilter()
+    }
+    
+    
+    func searchBar(_: UISearchBar, textDidChange: String) {
+        if (filter == nil) {
+            filter = RankingFilter()
+        }
+        filter!.text = textDidChange
         applyFilter()
     }
     
