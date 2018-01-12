@@ -124,6 +124,10 @@ class MyGamesViewController: UIViewController, UITableViewDataSource, APIMyGames
         applyFilter()
     }
     
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.endEditing(true)
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if (segue.identifier == nil) {
             NSLog("nil segue from my games view")

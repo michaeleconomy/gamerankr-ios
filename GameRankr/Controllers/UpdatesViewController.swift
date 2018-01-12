@@ -45,18 +45,22 @@ class UpdatesViewController: UIViewController, UITableViewDataSource, APIUpdates
         })
     }
     
+    func getNextPage() {
+        api.updates(after: nextPage, delegate: self)
+        self.nextPage = nil
+        
+        DispatchQueue.main.async(execute: {
+            self.loadingImage.isHidden = false
+        })
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return rankings.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if (nextPage != nil && indexPath.row >= (rankings.count - 15)) {
-            api.updates(after: nextPage, delegate: self)
-            self.nextPage = nil
-            
-            DispatchQueue.main.async(execute: {
-                self.loadingImage.isHidden = false
-            })
+            getNextPage()
         }
         let ranking = rankings[indexPath.row] // - index out of bounds here
         return cellFor(ranking: ranking, tableView: tableView, indexPath: indexPath);
@@ -85,12 +89,21 @@ class UpdatesViewController: UIViewController, UITableViewDataSource, APIUpdates
     }
     
     func handleAPILogin() {
-        //nothing for now
+        fetchedUpdates = true
+        api.updates(delegate: self)
+        
+        DispatchQueue.main.async(execute: {
+            self.loadingImage.isHidden = false
+        })
     }
     
     func handleAPILogout() {
         rankings.removeAll()
         fetchedUpdates = false
+        
+        DispatchQueue.main.async(execute: {
+            self.tableView.reloadData()
+        })
     }
     
     func handleAPIAuthenticationError() {
