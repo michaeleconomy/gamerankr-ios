@@ -4,7 +4,6 @@
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -245,7 +244,7 @@ Add more friends to see more updates.</string>
                                 <rect key="frame" x="10" y="20" width="300" height="411"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Q1L-yZ-euJ">
-                                        <rect key="frame" x="0.0" y="0.0" width="300" height="335"/>
+                                        <rect key="frame" x="0.0" y="10" width="300" height="335"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="About GameRankr" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FMe-4d-nXO">
                                                 <rect key="frame" x="75.5" y="0.0" width="149.5" height="20.5"/>
@@ -256,7 +255,7 @@ Add more friends to see more updates.</string>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UFa-Tf-Mgt">
                                                 <rect key="frame" x="0.0" y="30.5" width="300" height="142.5"/>
                                                 <subviews>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sS3-Ux-UbQ">
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sS3-Ux-UbQ">
                                                         <rect key="frame" x="0.0" y="0.0" width="300" height="142.5"/>
                                                         <string key="text">GameRankr a completely free application that lets anyone easily track games they've played, own, want to, etc. It also lets you write reviews, and see friends and community reviews.</string>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -305,7 +304,7 @@ Add more friends to see more updates.</string>
                                 </subviews>
                                 <constraints>
                                     <constraint firstAttribute="bottom" secondItem="Q1L-yZ-euJ" secondAttribute="bottom" id="BUx-AM-cGw"/>
-                                    <constraint firstItem="Q1L-yZ-euJ" firstAttribute="top" secondItem="9nd-jS-KyJ" secondAttribute="top" id="EbW-Va-VxP"/>
+                                    <constraint firstItem="Q1L-yZ-euJ" firstAttribute="top" secondItem="9nd-jS-KyJ" secondAttribute="top" constant="10" id="EbW-Va-VxP"/>
                                     <constraint firstItem="Q1L-yZ-euJ" firstAttribute="leading" secondItem="9nd-jS-KyJ" secondAttribute="leading" id="VpW-1e-637"/>
                                     <constraint firstItem="Q1L-yZ-euJ" firstAttribute="width" secondItem="9nd-jS-KyJ" secondAttribute="width" id="tOo-1G-d3k"/>
                                     <constraint firstAttribute="trailing" secondItem="Q1L-yZ-euJ" secondAttribute="trailing" id="wdR-I8-pLM"/>
@@ -774,23 +773,23 @@ Add more friends to see more updates.</string>
                                                             <autoresizingMask key="autoresizingMask"/>
                                                             <subviews>
                                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="picture" translatesAutoresizingMaskIntoConstraints="NO" id="Zng-YM-4dK">
-                                                                    <rect key="frame" x="10" y="-8.5" width="60" height="60.5"/>
+                                                                    <rect key="frame" x="0.0" y="-8.5" width="60" height="60.5"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="height" constant="60" id="2a5-5o-ymO"/>
                                                                         <constraint firstAttribute="width" constant="60" id="gQb-XK-7Tf"/>
                                                                     </constraints>
                                                                 </imageView>
                                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="B9R-HD-RNA">
-                                                                    <rect key="frame" x="80" y="4.5" width="230" height="35"/>
+                                                                    <rect key="frame" x="0.0" y="4.5" width="0.0" height="35"/>
                                                                     <subviews>
                                                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jmv-VS-Yvs">
-                                                                            <rect key="frame" x="0.0" y="0.0" width="230" height="20.5"/>
+                                                                            <rect key="frame" x="0.0" y="0.0" width="0.0" height="20.5"/>
                                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                             <nil key="textColor"/>
                                                                             <nil key="highlightedColor"/>
                                                                         </label>
                                                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" verticalCompressionResistancePriority="749" insetsLayoutMarginsFromSafeArea="NO" text="Subtitle" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="5" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nqU-OD-KcQ">
-                                                                            <rect key="frame" x="0.0" y="20.5" width="230" height="14.5"/>
+                                                                            <rect key="frame" x="0.0" y="20.5" width="0.0" height="14.5"/>
                                                                             <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                                             <nil key="textColor"/>
                                                                             <nil key="highlightedColor"/>
@@ -1057,23 +1056,23 @@ Add more friends to see more updates.</string>
                                                             <autoresizingMask key="autoresizingMask"/>
                                                             <subviews>
                                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="picture" translatesAutoresizingMaskIntoConstraints="NO" id="Vy5-We-JTW">
-                                                                    <rect key="frame" x="10" y="-8.5" width="60" height="60.5"/>
+                                                                    <rect key="frame" x="0.0" y="-8.5" width="60" height="60.5"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="height" constant="60" id="BPi-Y1-ba3"/>
                                                                         <constraint firstAttribute="width" constant="60" id="EbD-3w-ydw"/>
                                                                     </constraints>
                                                                 </imageView>
                                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="bmn-BQ-YNB">
-                                                                    <rect key="frame" x="80" y="4.5" width="230" height="35"/>
+                                                                    <rect key="frame" x="0.0" y="4.5" width="0.0" height="35"/>
                                                                     <subviews>
                                                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1Qi-rz-mwi">
-                                                                            <rect key="frame" x="0.0" y="0.0" width="230" height="20.5"/>
+                                                                            <rect key="frame" x="0.0" y="0.0" width="0.0" height="20.5"/>
                                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                             <nil key="textColor"/>
                                                                             <nil key="highlightedColor"/>
                                                                         </label>
                                                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" verticalCompressionResistancePriority="749" insetsLayoutMarginsFromSafeArea="NO" text="Subtitle" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="5" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ayi-3k-Sy7">
-                                                                            <rect key="frame" x="0.0" y="20.5" width="230" height="14.5"/>
+                                                                            <rect key="frame" x="0.0" y="20.5" width="0.0" height="14.5"/>
                                                                             <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                                             <nil key="textColor"/>
                                                                             <nil key="highlightedColor"/>
