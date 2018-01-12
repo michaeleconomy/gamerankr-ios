@@ -58,7 +58,7 @@ class UpdatesViewController: UIViewController, UITableViewDataSource, APIUpdates
                 self.loadingImage.isHidden = false
             })
         }
-        let ranking = rankings[indexPath.row]
+        let ranking = rankings[indexPath.row] // - index out of bounds here
         return cellFor(ranking: ranking, tableView: tableView, indexPath: indexPath);
     }
     
