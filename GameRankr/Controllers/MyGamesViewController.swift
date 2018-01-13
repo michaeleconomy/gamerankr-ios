@@ -115,7 +115,6 @@ class MyGamesViewController: UIViewController, UITableViewDataSource, APIMyGames
         applyFilter()
     }
     
-    
     func searchBar(_: UISearchBar, textDidChange: String) {
         if (filter == nil) {
             filter = RankingFilter()

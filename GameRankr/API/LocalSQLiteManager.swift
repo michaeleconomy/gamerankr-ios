@@ -7,8 +7,10 @@ class LocalSQLiteManager {
     
     private let db : Connection
     
-    private let rankingsTable = Table("rankings")
+    private let rankingsTable = Table("rankings2")
+    private let rankingId = Expression<String>("id")
     private let serializedRanking = Expression<String>("serializedRanking")
+    
     private let miscTable = Table("misc")
     private let miscKey = Expression<String>("key")
     private let miscValue = Expression<String>("value")
@@ -19,11 +21,13 @@ class LocalSQLiteManager {
         
         db = try! Connection("\(basePath)/gamerankr.sqlite3")
         
+        _ = Table("rankings").drop(ifExists: true)
+        
         let createRankingTableQuery = rankingsTable.create(ifNotExists: true) { table in
+            table.column(rankingId, unique: true)
             table.column(serializedRanking)
         }
         try! db.run(createRankingTableQuery)
-        
         
         let createMiscTableQuery = miscTable.create(ifNotExists: true) { table in
             table.column(miscKey, unique: true)
@@ -32,18 +36,36 @@ class LocalSQLiteManager {
         try! db.run(createMiscTableQuery)
     }
     
-    func persistRankings(rankings: [RankingWithGame]) {
+    func persist(rankings: [RankingWithGame]) {
         do {
             try db.run(rankingsTable.delete())  // Delete all the existing records
-            for ranking in rankings {
-                let rankingSerialized = try JSONSerialization.data(withJSONObject: ranking.jsonObject, options: [])
-                let rankingString = String(data: rankingSerialized, encoding: .utf8)!
-                let insert = rankingsTable.insert(serializedRanking <- rankingString)
-                try db.run(insert)
-            }
         }
         catch {
             NSLog("error persisting rankings")
+        }
+        for ranking in rankings {
+            persist(ranking: ranking)
+        }
+    }
+    
+    func persist(ranking: RankingWithGame) {
+        do {
+            let rankingSerialized = try JSONSerialization.data(withJSONObject: ranking.jsonObject, options: [])
+            let rankingString = String(data: rankingSerialized, encoding: .utf8)!
+            let insert = rankingsTable.insert(rankingId <- ranking.id, serializedRanking <- rankingString)
+            try db.run(insert)
+        }
+        catch let error {
+            NSLog("Error while persisting row: \(ranking), error: \(error)")
+        }
+    }
+    
+    func delete(rankingId: GraphQLID) {
+        do {
+            try db.run(rankingsTable.where(self.rankingId == rankingId).delete())
+        }
+        catch let error {
+            NSLog("error deleting ranking \(rankingId): \(error)")
         }
     }
     

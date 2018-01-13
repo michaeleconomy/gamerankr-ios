@@ -126,7 +126,7 @@ class MyGamesManager : APIMyGamesDelegate, APIRankDelegate, APIDestroyRankingDel
         rankingsWasUnpopulated = false
         
         self.rankingsLoading = nil
-        LocalSQLiteManager.sharedInstance.persistRankings(rankings: rankings)
+        LocalSQLiteManager.sharedInstance.persist(rankings: rankings)
         notifyDelegates()
     }
     
@@ -134,11 +134,16 @@ class MyGamesManager : APIMyGamesDelegate, APIRankDelegate, APIDestroyRankingDel
         let gameId = ranking.game.id
         rankingsByGameId[gameId] = ranking
         rankings.insert(ranking, at: 0)
+        if (rankingsLoading != nil) {
+            rankingsLoading!.insert(ranking, at: 0)
+        }
     }
     
     func handleAPI(ranking: RankingWithGame) {
         deleteRankingFor(gameId: ranking.game.id)
         addRanking(ranking)
+        LocalSQLiteManager.sharedInstance.delete(rankingId: ranking.id)
+        LocalSQLiteManager.sharedInstance.persist(ranking: ranking)
         loadingCount -= 1
         notifyDelegates()
     }
@@ -147,6 +152,12 @@ class MyGamesManager : APIMyGamesDelegate, APIRankDelegate, APIDestroyRankingDel
         if let oldRanking = rankingsByGameId.removeValue(forKey: gameId) {
             if let oldIndex = rankings.index(where: {$0.id == oldRanking.id}) {
                 rankings.remove(at: oldIndex)
+            }
+        }
+        
+        if (rankingsLoading != nil) {
+            if let oldIndex = rankingsLoading!.index(where: {$0.game.id == gameId}) {
+                rankingsLoading!.remove(at: oldIndex)
             }
         }
     }
@@ -171,6 +182,7 @@ class MyGamesManager : APIMyGamesDelegate, APIRankDelegate, APIDestroyRankingDel
         loadingCount -= 1
         let gameId = ranking.game.id
         deleteRankingFor(gameId: gameId)
+        LocalSQLiteManager.sharedInstance.delete(rankingId: ranking.id)
         notifyDelegates()
     }
 }
