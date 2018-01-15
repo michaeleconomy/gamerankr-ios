@@ -261,6 +261,13 @@ class GameRankrAPI {
             delegate.handleAPIAuthenticationError()
             return false
         }
+        if let graphqlError = error as? GraphQLHTTPResponseError {
+            if (graphqlError.response.statusCode == 500) {
+                NSLog("Unexpected response from server.  This error has been logged and will be followed up on.")
+                delegate.handleAPI(error: "Unexpected response from server.  This error has been logged and will be followed up on.")
+                return false
+            }
+        }
         if (result?.data == nil) {
             if let nsError = error as NSError? {
                 NSLog("error encountered: \(nsError.localizedDescription)")
