@@ -40,9 +40,10 @@
 		4C4FC9D91FE23C9F002F6428 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C4FC9D81FE23C9F002F6428 /* API.swift */; };
 		4C4FC9DB1FE23D42002F6428 /* MyGames.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 4C4FC9DA1FE23D42002F6428 /* MyGames.graphql */; };
 		4C57FC151FDF7D9600A04E57 /* GameRankrAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C57FC141FDF7D9600A04E57 /* GameRankrAPI.swift */; };
+		4C5E746320126FA400769D21 /* appIconOriginal.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C5E746220126FA400769D21 /* appIconOriginal.png */; };
+		4C5E746520126FD200769D21 /* Flag.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 4C5E746420126FD200769D21 /* Flag.graphql */; };
 		4C5F885220044D8D002D67F5 /* GameRankrUITabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C5F885120044D8D002D67F5 /* GameRankrUITabBarController.swift */; };
 		4C5F8854200450F5002D67F5 /* SignOutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C5F8853200450F5002D67F5 /* SignOutViewController.swift */; };
-		4C5F885620052DCD002D67F5 /* appIconOriginal.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C5F885520052DCD002D67F5 /* appIconOriginal.png */; };
 		4C5F885820052DE6002D67F5 /* loading.gif in Resources */ = {isa = PBXBuildFile; fileRef = 4C5F885720052DE6002D67F5 /* loading.gif */; };
 		4C7CF64C1FE46A5400E7B32A /* PlaceholderImages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C7CF64B1FE46A5400E7B32A /* PlaceholderImages.swift */; };
 		4C7CF64E1FE4937800E7B32A /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C7CF64D1FE4937800E7B32A /* GameViewController.swift */; };
@@ -144,9 +145,10 @@
 		4C4FC9D81FE23C9F002F6428 /* API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		4C4FC9DA1FE23D42002F6428 /* MyGames.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = MyGames.graphql; sourceTree = "<group>"; };
 		4C57FC141FDF7D9600A04E57 /* GameRankrAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameRankrAPI.swift; sourceTree = "<group>"; };
+		4C5E746220126FA400769D21 /* appIconOriginal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = appIconOriginal.png; sourceTree = "<group>"; };
+		4C5E746420126FD200769D21 /* Flag.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = Flag.graphql; sourceTree = "<group>"; };
 		4C5F885120044D8D002D67F5 /* GameRankrUITabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameRankrUITabBarController.swift; sourceTree = "<group>"; };
 		4C5F8853200450F5002D67F5 /* SignOutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignOutViewController.swift; sourceTree = "<group>"; };
-		4C5F885520052DCD002D67F5 /* appIconOriginal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = appIconOriginal.png; sourceTree = "<group>"; };
 		4C5F885720052DE6002D67F5 /* loading.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = loading.gif; sourceTree = "<group>"; };
 		4C7CF64B1FE46A5400E7B32A /* PlaceholderImages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceholderImages.swift; sourceTree = "<group>"; };
 		4C7CF64D1FE4937800E7B32A /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
@@ -297,7 +299,7 @@
 		4C57FC061FDF775A00A04E57 /* Icons */ = {
 			isa = PBXGroup;
 			children = (
-				4C5F885520052DCD002D67F5 /* appIconOriginal.png */,
+				4C5E746220126FA400769D21 /* appIconOriginal.png */,
 				4CA747C81FF0AD3900C3BCE0 /* loading */,
 				4C47F02D1FF5D10100E5FD92 /* loading_photos.png */,
 				4CBD0F9A1FE9795900230771 /* down-arrow.png */,
@@ -331,6 +333,7 @@
 				4C9110391FEC54CA00DDEECC /* DestroyRanking.graphql */,
 				4C91103B1FEC552500DDEECC /* Comment.graphql */,
 				4CA747C41FEF089E00C3BCE0 /* DestroyComment.graphql */,
+				4C5E746420126FD200769D21 /* Flag.graphql */,
 			);
 			path = Mutations;
 			sourceTree = "<group>";
@@ -520,6 +523,7 @@
 				4C7CF6501FE4CF2200E7B32A /* GameBasic.graphql in Resources */,
 				4C430E5A200163BB00CAC150 /* PopularGames.graphql in Resources */,
 				4CA747ED1FF0AD9C00C3BCE0 /* loading-bar-11.png in Resources */,
+				4C5E746320126FA400769D21 /* appIconOriginal.png in Resources */,
 				4CBD0F9B1FE9795A00230771 /* down-arrow.png in Resources */,
 				4CA747EB1FF0AD9C00C3BCE0 /* loading-bar-9.png in Resources */,
 				4C91103A1FEC54CA00DDEECC /* DestroyRanking.graphql in Resources */,
@@ -527,6 +531,7 @@
 				4CA747EF1FF0AD9C00C3BCE0 /* loading-bar-18.png in Resources */,
 				4C430E662001A80900CAC150 /* PlatformBasic.graphql in Resources */,
 				4C47F0361FF6A57500E5FD92 /* UserRankings.graphql in Resources */,
+				4C5E746520126FD200769D21 /* Flag.graphql in Resources */,
 				4C430E5E2001648700CAC150 /* Platforms.graphql in Resources */,
 				4CBD0F811FE6DD7E00230771 /* Updates.graphql in Resources */,
 				4C4FC9DB1FE23D42002F6428 /* MyGames.graphql in Resources */,
@@ -541,7 +546,6 @@
 				4C5F885820052DE6002D67F5 /* loading.gif in Resources */,
 				4CA747E11FF0AD9C00C3BCE0 /* loading-bar-7.png in Resources */,
 				4CA747F31FF0AD9C00C3BCE0 /* loading-bar-21.png in Resources */,
-				4C5F885620052DCD002D67F5 /* appIconOriginal.png in Resources */,
 				4CAA41711FEAFD85007EBB7C /* MyShelves.graphql in Resources */,
 				4CA747E41FF0AD9C00C3BCE0 /* loading-bar-10.png in Resources */,
 				4CA747EC1FF0AD9C00C3BCE0 /* loading-bar-5.png in Resources */,

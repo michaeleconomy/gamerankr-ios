@@ -224,7 +224,6 @@ class GameViewController : UIViewController, APIGameDetailDelegate, APIGameRanki
     
     @objc func descriptionTouched() {
         gameDescription.numberOfLines = gameDescription.numberOfLines == 3 ? 0 : 3
-        NSLog("foo")
     }
     
     func starRankPort(rankingValue: Int) {
