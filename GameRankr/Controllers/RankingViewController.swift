@@ -139,7 +139,7 @@ class RankingViewController : UIViewController, UITableViewDataSource, APICommen
     }
     
     @objc func shareRanking() {
-        share(message: "\(user!.realName)'s review of \(game!.title) - GameRankr", link: ranking!.url)
+        share(message: "\(user!.realName)'s review of \(game!.title) - GameRankr", link: ranking!.url, displayFlag: true)
     }
     
     @objc func shelfButtonTap(sender: UIButton) {
@@ -296,6 +296,10 @@ class RankingViewController : UIViewController, UITableViewDataSource, APICommen
             let controller = segue.destination as! GameViewController
             controller.game = game
             controller.selectPort(portId: ranking!.port.id)
+        case "flag":
+            let controller = segue.destination as! FlagViewController
+            controller.resourceType = "Ranking"
+            controller.resourceId = ranking!.id
         case "requireSignIn": ()
         case "shelfDetail":
             let button = sender as! UIButton

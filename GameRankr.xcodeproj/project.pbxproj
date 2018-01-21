@@ -42,6 +42,9 @@
 		4C57FC151FDF7D9600A04E57 /* GameRankrAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C57FC141FDF7D9600A04E57 /* GameRankrAPI.swift */; };
 		4C5E746320126FA400769D21 /* appIconOriginal.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C5E746220126FA400769D21 /* appIconOriginal.png */; };
 		4C5E746520126FD200769D21 /* Flag.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 4C5E746420126FD200769D21 /* Flag.graphql */; };
+		4C5E746720127BC900769D21 /* FlagAPIs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C5E746620127BC900769D21 /* FlagAPIs.swift */; };
+		4C5E746920127E2500769D21 /* FlagActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C5E746820127E2500769D21 /* FlagActivity.swift */; };
+		4C5E746B2013C64900769D21 /* FlagViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C5E746A2013C64900769D21 /* FlagViewController.swift */; };
 		4C5F885220044D8D002D67F5 /* GameRankrUITabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C5F885120044D8D002D67F5 /* GameRankrUITabBarController.swift */; };
 		4C5F8854200450F5002D67F5 /* SignOutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C5F8853200450F5002D67F5 /* SignOutViewController.swift */; };
 		4C5F885820052DE6002D67F5 /* loading.gif in Resources */ = {isa = PBXBuildFile; fileRef = 4C5F885720052DE6002D67F5 /* loading.gif */; };
@@ -147,6 +150,9 @@
 		4C57FC141FDF7D9600A04E57 /* GameRankrAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameRankrAPI.swift; sourceTree = "<group>"; };
 		4C5E746220126FA400769D21 /* appIconOriginal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = appIconOriginal.png; sourceTree = "<group>"; };
 		4C5E746420126FD200769D21 /* Flag.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = Flag.graphql; sourceTree = "<group>"; };
+		4C5E746620127BC900769D21 /* FlagAPIs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlagAPIs.swift; sourceTree = "<group>"; };
+		4C5E746820127E2500769D21 /* FlagActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlagActivity.swift; sourceTree = "<group>"; };
+		4C5E746A2013C64900769D21 /* FlagViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlagViewController.swift; sourceTree = "<group>"; };
 		4C5F885120044D8D002D67F5 /* GameRankrUITabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameRankrUITabBarController.swift; sourceTree = "<group>"; };
 		4C5F8853200450F5002D67F5 /* SignOutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignOutViewController.swift; sourceTree = "<group>"; };
 		4C5F885720052DE6002D67F5 /* loading.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = loading.gif; sourceTree = "<group>"; };
@@ -247,6 +253,7 @@
 				4C9698512005A66A00B88A91 /* AboutViewController.swift */,
 				4C430E692001C8AF00CAC150 /* BrowseViewController.swift */,
 				4CAA416C1FEAE74D007EBB7C /* EditReviewViewController.swift */,
+				4C5E746A2013C64900769D21 /* FlagViewController.swift */,
 				4CBD0F921FE6FC8500230771 /* FriendsController.swift */,
 				4C5F885120044D8D002D67F5 /* GameRankrUITabBarController.swift */,
 				4C7CF64D1FE4937800E7B32A /* GameViewController.swift */,
@@ -276,6 +283,7 @@
 				4C430E431FFED61F00CAC150 /* ShareExtension.swift */,
 				4C430E572000636C00CAC150 /* FixedImageSizeTableCell.swift */,
 				4C430E6B2001D19100CAC150 /* FullRankingDataSource.swift */,
+				4C5E746820127E2500769D21 /* FlagActivity.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -322,6 +330,7 @@
 				4C430E632001A7CF00CAC150 /* PlatformAPIs.swift */,
 				4C430E672001BD0700CAC150 /* CommentAPIs.swift */,
 				4C10838220053C730072C8CA /* AuthenticationAPIs.swift */,
+				4C5E746620127BC900769D21 /* FlagAPIs.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -684,7 +693,9 @@
 				4CD1C9DB1FDF6B62001A0B8D /* AppDelegate.swift in Sources */,
 				4C430E6A2001C8AF00CAC150 /* BrowseViewController.swift in Sources */,
 				4CBD0F8B1FE6F4EC00230771 /* UserViewController.swift in Sources */,
+				4C5E746720127BC900769D21 /* FlagAPIs.swift in Sources */,
 				4C10838320053C730072C8CA /* AuthenticationAPIs.swift in Sources */,
+				4C5E746B2013C64900769D21 /* FlagViewController.swift in Sources */,
 				4C430E511FFFF7B500CAC150 /* RankingFilter.swift in Sources */,
 				4CBD0F991FE88EA600230771 /* MyGamesManager.swift in Sources */,
 				4C430E441FFED61F00CAC150 /* ShareExtension.swift in Sources */,
@@ -695,6 +706,7 @@
 				4C2CF8151FF2E7F700A464AA /* LocalSQLiteManager.swift in Sources */,
 				4CAA41731FEAFFFC007EBB7C /* MyShelvesManager.swift in Sources */,
 				4C430E6E2001DFEB00CAC150 /* RecentReviewsViewController.swift in Sources */,
+				4C5E746920127E2500769D21 /* FlagActivity.swift in Sources */,
 				4C4FC9D91FE23C9F002F6428 /* API.swift in Sources */,
 				4CBD0F951FE7801F00230771 /* IntrinsicTableView.swift in Sources */,
 				4C430E642001A7CF00CAC150 /* PlatformAPIs.swift in Sources */,

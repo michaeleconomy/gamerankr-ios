@@ -204,7 +204,7 @@ class GameViewController : UIViewController, APIGameDetailDelegate, APIGameRanki
     }
     
     @objc func shareGame() {
-        share(message: "\(game!.title) - GameRankr", link: game!.url)
+        share(message: "\(game!.title) - GameRankr", link: game!.url, displayFlag: true)
     }
     
     @objc func switchEditions(sender: UIButton) {
@@ -372,6 +372,10 @@ class GameViewController : UIViewController, APIGameDetailDelegate, APIGameRanki
             controller.game = game
             controller.selected = selectedPort().id
             controller.ranked = ranking?.port.id
+        case "flag":
+            let controller = segue.destination as! FlagViewController
+            controller.resourceType = "Game"
+            controller.resourceId = game!.id
         default:
             NSLog("unknown segue from game view: \(segue.identifier!)")
         }

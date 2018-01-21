@@ -560,6 +560,52 @@ public final class DestroyRankingMutation: GraphQLMutation {
   }
 }
 
+public final class FlagMutation: GraphQLMutation {
+  public static let operationString =
+    "mutation Flag($resourceId: ID, $resourceType: String, $text: String) {\n  flag(resource_id: $resourceId, resource_type: $resourceType, text: $text)\n}"
+
+  public var resourceId: GraphQLID?
+  public var resourceType: String?
+  public var text: String?
+
+  public init(resourceId: GraphQLID? = nil, resourceType: String? = nil, text: String? = nil) {
+    self.resourceId = resourceId
+    self.resourceType = resourceType
+    self.text = text
+  }
+
+  public var variables: GraphQLMap? {
+    return ["resourceId": resourceId, "resourceType": resourceType, "text": text]
+  }
+
+  public struct Data: GraphQLSelectionSet {
+    public static let possibleTypes = ["Mutation"]
+
+    public static let selections: [GraphQLSelection] = [
+      GraphQLField("flag", arguments: ["resource_id": GraphQLVariable("resourceId"), "resource_type": GraphQLVariable("resourceType"), "text": GraphQLVariable("text")], type: .nonNull(.scalar(Bool.self))),
+    ]
+
+    public var snapshot: Snapshot
+
+    public init(snapshot: Snapshot) {
+      self.snapshot = snapshot
+    }
+
+    public init(flag: Bool) {
+      self.init(snapshot: ["__typename": "Mutation", "flag": flag])
+    }
+
+    public var flag: Bool {
+      get {
+        return snapshot["flag"]! as! Bool
+      }
+      set {
+        snapshot.updateValue(newValue, forKey: "flag")
+      }
+    }
+  }
+}
+
 public final class RankPortMutation: GraphQLMutation {
   public static let operationString =
     "mutation RankPort($portId: ID!, $ranking: Int, $removeRanking: Boolean, $review: String, $addShelfId: ID, $removeShelfId: ID) {\n  ranking: rank_port(port_id: $portId, ranking: $ranking, remove_ranking: $removeRanking, review: $review, add_shelf_id: $addShelfId, remove_shelf_id: $removeShelfId) {\n    __typename\n    ...RankingWithGame\n  }\n}"
