@@ -1,36 +1,37 @@
 PODS:
-  - Apollo (0.7.0):
-    - Apollo/Core (= 0.7.0)
-  - Apollo/Core (0.7.0)
-  - Bolts (1.8.4):
-    - Bolts/AppLinks (= 1.8.4)
-    - Bolts/Tasks (= 1.8.4)
-  - Bolts/AppLinks (1.8.4):
-    - Bolts/Tasks
-  - Bolts/Tasks (1.8.4)
-  - FacebookCore (0.3.0):
-    - Bolts (~> 1.8)
-    - FBSDKCoreKit (~> 4.27)
-  - FacebookLogin (0.3.0):
-    - Bolts (~> 1.8)
-    - FacebookCore (~> 0.3)
-    - FBSDKCoreKit (~> 4.27)
-    - FBSDKLoginKit (~> 4.27)
-  - FacebookShare (0.3.0):
-    - Bolts (~> 1.8)
-    - FacebookCore (~> 0.3)
-    - FBSDKCoreKit (~> 4.27)
-    - FBSDKShareKit (~> 4.27)
-  - FBSDKCoreKit (4.29.0):
-    - Bolts (~> 1.7)
-  - FBSDKLoginKit (4.29.0):
-    - FBSDKCoreKit
-  - FBSDKShareKit (4.29.0):
-    - FBSDKCoreKit
-  - Kingfisher (4.5.0)
-  - SQLite.swift (0.11.4):
-    - SQLite.swift/standard (= 0.11.4)
-  - SQLite.swift/standard (0.11.4)
+  - Apollo (0.19.0):
+    - Apollo/Core (= 0.19.0)
+  - Apollo/Core (0.19.0)
+  - FacebookCore (0.9.0):
+    - FBSDKCoreKit (~> 5.0)
+  - FacebookLogin (0.9.0):
+    - FacebookCore (~> 0.9.0)
+    - FBSDKCoreKit (~> 5.0)
+    - FBSDKLoginKit (~> 5.0)
+  - FacebookShare (0.9.0):
+    - FacebookCore (~> 0.9.0)
+    - FBSDKCoreKit (~> 5.0)
+    - FBSDKShareKit (~> 5.0)
+  - FBSDKCoreKit (5.10.0):
+    - FBSDKCoreKit/Basics (= 5.10.0)
+    - FBSDKCoreKit/Core (= 5.10.0)
+  - FBSDKCoreKit/Basics (5.10.0)
+  - FBSDKCoreKit/Core (5.10.0):
+    - FBSDKCoreKit/Basics
+  - FBSDKLoginKit (5.10.0):
+    - FBSDKLoginKit/Login (= 5.10.0)
+  - FBSDKLoginKit/Login (5.10.0):
+    - FBSDKCoreKit (~> 5.0)
+  - FBSDKShareKit (5.10.0):
+    - FBSDKShareKit/Share (= 5.10.0)
+  - FBSDKShareKit/Share (5.10.0):
+    - FBSDKCoreKit (~> 5.0)
+  - Kingfisher (5.9.0):
+    - Kingfisher/Core (= 5.9.0)
+  - Kingfisher/Core (5.9.0)
+  - SQLite.swift (0.12.2):
+    - SQLite.swift/standard (= 0.12.2)
+  - SQLite.swift/standard (0.12.2)
 
 DEPENDENCIES:
   - Apollo
@@ -40,18 +41,29 @@ DEPENDENCIES:
   - Kingfisher
   - SQLite.swift
 
+SPEC REPOS:
+  trunk:
+    - Apollo
+    - FacebookCore
+    - FacebookLogin
+    - FacebookShare
+    - FBSDKCoreKit
+    - FBSDKLoginKit
+    - FBSDKShareKit
+    - Kingfisher
+    - SQLite.swift
+
 SPEC CHECKSUMS:
-  Apollo: d6649ac06168660e70c6226c4eadfc0770791ba5
-  Bolts: 8a7995239dbe724f9cba2248b766d48b7ebdd322
-  FacebookCore: 3ffa190a3f1f96cec0e44d3fc221bc322c595ffa
-  FacebookLogin: 0af839ea858faef99550d16596b87b4a8e8906e6
-  FacebookShare: 0469964297ebd75f052be2c5083389a4208e82b7
-  FBSDKCoreKit: 6f139173dc63a1deaff4430a55f2fe5bb222d2af
-  FBSDKLoginKit: 56a057ca6822535ea0faa25f57a7c41edb697fd4
-  FBSDKShareKit: 18a2cd118aef11dd657fe7e8b64bae5c719088b2
-  Kingfisher: 26ae0473102b77b575da51960c932431e3745407
-  SQLite.swift: 3e3bee21da701b5b9f87c4a672cb54f233505692
+  Apollo: 4f0fea775a98bba34935764e49d27f2d3b1a5f21
+  FacebookCore: ba86524b66cfa86d0f8e65d08faa8504a9f732dd
+  FacebookLogin: 6cee9fd6e1fe976fe8f7eec199e27b28b14f5d63
+  FacebookShare: 85968ad1b1606c4944fb154924e425fd29184ea5
+  FBSDKCoreKit: f9bae468a078f20c05c73450825ccd54cfafbbb7
+  FBSDKLoginKit: 4ece964272a52c4e1363d5c048a545e33761491b
+  FBSDKShareKit: 09c3b7166802a3629970fa00d45d59cf6942df37
+  Kingfisher: ff98240aebb7302bdc4f1ecd701761030ce18b16
+  SQLite.swift: d2b4642190917051ce6bd1d49aab565fe794eea3
 
 PODFILE CHECKSUM: 1d457e420a12efa06c7ada41e20d881fa153cd49
 
-COCOAPODS: 1.3.1
+COCOAPODS: 1.8.4

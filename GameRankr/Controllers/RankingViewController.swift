@@ -93,7 +93,7 @@ class RankingViewController : UIViewController, UITableViewDataSource, APICommen
         }
         for shelf in ranking!.shelves {
             let shelfButton = UIButton()
-            shelfButton.setTitle(shelf.name, for: .normal)
+            shelfButton.setTitle(shelf.fragments.shelfBasic.name, for: .normal)
             shelfButton.setTitleColor(.blue, for: .normal)
             shelfButton.contentHorizontalAlignment = .left
             shelfButton.addTarget(self, action: #selector(shelfButtonTap(sender:)), for: .touchUpInside)
@@ -242,8 +242,8 @@ class RankingViewController : UIViewController, UITableViewDataSource, APICommen
         let comment = comments[indexPath.row]
         let user = comment.user
 
-        cell.textLabel!.text = user.realName
-        cell.imageView?.kf.setImage(with: URL(string: user.photoUrl)!, placeholder: PlaceholderImages.user, completionHandler: {
+        cell.textLabel!.text = user.fragments.userBasic.realName
+        cell.imageView?.kf.setImage(with: URL(string: user.fragments.userBasic.photoUrl)!, placeholder: PlaceholderImages.user, completionHandler: {
             (image, error, cacheType, imageUrl) in
             cell.layoutSubviews()
         })
@@ -259,7 +259,7 @@ class RankingViewController : UIViewController, UITableViewDataSource, APICommen
             return true
         }
         let comment = comments[indexPath.row]
-        return comment.user.id == api.currentUserId
+        return comment.user.fragments.userBasic.id == api.currentUserId
     }
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {

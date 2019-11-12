@@ -37,7 +37,7 @@ class SignInViewController : UIViewController, APILoginDelegate {
     // Once the button is clicked, show the login dialog
     @objc func loginButtonClicked(sender: UIButton) {
         loadingImage.isHidden = false
-        LoginManager().logIn(readPermissions: [.publicProfile, .email, .userFriends], viewController: self) { loginResult in
+        LoginManager().logIn(permissions: [.publicProfile, .email, .userFriends], viewController: self) { loginResult in
             switch loginResult {
             case .failed(let error):
                 DispatchQueue.main.async(execute: {
@@ -51,7 +51,7 @@ class SignInViewController : UIViewController, APILoginDelegate {
                 })
             case .success(let grantedPermissions, let declinedPermissions, let accessToken):
                 NSLog("Logged in via facebook.  grantedPermissions: \(grantedPermissions) declinedPermissions: \(declinedPermissions) accessToken: \(accessToken)")
-                api.login(fbAuthToken: accessToken.authenticationToken, delegate: self)
+                api.login(fbAuthToken: accessToken.tokenString, delegate: self)
             }
         }
     }

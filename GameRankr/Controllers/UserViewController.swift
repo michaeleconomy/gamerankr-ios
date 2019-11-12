@@ -21,7 +21,7 @@ class UserViewController : UIViewController, APIUserDetailDelegate, UITableViewD
                     self.user = userDetail!.fragments.userBasic
                 }
                 else {
-                    if (userDetail!.id != user!.id) {
+                    if (userDetail!.fragments.userBasic.id != user!.id) {
                         self.userDetail = nil
                         return
                     }
@@ -32,7 +32,7 @@ class UserViewController : UIViewController, APIUserDetailDelegate, UITableViewD
     var user: UserBasic? {
         didSet {
             if (user != nil) {
-                if (userDetail?.id != user!.id) {
+                if (userDetail?.fragments.userBasic.id != user!.id) {
                     self.userDetail = nil
                     self.rankings.removeAll()
                 }
@@ -95,7 +95,7 @@ class UserViewController : UIViewController, APIUserDetailDelegate, UITableViewD
             shelvesStack?.subviews.forEach{ $0.removeFromSuperview()}
             for shelf in userDetail!.shelves {
                 let shelfButton = UIButton()
-                shelfButton.setTitle(shelf.name, for: .normal)
+                shelfButton.setTitle(shelf.fragments.shelfBasic.name, for: .normal)
                 shelfButton.setTitleColor(.blue, for: .normal)
                 shelfButton.contentHorizontalAlignment = .left
                 shelfButton.addTarget(self, action: #selector(shelfButtonTap(sender:)), for: .touchUpInside)
@@ -135,16 +135,16 @@ class UserViewController : UIViewController, APIUserDetailDelegate, UITableViewD
         
         let ranking = rankings[indexPath.row]
         let game = ranking.game
-        let port = ranking.port
-        cell.primaryLabel.text = "\(ranking.verb.capitalizingFirstLetter()) \(game.title) (\(port.platform.name))"
+        let port = ranking.fragments.rankingBasic.port
+        cell.primaryLabel.text = "\(ranking.fragments.rankingBasic.verb.capitalizingFirstLetter()) \(game.fragments.gameBasic.title) (\(port.platform.name))"
         
         var secondLine = ""
-        if (ranking.ranking != nil) {
-            let starsStr = String(repeating: "\u{2605}", count: ranking.ranking!)
+        if (ranking.fragments.rankingBasic.ranking != nil) {
+            let starsStr = String(repeating: "\u{2605}", count: ranking.fragments.rankingBasic.ranking!)
             secondLine += "\(starsStr) "
         }
-        if (ranking.review != nil && ranking.review != "") {
-            secondLine += "\"\(ranking.review!)\""
+        if (ranking.fragments.rankingBasic.review != nil && ranking.fragments.rankingBasic.review != "") {
+            secondLine += "\"\(ranking.fragments.rankingBasic.review!)\""
         }
         cell.secondaryLabel.text = secondLine
         

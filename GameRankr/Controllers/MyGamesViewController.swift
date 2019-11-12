@@ -79,31 +79,31 @@ class MyGamesViewController: UIViewController, UITableViewDataSource, APIMyGames
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! FixedImageSizeTableCell
         let ranking = getCurrentRankingArray()[indexPath.row]
         let game = ranking.game
-        let port = ranking.port
+        let port = ranking.fragments.rankingBasic.port
         
-        cell.primaryLabel!.text = game.title
+        cell.primaryLabel!.text = game.fragments.gameBasic.title
         var secondaryText = ""
-        if (ranking.ranking != nil) {
-            secondaryText += String(repeating: "\u{2605}", count: ranking.ranking!) + " "
+        if (ranking.fragments.rankingBasic.ranking != nil) {
+            secondaryText += String(repeating: "\u{2605}", count: ranking.fragments.rankingBasic.ranking!) + " "
         }
         secondaryText += port.platform.name
-        if (ranking.review != nil && ranking.review != "") {
+        if (ranking.fragments.rankingBasic.review != nil && ranking.fragments.rankingBasic.review != "") {
             secondaryText += " - review"
         }
-        secondaryText += "\nShelves: " + ranking.shelves.map{$0.name}.joined(separator: ", ")
+        secondaryText += "\nShelves: " + ranking.fragments.rankingBasic.shelves.map{$0.fragments.shelfBasic.name}.joined(separator: ", ")
         
-        if (ranking.commentsCount > 0) {
-            secondaryText += "\n\(ranking.commentsCount) comment"
-            if (ranking.commentsCount > 1) {
+        if (ranking.fragments.rankingBasic.commentsCount > 0) {
+            secondaryText += "\n\(ranking.fragments.rankingBasic.commentsCount) comment"
+            if (ranking.fragments.rankingBasic.commentsCount > 1) {
                 secondaryText += "s"
             }
         }
         cell.secondaryLabel!.text = secondaryText
         
         cell.fixedSizeImageView!.image = PlaceholderImages.game
-        if (ranking.port.smallImageUrl != nil) {
+        if (ranking.fragments.rankingBasic.port.smallImageUrl != nil) {
             cell.fixedSizeImageView!.kf.indicatorType = .activity
-            cell.fixedSizeImageView!.kf.setImage(with: URL(string: ranking.port.smallImageUrl!)!, placeholder: PlaceholderImages.game, completionHandler: {
+            cell.fixedSizeImageView!.kf.setImage(with: URL(string: ranking.fragments.rankingBasic.port.smallImageUrl!)!, placeholder: PlaceholderImages.game, completionHandler: {
                 (image, error, cacheType, imageUrl) in
                 cell.layoutSubviews()
             })
@@ -141,7 +141,7 @@ class MyGamesViewController: UIViewController, UITableViewDataSource, APIMyGames
             let controller = segue.destination as! GameViewController
             let ranking = getCurrentRankingArray()[indexPath.row]
             controller.game = ranking.game.fragments.gameBasic
-            controller.selectPort(portId: ranking.port.id)
+            controller.selectPort(portId: ranking.fragments.rankingBasic.port.id)
         case "requireSignIn": ()
         case "filter":
             let controller = segue.destination as! MyGamesFilterViewController

@@ -10,9 +10,10 @@ protocol APIPopularGamesDelegate: AuthenticatedAPIErrorDelegate {
 extension GameRankrAPI {
     
     func recentReviews(after: String? = nil, delegate: APIRecentReviewsDelegate) {
-        apollo.fetch(query: RecentReviewsQuery(after: after)) { (result, error) in
-            if (!self.handleApolloApiErrors(result, error, delegate: delegate)) { return }
-            let rankingEdges = result!.data!.recentReviews
+        apollo.fetch(query: RecentReviewsQuery(after: after)) { (result) in
+            if (!self.handleApolloApiErrors(result, delegate: delegate)) { return }
+            guard let data = try? result.get().data else {return}
+            let rankingEdges = data!.recentReviews
             var nextPage : String?
             if (rankingEdges.pageInfo.hasNextPage){
                 nextPage = rankingEdges.pageInfo.endCursor
@@ -22,9 +23,10 @@ extension GameRankrAPI {
     }
     
     func popularGames(delegate: APIPopularGamesDelegate) {
-        apollo.fetch(query: PopularGamesQuery()) { (result, error) in
-            if (!self.handleApolloApiErrors(result, error, delegate: delegate)) { return }
-            let games = result!.data!.games
+        apollo.fetch(query: PopularGamesQuery()) { (result) in
+            if (!self.handleApolloApiErrors(result, delegate: delegate)) { return }
+            guard let data = try? result.get().data else {return}
+            let games = data!.games
             delegate.handleAPI(games: games.map{$0.fragments.gameBasic})
         }
     }

@@ -20,7 +20,7 @@ class MyGamesManager : APIMyGamesDelegate, APIRankDelegate, APIDestroyRankingDel
         do {
             rankings = try LocalSQLiteManager.sharedInstance.getRankings()
             for ranking in rankings {
-                rankingsByGameId[ranking.game.id] = ranking
+                rankingsByGameId[ranking.game.fragments.gameBasic.id] = ranking
             }
         }
         catch {
@@ -99,7 +99,7 @@ class MyGamesManager : APIMyGamesDelegate, APIRankDelegate, APIDestroyRankingDel
             if (rankingsWasUnpopulated) {
                 self.rankings.append(contentsOf: rankings)
                 for ranking in rankings {
-                    rankingsByGameId[ranking.game.id] = ranking
+                    rankingsByGameId[ranking.game.fragments.gameBasic.id] = ranking
                 }
                 notifyDelegates()
             }
@@ -117,7 +117,7 @@ class MyGamesManager : APIMyGamesDelegate, APIRankDelegate, APIDestroyRankingDel
         if (!rankingsWasUnpopulated) {
             var rankingsByGameIdLoading = [GraphQLID: RankingWithGame]()
             for ranking in rankingsLoading! {
-                rankingsByGameIdLoading[ranking.game.id] = ranking
+                rankingsByGameIdLoading[ranking.game.fragments.gameBasic.id] = ranking
             }
             self.rankings = rankingsLoading!
             self.rankingsByGameId = rankingsByGameIdLoading
@@ -131,7 +131,7 @@ class MyGamesManager : APIMyGamesDelegate, APIRankDelegate, APIDestroyRankingDel
     }
     
     private func addRanking(_ ranking: RankingWithGame) {
-        let gameId = ranking.game.id
+        let gameId = ranking.game.fragments.gameBasic.id
         rankingsByGameId[gameId] = ranking
         rankings.insert(ranking, at: 0)
         if (rankingsLoading != nil) {
@@ -140,9 +140,9 @@ class MyGamesManager : APIMyGamesDelegate, APIRankDelegate, APIDestroyRankingDel
     }
     
     func handleAPI(ranking: RankingWithGame) {
-        deleteRankingFor(gameId: ranking.game.id)
+        deleteRankingFor(gameId: ranking.game.fragments.gameBasic.id)
         addRanking(ranking)
-        LocalSQLiteManager.sharedInstance.delete(rankingId: ranking.id)
+        LocalSQLiteManager.sharedInstance.delete(rankingId: ranking.fragments.rankingBasic.id)
         LocalSQLiteManager.sharedInstance.persist(ranking: ranking)
         loadingCount -= 1
         notifyDelegates()
@@ -150,13 +150,13 @@ class MyGamesManager : APIMyGamesDelegate, APIRankDelegate, APIDestroyRankingDel
     
     private func deleteRankingFor(gameId: GraphQLID) {
         if let oldRanking = rankingsByGameId.removeValue(forKey: gameId) {
-            if let oldIndex = rankings.index(where: {$0.id == oldRanking.id}) {
+            if let oldIndex = rankings.index(where: {$0.fragments.rankingBasic.id == oldRanking.fragments.rankingBasic.id}) {
                 rankings.remove(at: oldIndex)
             }
         }
         
         if (rankingsLoading != nil) {
-            if let oldIndex = rankingsLoading!.index(where: {$0.game.id == gameId}) {
+            if let oldIndex = rankingsLoading!.index(where: {$0.game.fragments.gameBasic.id == gameId}) {
                 rankingsLoading!.remove(at: oldIndex)
             }
         }

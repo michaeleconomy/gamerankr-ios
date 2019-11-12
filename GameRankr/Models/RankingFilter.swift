@@ -28,8 +28,8 @@ class RankingFilter {
     
     private func filterShelves(_ ranking: RankingWithGame) -> Bool {
         if (!shelves.isEmpty) {
-            let onShelf = ranking.shelves.contains(where: { shelf in
-                return shelves.contains(shelf.name)
+            let onShelf = ranking.fragments.rankingBasic.shelves.contains(where: { shelf in
+                return shelves.contains(shelf.fragments.shelfBasic.name)
             })
             if (!onShelf) {
                 return false
@@ -43,11 +43,11 @@ class RankingFilter {
             return true
         }
         
-        if (ranking.game.title.lowercased().contains(text!)) {
+        if (ranking.game.fragments.gameBasic.title.lowercased().contains(text!)) {
             return true
         }
         
-        if (ranking.port.platform.name.lowercased().contains(text!)) {
+        if (ranking.fragments.rankingBasic.port.platform.name.lowercased().contains(text!)) {
             return true
         }
         return false

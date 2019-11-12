@@ -8,21 +8,21 @@ extension FullRankingDataSource where Self : UIViewController {
     func cellFor(ranking: RankingFull, tableView: UITableView, indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! FixedImageSizeTableCell
         
-        let port = ranking.port
+        let port = ranking.fragments.rankingWithGame.fragments.rankingBasic.port
         let user = ranking.user
-        let game = ranking.game
+        let game = ranking.fragments.rankingWithGame.game
         
-        cell.primaryLabel.text = "\(user.realName) \(ranking.verb)"
-        var secondLabelText = "\(game.title) (\(port.platform.name))"
-        let hasReview = ranking.review != nil && ranking.review! != ""
-        if (hasReview || ranking.ranking != nil) {
+        cell.primaryLabel.text = "\(user.fragments.userBasic.realName) \(ranking.fragments.rankingWithGame.fragments.rankingBasic.verb)"
+        var secondLabelText = "\(game.fragments.gameBasic.title) (\(port.platform.name))"
+        let hasReview = ranking.fragments.rankingWithGame.fragments.rankingBasic.review != nil && ranking.fragments.rankingWithGame.fragments.rankingBasic.review! != ""
+        if (hasReview || ranking.fragments.rankingWithGame.fragments.rankingBasic.ranking != nil) {
             secondLabelText += "\n"
-            if (ranking.ranking != nil) {
-                let starsStr = String(repeating: "\u{2605}", count: ranking.ranking!)
+            if (ranking.fragments.rankingWithGame.fragments.rankingBasic.ranking != nil) {
+                let starsStr = String(repeating: "\u{2605}", count: ranking.fragments.rankingWithGame.fragments.rankingBasic.ranking!)
                 secondLabelText += "\(starsStr) "
             }
             if (hasReview) {
-                secondLabelText += "\"\(ranking.review!)\""
+                secondLabelText += "\"\(ranking.fragments.rankingWithGame.fragments.rankingBasic.review!)\""
             }
         }
         cell.secondaryLabel.text = secondLabelText

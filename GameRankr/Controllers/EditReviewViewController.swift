@@ -25,12 +25,12 @@ class EditReviewViewController : UIViewController, UITextViewDelegate {
             return
         }
         
-        if (ranking!.review == nil || ranking!.review! == "") {
+        if (ranking!.fragments.rankingBasic.review == nil || ranking!.fragments.rankingBasic.review! == "") {
             reviewView.text = defaultText
             reviewView.textColor = .gray
             return
         }
-        reviewView.text = ranking?.review
+        reviewView.text = ranking?.fragments.rankingBasic.review
         
     }
     
@@ -43,8 +43,8 @@ class EditReviewViewController : UIViewController, UITextViewDelegate {
     
     
     @objc func saveButtonClick(sender: UIButton) {
-        MyGamesManager.sharedInstance.rankPort(portId: ranking!.port.id, review: reviewView.text)
-        ranking?.review = reviewView.text
+        MyGamesManager.sharedInstance.rankPort(portId: ranking!.fragments.rankingBasic.port.id, review: reviewView.text)
+        ranking?.fragments.rankingBasic.review = reviewView.text
         self.navigationController!.popViewController(animated: true)
     }
 }

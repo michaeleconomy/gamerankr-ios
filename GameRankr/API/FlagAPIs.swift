@@ -8,9 +8,10 @@ protocol APIFlagDelegate: AuthenticatedAPIErrorDelegate {
 extension GameRankrAPI {
     
     func flag(resourceId: GraphQLID?, resourceType: String?, text: String, delegate: APIFlagDelegate) {
-        apollo.perform(mutation: FlagMutation(resourceId: resourceId, resourceType: resourceType, text: text) ) { (result, error) in
-            if (!self.handleApolloApiErrors(result, error, delegate: delegate)) { return }
-            if (!result!.data!.flag) {
+        apollo.perform(mutation: FlagMutation(resourceId: resourceId, resourceType: resourceType, text: text) ) { (result) in
+            if (!self.handleApolloApiErrors(result, delegate: delegate)) { return }
+            guard let data = try? result.get().data else { return }
+            if (!data!.flag) {
                 delegate.handleAPI(error: "Could not flag item for unknown reason")
                 return
             }

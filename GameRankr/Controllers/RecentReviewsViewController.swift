@@ -51,9 +51,9 @@ class RecentReviewsViewController: UIViewController, FullRankingDataSource, APIR
             }
             let controller = segue.destination as! RankingViewController
             let ranking = rankings[indexPath.row]
-            controller.ranking = ranking.fragments.rankingBasic
+            controller.ranking = ranking.fragments.rankingWithGame.fragments.rankingBasic
             controller.user = ranking.user.fragments.userBasic
-            controller.game = ranking.game.fragments.gameBasic
+            controller.game = ranking.fragments.rankingWithGame.game.fragments.gameBasic
         default:
             NSLog("recent reviews view: unhandled segue identifier: \(segue.identifier!)")
         }

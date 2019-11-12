@@ -79,15 +79,15 @@ class ShelfViewController: UIViewController, UITableViewDataSource, APIShelfDele
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
         let ranking = rankings[indexPath.row]
         let game = ranking.game
-        let port = ranking.port
+        let port = ranking.fragments.rankingBasic.port
         
-        cell.textLabel!.text = game.title
+        cell.textLabel!.text = game.fragments.gameBasic.title
         cell.detailTextLabel!.text = port.platform.name
         
         cell.imageView?.image = PlaceholderImages.game
-        if (ranking.port.smallImageUrl != nil) {
+        if (ranking.fragments.rankingBasic.port.smallImageUrl != nil) {
             cell.imageView?.kf.indicatorType = .activity
-            cell.imageView?.kf.setImage(with: URL(string: ranking.port.smallImageUrl!)!, placeholder: PlaceholderImages.game, completionHandler: {
+            cell.imageView?.kf.setImage(with: URL(string: ranking.fragments.rankingBasic.port.smallImageUrl!)!, placeholder: PlaceholderImages.game, completionHandler: {
                 (image, error, cacheType, imageUrl) in
                 cell.layoutSubviews()
             })

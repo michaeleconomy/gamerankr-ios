@@ -52,7 +52,7 @@ class LocalSQLiteManager {
         do {
             let rankingSerialized = try JSONSerialization.data(withJSONObject: ranking.jsonObject, options: [])
             let rankingString = String(data: rankingSerialized, encoding: .utf8)!
-            let insert = rankingsTable.insert(rankingId <- ranking.id, serializedRanking <- rankingString)
+            let insert = rankingsTable.insert(rankingId <- ranking.fragments.rankingBasic.id, serializedRanking <- rankingString)
             try db.run(insert)
         }
         catch let error {

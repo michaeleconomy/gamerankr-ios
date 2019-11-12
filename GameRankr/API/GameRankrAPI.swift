@@ -75,11 +75,10 @@ class GameRankrAPI {
     
 //    let base_url = "http://localhost:3000"
     let base_url = "https://www.gamerankr.com"
-    internal let apollo: ApolloClient
     internal var authDelegates = [APIAuthenticationDelegate]()
     public internal(set) var token: String?
     public internal(set) var currentUserId: GraphQLID?
-    
+    private(set) lazy var apollo = ApolloClient(url: URL(string: api.base_url + "/graphql")!)
     init() {
         let token = LocalSQLiteManager.sharedInstance.getMisc(key: "token")
         let currentUserId = LocalSQLiteManager.sharedInstance.getMisc(key: "currentUserId")
@@ -94,14 +93,15 @@ class GameRankrAPI {
             LocalSQLiteManager.sharedInstance.clearRankings()
             LocalSQLiteManager.sharedInstance.clearMisc()
         }
-        apollo = ApolloClient(networkTransport: GameRankrNetworkTransport())
+//        apollo = ApolloClient(networkTransport: GameRankrNetworkTransport())
     }
     
     
     func search(query: String, after: String? = nil, delegate: APISearchResultsDelegate) -> Cancellable {
-        return apollo.fetch(query: SearchQuery(query: query, after: after)) { (result, error) in
-            if (!self.handleApolloApiErrors(result, error, delegate: delegate)) { return }
-            let games = result!.data!.search
+        return apollo.fetch(query: SearchQuery(query: query, after: after)) { (result) in
+            if (!self.handleApolloApiErrors(result, delegate: delegate)) { return }
+            guard let data = try? result.get().data else {return}
+            let games = data!.search
             var nextPage : String?
             if (games.pageInfo.hasNextPage){
                 nextPage = games.pageInfo.endCursor
@@ -112,9 +112,10 @@ class GameRankrAPI {
     }
     
     func gameDetail(id: GraphQLID, delegate: APIGameDetailDelegate) {
-        apollo.fetch(query: GameQuery(id: id)) { (result, error) in
-            if (!self.handleApolloApiErrors(result, error, delegate: delegate)) { return }
-            let game = result!.data!.game
+        apollo.fetch(query: GameQuery(id: id)) { (result) in
+            if (!self.handleApolloApiErrors(result, delegate: delegate)) { return }
+            guard let data = try? result.get().data else {return}
+            let game = data!.game
             let rankingEdges = game.rankings
             
             var nextPage : String?
@@ -128,9 +129,10 @@ class GameRankrAPI {
     }
     
     func gameRankings(id: GraphQLID, after: String? = nil, delegate: APIGameRankingsDelegate) {
-        apollo.fetch(query: GameRankingsQuery(id: id, after: after)) { (result, error) in
-            if (!self.handleApolloApiErrors(result, error, delegate: delegate)) { return }
-            let rankingEdges = result!.data!.game.rankings
+        apollo.fetch(query: GameRankingsQuery(id: id, after: after)) { (result) in
+            if (!self.handleApolloApiErrors(result, delegate: delegate)) { return }
+            guard let data = try? result.get().data else {return}
+            let rankingEdges = data!.game.rankings
             var nextPage : String?
             if (rankingEdges.pageInfo.hasNextPage){
                 nextPage = rankingEdges.pageInfo.endCursor
@@ -141,9 +143,10 @@ class GameRankrAPI {
     }
     
     func shelf(id: GraphQLID, after: String? = nil, delegate: APIShelfDelegate) {
-        apollo.fetch(query: ShelfQuery(id: id, after: after)) { (result, error) in
-            if (!self.handleApolloApiErrors(result, error, delegate: delegate)) { return }
-            let rankingEdges = result!.data!.shelf.rankings
+        apollo.fetch(query: ShelfQuery(id: id, after: after)) { (result) in
+            if (!self.handleApolloApiErrors(result, delegate: delegate)) { return }
+            guard let data = try? result.get().data else {return}
+            let rankingEdges = data!.shelf.rankings
             var nextPage : String?
             if (rankingEdges.pageInfo.hasNextPage) {
                 nextPage = rankingEdges.pageInfo.endCursor
@@ -154,10 +157,11 @@ class GameRankrAPI {
     }
     
     func userDetail(id: GraphQLID, delegate: APIUserDetailDelegate) {
-        apollo.fetch(query: UserQuery(id: id)) { (result, error) in
-            if (!self.handleApolloApiErrors(result, error, delegate: delegate)) { return }
-            let user = result!.data!.user
-            let rankingEdges = user.rankings
+        apollo.fetch(query: UserQuery(id: id)) { (result) in
+            if (!self.handleApolloApiErrors(result, delegate: delegate)) { return }
+            guard let data = try? result.get().data else {return}
+            let user = data!.user
+            let rankingEdges = user.fragments.userDetail.rankings
             var nextPage : String?
             if (rankingEdges.pageInfo.hasNextPage){
                 nextPage = rankingEdges.pageInfo.endCursor
@@ -168,9 +172,10 @@ class GameRankrAPI {
     }
 
     func userRankings(id: String, after: String? = nil, delegate: APIUserRankingsDelegate) {
-        apollo.fetch(query: UserRankingsQuery(id: id, after: after)) { (result, error) in
-            if (!self.handleApolloApiErrors(result, error, delegate: delegate)) { return }
-            let rankingEdges = result!.data!.user.rankings
+        apollo.fetch(query: UserRankingsQuery(id: id, after: after)) { (result) in
+            if (!self.handleApolloApiErrors(result, delegate: delegate)) { return }
+            guard let data = try? result.get().data else {return}
+            let rankingEdges = data!.user.rankings
             var nextPage : String?
             if (rankingEdges.pageInfo.hasNextPage){
                 nextPage = rankingEdges.pageInfo.endCursor
@@ -181,10 +186,11 @@ class GameRankrAPI {
     }
     
     func me(delegate: APIUserDetailDelegate) {
-        apollo.fetch(query: MeQuery()) { (result, error) in
-            if (!self.handleApolloApiErrors(result, error, delegate: delegate)) { return }
-            let user = result!.data!.user
-            let rankingEdges = user.rankings
+        apollo.fetch(query: MeQuery()) { (result) in
+            if (!self.handleApolloApiErrors(result, delegate: delegate)) { return }
+            guard let data = try? result.get().data else {return}
+            let user = data!.user
+            let rankingEdges = user.fragments.userDetail.rankings
             var nextPage : String?
             if (rankingEdges.pageInfo.hasNextPage){
                 nextPage = rankingEdges.pageInfo.endCursor
@@ -195,16 +201,18 @@ class GameRankrAPI {
     }
     
     func myShelves(delegate: APIShelvesDelegate) {
-        apollo.fetch(query: MyShelvesQuery(), cachePolicy: .fetchIgnoringCacheData) { (result, error) in
-            if (!self.handleApolloApiErrors(result, error, delegate: delegate)) { return }
-            delegate.handleAPI(shelves: result!.data!.shelves)
+        apollo.fetch(query: MyShelvesQuery(), cachePolicy: .fetchIgnoringCacheData) { (result) in
+            if (!self.handleApolloApiErrors(result, delegate: delegate)) { return }
+            guard let data = try? result.get().data else {return}
+            delegate.handleAPI(shelves: data!.shelves)
         }
     }
     
     func myGames(after: String? = nil, delegate: APIMyGamesDelegate) {
-        apollo.fetch(query: MyGamesQuery(after: after), cachePolicy: .fetchIgnoringCacheData) { (result, error) in
-            if (!self.handleApolloApiErrors(result, error, delegate: delegate)) { return }
-            let myGames = result!.data!.myGames
+        apollo.fetch(query: MyGamesQuery(after: after), cachePolicy: .fetchIgnoringCacheData) { (result) in
+            if (!self.handleApolloApiErrors(result, delegate: delegate)) { return }
+            guard let data = try? result.get().data else {return}
+            let myGames = data!.myGames
             
             var nextPage : String?
             if (myGames.pageInfo.hasNextPage){
@@ -216,9 +224,10 @@ class GameRankrAPI {
     }
     
     func updates(after: String? = nil, delegate: APIUpdatesDelegate) {
-        apollo.fetch(query: UpdatesQuery(after: after)) { (result, error) in
-            if (!self.handleApolloApiErrors(result, error, delegate: delegate)) { return }
-            let updates = result!.data!.updates
+        apollo.fetch(query: UpdatesQuery(after: after)) { (result) in
+            if (!self.handleApolloApiErrors(result, delegate: delegate)) { return }
+            guard let data = try? result.get().data else {return}
+            let updates = data!.updates
             var nextPage : String?
             if (updates.pageInfo.hasNextPage){
                 nextPage = updates.pageInfo.endCursor
@@ -228,9 +237,10 @@ class GameRankrAPI {
     }
     
     func friends(after: String? = nil, delegate: APIFriendsDelegate) {
-        apollo.fetch(query: FriendsQuery(after: after)) { (result, error) in
-            if (!self.handleApolloApiErrors(result, error, delegate: delegate)) { return }
-            let friends = result!.data!.friends
+        apollo.fetch(query: FriendsQuery(after: after)) { (result) in
+            if (!self.handleApolloApiErrors(result, delegate: delegate)) { return }
+            guard let data = try? result.get().data else {return}
+            let friends = data!.friends
             var nextPage : String?
             if (friends.pageInfo.hasNextPage){
                 nextPage = friends.pageInfo.endCursor
@@ -241,49 +251,58 @@ class GameRankrAPI {
     
     // - mutations
     func rankPort(portId: GraphQLID, ranking: Int?, removeRanking: Bool, review: String?, addShelfId: GraphQLID?, removeShelfId: GraphQLID?, delegate: APIRankDelegate) {
-        apollo.perform(mutation: RankPortMutation(portId: portId, ranking: ranking, removeRanking: removeRanking, review: review, addShelfId: addShelfId, removeShelfId: removeShelfId)) { (result, error) in
-            if (!self.handleApolloApiErrors(result, error, delegate: delegate)) { return }
-            delegate.handleAPI(ranking: result!.data!.ranking.fragments.rankingWithGame)
+        apollo.perform(mutation: RankPortMutation(portId: portId, ranking: ranking, removeRanking: removeRanking, review: review, addShelfId: addShelfId, removeShelfId: removeShelfId)) { (result) in
+            if (!self.handleApolloApiErrors(result, delegate: delegate)) { return }
+            guard let data = try? result.get().data else {return}
+            delegate.handleAPI(ranking: data!.ranking.fragments.rankingWithGame)
         }
     }
     
     func destroyRanking(portId: GraphQLID, delegate: APIDestroyRankingDelegate) {
-        apollo.perform(mutation: DestroyRankingMutation(portId: portId)) { (result, error) in
-            if (!self.handleApolloApiErrors(result, error, delegate: delegate)) { return }
-            delegate.handleAPIRankingDestruction(ranking: result!.data!.ranking)
+        apollo.perform(mutation: DestroyRankingMutation(portId: portId)) { (result) in
+            if (!self.handleApolloApiErrors(result, delegate: delegate)) { return }
+            guard let data = try? result.get().data else {return}
+            delegate.handleAPIRankingDestruction(ranking: data!.ranking)
         }
     }
     
-    internal func handleApolloApiErrors<Type>(_ result: GraphQLResult<Type>?, _ error: Error?, delegate: AuthenticatedAPIErrorDelegate) -> Bool {
-        if ((error as? GameRankrAuthenticationError) != nil) {
-            NSLog("authentication error - signing user out")
-            handleLogout()
-            delegate.handleAPIAuthenticationError()
-            return false
-        }
-        if let graphqlError = error as? GraphQLHTTPResponseError {
-            if (graphqlError.response.statusCode == 500) {
-                NSLog("Unexpected response from server.  This error has been logged and will be followed up on.")
-                delegate.handleAPI(error: "Unexpected response from server.  This error has been logged and will be followed up on.")
+    internal func handleApolloApiErrors<Data>(_ result: Result<GraphQLResult<Data>, Error>, delegate: AuthenticatedAPIErrorDelegate) -> Bool {
+        switch result {
+        case .success(let graphQLResult):
+            if graphQLResult.data != nil {
+                return true
+            }
+            else if let errors = graphQLResult.errors {
+                let errorsStr = errors.map{($0.message ?? "nil message")}.joined(separator: ", ")
+                NSLog("server side error(s): \(errorsStr)")
+                delegate.handleAPI(error: "server side error(s): \(errorsStr)")
                 return false
             }
-        }
-        if (result?.data == nil) {
+            NSLog("result was success, errors was nil")
+            delegate.handleAPI(error: "result was success, errors was nil")
+            return false
+        case .failure(let error):
             if let nsError = error as NSError? {
                 NSLog("error encountered: \(nsError.localizedDescription)")
                 delegate.handleAPI(error: nsError.localizedDescription)
                 return false
             }
+            if ((error as? GameRankrAuthenticationError) != nil) {
+                NSLog("authentication error - signing user out")
+                handleLogout()
+                delegate.handleAPIAuthenticationError()
+                return false
+            }
+            if let graphqlError = error as? GraphQLHTTPResponseError {
+                if (graphqlError.response.statusCode == 500) {
+                    NSLog("Unexpected response from server.  This error has been logged and will be followed up on.")
+                    delegate.handleAPI(error: "Unexpected response from server.  This error has been logged and will be followed up on.")
+                    return false
+                }
+            }
             NSLog("data was nil, error: \(String(describing: error))")
             delegate.handleAPI(error: "data was nil, error: \(String(describing: error))")
             return false
         }
-        if (result?.errors != nil && result!.errors!.count > 0) {
-            let errorsStr = result!.errors!.map{$0.message}.joined(separator: ", ")
-            NSLog("server side error(s): \(errorsStr)")
-            delegate.handleAPI(error: "server side error(s): \(errorsStr)")
-            return false
-        }
-        return true
     }
 }

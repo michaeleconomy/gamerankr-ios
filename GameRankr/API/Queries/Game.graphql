@@ -2,6 +2,7 @@ query Game($id: ID!) {
     game(id: $id) {
         ...GameBasic
         ports {
+            id
             medium_image_url
             description
         }

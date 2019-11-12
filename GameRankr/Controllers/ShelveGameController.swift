@@ -41,7 +41,7 @@ class ShelveGameController : UIViewController, UITableViewDataSource, APIMyShelv
     }
     
     @objc func removeButtonTap(sender: UIButton) {
-        MyGamesManager.sharedInstance.destroyRanking(portId:ranking!.port.id)
+        MyGamesManager.sharedInstance.destroyRanking(portId:ranking!.fragments.rankingBasic.port.id)
         self.dismiss(animated: true)
     }
     
@@ -62,8 +62,8 @@ class ShelveGameController : UIViewController, UITableViewDataSource, APIMyShelv
         }
         cell.textLabel?.text = shelf!.name
         if (ranking != nil) {
-            let matchingShelf = ranking!.shelves.first(where: { (r_shelf) -> Bool in
-                return r_shelf.name == shelf!.name
+            let matchingShelf = ranking!.fragments.rankingBasic.shelves.first(where: { (r_shelf) -> Bool in
+                return r_shelf.fragments.shelfBasic.name == shelf!.name
             })
             cell.switch.isOn = matchingShelf != nil
         }
@@ -89,7 +89,7 @@ class ShelveGameController : UIViewController, UITableViewDataSource, APIMyShelv
             easyAlert("Still saving, please try again soon")
             return
         }
-        if (ranking!.shelves.count == 1) {
+        if (ranking!.fragments.rankingBasic.shelves.count == 1) {
             sender.isOn = true
             easyAlert("Can't remove the last shelf from a game - to remove the port - use the delete button")
             return

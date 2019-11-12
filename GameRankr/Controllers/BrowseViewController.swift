@@ -95,9 +95,9 @@ class BrowseViewController: UIViewController, FullRankingDataSource, APIPopularG
             }
             let controller = segue.destination as! RankingViewController
             let ranking = rankings![indexPath.row]
-            controller.ranking = ranking.fragments.rankingBasic
+            controller.ranking = ranking.fragments.rankingWithGame.fragments.rankingBasic
             controller.user = ranking.user.fragments.userBasic
-            controller.game = ranking.game.fragments.gameBasic
+            controller.game = ranking.fragments.rankingWithGame.game.fragments.gameBasic
             
         case "gameDetail":
             let button = sender as! UIButton

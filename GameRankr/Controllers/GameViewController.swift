@@ -25,7 +25,7 @@ class GameViewController : UIViewController, APIGameDetailDelegate, APIGameRanki
     var gameDetail: GameQuery.Data.Game? {
         didSet {
             if (gameDetail != nil) {
-                if (gameDetail!.id != game!.id) {
+                if (gameDetail!.fragments.gameBasic.id != game!.id) {
                     self.gameDetail = nil
                 }
                 else {
@@ -39,7 +39,7 @@ class GameViewController : UIViewController, APIGameDetailDelegate, APIGameRanki
     var game: GameBasic? {
         didSet {
             if(game != nil) {
-                if(gameDetail != nil && gameDetail!.id != game!.id) {
+                if(gameDetail != nil && gameDetail!.fragments.gameBasic.id != game!.id) {
                     self.gameDetail = nil
                     self.rankings.removeAll()
                 }
@@ -139,30 +139,30 @@ class GameViewController : UIViewController, APIGameDetailDelegate, APIGameRanki
     private func configureViewWithRanking() {
         var starsToFill = 0
         if (ranking != nil) {
-            if (ranking!.port.id == selectedPort().id) {
+            if (ranking!.fragments.rankingBasic.port.id == selectedPort().id) {
                 switchEditionButton?.isHidden = true
             }
             else {
                 switchEditionButton?.isHidden = false
             }
             reviewStack?.isHidden = false
-            if (ranking!.ranking != nil) {
-                starsToFill = ranking!.ranking!
+            if (ranking!.fragments.rankingBasic.ranking != nil) {
+                starsToFill = ranking!.fragments.rankingBasic.ranking!
             }
-            let shelvesStr = ranking!.shelves.map{$0.name}.joined(separator: ", ")
+            let shelvesStr = ranking!.fragments.rankingBasic.shelves.map{$0.fragments.shelfBasic.name}.joined(separator: ", ")
             shelveButton?.setTitle("Shelved: \(shelvesStr)", for: .normal)
             shelveButton?.backgroundColor = UIColor.white
-            if (ranking!.review != nil && ranking!.review != "") {
+            if (ranking!.fragments.rankingBasic.review != nil && ranking!.fragments.rankingBasic.review != "") {
                 reviewLabel?.isHidden = false
-                reviewLabel?.text = "\"\(ranking!.review!)\""
+                reviewLabel?.text = "\"\(ranking!.fragments.rankingBasic.review!)\""
                 reviewButton?.setTitle("Edit My Review", for: .normal)
             }
             else {
                 reviewLabel?.isHidden = true
                 reviewButton?.setTitle("Write a Review", for: .normal)
             }
-            if (ranking!.commentsCount > 0) {
-                commentsButton?.setTitle("\(ranking!.commentsCount) Comments", for: .normal)
+            if (ranking!.fragments.rankingBasic.commentsCount > 0) {
+                commentsButton?.setTitle("\(ranking!.fragments.rankingBasic.commentsCount) Comments", for: .normal)
                 commentsButton?.isHidden = false
             }
             else {
@@ -227,7 +227,7 @@ class GameViewController : UIViewController, APIGameDetailDelegate, APIGameRanki
     }
     
     func starRankPort(rankingValue: Int) {
-        if (ranking != nil && ranking?.ranking == rankingValue) {
+        if (ranking != nil && ranking?.fragments.rankingBasic.ranking == rankingValue) {
             // for taping on the existing ranking - remove the ranking
             setStars(0)
             rankPort(removeRanking: true)
@@ -238,7 +238,7 @@ class GameViewController : UIViewController, APIGameDetailDelegate, APIGameRanki
     }
     
     func rankPort(portId: GraphQLID? = nil, rankingValue: Int? = nil, removeRanking: Bool = false, review: String? = nil, addShelfId: GraphQLID? = nil, removeShelfId: GraphQLID? = nil) {
-        let optimalPortId = portId ?? ranking?.port.id ?? selectedPort().id
+        let optimalPortId = portId ?? ranking?.fragments.rankingBasic.port.id ?? selectedPort().id
         MyGamesManager.sharedInstance.rankPort(portId: optimalPortId, ranking: rankingValue, removeRanking: removeRanking, review: review, addShelfId: addShelfId, removeShelfId: removeShelfId)
     }
     
@@ -281,7 +281,7 @@ class GameViewController : UIViewController, APIGameDetailDelegate, APIGameRanki
     
     func addNonFriendRankings(_ rankings: [RankingWithUser]) {
         let nonFriendRankings = rankings.filter{ ranking in
-            return !friendRankings.contains(where: {$0.id == ranking.id})
+            return !friendRankings.contains(where: {$0.fragments.rankingBasic.id == ranking.fragments.rankingBasic.id})
         }
         self.rankings.append(contentsOf: nonFriendRankings)
     }
@@ -311,16 +311,16 @@ class GameViewController : UIViewController, APIGameDetailDelegate, APIGameRanki
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
         let ranking = rankings[indexPath.row]
         let user = ranking.user
-        if (ranking.ranking != nil) {
-            let starsStr = String(repeating: "\u{2605}", count: ranking.ranking!)
-            cell.textLabel!.text = "\(user.realName) \(ranking.verb) \(starsStr)"
+        if (ranking.fragments.rankingBasic.ranking != nil) {
+            let starsStr = String(repeating: "\u{2605}", count: ranking.fragments.rankingBasic.ranking!)
+            cell.textLabel!.text = "\(user.fragments.userBasic.realName) \(ranking.fragments.rankingBasic.verb) \(starsStr)"
         }
         else {
-            cell.textLabel!.text = "\(user.realName) \(ranking.verb)"
+            cell.textLabel!.text = "\(user.fragments.userBasic.realName) \(ranking.fragments.rankingBasic.verb)"
         }
         
-        if (ranking.review != nil && ranking.review! != "") {
-            cell.detailTextLabel!.text = "\"\(ranking.review!)\""
+        if (ranking.fragments.rankingBasic.review != nil && ranking.fragments.rankingBasic.review! != "") {
+            cell.detailTextLabel!.text = "\"\(ranking.fragments.rankingBasic.review!)\""
         }
         else {
             cell.detailTextLabel!.text = ""
@@ -351,7 +351,7 @@ class GameViewController : UIViewController, APIGameDetailDelegate, APIGameRanki
             let controller = segue.destination as! ShelveGameController
             controller.game = game
             controller.ranking = ranking
-            controller.portId = ranking?.port.id ?? selectedPort().id
+            controller.portId = ranking?.fragments.rankingBasic.port.id ?? selectedPort().id
         case "rankingDetail":
             guard let indexPath = self.reviewsTable?.indexPathForSelectedRow  else {
                 NSLog("GameViewController: could not get indexPath")
@@ -371,7 +371,7 @@ class GameViewController : UIViewController, APIGameDetailDelegate, APIGameRanki
             let controller = segue.destination as! PortChooserViewController
             controller.game = game
             controller.selected = selectedPort().id
-            controller.ranked = ranking?.port.id
+            controller.ranked = ranking?.fragments.rankingBasic.port.id
         case "flag":
             let controller = segue.destination as! FlagViewController
             controller.resourceType = "Game"

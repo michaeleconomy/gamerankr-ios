@@ -7,9 +7,10 @@ protocol APIPlatformsDelegate: AuthenticatedAPIErrorDelegate {
 extension GameRankrAPI {
     
     func platforms(after: String? = nil, delegate: APIPlatformsDelegate) {
-        apollo.fetch(query: PlatformsQuery(after: after)) { (result, error) in
-            if (!self.handleApolloApiErrors(result, error, delegate: delegate)) { return }
-            let platformEdges = result!.data!.platforms
+        apollo.fetch(query: PlatformsQuery(after: after)) { (result) in
+            if (!self.handleApolloApiErrors(result, delegate: delegate)) { return }
+            guard let data = try? result.get().data else { return }
+            let platformEdges = data!.platforms
             var nextPage : String?
             if (platformEdges.pageInfo.hasNextPage){
                 nextPage = platformEdges.pageInfo.endCursor
@@ -19,9 +20,10 @@ extension GameRankrAPI {
     }
     
     func featuredPlatforms(delegate: APIPlatformsDelegate) {
-        apollo.fetch(query: FeaturedPlatformsQuery()) { (result, error) in
-            if (!self.handleApolloApiErrors(result, error, delegate: delegate)) { return }
-            let platforms = result!.data!.platforms
+        apollo.fetch(query: FeaturedPlatformsQuery()) { (result) in
+            if (!self.handleApolloApiErrors(result, delegate: delegate)) { return }
+            guard let data = try? result.get().data else { return }
+            let platforms = data!.platforms
             delegate.handleAPI(platforms: platforms.map{$0.fragments.platformBasic}, nextPage: nil)
         }
     }
