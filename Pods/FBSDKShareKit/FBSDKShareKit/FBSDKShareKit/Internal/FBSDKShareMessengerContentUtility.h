@@ -18,19 +18,46 @@
 
 #import <Foundation/Foundation.h>
 
-@class FBSDKShareMessengerGenericTemplateContent;
-@class FBSDKShareMessengerMediaTemplateContent;
-@class FBSDKShareMessengerOpenGraphMusicTemplateContent;
+#import "FBSDKShareConstants.h"
 
+@class FBSDKShareMessengerURLActionButton;
+@protocol FBSDKShareMessengerActionButton;
+
+DEPRECATED_FOR_MESSENGER
+FOUNDATION_EXPORT NSString *const kFBSDKShareMessengerTemplateTypeKey;
+DEPRECATED_FOR_MESSENGER
+FOUNDATION_EXPORT NSString *const kFBSDKShareMessengerTemplateKey;
+DEPRECATED_FOR_MESSENGER
+FOUNDATION_EXPORT NSString *const kFBSDKShareMessengerPayloadKey;
+DEPRECATED_FOR_MESSENGER
+FOUNDATION_EXPORT NSString *const kFBSDKShareMessengerTypeKey;
+DEPRECATED_FOR_MESSENGER
+FOUNDATION_EXPORT NSString *const kFBSDKShareMessengerAttachmentKey;
+DEPRECATED_FOR_MESSENGER
+FOUNDATION_EXPORT NSString *const kFBSDKShareMessengerElementsKey;
+DEPRECATED_FOR_MESSENGER
+FOUNDATION_EXPORT NSString *const kFBSDKShareMessengerButtonsKey;
+
+DEPRECATED_FOR_MESSENGER
+void AddToContentPreviewDictionaryForButton(NSMutableDictionary<NSString *, id> *dictionary,
+                                            id<FBSDKShareMessengerActionButton> button);
+
+NSDictionary<NSString *, id> *SerializableButtonFromURLButton(FBSDKShareMessengerURLActionButton *button, BOOL isDefaultAction);
+
+DEPRECATED_FOR_MESSENGER
+NSArray<NSDictionary<NSString *, id> *> *SerializableButtonsFromButton(id<FBSDKShareMessengerActionButton> button);
+
+DEPRECATED_FOR_MESSENGER
+NS_SWIFT_NAME(ShareMessengerContentUtility)
 @interface FBSDKShareMessengerContentUtility : NSObject
 
-+ (void)addToParameters:(NSMutableDictionary *)parameters
-forShareMessengerGenericTemplateContent:(FBSDKShareMessengerGenericTemplateContent *)genericTemplateContent;
++ (void)addToParameters:(NSMutableDictionary<NSString *, id> *)parameters
+        contentForShare:(NSMutableDictionary<NSString *, id> *)contentForShare
+      contentForPreview:(NSMutableDictionary<NSString *, id> *)contentForPreview;
 
-+ (void)addToParameters:(NSMutableDictionary *)parameters
-forShareMessengerMediaTemplateContent:(FBSDKShareMessengerMediaTemplateContent *)mediaTemplateContent;
-
-+ (void)addToParameters:(NSMutableDictionary *)parameters
-forShareMessengerOpenGraphMusicTemplateContent:(FBSDKShareMessengerOpenGraphMusicTemplateContent *)openGraphMusicTemplate;
++ (BOOL)validateMessengerActionButton:(id<FBSDKShareMessengerActionButton>)button
+                isDefaultActionButton:(BOOL)isDefaultActionButton
+                               pageID:(NSString *)pageID
+                                error:(NSError *__autoreleasing *)errorRef;
 
 @end

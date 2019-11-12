@@ -1,23 +1,23 @@
-public typealias Snapshot = [String: Any?]
+public typealias ResultMap = [String: Any?]
 
 public protocol GraphQLSelectionSet {
   static var selections: [GraphQLSelection] { get }
   
-  var snapshot: Snapshot { get }
-  init(snapshot: Snapshot)
+  var resultMap: ResultMap { get }
+  init(unsafeResultMap: ResultMap)
 }
 
 public extension GraphQLSelectionSet {
-  init(jsonObject: JSONObject) throws {
+  init(jsonObject: JSONObject, variables: GraphQLMap? = nil) throws {
     let executor = GraphQLExecutor { object, info in
       .result(.success(object[info.responseKeyForField]))
     }
     executor.shouldComputeCachePath = false
-    self = try executor.execute(selections: Self.selections, on: jsonObject, accumulator: GraphQLSelectionSetMapper<Self>()).await()
+    self = try executor.execute(selections: Self.selections, on: jsonObject, variables: variables, accumulator: GraphQLSelectionSetMapper<Self>()).await()
   }
   
   var jsonObject: JSONObject {
-    return snapshot.jsonObject
+    return resultMap.jsonObject
   }
 }
 
@@ -51,9 +51,11 @@ public struct GraphQLField: GraphQLSelection {
   }
   
   func cacheKey(with variables: [String: JSONEncodable]?) throws -> String {
-    if let argumentValues = try arguments?.evaluate(with: variables), !argumentValues.isEmpty {
-      let argumentsKey = orderIndependentKey(for: argumentValues)
-      return "\(name)(\(argumentsKey))"
+    if
+      let argumentValues = try arguments?.evaluate(with: variables),
+      argumentValues.isNotEmpty {
+        let argumentsKey = orderIndependentKey(for: argumentValues)
+        return "\(name)(\(argumentsKey))"
     } else {
       return name
     }

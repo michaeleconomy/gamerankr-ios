@@ -18,18 +18,18 @@
 
 #import <Foundation/Foundation.h>
 
-#import <FBSDKLoginKit/FBSDKLoginConstants.h>
+#import "FBSDKLoginConstants.h"
 
-@interface FBSDKLoginError : NSObject
+NS_ASSUME_NONNULL_BEGIN
 
-+ (NSString *)errorDomain;
+@interface NSError (FBSDKLoginError)
 
-+ (NSError *)errorForFailedLoginWithCode:(FBSDKLoginErrorCode)code;
++ (NSError *)fbErrorForFailedLoginWithCode:(FBSDKLoginError)code;
++ (NSError *)fbErrorForSystemPasswordChange:(NSError *)innerError;
 
-+ (NSError *)errorForSystemAccountStoreError:(NSError *)accountStoreError;
-+ (NSError *)errorForSystemPasswordChange:(NSError *)innerError;
-
-+ (NSError *)errorFromReturnURLParameters:(NSDictionary *)parameters;
-+ (NSError *)errorFromServerError:(NSError *)serverError;
++ (nullable NSError *)fbErrorFromReturnURLParameters:(NSDictionary<NSString *, id> *)parameters;
++ (nullable NSError *)fbErrorFromServerError:(NSError *)serverError;
 
 @end
+
+NS_ASSUME_NONNULL_END

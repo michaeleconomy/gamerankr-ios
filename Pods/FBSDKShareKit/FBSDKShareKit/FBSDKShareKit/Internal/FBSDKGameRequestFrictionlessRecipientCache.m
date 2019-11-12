@@ -18,9 +18,17 @@
 
 #import "FBSDKGameRequestFrictionlessRecipientCache.h"
 
+#ifdef BUCK
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
+#else
+@import FBSDKCoreKit;
+#endif
 
+#ifdef COCOAPODS
+#import <FBSDKCoreKit/FBSDKCoreKit+Internal.h>
+#else
 #import "FBSDKCoreKit+Internal.h"
+#endif
 
 @implementation FBSDKGameRequestFrictionlessRecipientCache
 {
@@ -72,7 +80,7 @@
 
 - (void)_accessTokenDidChangeNotification:(NSNotification *)notification
 {
-  if (![notification.userInfo[FBSDKAccessTokenDidChangeUserID] boolValue]) {
+  if (![notification.userInfo[FBSDKAccessTokenDidChangeUserIDKey] boolValue]) {
     return;
   }
   _recipientIDs = nil;
@@ -93,7 +101,7 @@
     if (!error) {
       NSArray *items = [FBSDKTypeUtility arrayValue:result[@"data"]];
       NSArray *recipientIDs = [items valueForKey:@"recipient_id"];
-      _recipientIDs = [[NSSet alloc] initWithArray:recipientIDs];
+      self->_recipientIDs = [[NSSet alloc] initWithArray:recipientIDs];
     }
   }];
 }

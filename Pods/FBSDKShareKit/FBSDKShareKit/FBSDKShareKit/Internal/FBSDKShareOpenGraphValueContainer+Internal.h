@@ -18,12 +18,12 @@
 
 #import <Foundation/Foundation.h>
 
-#import <FBSDKShareKit/FBSDKShareOpenGraphValueContainer.h>
+#import "FBSDKShareOpenGraphValueContainer.h"
 
 @interface FBSDKShareOpenGraphValueContainer ()
 
-- (NSDictionary *)allProperties;
+@property (nonatomic, readonly) BOOL requireKeyNamespace;
+
 - (BOOL)isEqualToShareOpenGraphValueContainer:(FBSDKShareOpenGraphValueContainer *)object;
-- (BOOL)requireKeyNamespace;
 
 @end
