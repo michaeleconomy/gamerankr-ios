@@ -8,8 +8,8 @@ class SignInViewController : UIViewController, APILoginDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationController!.navigationBar.isUserInteractionEnabled = false
-        self.navigationController!.navigationBar.tintColor = UIColor.lightGray
+        self.navigationController?.navigationBar.isUserInteractionEnabled = false
+        self.navigationController?.navigationBar.tintColor = UIColor.lightGray
         
         fbButton.addTarget(self, action:#selector(loginButtonClicked(sender:)), for: .touchUpInside)
         loadingImage.image = PlaceholderImages.loadingBar
@@ -26,10 +26,10 @@ class SignInViewController : UIViewController, APILoginDelegate {
     private func handleLogin() {
         loadingImage.isHidden = true
         
-        navigationController!.navigationBar.isUserInteractionEnabled = true
-        navigationController!.navigationBar.tintColor = UIColor.blue
+        navigationController?.navigationBar.isUserInteractionEnabled = true
+        navigationController?.navigationBar.tintColor = UIColor.blue
         
-        if (navigationController!.popViewController(animated: true) == nil) {
+        if (navigationController?.popViewController(animated: true) == nil) {
             performSegue(withIdentifier: "updates", sender: nil)
         }
     }

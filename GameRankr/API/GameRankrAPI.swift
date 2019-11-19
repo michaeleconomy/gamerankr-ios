@@ -78,10 +78,13 @@ class GameRankrAPI {
     internal var authDelegates = [APIAuthenticationDelegate]()
     public internal(set) var token: String?
     public internal(set) var currentUserId: GraphQLID?
-    private(set) lazy var apollo = ApolloClient(url: URL(string: api.base_url + "/graphql")!)
+    private(set) lazy var apollo = ApolloClient(networkTransport: HTTPNetworkTransport(url: URL(string: api.base_url + "/graphql")!, delegate: self))
     init() {
         let token = LocalSQLiteManager.sharedInstance.getMisc(key: "token")
         let currentUserId = LocalSQLiteManager.sharedInstance.getMisc(key: "currentUserId")
+        NSLog("token: " + (token ?? "nil"))
+        NSLog("currentUserId: " + (currentUserId ?? "nil"))
+        
         self.token = token
         self.currentUserId = currentUserId
         if (token != nil && currentUserId != nil) {
@@ -304,5 +307,22 @@ class GameRankrAPI {
             delegate.handleAPI(error: "data was nil, error: \(String(describing: error))")
             return false
         }
+    }
+}
+
+extension GameRankrAPI : HTTPNetworkTransportPreflightDelegate {
+    func networkTransport(_ networkTransport: HTTPNetworkTransport, shouldSend request: URLRequest) -> Bool {
+        return true
+    }
+    
+    func networkTransport(_ networkTransport: HTTPNetworkTransport,
+                          willSend request: inout URLRequest) {
+        
+        // Get the existing headers, or create new ones if they're nil
+        var headers = request.allHTTPHeaderFields ?? [String: String]()
+        headers["api-token"] = token
+        
+        request.allHTTPHeaderFields = headers
+        NSLog("willsend request: \(request)" )
     }
 }
