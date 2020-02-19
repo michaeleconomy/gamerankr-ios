@@ -20,7 +20,7 @@
 
 #import <Foundation/Foundation.h>
 
-#ifdef BUCK
+#if defined BUCK || defined FBSDKCOCOAPODS
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #else
 @import FBSDKCoreKit;
@@ -28,7 +28,7 @@
 
 #import "FBSDKShareConstants.h"
 
-#ifdef COCOAPODS
+#ifdef FBSDKCOCOAPODS
 #import <FBSDKCoreKit/FBSDKCoreKit+Internal.h>
 #else
 #import "FBSDKCoreKit+Internal.h"

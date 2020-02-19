@@ -286,6 +286,10 @@ class GameRankrAPI {
             return false
         case .failure(let error):
             if let nsError = error as NSError? {
+                if (nsError.code == NSURLErrorCancelled) {
+                    //api call cancelled - ignoring
+                    return false
+                }
                 NSLog("error encountered: \(nsError.localizedDescription)")
                 delegate.handleAPI(error: nsError.localizedDescription)
                 return false

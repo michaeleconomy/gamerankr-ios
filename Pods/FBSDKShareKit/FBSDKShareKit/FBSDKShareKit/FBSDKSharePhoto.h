@@ -18,7 +18,7 @@
 
 #import <UIKit/UIKit.h>
 
-#ifdef BUCK
+#if defined BUCK || defined FBSDKCOCOAPODS || defined __cplusplus
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #else
 @import FBSDKCoreKit;

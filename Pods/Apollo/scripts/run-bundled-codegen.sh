@@ -8,7 +8,7 @@ SCRIPT_DIR="$(dirname "$0")"
 
 # Get the SHASUM of the tarball
 ZIP_FILE="${SCRIPT_DIR}/apollo.tar.gz"
-ZIP_FILE_DOWNLOAD_URL="https://34622-65563448-gh.circle-artifacts.com/0/oclif-pack/apollo-v2.21.0/apollo-v2.21.0-darwin-x64.tar.gz"
+ZIP_FILE_DOWNLOAD_URL="https://41516-65563448-gh.circle-artifacts.com/0/oclif-pack/apollo-v2.22.1/apollo-v2.22.1-darwin-x64.tar.gz"
 SHASUM_FILE="${SCRIPT_DIR}/apollo/.shasum"
 APOLLO_DIR="${SCRIPT_DIR}"/apollo
 IS_RETRY="false"
@@ -26,7 +26,7 @@ download_apollo_cli_if_needed() {
 
 download_cli() {
   echo "Downloading zip file with the CLI..."
-  curl --silent "${ZIP_FILE_DOWNLOAD_URL}" -o "${ZIP_FILE}"
+  curl --silent --retry 3 --fail --show-error "${ZIP_FILE_DOWNLOAD_URL}" -o "${ZIP_FILE}"
 }
 
 force_cli_download() {
@@ -55,7 +55,7 @@ extract_cli() {
 
 validate_codegen_and_extract_if_needed() {
   # Make sure the SHASUM matches the release for this version
-  EXPECTED_SHASUM="14e24195e73846111f21b0239dd44afdadc3249ff3fdbc8d0fc74e76459eb3b7"
+  EXPECTED_SHASUM="bf98280b7164fbb2cd6fa04a9e7869d59798b9717ebee7650c365b920f566c59"
   update_shasum
 
   if [[ ${SHASUM} = ${EXPECTED_SHASUM}* ]]; then
