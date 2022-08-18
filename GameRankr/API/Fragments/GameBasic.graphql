@@ -2,12 +2,18 @@ fragment GameBasic on Game {
     id
     title
     url
+    initiallyReleasedAt
+    averageRanking
+    rankingsCount
     ports {
         id
         platform {
             id
             name
         }
+        releasedAt
+        averageRanking
+        rankingsCount
         small_image_url
         medium_image_url
     }

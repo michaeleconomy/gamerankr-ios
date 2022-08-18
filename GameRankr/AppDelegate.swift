@@ -13,6 +13,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         SentrySDK.start { options in
             options.dsn = "https://21746597ddb44404a91dd3139c513e64@o110652.ingest.sentry.io/6661119"
+#if DEBUG
+            options.beforeSend = { event in
+                // modify event here or return NULL to discard the event
+                return nil
+            }
+#endif
+
         }
         return true
     }

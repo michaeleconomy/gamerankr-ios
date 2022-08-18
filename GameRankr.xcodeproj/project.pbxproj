@@ -131,6 +131,8 @@
 		6CB318BE2894C67800EDB9A2 /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CB318BD2894C67800EDB9A2 /* SignInViewController.swift */; };
 		6CB318C02894EFEB00EDB9A2 /* VerifyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CB318BF2894EFEB00EDB9A2 /* VerifyViewController.swift */; };
 		6CB318C32895C17400EDB9A2 /* ResetPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CB318C22895C17400EDB9A2 /* ResetPasswordViewController.swift */; };
+		6CEF123228AE0E8500E6030A /* SubtitleTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CEF123128AE0E8500E6030A /* SubtitleTableCell.swift */; };
+		6CEF123428AEB4D700E6030A /* Formatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CEF123328AEB4D700E6030A /* Formatter.swift */; };
 		77C4A33059E9FCA84053FA20 /* Pods_GameRankr.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9897AF21C6448A08E485BA89 /* Pods_GameRankr.framework */; };
 /* End PBXBuildFile section */
 
@@ -264,6 +266,8 @@
 		6CB318BD2894C67800EDB9A2 /* SignInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
 		6CB318BF2894EFEB00EDB9A2 /* VerifyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifyViewController.swift; sourceTree = "<group>"; };
 		6CB318C22895C17400EDB9A2 /* ResetPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPasswordViewController.swift; sourceTree = "<group>"; };
+		6CEF123128AE0E8500E6030A /* SubtitleTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubtitleTableCell.swift; sourceTree = "<group>"; };
+		6CEF123328AEB4D700E6030A /* Formatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Formatter.swift; sourceTree = "<group>"; };
 		9897AF21C6448A08E485BA89 /* Pods_GameRankr.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GameRankr.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -322,6 +326,7 @@
 				4C430E572000636C00CAC150 /* FixedImageSizeTableCell.swift */,
 				4C430E6B2001D19100CAC150 /* FullRankingDataSource.swift */,
 				4C5E746820127E2500769D21 /* FlagActivity.swift */,
+				6CEF123328AEB4D700E6030A /* Formatter.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -516,6 +521,7 @@
 				4C7CF64D1FE4937800E7B32A /* GameViewController.swift */,
 				4CAA416C1FEAE74D007EBB7C /* EditReviewViewController.swift */,
 				4CAA41761FEC186A007EBB7C /* PortChooserViewController.swift */,
+				6CEF123128AE0E8500E6030A /* SubtitleTableCell.swift */,
 			);
 			path = Game;
 			sourceTree = "<group>";
@@ -824,6 +830,7 @@
 				4CAA416F1FEAF639007EBB7C /* UITableViewCellWithSwitch.swift in Sources */,
 				4C42E4F11FE1BC58003F1C68 /* MyGamesViewController.swift in Sources */,
 				4C2CF8151FF2E7F700A464AA /* LocalSQLiteManager.swift in Sources */,
+				6CEF123228AE0E8500E6030A /* SubtitleTableCell.swift in Sources */,
 				4CAA41731FEAFFFC007EBB7C /* MyShelvesManager.swift in Sources */,
 				4C430E6E2001DFEB00CAC150 /* RecentReviewsViewController.swift in Sources */,
 				4C5E746920127E2500769D21 /* FlagActivity.swift in Sources */,
@@ -844,6 +851,7 @@
 				4C430E56200036EA00CAC150 /* StringExtensions.swift in Sources */,
 				4C5F885220044D8D002D67F5 /* GameRankrUITabBarController.swift in Sources */,
 				4CAA41771FEC186A007EBB7C /* PortChooserViewController.swift in Sources */,
+				6CEF123428AEB4D700E6030A /* Formatter.swift in Sources */,
 				4C430E532000109500CAC150 /* MyGamesFilterViewController.swift in Sources */,
 				4CD1C9DD1FDF6B62001A0B8D /* UpdatesViewController.swift in Sources */,
 				4C430E6C2001D19100CAC150 /* FullRankingDataSource.swift in Sources */,

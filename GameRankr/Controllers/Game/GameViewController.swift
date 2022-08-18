@@ -5,22 +5,55 @@ class GameViewController : UIViewController, APIGameDetailDelegate, APIGameRanki
     
     @IBOutlet weak var shareButton: UIBarButtonItem!
     @IBOutlet weak var loadingImage: UIImageView!
+    
     @IBOutlet weak var imageView: UIImageView!
-    @IBOutlet weak var gameDescription: UILabel!
+    
+    // details section
     @IBOutlet weak var platformLabel: UILabel!
     @IBOutlet weak var otherPlatformsButton: UIButton!
-    @IBOutlet weak var switchEditionButton: UIButton!
+    @IBOutlet weak var unexpandedConstraint: NSLayoutConstraint!
+    @IBOutlet weak var expandedConstraint: NSLayoutConstraint!
+    @IBOutlet weak var gameDescription: UILabel!
+    @IBOutlet weak var releaseDateLabel: UILabel!
+    @IBOutlet weak var originalReleaseDateLabel: UILabel!
+    @IBOutlet weak var originalReleaseRow: UIView!
+    @IBOutlet weak var editionRatingsCountLabel: UILabel!
+    @IBOutlet weak var editionRatingsDescriptorLabel: UILabel!
+    @IBOutlet weak var editionRatingsRow: UIView!
+    @IBOutlet weak var editionAverageLabel: UILabel!
+    @IBOutlet weak var allRankingsRow: UIView!
+    @IBOutlet weak var allRatingsCountLabel: UILabel!
+    @IBOutlet weak var allRatingsDescriptorLabel: UILabel!
+    @IBOutlet weak var allAverageLabel: UILabel!
+    @IBOutlet weak var platformsLabel: UILabel!
+    @IBOutlet weak var expandDetailsButton: UIButton!
+    
+    // my reviews secrion
     @IBOutlet weak var stars: UIStackView!
     @IBOutlet weak var shelveButton: UIButton!
     @IBOutlet weak var reviewStack: UIStackView!
     @IBOutlet weak var reviewLabel: UILabel!
+    @IBOutlet weak var reviewDateLabel: UILabel!
+    @IBOutlet weak var reviewPlatformLabel: UILabel!
     @IBOutlet weak var reviewButton: UIButton!
+    @IBOutlet weak var switchEditionButton: UIButton!
     @IBOutlet weak var commentsButton: UIButton!
+    
+    
     @IBOutlet weak var noRankingsLabel: UILabel!
     @IBOutlet weak var reviewsTable: IntrinsicTableView!
     
     let starFull = UIImage(named: "star-large-full")
     let starEmpty = UIImage(named: "star-large-empty")
+    
+    
+    var nextPage: String?
+    var ranking: RankingWithGame?
+    var rankings = [RankingWithUser]()
+    var friendRankings = [RankingWithUser]()
+    var portId: GraphQLID?
+    
+    private var expanded = false
     
     var gameDetail: GameQuery.Data.Game? {
         didSet {
@@ -56,11 +89,27 @@ class GameViewController : UIViewController, APIGameDetailDelegate, APIGameRanki
         }
     }
     
-    var nextPage: String?
-    var ranking: RankingWithGame?
-    var rankings = [RankingWithUser]()
-    var friendRankings = [RankingWithUser]()
-    var portId: GraphQLID?
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        loadingImage.image = PlaceholderImages.loadingBar
+        stars.arrangedSubviews.forEach({ subview in
+            let star = subview as! UIButton
+            star.addTarget(self, action: #selector(starTapped(sender:)), for: .touchUpInside)
+        })
+        switchEditionButton.addTarget(self, action: #selector(switchEditions(sender:)), for: .touchUpInside)
+        api.register(authenticationDelegate: self)
+        shareButton.target = self
+        shareButton.action = #selector(shareGame)
+        
+        expandDetailsButton.addTarget(self, action: #selector(expandDetails), for: .touchUpInside)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        configureView()
+        MyGamesManager.sharedInstance.register(delegate: self)
+        gameDescription.numberOfLines = 3
+    }
     
     func selectPort(portId: GraphQLID) {
         self.portId = portId
@@ -98,6 +147,9 @@ class GameViewController : UIViewController, APIGameDetailDelegate, APIGameRanki
     }
     
     func configureView() {
+        if !isViewLoaded {
+            return
+        }
         loadingImage?.isHidden = !isLoading()
         self.reviewsTable?.reloadData()
         guard let game = game else {
@@ -107,16 +159,48 @@ class GameViewController : UIViewController, APIGameDetailDelegate, APIGameRanki
     
         let port = selectedPort()
         title = game.title
-        platformLabel?.text = "Platform: \(port.platform.name)"
+        platformLabel?.text = port.platform.name
+        releaseDateLabel?.text = Formatter.format(dateString: port.releasedAt)
+        editionRatingsCountLabel?.text = Formatter.format(port.rankingsCount)
+        if port.rankingsCount == 0 {
+            editionRatingsDescriptorLabel?.text = "rankings"
+            editionAverageLabel?.text = ""
+        }
+        else {
+            editionRatingsDescriptorLabel?.text = "rankings, Avg rating:"
+            editionAverageLabel?.text = Formatter.format(port.averageRanking)
+        }
         
         let remainingPorts = game.ports.filter({$0.id != port.id})
         if (remainingPorts.isEmpty) {
             otherPlatformsButton?.isHidden = true
+            originalReleaseRow?.isHidden = true
+            allRankingsRow?.isHidden = true
+            platformsLabel?.isHidden = true
+            editionRatingsRow.isHidden = false
         }
         else {
+            originalReleaseRow?.isHidden = false
             otherPlatformsButton?.isHidden = false
-            let otherPlatforms = remainingPorts.map{$0.platform.name}.joined(separator: ", ")
-            otherPlatformsButton?.setTitle("Other Platforms: \(otherPlatforms)", for: .normal)
+            allRankingsRow?.isHidden = false
+            platformsLabel?.isHidden = false
+            
+            platformsLabel?.text = "All Platforms: " + remainingPorts.map{$0.platform.name}.joined(separator: ", ")
+            
+            originalReleaseDateLabel?.text = Formatter.format(dateString: game.initiallyReleasedAt)
+            
+            allAverageLabel?.text = Formatter.format(game.averageRanking)
+            allRatingsCountLabel?.text = Formatter.format(game.rankingsCount)
+            if game.rankingsCount == 0 {
+                allRatingsDescriptorLabel?.text = "rankings"
+                allAverageLabel?.text = ""
+                editionRatingsRow.isHidden = true
+            }
+            else {
+                allRatingsDescriptorLabel?.text = "rankings, Avg rating:"
+                allAverageLabel?.text = Formatter.format(port.averageRanking)
+                editionRatingsRow?.isHidden = false
+            }
         }
         
         configureViewWithRanking()
@@ -151,28 +235,30 @@ class GameViewController : UIViewController, APIGameDetailDelegate, APIGameRanki
     
     private func configureViewWithRanking() {
         guard let ranking = ranking else {
-            switchEditionButton?.isHidden = true
             shelveButton?.setTitle("Add to My Games", for: .normal)
-            shelveButton?.backgroundColor = UIColor.lightGray
             reviewStack?.isHidden = true
             setStars(0)
             return
         }
         let rankingBasic = ranking.fragments.rankingBasic
-        if (rankingBasic.port?.id == selectedPort().id) {
+        let selectedPort = selectedPort()
+        if (rankingBasic.port?.id == selectedPort.id) {
             switchEditionButton?.isHidden = true
         }
         else {
             switchEditionButton?.isHidden = false
+            switchEditionButton?.setTitle("Switch to \(selectedPort.platform.name)", for: .normal)
         }
         reviewStack?.isHidden = false
         
         setStars(rankingBasic.ranking ?? 0)
+        
+        reviewDateLabel?.text = Formatter.formatDate(rankingBasic.updatedAt)
+        reviewPlatformLabel?.text = rankingBasic.port?.platform.name ?? "UKN"
 
         let shelfNames = rankingBasic.shelves.map{$0.fragments.shelfBasic.name}
         let shelvesStr = shelfNames.joined(separator: ", ")
-        shelveButton?.setTitle("Shelved: \(shelvesStr)", for: .normal)
-        shelveButton?.backgroundColor = UIColor.white
+        shelveButton?.setTitle(shelvesStr, for: .normal)
         if (rankingBasic.review != nil && rankingBasic.review != "") {
             reviewLabel?.isHidden = false
             reviewLabel?.text = "\"\(rankingBasic.review!)\""
@@ -190,30 +276,7 @@ class GameViewController : UIViewController, APIGameDetailDelegate, APIGameRanki
             commentsButton?.isHidden = true
         }
     }
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        loadingImage.image = PlaceholderImages.loadingBar
-        shelveButton.layer.borderColor = UIColor.lightGray.cgColor
-        shelveButton.layer.borderWidth = 2
-        stars.arrangedSubviews.forEach({ subview in
-            let star = subview as! UIButton
-            star.addTarget(self, action: #selector(starTapped(sender:)), for: .touchUpInside)
-        })
-        switchEditionButton.addTarget(self, action: #selector(switchEditions(sender:)), for: .touchUpInside)
-        api.register(authenticationDelegate: self)
-        shareButton.target = self
-        shareButton.action = #selector(shareGame)
-        gameDescription.isUserInteractionEnabled = true
-        gameDescription.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(descriptionTouched)))
-    }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        configureView()
-        MyGamesManager.sharedInstance.register(delegate: self)
-        gameDescription.numberOfLines = 3
-    }
     
     @objc func shareGame() {
         share(message: "\(game!.title) - GameRankr", link: game!.url, displayFlag: true)
@@ -234,8 +297,18 @@ class GameViewController : UIViewController, APIGameDetailDelegate, APIGameRanki
         starRankPort(rankingValue: rankingValue)
     }
     
-    @objc func descriptionTouched() {
-        gameDescription.numberOfLines = gameDescription.numberOfLines == 3 ? 0 : 3
+    @objc func expandDetails() {
+        if expanded {
+            expandDetailsButton.setTitle("Show Details", for: .normal)
+            expandedConstraint.isActive = false
+            unexpandedConstraint.isActive = true
+            expanded = false
+            return
+        }
+        expandDetailsButton.setTitle("Less", for: .normal)
+        unexpandedConstraint.isActive = false
+        expandedConstraint.isActive = true
+        expanded = true
     }
     
     func starRankPort(rankingValue: Int) {
@@ -322,19 +395,37 @@ class GameViewController : UIViewController, APIGameDetailDelegate, APIGameRanki
         }
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
         let ranking = rankings[indexPath.row]
-        let user = ranking.user
-        cell.textLabel!.text = "\(user?.fragments.userBasic.realName ?? "unknown") \(ranking.fragments.rankingBasic.verb)"
-        if (ranking.fragments.rankingBasic.ranking != nil) {
-            let starsStr = String(repeating: "\u{2605}", count: ranking.fragments.rankingBasic.ranking!)
-            cell.textLabel!.text! += " \(starsStr)"
-        }
         
-        if (ranking.fragments.rankingBasic.review != nil && ranking.fragments.rankingBasic.review! != "") {
-            cell.detailTextLabel!.text = "\"\(ranking.fragments.rankingBasic.review!)\""
+        let user = ranking.user
+        let userBasic = user?.fragments.userBasic
+        let rankingBasic = ranking.fragments.rankingBasic
+        let userName = userBasic?.realName ?? "Unknown"
+        var primaryText = "\(userName) \(rankingBasic.verb)"
+        let stars = rankingBasic.ranking ?? 0
+        if stars > 0 {
+            primaryText += " \(String(repeating: "\u{2605}", count: stars))"
+        }
+        cell.textLabel?.text = primaryText
+        if let photoUrl = userBasic?.photoUrl {
+            cell.imageView?.kf.setImage(with: URL(string: photoUrl)!, placeholder: PlaceholderImages.user, completionHandler: {
+                (result) in
+                cell.layoutSubviews()
+            })
         }
         else {
-            cell.detailTextLabel!.text = ""
+            cell.imageView?.image = PlaceholderImages.user
         }
+        
+        let review = rankingBasic.review ?? ""
+        var secondaryText = ""
+        if review != "" {
+            secondaryText = "\"\(review)\"\n"
+        }
+        secondaryText += "\(Formatter.format(dateString: rankingBasic.updatedAt))"
+        if rankingBasic.commentsCount > 0 {
+            secondaryText += "    \(rankingBasic.commentsCount) comments"
+        }
+        cell.detailTextLabel?.text = secondaryText
         return cell
     }
     

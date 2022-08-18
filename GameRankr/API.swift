@@ -5094,6 +5094,9 @@ public struct GameBasic: GraphQLFragment {
       id
       title
       url
+      initiallyReleasedAt
+      averageRanking
+      rankingsCount
       ports {
         __typename
         id
@@ -5102,6 +5105,9 @@ public struct GameBasic: GraphQLFragment {
           id
           name
         }
+        releasedAt
+        averageRanking
+        rankingsCount
         small_image_url
         medium_image_url
       }
@@ -5116,6 +5122,9 @@ public struct GameBasic: GraphQLFragment {
       GraphQLField("id", type: .nonNull(.scalar(GraphQLID.self))),
       GraphQLField("title", type: .nonNull(.scalar(String.self))),
       GraphQLField("url", type: .nonNull(.scalar(String.self))),
+      GraphQLField("initiallyReleasedAt", type: .scalar(String.self)),
+      GraphQLField("averageRanking", type: .nonNull(.scalar(Double.self))),
+      GraphQLField("rankingsCount", type: .nonNull(.scalar(Int.self))),
       GraphQLField("ports", type: .nonNull(.list(.nonNull(.object(Port.selections))))),
     ]
   }
@@ -5126,8 +5135,8 @@ public struct GameBasic: GraphQLFragment {
     self.resultMap = unsafeResultMap
   }
 
-  public init(id: GraphQLID, title: String, url: String, ports: [Port]) {
-    self.init(unsafeResultMap: ["__typename": "Game", "id": id, "title": title, "url": url, "ports": ports.map { (value: Port) -> ResultMap in value.resultMap }])
+  public init(id: GraphQLID, title: String, url: String, initiallyReleasedAt: String? = nil, averageRanking: Double, rankingsCount: Int, ports: [Port]) {
+    self.init(unsafeResultMap: ["__typename": "Game", "id": id, "title": title, "url": url, "initiallyReleasedAt": initiallyReleasedAt, "averageRanking": averageRanking, "rankingsCount": rankingsCount, "ports": ports.map { (value: Port) -> ResultMap in value.resultMap }])
   }
 
   public var __typename: String {
@@ -5166,6 +5175,33 @@ public struct GameBasic: GraphQLFragment {
     }
   }
 
+  public var initiallyReleasedAt: String? {
+    get {
+      return resultMap["initiallyReleasedAt"] as? String
+    }
+    set {
+      resultMap.updateValue(newValue, forKey: "initiallyReleasedAt")
+    }
+  }
+
+  public var averageRanking: Double {
+    get {
+      return resultMap["averageRanking"]! as! Double
+    }
+    set {
+      resultMap.updateValue(newValue, forKey: "averageRanking")
+    }
+  }
+
+  public var rankingsCount: Int {
+    get {
+      return resultMap["rankingsCount"]! as! Int
+    }
+    set {
+      resultMap.updateValue(newValue, forKey: "rankingsCount")
+    }
+  }
+
   public var ports: [Port] {
     get {
       return (resultMap["ports"] as! [ResultMap]).map { (value: ResultMap) -> Port in Port(unsafeResultMap: value) }
@@ -5183,6 +5219,9 @@ public struct GameBasic: GraphQLFragment {
         GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
         GraphQLField("id", type: .nonNull(.scalar(GraphQLID.self))),
         GraphQLField("platform", type: .nonNull(.object(Platform.selections))),
+        GraphQLField("releasedAt", type: .scalar(String.self)),
+        GraphQLField("averageRanking", type: .nonNull(.scalar(Double.self))),
+        GraphQLField("rankingsCount", type: .nonNull(.scalar(Int.self))),
         GraphQLField("small_image_url", type: .scalar(String.self)),
         GraphQLField("medium_image_url", type: .scalar(String.self)),
       ]
@@ -5194,8 +5233,8 @@ public struct GameBasic: GraphQLFragment {
       self.resultMap = unsafeResultMap
     }
 
-    public init(id: GraphQLID, platform: Platform, smallImageUrl: String? = nil, mediumImageUrl: String? = nil) {
-      self.init(unsafeResultMap: ["__typename": "Port", "id": id, "platform": platform.resultMap, "small_image_url": smallImageUrl, "medium_image_url": mediumImageUrl])
+    public init(id: GraphQLID, platform: Platform, releasedAt: String? = nil, averageRanking: Double, rankingsCount: Int, smallImageUrl: String? = nil, mediumImageUrl: String? = nil) {
+      self.init(unsafeResultMap: ["__typename": "Port", "id": id, "platform": platform.resultMap, "releasedAt": releasedAt, "averageRanking": averageRanking, "rankingsCount": rankingsCount, "small_image_url": smallImageUrl, "medium_image_url": mediumImageUrl])
     }
 
     public var __typename: String {
@@ -5222,6 +5261,33 @@ public struct GameBasic: GraphQLFragment {
       }
       set {
         resultMap.updateValue(newValue.resultMap, forKey: "platform")
+      }
+    }
+
+    public var releasedAt: String? {
+      get {
+        return resultMap["releasedAt"] as? String
+      }
+      set {
+        resultMap.updateValue(newValue, forKey: "releasedAt")
+      }
+    }
+
+    public var averageRanking: Double {
+      get {
+        return resultMap["averageRanking"]! as! Double
+      }
+      set {
+        resultMap.updateValue(newValue, forKey: "averageRanking")
+      }
+    }
+
+    public var rankingsCount: Int {
+      get {
+        return resultMap["rankingsCount"]! as! Int
+      }
+      set {
+        resultMap.updateValue(newValue, forKey: "rankingsCount")
       }
     }
 

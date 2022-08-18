@@ -259,24 +259,6 @@ class GameRankrAPI {
             return false
         }
     }
-    
-    func parseDate(_ dateString: String) -> Date? {
-        
-        let dateFormatterGet = DateFormatter()
-        dateFormatterGet.dateFormat = "yyyy-MM-dd HH:mm:ss zzz"
-        
-        return dateFormatterGet.date(from: dateString)
-    }
-    
-    func formatDate(_ dateString: String) -> String? {
-        guard let date = parseDate(dateString) else {
-            return nil
-        }
-        
-        let dateFormatterPrint = DateFormatter()
-        dateFormatterPrint.dateFormat = "MMM dd, yyyy"
-        return dateFormatterPrint.string(from: date)
-    }
 }
 
 class GameRankrAuthInterceptor : ApolloInterceptor {

@@ -128,7 +128,7 @@ class RankingViewController : UIViewController, UITableViewDataSource, APICommen
             reviewLabel.isHidden = true
         }
         
-        if let date = api.formatDate(ranking.updatedAt) {
+        if let date = Formatter.formatDate(ranking.updatedAt) {
             dateLabel?.text = date
             dateLabel.isHidden = false
         }
@@ -218,8 +218,6 @@ class RankingViewController : UIViewController, UITableViewDataSource, APICommen
     }
     
     
-    
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return comments.count
     }
@@ -237,11 +235,7 @@ class RankingViewController : UIViewController, UITableViewDataSource, APICommen
             (result) in
             cell.layoutSubviews()
         })
-        var text = "\"\(comment.comment)\""
-        if let date = api.formatDate(comment.createdAt) {
-            text += "\n\(date)"
-        }
-        cell.detailTextLabel?.text = text
+        cell.detailTextLabel?.text = "\"\(comment.comment)\"\n\(Formatter.format(dateString: comment.createdAt))"
         return cell
     }
     
