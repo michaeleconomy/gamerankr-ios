@@ -5,6 +5,7 @@ fragment RankingBasic on Ranking {
     verb
     comments_count
     url
+    updated_at
     shelves {
         ...ShelfBasic
     }
@@ -15,5 +16,6 @@ fragment RankingBasic on Ranking {
             name
         }
         small_image_url
+        medium_image_url
     }
 }

@@ -8,13 +8,16 @@ class UpdatesViewController: UIViewController, UITableViewDataSource, APIUpdates
     @IBOutlet weak var loadingImage: UIImageView!
     @IBOutlet weak var tableView: UITableView!
     
+    @IBAction func unwindToUpdates(segue: UIStoryboardSegue) {
+        
+    }
+    
     private var nextPage: String?
     var fetchedUpdates = false
     var rankings = [RankingFull]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         loadingImage.image = PlaceholderImages.loadingBar
         api.register(authenticationDelegate: self)
     }
@@ -38,20 +41,20 @@ class UpdatesViewController: UIViewController, UITableViewDataSource, APIUpdates
         
         self.nextPage = nextPage
         
-        DispatchQueue.main.async(execute: {
+        DispatchQueue.main.async {
             self.noUpdatesLabel.isHidden = !self.rankings.isEmpty
             self.tableView.reloadData()
             self.loadingImage.isHidden = true
-        })
+        }
     }
     
     func getNextPage() {
         api.updates(after: nextPage, delegate: self)
         self.nextPage = nil
         
-        DispatchQueue.main.async(execute: {
+        DispatchQueue.main.async {
             self.loadingImage.isHidden = false
-        })
+        }
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -67,24 +70,27 @@ class UpdatesViewController: UIViewController, UITableViewDataSource, APIUpdates
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if (segue.identifier == nil) {
-            NSLog("nil segue from updatesView")
+        guard let identifier = segue.identifier else {
+            silentError("nil segue identifier from shelf view")
             return
         }
-        switch segue.identifier! {
+        switch identifier {
         case "requireSignIn": ()
         case "rankingDetail":
             guard let indexPath = tableView.indexPathForSelectedRow else {
                 NSLog("tableView.indexPathForSelectedRow was nil")
                 return
             }
-            let controller = segue.destination as! RankingViewController
+            guard let controller = segue.destination as? RankingViewController else {
+                unexpectedError("unexpected controller type for segue: \(identifier)")
+                return
+            }
             let ranking = rankings[indexPath.row]
             controller.ranking = ranking.fragments.rankingWithGame.fragments.rankingBasic
-            controller.user = ranking.user.fragments.userBasic
-            controller.game = ranking.fragments.rankingWithGame.game.fragments.gameBasic
+            controller.user = ranking.user?.fragments.userBasic
+            controller.game = ranking.fragments.rankingWithGame.game?.fragments.gameBasic
         default:
-            NSLog("updates view: unhandled segue identifier: \(segue.identifier!)")
+            silentError("unhandled segue identifier: \(identifier)")
         }
     }
     
@@ -101,14 +107,14 @@ class UpdatesViewController: UIViewController, UITableViewDataSource, APIUpdates
         rankings.removeAll()
         fetchedUpdates = false
         
-        DispatchQueue.main.async(execute: {
+        DispatchQueue.main.async {
             self.tableView.reloadData()
-        })
+        }
     }
     
     func handleAPIAuthenticationError() {
-        DispatchQueue.main.async(execute: {
+        DispatchQueue.main.async {
             self.performSegue(withIdentifier: "requireSignIn", sender: nil)
-        })
+        }
     }
 }

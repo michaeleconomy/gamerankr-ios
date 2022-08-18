@@ -9,6 +9,11 @@ class BrowseViewController: UIViewController, FullRankingDataSource, APIPopularG
     @IBOutlet weak var reviewsTable: UITableView!
     @IBOutlet weak var moreReviewsButton: UIButton!
     
+    
+    @IBAction func unwindToBrowse(segue: UIStoryboardSegue) {
+        
+    }
+    
     private var games: [GameBasic]?
     private var rankings: [RankingFull]?
     private var nextPage: String?
@@ -22,21 +27,19 @@ class BrowseViewController: UIViewController, FullRankingDataSource, APIPopularG
         api.recentReviews(delegate: self)
         configureView()
     }
-    
-    func asyncConfigureView() {
-        DispatchQueue.main.async(execute: {
-            self.configureView()
-        })
-    }
+
     
     func configureView() {
-        loadingImage?.isHidden = false
-        if (games == nil) {
+        if games == nil {
+            loadingImage?.isHidden = false
             scrollView?.isHidden = true
             return
         }
+        
         scrollView?.isHidden = false
-        if (rankings == nil) {
+        
+        if rankings == nil {
+            loadingImage?.isHidden = false
             reviewsLabel?.isHidden = true
             reviewsTable?.isHidden = true
             moreReviewsButton?.isHidden = true
@@ -47,15 +50,6 @@ class BrowseViewController: UIViewController, FullRankingDataSource, APIPopularG
         moreReviewsButton?.isHidden = false
         loadingImage?.isHidden = true
         reviewsTable?.reloadData()
-    }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return rankings?.count ?? 0
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let ranking = rankings![indexPath.row]
-        return cellFor(ranking: ranking, tableView: tableView, indexPath: indexPath);
     }
     
     func addGames() {
@@ -78,57 +72,77 @@ class BrowseViewController: UIViewController, FullRankingDataSource, APIPopularG
         }
     }
     
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return rankings?.count ?? 0
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let ranking = rankings![indexPath.row]
+        return cellFor(ranking: ranking, tableView: tableView, indexPath: indexPath)
+    }
+    
     @objc func gameImageTouch(sender: UIButton) {
          performSegue(withIdentifier: "gameDetail", sender: sender)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if (segue.identifier == nil) {
-            NSLog("nil segue from updatesView")
+        guard let identifier = segue.identifier else {
+            silentError("nil segue identifier")
             return
         }
-        switch segue.identifier! {
+        switch identifier {
         case "rankingDetail":
             guard let indexPath = reviewsTable.indexPathForSelectedRow else {
-                NSLog("tableView.indexPathForSelectedRow was nil")
+                unexpectedError("tableView.indexPathForSelectedRow was nil")
                 return
             }
-            let controller = segue.destination as! RankingViewController
+            guard let controller = segue.destination as? RankingViewController else {
+                unexpectedError("Unexpected destination controller type for segue: \(identifier)")
+                return
+            }
             let ranking = rankings![indexPath.row]
             controller.ranking = ranking.fragments.rankingWithGame.fragments.rankingBasic
-            controller.user = ranking.user.fragments.userBasic
-            controller.game = ranking.fragments.rankingWithGame.game.fragments.gameBasic
-            
+            controller.user = ranking.user?.fragments.userBasic
+            controller.game = ranking.fragments.rankingWithGame.game?.fragments.gameBasic
         case "gameDetail":
             let button = sender as! UIButton
             guard let index = gamesStack.arrangedSubviews.index(of: button) else {
-                NSLog("could not find button in gamesStack")
+                unexpectedError("could not find button in gamesStack")
                 return
             }
-            let controller = segue.destination as! GameViewController
+            guard let controller = segue.destination as? GameViewController else {
+                unexpectedError("Unexpected destination controller type for segue: \(identifier)")
+                return
+            }
             let game = games![index]
             controller.game = game
         case "moreRecentReviews":
-            let controller = segue.destination as! RecentReviewsViewController
+            guard let controller = segue.destination as? RecentReviewsViewController else {
+                unexpectedError("Unexpected destination controller type for segue: \(identifier)")
+                return
+            }
             api.recentReviews(after: nextPage, delegate: controller)
         default:
-            NSLog("browse view: unhandled segue identifier: \(segue.identifier!)")
+            silentError("browse view: unhandled segue identifier: \(identifier)")
         }
     }
     
     func handleAPI(games: [GameBasic]) {
         self.games = games
         
-        DispatchQueue.main.async(execute: {
+        DispatchQueue.main.async {
             self.addGames()
             self.configureView()
-        })
+        }
     }
     
     func handleAPI(rankings: [RankingFull], nextPage: String?) {
         self.rankings = rankings
         self.nextPage = nextPage
         
-        asyncConfigureView()
+        DispatchQueue.main.async {
+            self.configureView()
+        }
     }
 }

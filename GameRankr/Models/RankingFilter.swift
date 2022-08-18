@@ -43,11 +43,11 @@ class RankingFilter {
             return true
         }
         
-        if (ranking.game.fragments.gameBasic.title.lowercased().contains(text!)) {
+        if ((ranking.game != nil) && ranking.game!.fragments.gameBasic.title.lowercased().contains(text!)) {
             return true
         }
         
-        if (ranking.fragments.rankingBasic.port.platform.name.lowercased().contains(text!)) {
+        if ((ranking.fragments.rankingBasic.port != nil) && ranking.fragments.rankingBasic.port!.platform.name.lowercased().contains(text!)) {
             return true
         }
         return false

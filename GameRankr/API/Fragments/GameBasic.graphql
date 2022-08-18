@@ -9,5 +9,6 @@ fragment GameBasic on Game {
             name
         }
         small_image_url
+        medium_image_url
     }
 }

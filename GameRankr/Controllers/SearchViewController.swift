@@ -30,20 +30,21 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
         if (nextPage != nil && indexPath.row >= (results.count - 15)) {
             doSearch(getNextPage: true)
         }
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
+        
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! FixedImageSizeTableCell
         let game = results[indexPath.row]
-        cell.textLabel!.text = game.title
-        cell.detailTextLabel!.text = game.ports.map{$0.platform.name}.joined(separator: ", ")
+        cell.primaryLabel?.text = game.title
+        cell.secondaryLabel?.text = game.ports.map{$0.platform.name}.joined(separator: ", ")
         let port = game.ports.first
-        if (port != nil && port?.smallImageUrl != nil) {
-            cell.imageView?.kf.indicatorType = .activity
-            cell.imageView?.kf.setImage(with: URL(string: port!.smallImageUrl!)!, placeholder: PlaceholderImages.game, completionHandler: {
-                (image, error, cacheType, imageUrl) in
+        if let imageUrl = port?.smallImageUrl {
+            cell.fixedSizeImageView?.kf.indicatorType = .activity
+            cell.fixedSizeImageView?.kf.setImage(with: URL(string: imageUrl)!, placeholder: PlaceholderImages.game, completionHandler: {
+                (result) in
                 cell.layoutSubviews()
             })
         }
         else {
-            cell.imageView?.image = PlaceholderImages.game
+            cell.fixedSizeImageView?.image = PlaceholderImages.game
         }
         return cell
     }
@@ -54,19 +55,19 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
             currentApiTask = nil
         }
         if (query != nil) {
-            self.shouldClearSearchOnResults = true
+            shouldClearSearchOnResults = true
             lastQuery = query
         }
         var nextPage: String?
         if (getNextPage) {
             nextPage = self.nextPage
-            self.nextPage = nil
+            nextPage = nil
         }
         currentApiTask = api.search(query: lastQuery!, after: nextPage, delegate: self)
         
-        DispatchQueue.main.async(execute: {
+        DispatchQueue.main.async {
             self.loadingImage.isHidden = false
-        })
+        }
     }
     
     func searchBar(_: UISearchBar, textDidChange: String) {
@@ -79,48 +80,54 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         doSearch(query: searchBar.text)
         searchBar.endEditing(true)
-        DispatchQueue.main.async(execute: {
+        DispatchQueue.main.async {
             self.tableView.reloadData()
-        })
+        }
     }
     
     func handleAPISearch(results: [GameBasic], nextPage: String?) {
         if (shouldClearSearchOnResults) {
             shouldClearSearchOnResults = false
             self.results.removeAll()
-            DispatchQueue.main.async(execute: {
+            DispatchQueue.main.async {
                 self.tableView?.setContentOffset(CGPoint.zero, animated:false)
-            })
+            }
         }
         self.results.append(contentsOf: results)
         self.nextPage = nextPage
-        DispatchQueue.main.async(execute: {
+        DispatchQueue.main.async {
             self.noGamesLabel?.isHidden = !self.results.isEmpty
             self.tableView.reloadData()
             self.loadingImage.isHidden = true
-        })
+        }
     }
     
     func handleAPIAuthenticationError() {
         easyAlert("Session Expired, please try again.")
-        DispatchQueue.main.async(execute: {
+        DispatchQueue.main.async {
             self.loadingImage.isHidden = true
-        })
+        }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if (segue.identifier == nil) {
-            NSLog("nil segue from search view")
+        guard let identifier = segue.identifier else {
+            silentError("nil segue identifier")
             return
         }
-        switch segue.identifier! {
+        switch identifier {
         case "gameDetail":
-            if let indexPath = tableView.indexPathForSelectedRow {
-                let controller = segue.destination as! GameViewController
-                controller.game = results[indexPath.row]
+            guard let indexPath = tableView.indexPathForSelectedRow else {
+                unexpectedError("no indexPathForSelectedRow")
+                return
             }
+            
+            guard let controller = segue.destination as? GameViewController else {
+                unexpectedError("Unexpected destination controller type for segue: \(identifier)")
+                return
+            }
+            controller.game = results[indexPath.row]
         default:
-            NSLog("search view: unhandled segue identifier: \(segue.identifier!)")
+            silentError("unhandled segue identifier: \(identifier)")
         }
     }
 }

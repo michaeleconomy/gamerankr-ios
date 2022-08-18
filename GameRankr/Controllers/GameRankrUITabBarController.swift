@@ -2,7 +2,7 @@ import UIKit
 
 class GameRankrUITabBarController: UITabBarController, APIAuthenticationDelegate {
     
-    var signInController: SignInViewController?
+    var signInController: SignUpViewController?
     var signOutController: SignOutViewController?
     
     override func viewDidLoad() {
@@ -21,9 +21,9 @@ class GameRankrUITabBarController: UITabBarController, APIAuthenticationDelegate
     }
     
     private func asyncShowHideLogout() {
-        DispatchQueue.main.async(execute: {
+        DispatchQueue.main.async {
             self.showHideLogout()
-        })
+        }
     }
     
     private func showHideLogout() {
@@ -39,13 +39,13 @@ class GameRankrUITabBarController: UITabBarController, APIAuthenticationDelegate
     
     private func removeSignInPage() {
         let signInIndex = viewControllers!.index(where: {controller in
-            return (controller as? SignInViewController) != nil
+            return (controller as? SignUpViewController) != nil
         })
         
         if(signInIndex == nil) {
             return
         }
-        self.signInController = viewControllers!.remove(at: signInIndex!) as? SignInViewController
+        self.signInController = viewControllers!.remove(at: signInIndex!) as? SignUpViewController
     }
     
     private func removeSignOutPage() {

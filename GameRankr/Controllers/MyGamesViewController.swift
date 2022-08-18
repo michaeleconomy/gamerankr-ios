@@ -79,32 +79,33 @@ class MyGamesViewController: UIViewController, UITableViewDataSource, APIMyGames
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! FixedImageSizeTableCell
         let ranking = getCurrentRankingArray()[indexPath.row]
         let game = ranking.game
-        let port = ranking.fragments.rankingBasic.port
+        let rankingBasic = ranking.fragments.rankingBasic
+        let port = rankingBasic.port
         
-        cell.primaryLabel!.text = game.fragments.gameBasic.title
+        cell.primaryLabel!.text = game?.fragments.gameBasic.title ?? "unknown"
         var secondaryText = ""
-        if (ranking.fragments.rankingBasic.ranking != nil) {
-            secondaryText += String(repeating: "\u{2605}", count: ranking.fragments.rankingBasic.ranking!) + " "
+        if (rankingBasic.ranking != nil) {
+            secondaryText += String(repeating: "\u{2605}", count: rankingBasic.ranking!) + " "
         }
-        secondaryText += port.platform.name
-        if (ranking.fragments.rankingBasic.review != nil && ranking.fragments.rankingBasic.review != "") {
+        secondaryText += port?.platform.name ?? "UKN"
+        if (rankingBasic.review != nil && rankingBasic.review != "") {
             secondaryText += " - review"
         }
-        secondaryText += "\nShelves: " + ranking.fragments.rankingBasic.shelves.map{$0.fragments.shelfBasic.name}.joined(separator: ", ")
+        secondaryText += "\nShelves: " + rankingBasic.shelves.map{$0.fragments.shelfBasic.name}.joined(separator: ", ")
         
-        if (ranking.fragments.rankingBasic.commentsCount > 0) {
-            secondaryText += "\n\(ranking.fragments.rankingBasic.commentsCount) comment"
-            if (ranking.fragments.rankingBasic.commentsCount > 1) {
+        if (rankingBasic.commentsCount > 0) {
+            secondaryText += "\n\(rankingBasic.commentsCount) comment"
+            if (rankingBasic.commentsCount > 1) {
                 secondaryText += "s"
             }
         }
         cell.secondaryLabel!.text = secondaryText
         
         cell.fixedSizeImageView!.image = PlaceholderImages.game
-        if (ranking.fragments.rankingBasic.port.smallImageUrl != nil) {
+        if (rankingBasic.port?.smallImageUrl != nil) {
             cell.fixedSizeImageView!.kf.indicatorType = .activity
-            cell.fixedSizeImageView!.kf.setImage(with: URL(string: ranking.fragments.rankingBasic.port.smallImageUrl!)!, placeholder: PlaceholderImages.game, completionHandler: {
-                (image, error, cacheType, imageUrl) in
+            cell.fixedSizeImageView!.kf.setImage(with: URL(string: rankingBasic.port!.smallImageUrl!)!, placeholder: PlaceholderImages.game, completionHandler: {
+                (result) in
                 cell.layoutSubviews()
             })
         }
@@ -128,33 +129,41 @@ class MyGamesViewController: UIViewController, UITableViewDataSource, APIMyGames
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if (segue.identifier == nil) {
-            NSLog("nil segue from my games view")
+        guard let identifier = segue.identifier else {
+            silentError("nil segue identifier")
             return
         }
-        switch segue.identifier! {
+        switch identifier {
         case "gameDetail":
             guard let indexPath = tableView.indexPathForSelectedRow else {
-                NSLog("my games: tableView.indexPathForSelectedRow was nil")
+                unexpectedError("my games: tableView.indexPathForSelectedRow was nil")
                 return
             }
-            let controller = segue.destination as! GameViewController
+            guard let controller = segue.destination as? GameViewController else {
+                unexpectedError("Unexpected destination controller type for segue: \(identifier)")
+                return
+            }
             let ranking = getCurrentRankingArray()[indexPath.row]
-            controller.game = ranking.game.fragments.gameBasic
-            controller.selectPort(portId: ranking.fragments.rankingBasic.port.id)
+            controller.game = ranking.game?.fragments.gameBasic
+            if let port = ranking.fragments.rankingBasic.port {
+                controller.selectPort(portId: port.id)
+            }
         case "requireSignIn": ()
         case "filter":
-            let controller = segue.destination as! MyGamesFilterViewController
+            guard let controller = segue.destination as? MyGamesFilterViewController else {
+                unexpectedError("Unexpected destination controller type for segue: \(identifier)")
+                return
+            }
             controller.filter = filter ?? RankingFilter()
             controller.callingController = self
         default:
-            NSLog("my games view: unhandled segue identifier: \(segue.identifier!)")
+            silentError("my games view: unhandled segue identifier: \(identifier)")
         }
     }
     
     func handleAPIAuthenticationError() {
-        DispatchQueue.main.async(execute: {
+        DispatchQueue.main.async {
             self.performSegue(withIdentifier: "requireSignIn", sender: nil)
-        })
+        }
     }
 }

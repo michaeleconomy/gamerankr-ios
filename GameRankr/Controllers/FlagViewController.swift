@@ -42,6 +42,15 @@ class FlagViewController: UIViewController, APIFlagDelegate, UITextViewDelegate 
             easyAlert("Justification required.")
             return
         }
+        guard let resourceId = resourceId else {
+            unexpectedError("resourceId required.")
+            return
+        }
+        guard let resourceType = resourceType else {
+            unexpectedError("resourceType required.")
+            return
+        }
+
         api.flag(resourceId: resourceId, resourceType: resourceType, text: flagText.text, delegate: self)
         
         easyAlert("Thank you for your report. GameRankr staff will investigate this report.", handler: { alert in

@@ -3,12 +3,15 @@
 # Exit on all errors, undeclared variables and pipefailures.
 set -euo pipefail
 
+# Advertisement!
+echo "Have you tried our new Swift Package Manager wrapper around codegen? It's now out of beta and ready to go! See docs at https://www.apollographql.com/docs/ios/swift-scripting/. This Bash script will be deprecated soon, so give it a try today!"
+
 # Get the path to the script directory
 SCRIPT_DIR="$(dirname "$0")"
 
 # Get the SHASUM of the tarball
 ZIP_FILE="${SCRIPT_DIR}/apollo.tar.gz"
-ZIP_FILE_DOWNLOAD_URL="https://41516-65563448-gh.circle-artifacts.com/0/oclif-pack/apollo-v2.22.1/apollo-v2.22.1-darwin-x64.tar.gz"
+ZIP_FILE_DOWNLOAD_URL="https://install.apollographql.com/legacy-cli/darwin/2.33.9"
 SHASUM_FILE="${SCRIPT_DIR}/apollo/.shasum"
 APOLLO_DIR="${SCRIPT_DIR}"/apollo
 IS_RETRY="false"
@@ -26,7 +29,7 @@ download_apollo_cli_if_needed() {
 
 download_cli() {
   echo "Downloading zip file with the CLI..."
-  curl --silent --retry 3 --fail --show-error "${ZIP_FILE_DOWNLOAD_URL}" -o "${ZIP_FILE}"
+  curl --silent --retry 3 --fail --show-error -L "${ZIP_FILE_DOWNLOAD_URL}" -o "${ZIP_FILE}"
 }
 
 force_cli_download() {
@@ -49,13 +52,13 @@ remove_existing_apollo() {
 
 extract_cli() {
   tar xzf "${SCRIPT_DIR}"/apollo.tar.gz -C "${SCRIPT_DIR}"
-  
+
   echo "${SHASUM}" | tee "${SHASUM_FILE}"
 }
 
 validate_codegen_and_extract_if_needed() {
   # Make sure the SHASUM matches the release for this version
-  EXPECTED_SHASUM="bf98280b7164fbb2cd6fa04a9e7869d59798b9717ebee7650c365b920f566c59"
+  EXPECTED_SHASUM="cb73089deb2a720a7d2f5a39ad449e1cfbdc22771130cd6e2a405aaa887c343e"
   update_shasum
 
   if [[ ${SHASUM} = ${EXPECTED_SHASUM}* ]]; then
@@ -77,7 +80,7 @@ validate_codegen_and_extract_if_needed() {
     # The file exists, let's see if it's the same SHASUM
     FILE_CONTENTS="$(cat "${SHASUM_FILE}")"
     if [[ ${FILE_CONTENTS} = ${EXPECTED_SHASUM}* ]]; then
-      echo "Current verson of CLI is already extracted!"
+      echo "Current version of CLI is already extracted!"
     else
       echo "Extracting updated version of the Apollo CLI. This may take a minute..."
       remove_existing_apollo
@@ -96,7 +99,7 @@ download_apollo_cli_if_needed
 # Make sure we're using an up-to-date and valid version of the Apollo CLI
 validate_codegen_and_extract_if_needed
 
-# Add the binary directory to the beginning of PATH so included binary verson of node is used.
+# Add the binary directory to the beginning of PATH so included binary version of node is used.
 PATH="${SCRIPT_DIR}/apollo/bin:${PATH}"
 
 # Use the bundled executable of the Apollo CLI to generate code

@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="RBy-Ta-SSI">
+    <device id="retina3_5" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Shelf-->
+        <scene sceneID="uZt-7T-CpJ">
+            <objects>
+                <viewController title="Shelf: Foo" id="RBy-Ta-SSI" userLabel="Shelf" customClass="ShelfViewController" customModule="GameRankr" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="3BC-xI-uZi">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="ebX-O5-58c">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="22.5"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="aOa-ia-23S">
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="2"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="2" id="K75-pQ-Ppg"/>
+                                        </constraints>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No games are on this shelf." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ylm-hn-Dpk">
+                                        <rect key="frame" x="0.0" y="2" width="320" height="20.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="aOa-ia-23S" firstAttribute="width" secondItem="ebX-O5-58c" secondAttribute="width" id="Ldl-A1-pyf"/>
+                                </constraints>
+                            </stackView>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="yqJ-tR-PvX">
+                                <rect key="frame" x="0.0" y="22.5" width="320" height="457.5"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" id="yvC-4R-Rp4" customClass="FixedImageSizeTableCell" customModule="GameRankr" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="44.5" width="320" height="62.5"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="yvC-4R-Rp4" id="I0T-du-sAt">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="62.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="picture" translatesAutoresizingMaskIntoConstraints="NO" id="RR2-L3-alq">
+                                                    <rect key="frame" x="10" y="1.5" width="60" height="60"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="60" id="TT0-kZ-TPm"/>
+                                                        <constraint firstAttribute="height" constant="60" id="gTb-a7-6Oy"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="C8W-v2-s1v">
+                                                    <rect key="frame" x="80" y="14" width="230" height="35"/>
+                                                    <subviews>
+                                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wgb-BX-MCD">
+                                                            <rect key="frame" x="0.0" y="0.0" width="230" height="20.5"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" verticalCompressionResistancePriority="749" insetsLayoutMarginsFromSafeArea="NO" text="Subtitle" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="5" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3JC-pV-cNB">
+                                                            <rect key="frame" x="0.0" y="20.5" width="230" height="14.5"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                    </subviews>
+                                                </stackView>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="C8W-v2-s1v" firstAttribute="centerY" secondItem="I0T-du-sAt" secondAttribute="centerY" id="Fl2-9V-u2k"/>
+                                                <constraint firstItem="RR2-L3-alq" firstAttribute="centerY" secondItem="I0T-du-sAt" secondAttribute="centerY" id="JeA-lV-UOe"/>
+                                                <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="C8W-v2-s1v" secondAttribute="bottom" constant="1" id="MLA-rw-SV6"/>
+                                                <constraint firstItem="RR2-L3-alq" firstAttribute="top" relation="greaterThanOrEqual" secondItem="I0T-du-sAt" secondAttribute="top" priority="999" constant="1" id="R4k-fz-NEd"/>
+                                                <constraint firstItem="C8W-v2-s1v" firstAttribute="leading" secondItem="RR2-L3-alq" secondAttribute="trailing" constant="10" id="RX3-Dv-bf3"/>
+                                                <constraint firstItem="C8W-v2-s1v" firstAttribute="top" relation="greaterThanOrEqual" secondItem="I0T-du-sAt" secondAttribute="top" constant="1" id="VaV-6g-9dm"/>
+                                                <constraint firstItem="RR2-L3-alq" firstAttribute="leading" secondItem="I0T-du-sAt" secondAttribute="leading" constant="10" id="c15-1S-L1h"/>
+                                                <constraint firstAttribute="trailing" secondItem="C8W-v2-s1v" secondAttribute="trailing" constant="10" id="rpe-ZB-wy6"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="fixedSizeImageView" destination="RR2-L3-alq" id="th7-ge-gHV"/>
+                                            <outlet property="imageView" destination="RR2-L3-alq" id="biy-Xr-FQs"/>
+                                            <outlet property="primaryLabel" destination="Wgb-BX-MCD" id="Qfw-uW-YVM"/>
+                                            <outlet property="secondaryLabel" destination="3JC-pV-cNB" id="N1X-9W-Kuu"/>
+                                            <segue destination="rZL-Sj-biq" kind="show" identifier="rankingDetail" id="ff9-3h-I2C"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="RBy-Ta-SSI" id="h8u-eS-Zf0"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="jLc-ne-k6G"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="ebX-O5-58c" firstAttribute="top" secondItem="jLc-ne-k6G" secondAttribute="top" id="B05-M0-eRJ"/>
+                            <constraint firstItem="yqJ-tR-PvX" firstAttribute="leading" secondItem="jLc-ne-k6G" secondAttribute="leading" id="BfR-5Y-kYj"/>
+                            <constraint firstItem="jLc-ne-k6G" firstAttribute="bottom" secondItem="yqJ-tR-PvX" secondAttribute="bottom" id="Hb4-gT-A9R"/>
+                            <constraint firstItem="ebX-O5-58c" firstAttribute="leading" secondItem="3BC-xI-uZi" secondAttribute="leading" id="b6M-lB-Zc6"/>
+                            <constraint firstItem="jLc-ne-k6G" firstAttribute="trailing" secondItem="yqJ-tR-PvX" secondAttribute="trailing" id="hIj-gL-9w9"/>
+                            <constraint firstAttribute="trailing" secondItem="ebX-O5-58c" secondAttribute="trailing" id="iYR-jo-ET6"/>
+                            <constraint firstItem="ebX-O5-58c" firstAttribute="bottom" secondItem="yqJ-tR-PvX" secondAttribute="top" id="raI-Nz-BQQ"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="Shelf: Foo" id="Opo-pt-hXC"/>
+                    <connections>
+                        <outlet property="loadingImage" destination="aOa-ia-23S" id="Avd-u9-Xap"/>
+                        <outlet property="noRankingsLabel" destination="Ylm-hn-Dpk" id="hJX-Qw-9Hm"/>
+                        <outlet property="tableView" destination="yqJ-tR-PvX" id="Irg-Nu-5Z8"/>
+                        <segue destination="tox-DA-C3L" kind="show" identifier="requireSignIn" id="vlu-E2-uJv"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="n2j-cL-mKP" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1039" y="930"/>
+        </scene>
+        <!--Ranking-->
+        <scene sceneID="O2m-BG-mcW">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Ranking" id="rZL-Sj-biq" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="zHT-9U-P3x"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="VBE-ou-6gw" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1739" y="930"/>
+        </scene>
+        <!--Auth-->
+        <scene sceneID="zwi-x4-nAo">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Auth" id="tox-DA-C3L" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="lwu-JY-bvx"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Taa-L2-tOh" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1120" y="1516"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="picture" width="25" height="25"/>
+    </resources>
+</document>

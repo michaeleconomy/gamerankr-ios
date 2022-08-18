@@ -36,14 +36,16 @@ class AboutViewController: UIViewController {
     
     func openUrl(_ string: String) {
         guard let url = URL(string: string) else {
-            NSLog("coudln't make a url out of: \(string)")
+            unexpectedError("coudln't make a url out of: \(string)")
             return
         }
         
         UIApplication.shared.open(url) {
             boolean in
             if (!boolean) {
-                NSLog("could not open the url for some reason!")
+                DispatchQueue.main.async {
+                    self.silentError("could not open the url for some reason!")
+                }
             }
         }
     }

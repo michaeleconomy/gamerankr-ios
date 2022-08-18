@@ -30,18 +30,21 @@ class ShelveGameController : UIViewController, UITableViewDataSource, APIMyShelv
     
     func configureView() {
         loadingImage.isHidden = !MyGamesManager.sharedInstance.loading() || !MyShelvesManager.sharedInstance.loading
-        if (game == nil) {
-            NSLog("game could not be found")
-            easyAlert("Game could not be found for ShelveGameViewController")
+        guard let game = game else {
+            unexpectedError("Game could not be found")
             return
         }
-        self.title = "Shelving: \(game!.title)"
+        self.title = "Shelving: \(game.title)"
         tableView.reloadData()
         removeButton.isHidden = ranking == nil
     }
     
     @objc func removeButtonTap(sender: UIButton) {
-        MyGamesManager.sharedInstance.destroyRanking(portId:ranking!.fragments.rankingBasic.port.id)
+        guard let port = ranking!.fragments.rankingBasic.port else {
+            easyAlert("no port id, cannot remove")
+            return
+        }
+        MyGamesManager.sharedInstance.destroyRanking(portId:port.id)
         self.dismiss(animated: true)
     }
     
@@ -57,7 +60,7 @@ class ShelveGameController : UIViewController, UITableViewDataSource, APIMyShelv
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! UITableViewCellWithSwitch
         let shelf = MyShelvesManager.sharedInstance[indexPath.row]
         if (shelf == nil) {
-            easyAlert("Couldn't locate shelf: \(indexPath.row)")
+            unexpectedError("Couldn't locate shelf: \(indexPath.row)")
             return cell
         }
         cell.textLabel?.text = shelf!.name
@@ -104,24 +107,23 @@ class ShelveGameController : UIViewController, UITableViewDataSource, APIMyShelv
         shelfToggled(sender: cell.switch)
     }
     
-    
     func handleShelvesUpdates() {
-        DispatchQueue.main.async(execute: {
+        DispatchQueue.main.async {
             self.configureView()
-        })
+        }
     }
     
     func handleUpdates() {
         self.ranking = MyGamesManager.sharedInstance.getRanking(gameId: game!.id)
-        DispatchQueue.main.async(execute: {
+        DispatchQueue.main.async {
             self.configureView()
-        })
+        }
     }
     
     func handleAPIAuthenticationError() {
         easyAlert("You've been signed out.")
-        DispatchQueue.main.async(execute: {
+        DispatchQueue.main.async {
             self.dismiss(animated: true)
-        })
+        }
     }
 }

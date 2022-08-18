@@ -1,6 +1,9 @@
 fragment UserDetail on User {
     ...UserBasic
-    rankings(first: 20) {
+    rankingsCount
+    followerCount
+    followingCount
+    rankings(first: 10) {
         edges {
             ranking : node {
                 ...RankingWithGame

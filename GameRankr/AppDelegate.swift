@@ -2,6 +2,7 @@ import UIKit
 import FacebookCore
 import Kingfisher
 import FBSDKLoginKit
+import Sentry
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -9,7 +10,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+        
+        SentrySDK.start { options in
+            options.dsn = "https://21746597ddb44404a91dd3139c513e64@o110652.ingest.sentry.io/6661119"
+        }
         return true
     }
 

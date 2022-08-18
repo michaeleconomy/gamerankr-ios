@@ -39,23 +39,26 @@ class RecentReviewsViewController: UIViewController, FullRankingDataSource, APIR
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if (segue.identifier == nil) {
-            NSLog("nil segue from updatesView")
+        guard let identifier = segue.identifier else {
+            silentError("nil segue identifier")
             return
         }
-        switch segue.identifier! {
+        switch identifier {
         case "rankingDetail":
             guard let indexPath = tableView.indexPathForSelectedRow else {
-                NSLog("tableView.indexPathForSelectedRow was nil")
+                unexpectedError("tableView.indexPathForSelectedRow was nil")
                 return
             }
-            let controller = segue.destination as! RankingViewController
+            guard let controller = segue.destination as? RankingViewController else {
+                unexpectedError("Unexpected destination controller type for segue: \(identifier)")
+                return
+            }
             let ranking = rankings[indexPath.row]
             controller.ranking = ranking.fragments.rankingWithGame.fragments.rankingBasic
-            controller.user = ranking.user.fragments.userBasic
-            controller.game = ranking.fragments.rankingWithGame.game.fragments.gameBasic
+            controller.user = ranking.user?.fragments.userBasic
+            controller.game = ranking.fragments.rankingWithGame.game?.fragments.gameBasic
         default:
-            NSLog("recent reviews view: unhandled segue identifier: \(segue.identifier!)")
+            silentError("unhandled segue identifier: \(identifier)")
         }
     }
 }

@@ -3,16 +3,10 @@ import Apollo
 
 class ShelfViewController: UIViewController, UITableViewDataSource, APIShelfDelegate, APIUserRankingsDelegate {
     
-    var shelf: ShelfBasic? {
-        didSet {
-            if (shelf != nil) {
-                getRankings()
-            }
-        }
-    }
+    var shelf: ShelfBasic?
     var user: UserBasic?
-    var rankings = [RankingWithGame]()
-    var nextPage: String?
+    private var rankings = [RankingWithGame]()
+    private var nextPage: String?
     
     @IBOutlet weak var loadingImage: UIImageView!
     @IBOutlet weak var tableView: UITableView!
@@ -25,47 +19,36 @@ class ShelfViewController: UIViewController, UITableViewDataSource, APIShelfDele
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        if (shelf == nil) {
-            self.title = "Games"
+        if let shelf = shelf {
+            self.title = "Shelf: \(shelf.name)"
         }
         else {
-            self.title = "Shelf: \(shelf!.name)"
+            self.title = "Games"
         }
-        noRankingsLabel.isHidden = true
-    }
-    
-    func handleAPIAuthenticationError() {
-        //nothing for now
-    }
-    
-    func handleAPI(rankings: [RankingWithGame], nextPage: String?) {
-        self.rankings.append(contentsOf: rankings)
-        self.nextPage = nextPage
-        DispatchQueue.main.async(execute: {
-            self.loadingImage.isHidden = true
-            self.noRankingsLabel.isHidden = !self.rankings.isEmpty
-            self.tableView.reloadData()
-        })
+        getRankings()
     }
     
     func getRankings(getNextPage: Bool = false) {
         if (!getNextPage) {
             self.nextPage = nil
             rankings.removeAll()
-            DispatchQueue.main.async(execute: {
-                self.tableView?.reloadData()
-            })
         }
         if (shelf != nil) {
             api.shelf(id: shelf!.id, after: nextPage, delegate: self)
         }
         else {
-            api.userRankings(id: user!.id, after: nextPage, delegate: self)
+            guard let user = user else {
+                unexpectedError("User was undefined")
+                return
+            }
+            api.userRankings(id: user.id, after: nextPage, delegate: self)
         }
         self.nextPage = nil
-        DispatchQueue.main.async(execute: {
+        DispatchQueue.main.async {
+            self.tableView?.reloadData()
             self.loadingImage?.isHidden = false
-        })
+            self.noRankingsLabel.isHidden = true
+        }
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -76,19 +59,19 @@ class ShelfViewController: UIViewController, UITableViewDataSource, APIShelfDele
         if (nextPage != nil && indexPath.row >= rankings.count - 15) {
             getRankings(getNextPage: true)
         }
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! FixedImageSizeTableCell
         let ranking = rankings[indexPath.row]
         let game = ranking.game
         let port = ranking.fragments.rankingBasic.port
         
-        cell.textLabel!.text = game.fragments.gameBasic.title
-        cell.detailTextLabel!.text = port.platform.name
+        cell.primaryLabel?.text = game?.fragments.gameBasic.title ?? "Unknow"
+        cell.secondaryLabel?.text = port?.platform.name ?? "UKN"
         
-        cell.imageView?.image = PlaceholderImages.game
-        if (ranking.fragments.rankingBasic.port.smallImageUrl != nil) {
-            cell.imageView?.kf.indicatorType = .activity
-            cell.imageView?.kf.setImage(with: URL(string: ranking.fragments.rankingBasic.port.smallImageUrl!)!, placeholder: PlaceholderImages.game, completionHandler: {
-                (image, error, cacheType, imageUrl) in
+        cell.fixedSizeImageView?.image = PlaceholderImages.game
+        if let imageUrl = port?.smallImageUrl {
+            cell.fixedSizeImageView?.kf.indicatorType = .activity
+            cell.fixedSizeImageView?.kf.setImage(with: URL(string: imageUrl)!, placeholder: PlaceholderImages.game, completionHandler: {
+                (result) in
                 cell.layoutSubviews()
             })
         }
@@ -97,23 +80,43 @@ class ShelfViewController: UIViewController, UITableViewDataSource, APIShelfDele
     
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if (segue.identifier == nil) {
-            NSLog("nil segue from shelf view")
+        guard let identifier = segue.identifier else {
+            silentError("nil segue identifier from shelf view")
             return
         }
-        switch segue.identifier! {
+        switch identifier {
         case "rankingDetail":
             guard let indexPath = self.tableView?.indexPathForSelectedRow  else {
-                NSLog("ShelfViewController: could not get indexPath")
+                unexpectedError("ShelfViewController: could not get indexPath")
                 return
             }
             let ranking = rankings[indexPath.row]
-            let controller = segue.destination as! RankingViewController
+            guard let controller = segue.destination as? RankingViewController else {
+                unexpectedError("unexpected controller type for segue rankingDetail")
+                return
+            }
             controller.ranking = ranking.fragments.rankingBasic
             controller.user = user
-            controller.game = ranking.game.fragments.gameBasic
+            controller.game = ranking.game?.fragments.gameBasic
+        case "requireSignIn": ()
         default:
-            NSLog("unknown segue from shelf view: \(segue.identifier!)")
+            silentError("unknown segue from shelf view: \(identifier)")
+        }
+    }
+    
+    func handleAPIAuthenticationError() {
+        DispatchQueue.main.async {
+            self.performSegue(withIdentifier: "requireSignIn", sender: nil)
+        }
+    }
+    
+    func handleAPI(rankings: [RankingWithGame], nextPage: String?) {
+        self.rankings.append(contentsOf: rankings)
+        self.nextPage = nextPage
+        DispatchQueue.main.async {
+            self.loadingImage.isHidden = true
+            self.noRankingsLabel.isHidden = !self.rankings.isEmpty
+            self.tableView.reloadData()
         }
     }
 }

@@ -7,7 +7,7 @@ protocol APIFlagDelegate: AuthenticatedAPIErrorDelegate {
 }
 extension GameRankrAPI {
     
-    func flag(resourceId: GraphQLID?, resourceType: String?, text: String, delegate: APIFlagDelegate) {
+    func flag(resourceId: GraphQLID, resourceType: String, text: String, delegate: APIFlagDelegate) {
         apollo.perform(mutation: FlagMutation(resourceId: resourceId, resourceType: resourceType, text: text) ) { (result) in
             if (!self.handleApolloApiErrors(result, delegate: delegate)) { return }
             guard let data = try? result.get().data else { return }

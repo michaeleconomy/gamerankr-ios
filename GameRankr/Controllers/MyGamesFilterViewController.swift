@@ -48,7 +48,7 @@ class MyGamesFilterViewController: UIViewController, APIMyShelvesManagerDelegate
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! UITableViewCellWithSwitch
         let shelf = MyShelvesManager.sharedInstance[indexPath.row]
         if (shelf == nil) {
-            easyAlert("Couldn't locate shelf: \(indexPath.row)")
+            unexpectedError("Couldn't locate shelf: \(indexPath.row)")
             return cell
         }
         cell.textLabel?.text = shelf!.name

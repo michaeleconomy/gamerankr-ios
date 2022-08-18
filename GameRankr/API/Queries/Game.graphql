@@ -3,7 +3,6 @@ query Game($id: ID!) {
         ...GameBasic
         ports {
             id
-            medium_image_url
             description
         }
         rankings(first: 30) {

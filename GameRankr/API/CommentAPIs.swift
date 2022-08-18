@@ -20,7 +20,8 @@ extension GameRankrAPI {
             if (!self.handleApolloApiErrors(result, delegate: delegate)) { return }
             guard let data = try? result.get().data else { return }
             
-            let comments = data!.comments
+            let comments = data!.comments;
+
             var nextPage : String?
             if (comments.pageInfo.hasNextPage){
                 nextPage = comments.pageInfo.endCursor

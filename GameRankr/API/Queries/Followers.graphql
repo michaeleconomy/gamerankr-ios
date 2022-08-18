@@ -1,0 +1,15 @@
+query Followers($userId: ID!, $after: String) {
+    user(id: $userId) {
+        followers(first: 30, after: $after) {
+            edges {
+                user : node {
+                    ...UserBasic
+                }
+            }
+            pageInfo {
+                endCursor
+                hasNextPage
+            }
+        }
+    }
+}
