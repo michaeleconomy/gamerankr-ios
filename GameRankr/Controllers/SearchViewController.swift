@@ -34,7 +34,12 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! FixedImageSizeTableCell
         let game = results[indexPath.row]
         cell.primaryLabel?.text = game.title
-        cell.secondaryLabel?.text = game.ports.map{$0.platform.name}.joined(separator: ", ")
+        var secondaryText = ""
+        if let dateString = game.initiallyReleasedAt {
+            secondaryText = "\(Formatter.justYear(dateString: dateString)) "
+        }
+        secondaryText += game.ports.map{$0.platform.name}.joined(separator: ", ")
+        cell.secondaryLabel?.text = secondaryText
         let port = game.ports.first
         if let imageUrl = port?.smallImageUrl {
             cell.fixedSizeImageView?.kf.indicatorType = .activity

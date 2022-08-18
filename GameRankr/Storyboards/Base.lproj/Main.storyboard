@@ -15,7 +15,7 @@
                     <tabBarItem key="tabBarItem" title="Updates" image="news" id="Sat-lp-Xud"/>
                     <navigationItem key="navigationItem" id="gv2-59-CTv"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="uvk-wK-6EG">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
@@ -109,7 +109,7 @@ Add more friends to see more updates.</string>
                                             <outlet property="imageView" destination="hcm-zj-106" id="yv6-ds-nRT"/>
                                             <outlet property="primaryLabel" destination="7ul-gP-Uu2" id="E4H-x5-w1M"/>
                                             <outlet property="secondaryLabel" destination="iJg-UR-iWv" id="ae6-tP-9wk"/>
-                                            <segue destination="rwS-b2-IqV" kind="show" id="ZXO-zm-OW9"/>
+                                            <segue destination="rwS-b2-IqV" kind="show" identifier="rankingDetail" id="ZXO-zm-OW9"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -354,7 +354,7 @@ Add more friends to see more updates.</string>
                 <navigationController id="PR9-Vd-CNs" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="My Profile" image="person" id="Odj-36-0sp"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="ryH-3y-w8B">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
@@ -381,7 +381,7 @@ Add more friends to see more updates.</string>
                 <navigationController id="Mgj-l5-4h0" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Browse" image="controller" id="yg8-Q3-Nec"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="NeM-Q3-cZb">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>

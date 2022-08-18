@@ -108,7 +108,6 @@ class GameViewController : UIViewController, APIGameDetailDelegate, APIGameRanki
         super.viewWillAppear(animated)
         configureView()
         MyGamesManager.sharedInstance.register(delegate: self)
-        gameDescription.numberOfLines = 3
     }
     
     func selectPort(portId: GraphQLID) {
@@ -393,7 +392,7 @@ class GameViewController : UIViewController, APIGameDetailDelegate, APIGameRanki
             api.gameRankings(id: game!.id, after: nextPage, delegate: self)
             nextPage = nil
         }
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! FixedImageSizeTableCell
         let ranking = rankings[indexPath.row]
         
         let user = ranking.user
@@ -405,15 +404,15 @@ class GameViewController : UIViewController, APIGameDetailDelegate, APIGameRanki
         if stars > 0 {
             primaryText += " \(String(repeating: "\u{2605}", count: stars))"
         }
-        cell.textLabel?.text = primaryText
+        cell.primaryLabel?.text = primaryText
         if let photoUrl = userBasic?.photoUrl {
-            cell.imageView?.kf.setImage(with: URL(string: photoUrl)!, placeholder: PlaceholderImages.user, completionHandler: {
+            cell.fixedSizeImageView?.kf.setImage(with: URL(string: photoUrl)!, placeholder: PlaceholderImages.user, completionHandler: {
                 (result) in
                 cell.layoutSubviews()
             })
         }
         else {
-            cell.imageView?.image = PlaceholderImages.user
+            cell.fixedSizeImageView?.image = PlaceholderImages.user
         }
         
         let review = rankingBasic.review ?? ""
@@ -425,7 +424,7 @@ class GameViewController : UIViewController, APIGameDetailDelegate, APIGameRanki
         if rankingBasic.commentsCount > 0 {
             secondaryText += "    \(rankingBasic.commentsCount) comments"
         }
-        cell.detailTextLabel?.text = secondaryText
+        cell.secondaryLabel?.text = secondaryText
         return cell
     }
     

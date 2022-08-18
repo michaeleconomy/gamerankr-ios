@@ -26,7 +26,7 @@ PODS:
     - FBSDKShareKit/Share (= 5.15.1)
   - FBSDKShareKit/Share (5.15.1):
     - FBSDKCoreKit (~> 5.0)
-  - Kingfisher (7.3.1)
+  - Kingfisher (7.3.2)
   - Sentry (7.23.0):
     - Sentry/Core (= 7.23.0)
   - Sentry/Core (7.23.0)
@@ -73,7 +73,7 @@ SPEC CHECKSUMS:
   FBSDKCoreKit: 1d5acf7c9d7a2f92bb1a242dc60cae5b7adb91df
   FBSDKLoginKit: f1ea8026a58b52d30c9f2e6a58ca7d813619fb83
   FBSDKShareKit: 259737eab3cc807087374553abdf588b3096ba55
-  Kingfisher: f411ab4902e733fc0c40522920fb5a236d7a7334
+  Kingfisher: 0086ad83719761ba9b2cdaf6ef4d5b4878cbae23
   Sentry: a0d4563fa4ddacba31fdcc35daaa8573d87224d6
   SQLite.swift: 903bfa3bc9ab06345fdfbb578e34f47cfcf417da
 

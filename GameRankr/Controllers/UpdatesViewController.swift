@@ -98,9 +98,9 @@ class UpdatesViewController: UIViewController, UITableViewDataSource, APIUpdates
         fetchedUpdates = true
         api.updates(delegate: self)
         
-        DispatchQueue.main.async(execute: {
+        DispatchQueue.main.async {
             self.loadingImage.isHidden = false
-        })
+        }
     }
     
     func handleAPILogout() {

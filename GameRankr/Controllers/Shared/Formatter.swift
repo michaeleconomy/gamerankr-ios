@@ -27,6 +27,14 @@ class Formatter {
         return formatDate(dateString) ?? defaultString
     }
     
+    class func justYear(dateString: String?, defaultString: String = "Unknown") -> String {
+        guard let dateString = dateString else {
+            return defaultString
+        }
+        
+        return formatDate(dateString, dateFormat: "yyyy") ?? defaultString
+    }
+    
     class func parseDate(_ dateString: String) -> Date? {
         
         let dateFormatterGet = DateFormatter()
@@ -35,13 +43,13 @@ class Formatter {
         return dateFormatterGet.date(from: dateString)
     }
     
-    class func formatDate(_ dateString: String) -> String? {
+    class func formatDate(_ dateString: String, dateFormat: String = "MMM dd, yyyy") -> String? {
         guard let date = parseDate(dateString) else {
             return nil
         }
         
         let dateFormatterPrint = DateFormatter()
-        dateFormatterPrint.dateFormat = "MMM dd, yyyy"
+        dateFormatterPrint.dateFormat = dateFormat
         return dateFormatterPrint.string(from: date)
     }
 }
