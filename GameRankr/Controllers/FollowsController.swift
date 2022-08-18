@@ -17,12 +17,7 @@ class FollowsController : UIViewController, APIFollowersDelegate, APIFollowingDe
     var showFollowings = true
     
     var user: UserBasic?
-    var userId: GraphQLID? {
-        didSet {
-            follows.removeAll()
-            nextPage = nil
-        }
-    }
+    var userId: GraphQLID?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,7 +33,6 @@ class FollowsController : UIViewController, APIFollowersDelegate, APIFollowingDe
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
         if (userId == nil) {
             if (api.signedOut) {
                 performSegue(withIdentifier: "requireSignIn", sender: nil)
@@ -46,13 +40,10 @@ class FollowsController : UIViewController, APIFollowersDelegate, APIFollowingDe
             }
             userId = api.currentUserId
         }
+        follows.removeAll()
+        nextPage = nil
         getMore()
         configureView()
-    }
-    
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-        userId = nil
     }
     
     private func configureView() {
