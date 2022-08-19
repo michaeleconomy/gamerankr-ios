@@ -529,16 +529,16 @@
 		6C46243828A72A0700EA5F29 /* Storyboards */ = {
 			isa = PBXGroup;
 			children = (
-				6C4D97B728A7234A00C20BB5 /* UserProfile.storyboard */,
-				6C46243928A72A2800EA5F29 /* Game.storyboard */,
-				6C3FFDA428A730420012FEF6 /* Ranking.storyboard */,
-				6C1ECA7728A7316F000C7178 /* Browse.storyboard */,
-				6C1ECA7928A731B4000C7178 /* MyGames.storyboard */,
-				6C1ECA7B28A73ADF000C7178 /* Follows.storyboard */,
 				6C1ECA7D28A73B6F000C7178 /* Auth.storyboard */,
-				4CD1C9E01FDF6B62001A0B8D /* Main.storyboard */,
+				6C1ECA7728A7316F000C7178 /* Browse.storyboard */,
 				6C1ECA8028AAFB83000C7178 /* Flag.storyboard */,
+				6C1ECA7B28A73ADF000C7178 /* Follows.storyboard */,
+				6C46243928A72A2800EA5F29 /* Game.storyboard */,
+				4CD1C9E01FDF6B62001A0B8D /* Main.storyboard */,
+				6C1ECA7928A731B4000C7178 /* MyGames.storyboard */,
+				6C3FFDA428A730420012FEF6 /* Ranking.storyboard */,
 				6C1ECA8228AAFCEF000C7178 /* Shelf.storyboard */,
+				6C4D97B728A7234A00C20BB5 /* UserProfile.storyboard */,
 			);
 			path = Storyboards;
 			sourceTree = "<group>";
