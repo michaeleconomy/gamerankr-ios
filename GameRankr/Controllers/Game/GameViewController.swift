@@ -5,6 +5,8 @@ class GameViewController : UIViewController, APIGameDetailDelegate, APIGameRanki
     
     @IBOutlet weak var shareButton: UIBarButtonItem!
     @IBOutlet weak var loadingImage: UIImageView!
+    @IBOutlet weak var primaryStack: UIView!
+    
     
     @IBOutlet weak var imageView: UIImageView!
     
@@ -58,20 +60,20 @@ class GameViewController : UIViewController, APIGameDetailDelegate, APIGameRanki
     var gameDetail: GameQuery.Data.Game? {
         didSet {
             if (gameDetail != nil) {
-                if (gameDetail!.fragments.gameBasic.id != game!.id) {
-                    self.gameDetail = nil
+                if let game = game {
+                    if (gameDetail!.fragments.gameBasic.id != game.id) {
+                        self.gameDetail = nil
+                    }
                 }
                 else {
-                    DispatchQueue.main.async {
-                        self.configureView()
-                    }
+                    game = gameDetail?.fragments.gameBasic
                 }
             }
         }
     }
     var game: GameBasic? {
         didSet {
-            if(game != nil) {
+            if game != nil {
                 if(gameDetail != nil && gameDetail!.fragments.gameBasic.id != game!.id) {
                     self.gameDetail = nil
                     self.rankings.removeAll()
@@ -81,10 +83,19 @@ class GameViewController : UIViewController, APIGameDetailDelegate, APIGameRanki
                 }
                 self.ranking = MyGamesManager.sharedInstance.getRanking(gameId: game!.id)
             }
-            self.portId = nil
-            
-            DispatchQueue.main.async {
-                self.configureView()
+            portId = nil
+        }
+    }
+    
+    var gameId: GraphQLID? {
+        didSet {
+            if let gameId = gameId {
+                game = nil
+                ranking = nil
+                gameDetail = nil
+                rankings.removeAll()
+                    
+                api.gameDetail(id: gameId, delegate: self)
             }
         }
     }
@@ -152,9 +163,11 @@ class GameViewController : UIViewController, APIGameDetailDelegate, APIGameRanki
         loadingImage?.isHidden = !isLoading()
         self.reviewsTable?.reloadData()
         guard let game = game else {
-            unexpectedError("GameViewController - game was not set!")
+            title = "Loading"
+            primaryStack?.isHidden = true
             return
         }
+        primaryStack?.isHidden = false
     
         let port = selectedPort()
         title = game.title
@@ -342,42 +355,11 @@ class GameViewController : UIViewController, APIGameDetailDelegate, APIGameRanki
         }
     }
     
-    func handleAPI(rankings: [RankingWithUser], nextPage: String?) {
-        self.nextPage = nextPage
-        addNonFriendRankings(rankings)
-        DispatchQueue.main.async {
-            self.configureView()
-        }
-    }
-    
-    func handleAPI(gameDetail: GameQuery.Data.Game, rankings: [RankingWithUser], friendRankings: [RankingWithUser], nextPage: String?) {
-        self.gameDetail = gameDetail
-        self.nextPage = nextPage
-        self.friendRankings.removeAll()
-        self.friendRankings.append(contentsOf: friendRankings)
-        self.rankings.removeAll()
-        self.rankings.append(contentsOf: friendRankings)
-        addNonFriendRankings(rankings)
-        DispatchQueue.main.async {
-            self.configureView()
-        }
-    }
-    
     func addNonFriendRankings(_ rankings: [RankingWithUser]) {
         let nonFriendRankings = rankings.filter{ ranking in
             return !friendRankings.contains(where: {$0.fragments.rankingBasic.id == ranking.fragments.rankingBasic.id})
         }
         self.rankings.append(contentsOf: nonFriendRankings)
-    }
-    
-    func handleUpdates() {
-        if (game != nil) {
-            self.ranking = MyGamesManager.sharedInstance.getRanking(gameId: game!.id)
-            //optimization - this is maybe extra work, but is hard to figure out if ranking changed
-            DispatchQueue.main.async {
-                self.configureView()
-            }
-        }
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -496,6 +478,37 @@ class GameViewController : UIViewController, APIGameDetailDelegate, APIGameRanki
             controller.resourceId = game!.id
         default:
             silentError("unknown segue from game view: \(identifier)")
+        }
+    }
+    
+    func handleAPI(rankings: [RankingWithUser], nextPage: String?) {
+        self.nextPage = nextPage
+        addNonFriendRankings(rankings)
+        DispatchQueue.main.async {
+            self.configureView()
+        }
+    }
+    
+    func handleAPI(gameDetail: GameQuery.Data.Game, rankings: [RankingWithUser], friendRankings: [RankingWithUser], nextPage: String?) {
+        self.gameDetail = gameDetail
+        self.nextPage = nextPage
+        self.friendRankings.removeAll()
+        self.friendRankings.append(contentsOf: friendRankings)
+        self.rankings.removeAll()
+        self.rankings.append(contentsOf: friendRankings)
+        addNonFriendRankings(rankings)
+        DispatchQueue.main.async {
+            self.configureView()
+        }
+    }
+    
+    func handleUpdates() {
+        if (game != nil) {
+            self.ranking = MyGamesManager.sharedInstance.getRanking(gameId: game!.id)
+            //optimization - this is maybe extra work, but is hard to figure out if ranking changed
+            DispatchQueue.main.async {
+                self.configureView()
+            }
         }
     }
     

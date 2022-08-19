@@ -9,10 +9,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Game View Controller-->
+        <!--Game-->
         <scene sceneID="igV-Ye-npb">
             <objects>
-                <viewController id="kPi-IC-vnu" customClass="GameViewController" customModule="GameRankr" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="kPi-IC-vnu" userLabel="Game" customClass="GameViewController" customModule="GameRankr" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="bd4-G3-WnT">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="800"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -466,6 +466,7 @@
                         <outlet property="otherPlatformsButton" destination="Mre-eE-GEJ" id="3lW-gp-O5B"/>
                         <outlet property="platformLabel" destination="wSg-HU-T5f" id="9Gc-r8-J6n"/>
                         <outlet property="platformsLabel" destination="UhI-O2-TlT" id="QTM-TM-wgo"/>
+                        <outlet property="primaryStack" destination="YlM-Rh-hAd" id="jZU-nw-ob5"/>
                         <outlet property="releaseDateLabel" destination="fRJ-56-Ssw" id="wne-ad-Hck"/>
                         <outlet property="reviewButton" destination="Okn-QI-a4l" id="GPV-9H-krl"/>
                         <outlet property="reviewDateLabel" destination="XQ6-PT-eQm" id="9Qt-iP-yl6"/>

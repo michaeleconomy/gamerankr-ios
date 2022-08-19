@@ -3,10 +3,12 @@ import FacebookCore
 import Kingfisher
 import FBSDKLoginKit
 import Sentry
+import Apollo
+import Foundation
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-
+    var universalLinkId: GraphQLID?
     var window: UIWindow?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
@@ -55,23 +57,72 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                      continue userActivity: NSUserActivity,
                      restorationHandler: @escaping ([Any]?) -> Void) -> Bool
     {
-        // Get URL components from the incoming user activity.
-        guard userActivity.activityType == NSUserActivityTypeBrowsingWeb,
-            let incomingURL = userActivity.webpageURL,
-            let components = NSURLComponents(url: incomingURL, resolvingAgainstBaseURL: true) else {
-            return false
-        }
-
-
-        // Check for specific URL components that you need.
-        guard let path = components.path,
-        let params = components.queryItems else {
-            return false
-        }
-        print("userActivity: path = \(path), params = \(params)")
+        NSLog("userActivity: called")
         
+        
+        guard userActivity.activityType == NSUserActivityTypeBrowsingWeb else {
+            NSLog("userActivity: userActivity.activityType: \(userActivity.activityType)")
+            return false
+        }
+        
+        guard let incomingURL = userActivity.webpageURL else {
+            NSLog("userActivity: incomingURL unspecified")
+            return false
+        }
+        NSLog("userActivity: incomingURL = \(incomingURL)")
+        
+        guard let components = NSURLComponents(url: incomingURL, resolvingAgainstBaseURL: true) else {
+            NSLog("userActivity: no url components")
+            return false
+        }
+
+
+        let path = components.path ?? ""
+        NSLog("userActivity: path = \(path)")
+        let params = components.queryItems ?? []
+        NSLog("userActivity: params = \(params)")
+        
+        guard let uiTabBarController = window?.rootViewController as? UITabBarController else {
+            NSLog("UITabBarController not the root view controller")
+            return false
+        }
+        guard let firstNavigationController = uiTabBarController.viewControllers?[0] as? UINavigationController else {
+            NSLog("could not get first tab")
+            return false
+        }
+        let firstController = firstNavigationController.viewControllers[0]
+        
+        if path.starts(with: "/games/") {
+            guard let id = getId(path) else {
+                NSLog("could not get id from path")
+                return false
+            }
+            universalLinkId = id
+            firstController.performSegue(withIdentifier: "universalGameDetail", sender: self)
+            return true
+        }
+        
+        
+        if path.starts(with: "/users/") {
+            guard let id = getId(path) else {
+                NSLog("could not get id from path")
+                return false
+            }
+            universalLinkId = id
+            firstController.performSegue(withIdentifier: "universalUserDetail", sender: self)
+            return true
+        }
         
         return false
     }
+    
+    private func getId(_ path: String) -> GraphQLID? {
+        guard let range = path.range(of: #"(\d+)"#, options: .regularExpression) else {
+            return nil
+        }
+        let idRaw = path[range]
+        return GraphQLID(idRaw)
+    }
+    
 }
 

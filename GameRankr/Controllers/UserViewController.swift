@@ -1,4 +1,5 @@
 import UIKit
+import Apollo
 
 class UserViewController : UIViewController, APIUserDetailDelegate, FollowChangeDelegate, FullRankingDataSource {
     
@@ -25,17 +26,28 @@ class UserViewController : UIViewController, APIUserDetailDelegate, FollowChange
     var rankings = [RankingWithGame]()
     var nextPage: String?
     
+    var userId: GraphQLID? {
+        didSet {
+            if let userId = userId {
+                userDetail = nil
+                user = nil
+                rankings.removeAll()
+                nextPage = nil
+                self.loadingImage?.isHidden = true
+                api.userDetail(id: userId, delegate: self)
+            }
+        }
+    }
+    
+    
     var userDetail: UserDetail? {
         didSet {
             if let userDetail = userDetail {
                 if (user == nil) {
                     self.user = userDetail.fragments.userBasic
                 }
-                else {
-                    if (userDetail.fragments.userBasic.id != user!.id) {
-                        self.userDetail = nil
-                        return
-                    }
+                else if (userDetail.fragments.userBasic.id != user!.id) {
+                    self.userDetail = nil
                 }
             }
         }
@@ -51,9 +63,6 @@ class UserViewController : UIViewController, APIUserDetailDelegate, FollowChange
                     api.userDetail(id: user!.id, delegate: self)
                 }
             }
-            DispatchQueue.main.async {
-                self.configureView()
-            }
         }
     }
     
@@ -66,8 +75,8 @@ class UserViewController : UIViewController, APIUserDetailDelegate, FollowChange
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        if (user == nil) {
-            if (api.signedOut) {
+        if user == nil && userId == nil {
+            if api.signedOut {
                 performSegue(withIdentifier: "requireSignIn", sender: nil)
                 return
             }
@@ -87,9 +96,10 @@ class UserViewController : UIViewController, APIUserDetailDelegate, FollowChange
         if !isViewLoaded {
             return
         }
+        tableView?.reloadData()
         redrawFollowButtons()
         guard let user = user else {
-            self.navigationItem.title = "unknown"
+            navigationItem.title = "Loading"
             imageView.image = PlaceholderImages.user
             loadingImage?.isHidden = false
             followerCountButton?.setTitle("?", for: .normal)
@@ -98,7 +108,7 @@ class UserViewController : UIViewController, APIUserDetailDelegate, FollowChange
             return
         }
         
-        self.navigationItem.title = user.realName
+        navigationItem.title = user.realName
         imageView?.kf.setImage(with: largePhotoUrl(), placeholder: PlaceholderImages.user)
         guard let userDetail = userDetail else {
             followerCountButton?.setTitle("?", for: .normal)
@@ -109,6 +119,7 @@ class UserViewController : UIViewController, APIUserDetailDelegate, FollowChange
             shelvesTitle?.isHidden = true
             return
         }
+        
         followerCountButton?.setTitle(String(userDetail.followerCount), for: .normal)
         followingCountButton?.setTitle(String(userDetail.followingCount), for: .normal)
         gameCountButton?.setTitle(String(userDetail.rankingsCount), for: .normal)
@@ -136,7 +147,6 @@ class UserViewController : UIViewController, APIUserDetailDelegate, FollowChange
         noGamesLabel?.isHidden = !rankings.isEmpty
         
         moreReviewsButton?.isHidden = nextPage == nil
-        tableView?.reloadData()
     }
     
     func redrawFollowButtons() {
@@ -281,7 +291,6 @@ class UserViewController : UIViewController, APIUserDetailDelegate, FollowChange
         
         DispatchQueue.main.async {
             self.configureView()
-            self.tableView?.reloadData()
         }
     }
     

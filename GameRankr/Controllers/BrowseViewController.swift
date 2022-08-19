@@ -117,6 +117,26 @@ class BrowseViewController: UIViewController, FullRankingDataSource, APIPopularG
             }
             let game = games![index]
             controller.game = game
+        case "universalGameDetail":
+            guard let controller = segue.destination as? GameViewController else {
+                unexpectedError("Unexpected destination controller type for segue: \(identifier)")
+                return
+            }
+            guard let delegate = UIApplication.shared.delegate as? AppDelegate else {
+                unexpectedError("could not get appDelegate")
+                return
+            }
+            controller.gameId = delegate.universalLinkId
+        case "universalUserDetail":
+            guard let controller = segue.destination as? UserViewController else {
+                unexpectedError("Unexpected destination controller type for segue: \(identifier)")
+                return
+            }
+            guard let delegate = UIApplication.shared.delegate as? AppDelegate else {
+                unexpectedError("could not get appDelegate")
+                return
+            }
+            controller.userId = delegate.universalLinkId
         case "moreRecentReviews":
             guard let controller = segue.destination as? RecentReviewsViewController else {
                 unexpectedError("Unexpected destination controller type for segue: \(identifier)")

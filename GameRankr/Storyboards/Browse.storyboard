@@ -161,6 +161,8 @@
                         <outlet property="reviewsTable" destination="PjJ-YD-rsO" id="cds-OK-v7f"/>
                         <outlet property="scrollView" destination="lpf-PP-bg9" id="wUu-3X-Y73"/>
                         <segue destination="Phe-xQ-PUf" kind="show" identifier="gameDetail" id="LDg-Cg-3Z3"/>
+                        <segue destination="Phe-xQ-PUf" kind="show" identifier="universalGameDetail" id="zF7-1i-SkC"/>
+                        <segue destination="xBe-CZ-Yyy" kind="show" identifier="universalUserDetail" id="Qvn-A0-rQf"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mV0-Aq-eEt" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -275,6 +277,16 @@
             </objects>
             <point key="canvasLocation" x="1966" y="-414"/>
         </scene>
+        <!--UserProfile-->
+        <scene sceneID="rvw-6P-hSJ">
+            <objects>
+                <viewControllerPlaceholder storyboardName="UserProfile" id="xBe-CZ-Yyy" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="iII-Qp-kgX"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="qQO-vd-v0L" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2215" y="-415"/>
+        </scene>
         <!--Ranking-->
         <scene sceneID="x6c-Dh-TDR">
             <objects>
@@ -288,6 +300,7 @@
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="wzs-VF-fxC"/>
+        <segue reference="zF7-1i-SkC"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="picture" width="25" height="25"/>
