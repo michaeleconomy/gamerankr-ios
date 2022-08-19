@@ -66,7 +66,7 @@ class UpdatesViewController: UIViewController, UITableViewDataSource, APIUpdates
             getNextPage()
         }
         let ranking = rankings[indexPath.row] // - index out of bounds here
-        return cellFor(ranking: ranking, tableView: tableView, indexPath: indexPath);
+        return cellFor(rankingFull: ranking, tableView: tableView, indexPath: indexPath)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

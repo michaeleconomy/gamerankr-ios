@@ -65,7 +65,7 @@ class ShelfViewController: UIViewController, UITableViewDataSource, APIShelfDele
         let port = ranking.fragments.rankingBasic.port
         
         cell.primaryLabel?.text = game?.fragments.gameBasic.title ?? "Unknow"
-        cell.secondaryLabel?.text = port?.platform.name ?? "UKN"
+        cell.secondaryLabel?.text = port?.platform.shortName ?? "UKN"
         
         cell.fixedSizeImageView?.image = PlaceholderImages.game
         if let imageUrl = port?.smallImageUrl {

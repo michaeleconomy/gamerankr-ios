@@ -10,6 +10,7 @@ fragment GameBasic on Game {
         platform {
             id
             name
+            shortName
         }
         releasedAt
         averageRanking

@@ -87,7 +87,7 @@ class MyGamesViewController: UIViewController, UITableViewDataSource, APIMyGames
         if (rankingBasic.ranking != nil) {
             secondaryText += String(repeating: "\u{2605}", count: rankingBasic.ranking!) + " "
         }
-        secondaryText += port?.platform.name ?? "UKN"
+        secondaryText += port?.platform.shortName ?? "UKN"
         if (rankingBasic.review != nil && rankingBasic.review != "") {
             secondaryText += " - review"
         }

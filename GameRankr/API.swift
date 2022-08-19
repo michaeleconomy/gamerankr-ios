@@ -5104,6 +5104,7 @@ public struct GameBasic: GraphQLFragment {
           __typename
           id
           name
+          shortName
         }
         releasedAt
         averageRanking
@@ -5317,6 +5318,7 @@ public struct GameBasic: GraphQLFragment {
           GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
           GraphQLField("id", type: .nonNull(.scalar(GraphQLID.self))),
           GraphQLField("name", type: .nonNull(.scalar(String.self))),
+          GraphQLField("shortName", type: .nonNull(.scalar(String.self))),
         ]
       }
 
@@ -5326,8 +5328,8 @@ public struct GameBasic: GraphQLFragment {
         self.resultMap = unsafeResultMap
       }
 
-      public init(id: GraphQLID, name: String) {
-        self.init(unsafeResultMap: ["__typename": "Platform", "id": id, "name": name])
+      public init(id: GraphQLID, name: String, shortName: String) {
+        self.init(unsafeResultMap: ["__typename": "Platform", "id": id, "name": name, "shortName": shortName])
       }
 
       public var __typename: String {
@@ -5354,6 +5356,15 @@ public struct GameBasic: GraphQLFragment {
         }
         set {
           resultMap.updateValue(newValue, forKey: "name")
+        }
+      }
+
+      public var shortName: String {
+        get {
+          return resultMap["shortName"]! as! String
+        }
+        set {
+          resultMap.updateValue(newValue, forKey: "shortName")
         }
       }
     }
@@ -5443,6 +5454,7 @@ public struct RankingBasic: GraphQLFragment {
           __typename
           id
           name
+          shortName
         }
         small_image_url
         medium_image_url
@@ -5699,6 +5711,7 @@ public struct RankingBasic: GraphQLFragment {
           GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
           GraphQLField("id", type: .nonNull(.scalar(GraphQLID.self))),
           GraphQLField("name", type: .nonNull(.scalar(String.self))),
+          GraphQLField("shortName", type: .nonNull(.scalar(String.self))),
         ]
       }
 
@@ -5708,8 +5721,8 @@ public struct RankingBasic: GraphQLFragment {
         self.resultMap = unsafeResultMap
       }
 
-      public init(id: GraphQLID, name: String) {
-        self.init(unsafeResultMap: ["__typename": "Platform", "id": id, "name": name])
+      public init(id: GraphQLID, name: String, shortName: String) {
+        self.init(unsafeResultMap: ["__typename": "Platform", "id": id, "name": name, "shortName": shortName])
       }
 
       public var __typename: String {
@@ -5736,6 +5749,15 @@ public struct RankingBasic: GraphQLFragment {
         }
         set {
           resultMap.updateValue(newValue, forKey: "name")
+        }
+      }
+
+      public var shortName: String {
+        get {
+          return resultMap["shortName"]! as! String
+        }
+        set {
+          resultMap.updateValue(newValue, forKey: "shortName")
         }
       }
     }

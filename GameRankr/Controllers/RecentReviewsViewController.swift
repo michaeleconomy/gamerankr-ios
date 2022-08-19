@@ -26,7 +26,7 @@ class RecentReviewsViewController: UIViewController, FullRankingDataSource, APIR
             })
         }
         let ranking = rankings[indexPath.row]
-        return cellFor(ranking: ranking, tableView: tableView, indexPath: indexPath);
+        return cellFor(rankingFull: ranking, tableView: tableView, indexPath: indexPath)
     }
     
     func handleAPI(rankings: [RankingFull], nextPage: String?) {

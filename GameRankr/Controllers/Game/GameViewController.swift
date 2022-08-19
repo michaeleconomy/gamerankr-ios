@@ -184,7 +184,7 @@ class GameViewController : UIViewController, APIGameDetailDelegate, APIGameRanki
             allRankingsRow?.isHidden = false
             platformsLabel?.isHidden = false
             
-            platformsLabel?.text = "All Platforms: " + remainingPorts.map{$0.platform.name}.joined(separator: ", ")
+            platformsLabel?.text = "All Platforms: " + remainingPorts.map{$0.platform.shortName}.joined(separator: ", ")
             
             originalReleaseDateLabel?.text = Formatter.format(dateString: game.initiallyReleasedAt)
             
@@ -246,14 +246,14 @@ class GameViewController : UIViewController, APIGameDetailDelegate, APIGameRanki
         }
         else {
             switchEditionButton?.isHidden = false
-            switchEditionButton?.setTitle("Switch to \(selectedPort.platform.name)", for: .normal)
+            switchEditionButton?.setTitle("Switch to \(selectedPort.platform.shortName)", for: .normal)
         }
         reviewStack?.isHidden = false
         
         setStars(rankingBasic.ranking ?? 0)
         
         reviewDateLabel?.text = Formatter.formatDate(rankingBasic.updatedAt)
-        reviewPlatformLabel?.text = rankingBasic.port?.platform.name ?? "UKN"
+        reviewPlatformLabel?.text = rankingBasic.port?.platform.shortName ?? "UKN"
 
         let shelfNames = rankingBasic.shelves.map{$0.fragments.shelfBasic.name}
         let shelvesStr = shelfNames.joined(separator: ", ")

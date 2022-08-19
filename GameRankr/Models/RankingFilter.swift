@@ -39,16 +39,30 @@ class RankingFilter {
     }
     
     private func filterText(_ ranking: RankingWithGame) -> Bool {
+        let text = text ?? ""
         if (text == "") {
             return true
         }
         
-        if ((ranking.game != nil) && ranking.game!.fragments.gameBasic.title.lowercased().contains(text!)) {
+        if let game = ranking.game {
+            let title = game.fragments.gameBasic.title
+            if title.lowercased().contains(text) {
+                return true
+            }
             return true
         }
         
-        if ((ranking.fragments.rankingBasic.port != nil) && ranking.fragments.rankingBasic.port!.platform.name.lowercased().contains(text!)) {
-            return true
+        let rankingBasic = ranking.fragments.rankingBasic
+        let port = rankingBasic.port
+        
+        if let port = port {
+            let platform = port.platform
+            if platform.name.lowercased().contains(text) {
+                return true
+            }
+            if platform.shortName.lowercased().contains(text) {
+                return true
+            }
         }
         return false
     }

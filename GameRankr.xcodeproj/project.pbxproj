@@ -110,6 +110,7 @@
 		4CD1C9E21FDF6B62001A0B8D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4CD1C9E01FDF6B62001A0B8D /* Main.storyboard */; };
 		4CD1C9E41FDF6B62001A0B8D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4CD1C9E31FDF6B62001A0B8D /* Assets.xcassets */; };
 		4CD1C9E71FDF6B62001A0B8D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4CD1C9E51FDF6B62001A0B8D /* LaunchScreen.storyboard */; };
+		6C05A00A28B01D5E00FE6626 /* AttributedStringBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C05A00928B01D5E00FE6626 /* AttributedStringBuilder.swift */; };
 		6C1ECA7828A7316F000C7178 /* Browse.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6C1ECA7728A7316F000C7178 /* Browse.storyboard */; };
 		6C1ECA7A28A731B4000C7178 /* MyGames.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6C1ECA7928A731B4000C7178 /* MyGames.storyboard */; };
 		6C1ECA7C28A73ADF000C7178 /* Follows.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6C1ECA7B28A73ADF000C7178 /* Follows.storyboard */; };
@@ -123,7 +124,6 @@
 		6C4EEF652899DAB000980DE7 /* FollowManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C4EEF642899DAB000980DE7 /* FollowManager.swift */; };
 		6C4EEF672899DD0D00980DE7 /* FollowAPIs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C4EEF662899DD0D00980DE7 /* FollowAPIs.swift */; };
 		6C4EEF692899E1C800980DE7 /* Followers.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 6C4EEF682899E1C800980DE7 /* Followers.graphql */; };
-		6C66367C289AF07300011A09 /* UserRankingRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C66367B289AF07300011A09 /* UserRankingRow.swift */; };
 		6C96733228A178E60084D692 /* MyFollowing.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 6C96733128A178E60084D692 /* MyFollowing.graphql */; };
 		6C96733428A1C6930084D692 /* RankingAPIs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C96733328A1C6930084D692 /* RankingAPIs.swift */; };
 		6C96733628A1C7D10084D692 /* Follow.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 6C96733528A1C7D10084D692 /* Follow.graphql */; };
@@ -245,6 +245,8 @@
 		4CD1C9E61FDF6B62001A0B8D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		4CD1C9E81FDF6B62001A0B8D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5DA329335A9ABFDBA622A241 /* Pods-GameRankr.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GameRankr.debug.xcconfig"; path = "Target Support Files/Pods-GameRankr/Pods-GameRankr.debug.xcconfig"; sourceTree = "<group>"; };
+		6C05A00828B0152500FE6626 /* GameRankr.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = GameRankr.entitlements; sourceTree = "<group>"; };
+		6C05A00928B01D5E00FE6626 /* AttributedStringBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AttributedStringBuilder.swift; sourceTree = "<group>"; };
 		6C1ECA7728A7316F000C7178 /* Browse.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Browse.storyboard; sourceTree = "<group>"; };
 		6C1ECA7928A731B4000C7178 /* MyGames.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = MyGames.storyboard; sourceTree = "<group>"; };
 		6C1ECA7B28A73ADF000C7178 /* Follows.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Follows.storyboard; sourceTree = "<group>"; };
@@ -258,7 +260,6 @@
 		6C4EEF642899DAB000980DE7 /* FollowManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowManager.swift; sourceTree = "<group>"; };
 		6C4EEF662899DD0D00980DE7 /* FollowAPIs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowAPIs.swift; sourceTree = "<group>"; };
 		6C4EEF682899E1C800980DE7 /* Followers.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = Followers.graphql; sourceTree = "<group>"; };
-		6C66367B289AF07300011A09 /* UserRankingRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRankingRow.swift; sourceTree = "<group>"; };
 		6C96733128A178E60084D692 /* MyFollowing.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = MyFollowing.graphql; sourceTree = "<group>"; };
 		6C96733328A1C6930084D692 /* RankingAPIs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankingAPIs.swift; sourceTree = "<group>"; };
 		6C96733528A1C7D10084D692 /* Follow.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = Follow.graphql; sourceTree = "<group>"; };
@@ -296,7 +297,6 @@
 			children = (
 				6C1ECA7F28AAF5C0000C7178 /* Game */,
 				4C42E4F31FE1BC72003F1C68 /* Shared */,
-				6C66367A289AF04400011A09 /* UserView */,
 				6CB318C12895C14A00EDB9A2 /* Auth */,
 				4C9698512005A66A00B88A91 /* AboutViewController.swift */,
 				4C430E692001C8AF00CAC150 /* BrowseViewController.swift */,
@@ -311,6 +311,7 @@
 				4C47F0391FF8331E00E5FD92 /* ShelfViewController.swift */,
 				4C2E1BBB1FE9EB4400C048BC /* ShelveGameController.swift */,
 				4CD1C9DC1FDF6B62001A0B8D /* UpdatesViewController.swift */,
+				4CBD0F8A1FE6F4EC00230771 /* UserViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -318,6 +319,7 @@
 		4C42E4F31FE1BC72003F1C68 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				6C05A00928B01D5E00FE6626 /* AttributedStringBuilder.swift */,
 				4C42E4EC1FE1B679003F1C68 /* APIErrorDelegateUIExtension.swift */,
 				4C7CF64B1FE46A5400E7B32A /* PlaceholderImages.swift */,
 				4CBD0F941FE7801F00230771 /* IntrinsicTableView.swift */,
@@ -490,6 +492,7 @@
 		4CD1C9D91FDF6B62001A0B8D /* GameRankr */ = {
 			isa = PBXGroup;
 			children = (
+				6C05A00828B0152500FE6626 /* GameRankr.entitlements */,
 				6C46243828A72A0700EA5F29 /* Storyboards */,
 				4C430E54200036D200CAC150 /* Shared */,
 				4C430E4F1FFFF78800CAC150 /* Models */,
@@ -541,15 +544,6 @@
 				6C4D97B728A7234A00C20BB5 /* UserProfile.storyboard */,
 			);
 			path = Storyboards;
-			sourceTree = "<group>";
-		};
-		6C66367A289AF04400011A09 /* UserView */ = {
-			isa = PBXGroup;
-			children = (
-				4CBD0F8A1FE6F4EC00230771 /* UserViewController.swift */,
-				6C66367B289AF07300011A09 /* UserRankingRow.swift */,
-			);
-			path = UserView;
 			sourceTree = "<group>";
 		};
 		6CB318C12895C14A00EDB9A2 /* Auth */ = {
@@ -806,7 +800,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6C66367C289AF07300011A09 /* UserRankingRow.swift in Sources */,
 				6C4EEF672899DD0D00980DE7 /* FollowAPIs.swift in Sources */,
 				4C42E4ED1FE1B679003F1C68 /* APIErrorDelegateUIExtension.swift in Sources */,
 				4CBD0F931FE6FC8500230771 /* FollowsController.swift in Sources */,
@@ -844,6 +837,7 @@
 				4C2E1BBC1FE9EB4400C048BC /* ShelveGameController.swift in Sources */,
 				4C430E582000636C00CAC150 /* FixedImageSizeTableCell.swift in Sources */,
 				4C57FC151FDF7D9600A04E57 /* GameRankrAPI.swift in Sources */,
+				6C05A00A28B01D5E00FE6626 /* AttributedStringBuilder.swift in Sources */,
 				4CAA416D1FEAE74D007EBB7C /* EditReviewViewController.swift in Sources */,
 				4C9698522005A66A00B88A91 /* AboutViewController.swift in Sources */,
 				4CBD0F7D1FE627FB00230771 /* SignUpViewController.swift in Sources */,
@@ -1002,6 +996,7 @@
 			baseConfigurationReference = 5DA329335A9ABFDBA622A241 /* Pods-GameRankr.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = GameRankr/GameRankr.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_TEAM = NTDFC8PLCC;
@@ -1025,6 +1020,7 @@
 			baseConfigurationReference = 053BA10CCFA735C25E341A26 /* Pods-GameRankr.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = GameRankr/GameRankr.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_TEAM = NTDFC8PLCC;

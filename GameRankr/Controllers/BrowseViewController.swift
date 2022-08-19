@@ -79,7 +79,7 @@ class BrowseViewController: UIViewController, FullRankingDataSource, APIPopularG
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let ranking = rankings![indexPath.row]
-        return cellFor(ranking: ranking, tableView: tableView, indexPath: indexPath)
+        return cellFor(rankingFull: ranking, tableView: tableView, indexPath: indexPath)
     }
     
     @objc func gameImageTouch(sender: UIButton) {

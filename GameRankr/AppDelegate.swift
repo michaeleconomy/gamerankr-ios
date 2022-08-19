@@ -51,6 +51,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return ApplicationDelegate.shared.application(application, open: url, sourceApplication: sourceApplication, annotation: annotation)
     }
 
+    func application(_ application: UIApplication,
+                     continue userActivity: NSUserActivity,
+                     restorationHandler: @escaping ([Any]?) -> Void) -> Bool
+    {
+        // Get URL components from the incoming user activity.
+        guard userActivity.activityType == NSUserActivityTypeBrowsingWeb,
+            let incomingURL = userActivity.webpageURL,
+            let components = NSURLComponents(url: incomingURL, resolvingAgainstBaseURL: true) else {
+            return false
+        }
 
+
+        // Check for specific URL components that you need.
+        guard let path = components.path,
+        let params = components.queryItems else {
+            return false
+        }
+        print("userActivity: path = \(path), params = \(params)")
+        
+        
+        return false
+    }
 }
 

@@ -38,7 +38,7 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
         if let dateString = game.initiallyReleasedAt {
             secondaryText = "\(Formatter.justYear(dateString: dateString)) "
         }
-        secondaryText += game.ports.map{$0.platform.name}.joined(separator: ", ")
+        secondaryText += game.ports.map{$0.platform.shortName}.joined(separator: ", ")
         cell.secondaryLabel?.text = secondaryText
         let port = game.ports.first
         if let imageUrl = port?.smallImageUrl {

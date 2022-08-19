@@ -1,6 +1,6 @@
 import UIKit
 
-class UserViewController : UIViewController, APIUserDetailDelegate, FollowChangeDelegate {
+class UserViewController : UIViewController, APIUserDetailDelegate, FollowChangeDelegate, FullRankingDataSource {
     
     @IBOutlet weak var loadingImage: UIImageView!
     
@@ -8,7 +8,7 @@ class UserViewController : UIViewController, APIUserDetailDelegate, FollowChange
     @IBOutlet weak var shelvesStack: UIStackView!
     
     @IBOutlet weak var noGamesLabel: UILabel!
-    @IBOutlet weak var reviewTable: UIStackView!
+    @IBOutlet weak var tableView: UITableView!
     
     @IBOutlet weak var imageView: UIImageView!
     
@@ -62,10 +62,6 @@ class UserViewController : UIViewController, APIUserDetailDelegate, FollowChange
         loadingImage.image = PlaceholderImages.loadingBar
         followButton.addTarget(self, action: #selector(followTap(sender:)), for: .touchUpInside)
         unfollowButton.addTarget(self, action: #selector(unfollowTap(sender:)), for: .touchUpInside)
-        for subview in reviewTable.subviews {
-            let gr = UITapGestureRecognizer(target: self, action: #selector(rankingRowTap(sender:)))
-            subview.addGestureRecognizer(gr)
-        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -139,21 +135,8 @@ class UserViewController : UIViewController, APIUserDetailDelegate, FollowChange
         
         noGamesLabel?.isHidden = !rankings.isEmpty
         
-        for i in 0...9 {
-            guard let row = reviewTable?.subviews[i] as? UserRankingRow else {
-                easyAlert("no row \(i) found")
-                break
-            }
-            if rankings.count <= i {
-                row.isHidden = true
-                continue
-            }
-            let ranking = rankings[i]
-            row.isHidden = false
-            row.populate(ranking: ranking)
-        }
-        
         moreReviewsButton?.isHidden = nextPage == nil
+        tableView?.reloadData()
     }
     
     func redrawFollowButtons() {
@@ -183,11 +166,6 @@ class UserViewController : UIViewController, APIUserDetailDelegate, FollowChange
         performSegue(withIdentifier: "shelfDetail", sender: sender)
     }
     
-    
-    @objc func rankingRowTap(sender: UITapGestureRecognizer) {
-        performSegue(withIdentifier: "rankingDetail", sender: sender)
-    }
-    
     @objc func followTap(sender: UIButton) {
         guard let user = user else {
             easyAlert("User is not set")
@@ -214,15 +192,13 @@ class UserViewController : UIViewController, APIUserDetailDelegate, FollowChange
         return URL(string: "\(user!.photoUrl)?type=large")!
     }
     
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return rankings.count
+    }
     
-    func handleAPI(userDetail: UserDetail, rankings: [RankingWithGame], nextPage: String?) {
-        self.userDetail = userDetail
-        self.rankings = rankings
-        self.nextPage = nextPage
-        
-        DispatchQueue.main.async {
-            self.configureView()
-        }
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let ranking = rankings[indexPath.row] // - index out of bounds here
+        return cellFor(rankingWithGame: ranking, tableView: tableView, indexPath: indexPath)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -232,22 +208,15 @@ class UserViewController : UIViewController, APIUserDetailDelegate, FollowChange
         }
         switch identifier {
         case "rankingDetail":
-            guard let uiTapGR = sender as? UITapGestureRecognizer else {
-                unexpectedError("Unexpected segue sender for ranking detail for segue: rankingDetail")
-                return
-            }
-            guard let row = uiTapGR.view as? UserRankingRow else {
-                unexpectedError("missing ranking row for segue: rankingDetail")
-                return
-            }
-            guard let ranking = row.ranking else {
-                unexpectedError("missing ranking for segue: rankingDetail")
+            guard let indexPath = tableView.indexPathForSelectedRow else {
+                NSLog("tableView.indexPathForSelectedRow was nil")
                 return
             }
             guard let controller = segue.destination as? RankingViewController else {
-                unexpectedError("unexpected controller for segue: rankingDetail")
+                unexpectedError("unexpected controller type for segue: \(identifier)")
                 return
             }
+            let ranking = rankings[indexPath.row]
             controller.ranking = ranking.fragments.rankingBasic
             controller.game = ranking.game?.fragments.gameBasic
             controller.user = user
@@ -305,9 +274,20 @@ class UserViewController : UIViewController, APIUserDetailDelegate, FollowChange
         }
     }
     
+    func handleAPI(userDetail: UserDetail, rankings: [RankingWithGame], nextPage: String?) {
+        self.userDetail = userDetail
+        self.rankings = rankings
+        self.nextPage = nextPage
+        
+        DispatchQueue.main.async {
+            self.configureView()
+            self.tableView?.reloadData()
+        }
+    }
+    
     func handleFollowUpdates() {
         DispatchQueue.main.async {
-            self.loadingImage.isHidden = true
+            self.loadingImage?.isHidden = true
             self.redrawFollowButtons()
         }
     }
