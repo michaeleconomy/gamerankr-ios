@@ -68,10 +68,10 @@
                                                             <autoresizingMask key="autoresizingMask"/>
                                                             <subviews>
                                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="picture" translatesAutoresizingMaskIntoConstraints="NO" id="6my-YP-MYU">
-                                                                    <rect key="frame" x="10" y="-1.5" width="60" height="60"/>
+                                                                    <rect key="frame" x="10" y="-4" width="60" height="60"/>
                                                                     <constraints>
+                                                                        <constraint firstAttribute="height" constant="60" id="6EH-mP-CMd"/>
                                                                         <constraint firstAttribute="width" constant="60" id="DrA-3s-TIC"/>
-                                                                        <constraint firstAttribute="height" constant="60" id="QLB-bm-zYc"/>
                                                                     </constraints>
                                                                 </imageView>
                                                                 <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="rnN-x1-ktp">
@@ -94,12 +94,12 @@
                                                             </subviews>
                                                             <constraints>
                                                                 <constraint firstAttribute="trailing" secondItem="rnN-x1-ktp" secondAttribute="trailing" constant="10" id="0l1-Js-zZx"/>
+                                                                <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="6my-YP-MYU" secondAttribute="bottom" constant="1" id="DSx-wc-6sm"/>
                                                                 <constraint firstItem="6my-YP-MYU" firstAttribute="leading" secondItem="lws-uC-dGA" secondAttribute="leading" constant="10" id="PuY-Vm-cTq"/>
                                                                 <constraint firstItem="rnN-x1-ktp" firstAttribute="centerY" secondItem="lws-uC-dGA" secondAttribute="centerY" id="U4E-Ww-NHO"/>
                                                                 <constraint firstItem="rnN-x1-ktp" firstAttribute="top" secondItem="lws-uC-dGA" secondAttribute="top" constant="1" id="htd-yZ-atu"/>
                                                                 <constraint firstItem="6my-YP-MYU" firstAttribute="top" secondItem="lws-uC-dGA" secondAttribute="top" priority="999" constant="1" id="jaO-BS-wUR"/>
-                                                                <constraint firstAttribute="bottom" secondItem="rnN-x1-ktp" secondAttribute="bottom" constant="1" id="mZ0-di-C6y"/>
-                                                                <constraint firstItem="6my-YP-MYU" firstAttribute="centerY" secondItem="lws-uC-dGA" secondAttribute="centerY" id="nEN-Mk-CRx"/>
+                                                                <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="rnN-x1-ktp" secondAttribute="bottom" constant="1" id="mZ0-di-C6y"/>
                                                                 <constraint firstItem="rnN-x1-ktp" firstAttribute="leading" secondItem="lws-uC-dGA" secondAttribute="leading" constant="80" id="tGb-gJ-eMt"/>
                                                             </constraints>
                                                         </tableViewCellContentView>
@@ -158,8 +158,8 @@
                         <outlet property="loadingImage" destination="L7J-LJ-YTv" id="nlK-ZR-dq8"/>
                         <outlet property="moreReviewsButton" destination="YY4-k3-lRM" id="yGb-BJ-epl"/>
                         <outlet property="reviewsLabel" destination="JCf-X2-xiK" id="VJu-cI-UPo"/>
-                        <outlet property="reviewsTable" destination="PjJ-YD-rsO" id="cds-OK-v7f"/>
                         <outlet property="scrollView" destination="lpf-PP-bg9" id="wUu-3X-Y73"/>
+                        <outlet property="table" destination="PjJ-YD-rsO" id="7kV-HV-yW7"/>
                         <segue destination="Phe-xQ-PUf" kind="show" identifier="gameDetail" id="LDg-Cg-3Z3"/>
                         <segue destination="Phe-xQ-PUf" kind="show" identifier="universalGameDetail" id="zF7-1i-SkC"/>
                         <segue destination="xBe-CZ-Yyy" kind="show" identifier="universalUserDetail" id="Qvn-A0-rQf"/>
@@ -248,10 +248,10 @@
                         <viewLayoutGuide key="safeArea" id="buc-Z8-wfs"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstAttribute="bottom" secondItem="t1e-S2-YRu" secondAttribute="bottom" id="5mp-6Z-jcy"/>
                             <constraint firstItem="u8t-Ey-57q" firstAttribute="leading" secondItem="hro-Yq-9ko" secondAttribute="leading" id="AR9-E1-7bw"/>
                             <constraint firstItem="t1e-S2-YRu" firstAttribute="top" secondItem="u8t-Ey-57q" secondAttribute="bottom" id="Crx-6k-Gea"/>
                             <constraint firstAttribute="trailing" secondItem="u8t-Ey-57q" secondAttribute="trailing" id="Qvh-De-mlH"/>
+                            <constraint firstItem="buc-Z8-wfs" firstAttribute="bottom" secondItem="t1e-S2-YRu" secondAttribute="bottom" id="bHE-Nc-yhl"/>
                             <constraint firstItem="t1e-S2-YRu" firstAttribute="leading" secondItem="hro-Yq-9ko" secondAttribute="leading" id="pAG-Sb-tpY"/>
                             <constraint firstItem="u8t-Ey-57q" firstAttribute="top" secondItem="buc-Z8-wfs" secondAttribute="top" id="wdr-3s-uXt"/>
                             <constraint firstAttribute="trailing" secondItem="t1e-S2-YRu" secondAttribute="trailing" id="wjJ-4K-QqV"/>
@@ -260,7 +260,7 @@
                     <navigationItem key="navigationItem" id="7FG-ze-9vU"/>
                     <connections>
                         <outlet property="loadingImage" destination="u8t-Ey-57q" id="yeO-P8-nw7"/>
-                        <outlet property="tableView" destination="t1e-S2-YRu" id="K1X-s6-gOV"/>
+                        <outlet property="table" destination="t1e-S2-YRu" id="SDk-an-edx"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gj2-Aq-CCQ" userLabel="First Responder" sceneMemberID="firstResponder"/>

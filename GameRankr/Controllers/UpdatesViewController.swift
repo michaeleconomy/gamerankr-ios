@@ -2,11 +2,10 @@ import UIKit
 import FacebookCore
 import FacebookLogin
 
-class UpdatesViewController: UIViewController, UITableViewDataSource, APIUpdatesDelegate, APIAuthenticationDelegate, FullRankingDataSource {
+class UpdatesViewController: FullRankingDataSource, APIUpdatesDelegate, APIAuthenticationDelegate {
     
     @IBOutlet weak var noUpdatesLabel: UILabel!
     @IBOutlet weak var loadingImage: UIImageView!
-    @IBOutlet weak var tableView: UITableView!
     
     @IBAction func unwindToUpdates(segue: UIStoryboardSegue) {
         
@@ -14,7 +13,6 @@ class UpdatesViewController: UIViewController, UITableViewDataSource, APIUpdates
     
     private var nextPage: String?
     var fetchedUpdates = false
-    var rankings = [RankingFull]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,9 +40,9 @@ class UpdatesViewController: UIViewController, UITableViewDataSource, APIUpdates
         self.nextPage = nextPage
         
         DispatchQueue.main.async {
-            self.noUpdatesLabel.isHidden = !self.rankings.isEmpty
-            self.tableView.reloadData()
-            self.loadingImage.isHidden = true
+            self.noUpdatesLabel?.isHidden = !self.rankings.isEmpty
+            self.table?.reloadData()
+            self.loadingImage?.isHidden = true
         }
     }
     
@@ -53,20 +51,15 @@ class UpdatesViewController: UIViewController, UITableViewDataSource, APIUpdates
         self.nextPage = nil
         
         DispatchQueue.main.async {
-            self.loadingImage.isHidden = false
+            self.loadingImage?.isHidden = false
         }
     }
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return rankings.count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if (nextPage != nil && indexPath.row >= (rankings.count - 15)) {
             getNextPage()
         }
-        let ranking = rankings[indexPath.row] // - index out of bounds here
-        return cellFor(rankingFull: ranking, tableView: tableView, indexPath: indexPath)
+        return super.tableView(tableView, cellForRowAt: indexPath)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -77,7 +70,7 @@ class UpdatesViewController: UIViewController, UITableViewDataSource, APIUpdates
         switch identifier {
         case "requireSignIn": ()
         case "rankingDetail":
-            guard let indexPath = tableView.indexPathForSelectedRow else {
+            guard let indexPath = table.indexPathForSelectedRow else {
                 NSLog("tableView.indexPathForSelectedRow was nil")
                 return
             }
@@ -86,9 +79,10 @@ class UpdatesViewController: UIViewController, UITableViewDataSource, APIUpdates
                 return
             }
             let ranking = rankings[indexPath.row]
-            controller.ranking = ranking.fragments.rankingWithGame.fragments.rankingBasic
+            let rankingWithGame = ranking.fragments.rankingWithGame
+            controller.ranking = rankingWithGame.fragments.rankingBasic
             controller.user = ranking.user?.fragments.userBasic
-            controller.game = ranking.fragments.rankingWithGame.game?.fragments.gameBasic
+            controller.game = rankingWithGame.game?.fragments.gameBasic
         default:
             silentError("unhandled segue identifier: \(identifier)")
         }
@@ -108,7 +102,7 @@ class UpdatesViewController: UIViewController, UITableViewDataSource, APIUpdates
         fetchedUpdates = false
         
         DispatchQueue.main.async {
-            self.tableView.reloadData()
+            self.table?.reloadData()
         }
     }
     

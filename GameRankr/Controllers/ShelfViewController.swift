@@ -61,20 +61,7 @@ class ShelfViewController: UIViewController, UITableViewDataSource, APIShelfDele
         }
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! FixedImageSizeTableCell
         let ranking = rankings[indexPath.row]
-        let game = ranking.game
-        let port = ranking.fragments.rankingBasic.port
-        
-        cell.primaryLabel?.text = game?.fragments.gameBasic.title ?? "Unknow"
-        cell.secondaryLabel?.text = port?.platform.shortName ?? "UKN"
-        
-        cell.fixedSizeImageView?.image = PlaceholderImages.game
-        if let imageUrl = port?.smallImageUrl {
-            cell.fixedSizeImageView?.kf.indicatorType = .activity
-            cell.fixedSizeImageView?.kf.setImage(with: URL(string: imageUrl)!, placeholder: PlaceholderImages.game, completionHandler: {
-                (result) in
-                cell.layoutSubviews()
-            })
-        }
+        cell.populateForShelf(with: ranking)
         return cell
     }
     

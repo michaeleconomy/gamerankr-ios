@@ -78,37 +78,7 @@ class MyGamesViewController: UIViewController, UITableViewDataSource, APIMyGames
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! FixedImageSizeTableCell
         let ranking = getCurrentRankingArray()[indexPath.row]
-        let game = ranking.game
-        let rankingBasic = ranking.fragments.rankingBasic
-        let port = rankingBasic.port
-        
-        cell.primaryLabel!.text = game?.fragments.gameBasic.title ?? "unknown"
-        var secondaryText = ""
-        if (rankingBasic.ranking != nil) {
-            secondaryText += String(repeating: "\u{2605}", count: rankingBasic.ranking!) + " "
-        }
-        secondaryText += port?.platform.shortName ?? "UKN"
-        if (rankingBasic.review != nil && rankingBasic.review != "") {
-            secondaryText += " - review"
-        }
-        secondaryText += "\nShelves: " + rankingBasic.shelves.map{$0.fragments.shelfBasic.name}.joined(separator: ", ")
-        
-        if (rankingBasic.commentsCount > 0) {
-            secondaryText += "\n\(rankingBasic.commentsCount) comment"
-            if (rankingBasic.commentsCount > 1) {
-                secondaryText += "s"
-            }
-        }
-        cell.secondaryLabel!.text = secondaryText
-        
-        cell.fixedSizeImageView!.image = PlaceholderImages.game
-        if (rankingBasic.port?.smallImageUrl != nil) {
-            cell.fixedSizeImageView!.kf.indicatorType = .activity
-            cell.fixedSizeImageView!.kf.setImage(with: URL(string: rankingBasic.port!.smallImageUrl!)!, placeholder: PlaceholderImages.game, completionHandler: {
-                (result) in
-                cell.layoutSubviews()
-            })
-        }
+        cell.populateForShelf(with: ranking)
         return cell
     }
     

@@ -1,7 +1,7 @@
 import UIKit
 import Apollo
 
-class UserViewController : UIViewController, APIUserDetailDelegate, FollowChangeDelegate, FullRankingDataSource {
+class UserViewController : UIViewController, APIUserDetailDelegate, FollowChangeDelegate, UITableViewDataSource {
     
     @IBOutlet weak var loadingImage: UIImageView!
     
@@ -202,14 +202,39 @@ class UserViewController : UIViewController, APIUserDetailDelegate, FollowChange
         return URL(string: "\(user!.photoUrl)?type=large")!
     }
     
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return rankings.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let ranking = rankings[indexPath.row] // - index out of bounds here
-        return cellFor(rankingWithGame: ranking, tableView: tableView, indexPath: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! FixedImageSizeTableCell
+        
+        let data = rankings[indexPath.row]
+        populateCell(cell: cell, with: data)
+        return cell
     }
+    
+    func populateCell(cell: FixedImageSizeTableCell, with rankingWithGame: RankingWithGame) {
+        let game = rankingWithGame.game
+        let rankingBasic = rankingWithGame.fragments.rankingBasic
+        let port = rankingBasic.port
+        
+        let primaryText = AttributedStringBuilder()
+        
+        let gameTitle = game?.fragments.gameBasic.title ?? "Unknown"
+        let platformShortName = port?.platform.shortName ?? "UKN"
+        primaryText.add("\(rankingBasic.verb.capitalized) \(gameTitle) ")
+        primaryText.add(platformShortName, color: PredefinedColors.grey)
+        
+        cell.primaryLabel?.attributedText = primaryText.string
+        let secondaryText = AttributedStringBuilder()
+        secondaryText.add(cell.rankingText(rankingBasic: rankingBasic))
+        cell.secondaryLabel?.attributedText = secondaryText.string
+        
+        cell.setImage(port: port)
+    }
+    
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         guard let identifier = segue.identifier else {

@@ -114,8 +114,8 @@ class RankingViewController : UIViewController, UITableViewDataSource, APICommen
         let stars = ranking.ranking ?? 0
 //        starsLabel?.text = String(repeating: "\u{2605}", count: 5)
         let attributedStarsText = NSMutableAttributedString(string: String(repeating: "\u{2605}", count: 5))
-        attributedStarsText.addAttribute(NSAttributedString.Key.foregroundColor, value: #colorLiteral(red: 0.9254902005, green: 0.2352941185, blue: 0.1019607857, alpha: 1), range: NSRange(location: 0, length: stars))
-        attributedStarsText.addAttribute(NSAttributedString.Key.foregroundColor, value: #colorLiteral(red: 0.7, green: 0.7, blue: 0.7, alpha: 1), range: NSRange(location: stars, length: 5 - stars))
+        attributedStarsText.addAttribute(NSAttributedString.Key.foregroundColor, value: PredefinedColors.starRed, range: NSRange(location: 0, length: stars))
+        attributedStarsText.addAttribute(NSAttributedString.Key.foregroundColor, value: PredefinedColors.starGrey, range: NSRange(location: stars, length: 5 - stars))
         starsLabel?.attributedText = attributedStarsText
         
         

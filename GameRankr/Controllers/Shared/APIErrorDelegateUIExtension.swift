@@ -1,10 +1,16 @@
 import UIKit
 import Sentry
 
-extension UIViewController {
-    func silentError(_ error: String) {
+class ErrorLogger {
+    class func silentError(_ error: String) {
         NSLog("Error: \(error)")
         SentrySDK.capture(message: error)
+    }
+}
+
+extension UIViewController {
+    func silentError(_ error: String) {
+        ErrorLogger.silentError(error)
     }
     
     func unexpectedError(_ userError: String, sentryError: String? = nil) {

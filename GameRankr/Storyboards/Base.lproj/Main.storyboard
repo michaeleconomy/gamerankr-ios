@@ -114,7 +114,7 @@ Add more friends to see more updates.</string>
                                     </tableViewCell>
                                 </prototypes>
                                 <connections>
-                                    <outlet property="dataSource" destination="9pv-A4-QxB" id="QN6-DU-VHb"/>
+                                    <outlet property="dataSource" destination="9pv-A4-QxB" id="NtX-TN-NSB"/>
                                 </connections>
                             </tableView>
                         </subviews>
@@ -135,7 +135,7 @@ Add more friends to see more updates.</string>
                     <connections>
                         <outlet property="loadingImage" destination="QJX-dO-MY5" id="vPz-ET-PDP"/>
                         <outlet property="noUpdatesLabel" destination="pjr-3s-z9b" id="k2J-eH-Ln5"/>
-                        <outlet property="tableView" destination="ZXN-PD-Rbm" id="xOZ-ym-WBJ"/>
+                        <outlet property="table" destination="ZXN-PD-Rbm" id="zSy-lj-8wJ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="W5J-7L-Pyd" sceneMemberID="firstResponder"/>
@@ -158,7 +158,7 @@ Add more friends to see more updates.</string>
                 <navigationController id="sQU-Ad-aBX" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Following" image="people" id="1Ac-h3-PhQ"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="ENV-Xq-8l4">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
@@ -381,7 +381,7 @@ Add more friends to see more updates.</string>
                 <navigationController id="Mgj-l5-4h0" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Browse" image="controller" id="yg8-Q3-Nec"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="NeM-Q3-cZb">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
@@ -398,7 +398,7 @@ Add more friends to see more updates.</string>
                 <navigationController id="WRn-8S-dnY" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="My Games" image="list" id="c7R-oN-MeB"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="QKN-KC-02m">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>

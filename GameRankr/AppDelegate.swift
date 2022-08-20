@@ -92,6 +92,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         let firstController = firstNavigationController.viewControllers[0]
         
+        if path == "/" {
+            NSLog("/ - Open the app anywhere, it's cool")
+            return true
+        }
+        
         if path.starts(with: "/games/") {
             guard let id = getId(path) else {
                 NSLog("could not get id from path")

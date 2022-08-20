@@ -1,11 +1,9 @@
 import UIKit
 
-class RecentReviewsViewController: UIViewController, FullRankingDataSource, APIRecentReviewsDelegate {
+class RecentReviewsViewController: FullRankingDataSource, APIRecentReviewsDelegate {
     
     @IBOutlet weak var loadingImage: UIImageView!
-    @IBOutlet weak var tableView: UITableView!
     
-    var rankings = [RankingFull]()
     var nextPage: String?
     
     override func viewDidLoad() {
@@ -13,29 +11,24 @@ class RecentReviewsViewController: UIViewController, FullRankingDataSource, APIR
         loadingImage.image = PlaceholderImages.loadingBar
     }
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return rankings.count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if (nextPage != nil && indexPath.row >= (rankings.count - 15)) {
             api.recentReviews(after: nextPage, delegate: self)
             self.nextPage = nil
-            DispatchQueue.main.async(execute: {
+            DispatchQueue.main.async {
                 self.loadingImage.isHidden = false
-            })
+            }
         }
-        let ranking = rankings[indexPath.row]
-        return cellFor(rankingFull: ranking, tableView: tableView, indexPath: indexPath)
+        return super.tableView(tableView, cellForRowAt: indexPath)
     }
     
     func handleAPI(rankings: [RankingFull], nextPage: String?) {
         self.rankings.append(contentsOf: rankings)
         self.nextPage = nextPage
-        DispatchQueue.main.async(execute: {
+        DispatchQueue.main.async {
             self.loadingImage?.isHidden = true
-            self.tableView?.reloadData()
-        })
+            self.table?.reloadData()
+        }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -45,7 +38,7 @@ class RecentReviewsViewController: UIViewController, FullRankingDataSource, APIR
         }
         switch identifier {
         case "rankingDetail":
-            guard let indexPath = tableView.indexPathForSelectedRow else {
+            guard let indexPath = table.indexPathForSelectedRow else {
                 unexpectedError("tableView.indexPathForSelectedRow was nil")
                 return
             }

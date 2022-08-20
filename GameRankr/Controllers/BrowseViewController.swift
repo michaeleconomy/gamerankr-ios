@@ -1,12 +1,10 @@
 import UIKit
-class BrowseViewController: UIViewController, FullRankingDataSource, APIPopularGamesDelegate, APIRecentReviewsDelegate {
-    
+class BrowseViewController: FullRankingDataSource, APIPopularGamesDelegate, APIRecentReviewsDelegate {
     
     @IBOutlet weak var loadingImage: UIImageView!
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var gamesStack: UIStackView!
     @IBOutlet weak var reviewsLabel: UILabel!
-    @IBOutlet weak var reviewsTable: UITableView!
     @IBOutlet weak var moreReviewsButton: UIButton!
     
     
@@ -15,9 +13,8 @@ class BrowseViewController: UIViewController, FullRankingDataSource, APIPopularG
     }
     
     private var games: [GameBasic]?
-    private var rankings: [RankingFull]?
     private var nextPage: String?
-    var fetchedUpdates = false
+    private var fetchedUpdates = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,18 +35,18 @@ class BrowseViewController: UIViewController, FullRankingDataSource, APIPopularG
         
         scrollView?.isHidden = false
         
-        if rankings == nil {
+        if !fetchedUpdates {
             loadingImage?.isHidden = false
             reviewsLabel?.isHidden = true
-            reviewsTable?.isHidden = true
+            table?.isHidden = true
             moreReviewsButton?.isHidden = true
             return
         }
         reviewsLabel?.isHidden = false
-        reviewsTable?.isHidden = false
+        table?.isHidden = false
         moreReviewsButton?.isHidden = false
         loadingImage?.isHidden = true
-        reviewsTable?.reloadData()
+        table?.reloadData()
     }
     
     func addGames() {
@@ -72,16 +69,6 @@ class BrowseViewController: UIViewController, FullRankingDataSource, APIPopularG
         }
     }
     
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return rankings?.count ?? 0
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let ranking = rankings![indexPath.row]
-        return cellFor(rankingFull: ranking, tableView: tableView, indexPath: indexPath)
-    }
-    
     @objc func gameImageTouch(sender: UIButton) {
          performSegue(withIdentifier: "gameDetail", sender: sender)
     }
@@ -93,7 +80,7 @@ class BrowseViewController: UIViewController, FullRankingDataSource, APIPopularG
         }
         switch identifier {
         case "rankingDetail":
-            guard let indexPath = reviewsTable.indexPathForSelectedRow else {
+            guard let indexPath = table.indexPathForSelectedRow else {
                 unexpectedError("tableView.indexPathForSelectedRow was nil")
                 return
             }
@@ -101,7 +88,7 @@ class BrowseViewController: UIViewController, FullRankingDataSource, APIPopularG
                 unexpectedError("Unexpected destination controller type for segue: \(identifier)")
                 return
             }
-            let ranking = rankings![indexPath.row]
+            let ranking = rankings[indexPath.row]
             controller.ranking = ranking.fragments.rankingWithGame.fragments.rankingBasic
             controller.user = ranking.user?.fragments.userBasic
             controller.game = ranking.fragments.rankingWithGame.game?.fragments.gameBasic
@@ -158,7 +145,8 @@ class BrowseViewController: UIViewController, FullRankingDataSource, APIPopularG
     }
     
     func handleAPI(rankings: [RankingFull], nextPage: String?) {
-        self.rankings = rankings
+        self.rankings.append(contentsOf: rankings)
+        fetchedUpdates = true
         self.nextPage = nextPage
         
         DispatchQueue.main.async {
