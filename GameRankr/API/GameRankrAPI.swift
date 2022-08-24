@@ -55,8 +55,8 @@ class GameRankrAPI {
         }
     }
     
-    let base_url = "http://192.168.86.27:3000" // localhost
-//    let base_url = "https://www.gamerankr.com"
+//    let base_url = "http://192.168.86.27:3000" // localhost
+    let base_url = "https://www.gamerankr.com"
     internal var authDelegates = [APIAuthenticationDelegate]()
     public internal(set) var token: String?
     public internal(set) var currentUserId: GraphQLID?

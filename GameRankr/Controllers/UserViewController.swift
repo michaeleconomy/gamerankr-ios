@@ -77,6 +77,14 @@ class UserViewController : UIViewController, APIUserDetailDelegate, FollowChange
         super.viewWillAppear(animated)
         if user == nil && userId == nil {
             if api.signedOut {
+                title = "My Profile"
+                imageView.image = PlaceholderImages.user
+                loadingImage?.isHidden = false
+                followerCountButton?.setTitle("?", for: .normal)
+                followingCountButton?.setTitle("?", for: .normal)
+                gameCountButton?.setTitle("?", for: .normal)
+                tableView?.reloadData()
+                redrawFollowButtons()
                 performSegue(withIdentifier: "requireSignIn", sender: nil)
                 return
             }
@@ -99,7 +107,7 @@ class UserViewController : UIViewController, APIUserDetailDelegate, FollowChange
         tableView?.reloadData()
         redrawFollowButtons()
         guard let user = user else {
-            navigationItem.title = "Loading"
+            title = "Loading"
             imageView.image = PlaceholderImages.user
             loadingImage?.isHidden = false
             followerCountButton?.setTitle("?", for: .normal)
@@ -108,7 +116,7 @@ class UserViewController : UIViewController, APIUserDetailDelegate, FollowChange
             return
         }
         
-        navigationItem.title = user.realName
+        title = user.realName
         imageView?.kf.setImage(with: largePhotoUrl(), placeholder: PlaceholderImages.user)
         guard let userDetail = userDetail else {
             followerCountButton?.setTitle("?", for: .normal)

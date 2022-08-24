@@ -270,7 +270,7 @@
                         <outlet property="shelvesTitle" destination="R2v-C6-Q9O" id="SN6-aU-Y3h"/>
                         <outlet property="tableView" destination="p1G-cs-Ajc" id="chg-Gh-cQI"/>
                         <outlet property="unfollowButton" destination="JSz-HM-XoA" id="tDz-S7-1Yb"/>
-                        <segue destination="F6U-rn-Mjw" kind="show" identifier="requireSignin" id="CLI-Ai-b5Y"/>
+                        <segue destination="F6U-rn-Mjw" kind="show" identifier="requireSignIn" id="CLI-Ai-b5Y"/>
                         <segue destination="Ga0-dR-9eW" kind="show" identifier="shelfDetail" id="PpY-Uj-khN"/>
                     </connections>
                 </viewController>

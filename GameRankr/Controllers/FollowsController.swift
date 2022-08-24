@@ -33,15 +33,17 @@ class FollowsController : UIViewController, APIFollowersDelegate, APIFollowingDe
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        follows.removeAll()
+        nextPage = nil
         if (userId == nil) {
             if (api.signedOut) {
+                tableView?.reloadData()
+                title = "Follow"
                 performSegue(withIdentifier: "requireSignIn", sender: nil)
                 return
             }
             userId = api.currentUserId
         }
-        follows.removeAll()
-        nextPage = nil
         getMore()
         configureView()
     }

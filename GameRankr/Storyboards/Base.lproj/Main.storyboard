@@ -136,6 +136,7 @@ Add more friends to see more updates.</string>
                         <outlet property="loadingImage" destination="QJX-dO-MY5" id="vPz-ET-PDP"/>
                         <outlet property="noUpdatesLabel" destination="pjr-3s-z9b" id="k2J-eH-Ln5"/>
                         <outlet property="table" destination="ZXN-PD-Rbm" id="zSy-lj-8wJ"/>
+                        <segue destination="yNO-zm-FvE" kind="show" identifier="requireSignIn" id="tY4-U7-fDx"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="W5J-7L-Pyd" sceneMemberID="firstResponder"/>
@@ -332,11 +333,32 @@ Add more friends to see more updates.</string>
                     <navigationItem key="navigationItem" id="ZWQ-OK-IPG"/>
                     <connections>
                         <outlet property="signOutButton" destination="eGV-pe-qXH" id="ice-cl-Kkx"/>
+                        <segue destination="jzc-xi-mLD" kind="show" identifier="requireSignIn" id="LKg-H4-kT0"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9wL-rS-uCP" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1041" y="4209"/>
+        </scene>
+        <!--Auth-->
+        <scene sceneID="Y27-1x-63p">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Auth" id="jzc-xi-mLD" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="OwL-E4-zUa"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Qaq-YX-Fyf" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1760" y="4209"/>
+        </scene>
+        <!--Auth-->
+        <scene sceneID="VP9-hk-d63">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Auth" id="yNO-zm-FvE" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="Rxz-t5-qxd"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="20n-bU-Tka" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2570" y="-259"/>
         </scene>
         <!--Game-->
         <scene sceneID="fEs-na-eSY">
@@ -547,7 +569,7 @@ Add more friends to see more updates.</string>
                 <navigationController id="rJB-QW-iAR" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Search" image="search" id="luE-8e-qtx"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="L7U-np-JOE">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
