@@ -50,14 +50,15 @@ class MyGamesViewController: UIViewController, UITableViewDataSource, APIMyGames
     
     private func applyFilter() {
         if (filter != nil) {
+            NSLog("Applying filter: \(String(describing: filter?.shelves)) \"\(filter?.text ?? "")\"")
             filteredRankings = filter?.apply(rankings:  MyGamesManager.sharedInstance.rankings)
         }
         else {
             filteredRankings = nil
         }
-        DispatchQueue.main.async(execute: {
+        DispatchQueue.main.async {
             self.configureView()
-        })
+        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {

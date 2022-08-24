@@ -2,6 +2,7 @@ import Foundation
 
 class RankingFilter {
     
+    
     var shelves = Set<String>()
     
     private var _text = ""
@@ -40,7 +41,7 @@ class RankingFilter {
     
     private func filterText(_ ranking: RankingWithGame) -> Bool {
         let text = text ?? ""
-        if (text == "") {
+        if text == "" {
             return true
         }
         
@@ -49,7 +50,6 @@ class RankingFilter {
             if title.lowercased().contains(text) {
                 return true
             }
-            return true
         }
         
         let rankingBasic = ranking.fragments.rankingBasic

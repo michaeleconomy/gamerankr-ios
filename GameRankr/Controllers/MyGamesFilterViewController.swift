@@ -13,9 +13,9 @@ class MyGamesFilterViewController: UIViewController, APIMyShelvesManagerDelegate
     var callingController: MyGamesViewController?
     var filter = RankingFilter() {
         didSet {
-            DispatchQueue.main.async(execute: {
+            DispatchQueue.main.async {
                 self.configureView()
-            })
+            }
         }
     }
     
@@ -25,17 +25,20 @@ class MyGamesFilterViewController: UIViewController, APIMyShelvesManagerDelegate
         loadingImage.image = PlaceholderImages.loadingBar
         MyShelvesManager.sharedInstance.register(delegate: self)
         
-        doneButton.target = self
-        doneButton.action = #selector(doneButtonTouch(sender:))
-        cancelButton.target = self
-        cancelButton.action = #selector(cancelButtonTouch(sender:))
-        clearFiltersButton.addTarget(self, action: #selector(clearFiltersButtonTouch(sender:)), for: .touchUpInside)
+        doneButton?.target = self
+        doneButton?.action = #selector(doneButtonTouch(sender:))
+        cancelButton?.target = self
+        cancelButton?.action = #selector(cancelButtonTouch(sender:))
+        clearFiltersButton?.addTarget(self, action: #selector(clearFiltersButtonTouch(sender:)), for: .touchUpInside)
         searchField.addTarget(self, action: #selector(searchChanged(sender:)), for: .editingChanged)
         configureView()
     }
     
     func configureView() {
-        searchField.text = filter.text
+        if !isViewLoaded {
+            return
+        }
+        searchField?.text = filter.text
         loadingImage?.isHidden = !MyShelvesManager.sharedInstance.loading
         shelvesTable?.reloadData()
     }
@@ -60,9 +63,9 @@ class MyGamesFilterViewController: UIViewController, APIMyShelvesManagerDelegate
     
     func handleShelvesUpdates() {
         addAllShelves()
-        DispatchQueue.main.async(execute: {
+        DispatchQueue.main.async {
             self.configureView()
-        })
+        }
     }
     
     func handleAPIAuthenticationError() {
