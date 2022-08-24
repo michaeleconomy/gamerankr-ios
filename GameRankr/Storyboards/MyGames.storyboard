@@ -125,7 +125,7 @@
                     <navigationItem key="navigationItem" title="My Games" id="Ffe-b5-WGO">
                         <barButtonItem key="rightBarButtonItem" image="filter" id="og4-cn-ArH">
                             <connections>
-                                <segue destination="Lrs-4V-wtK" kind="show" identifier="filter" id="U9s-0g-heU"/>
+                                <segue destination="Lrs-4V-wtK" kind="presentation" identifier="filter" id="U9s-0g-heU"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
