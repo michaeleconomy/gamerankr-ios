@@ -480,6 +480,7 @@
                         <outlet property="switchEditionButton" destination="QL7-3M-2Py" id="KbI-YZ-eNE"/>
                         <outlet property="unexpandedConstraint" destination="phl-ko-L40" id="Eqd-Wx-tJ4"/>
                         <segue destination="wSy-Fk-3YE" kind="modal" identifier="flag" id="qf0-D4-jaz"/>
+                        <segue destination="6cG-qa-QpH" kind="show" identifier="requireSignIn" id="avL-pD-Tke"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VYh-Vk-YvU" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -685,6 +686,16 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="08j-EK-MJD" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="863" y="1043"/>
+        </scene>
+        <!--Auth-->
+        <scene sceneID="X6J-Q1-P06">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Auth" id="6cG-qa-QpH" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="WPg-NJ-jbA"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="4hv-nz-zLd" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1105" y="1043"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
