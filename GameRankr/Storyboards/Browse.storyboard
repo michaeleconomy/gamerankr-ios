@@ -5,6 +5,7 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -58,7 +59,7 @@
                                             </label>
                                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="PjJ-YD-rsO" customClass="IntrinsicTableView" customModule="GameRankr" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="131" width="316" height="128"/>
-                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                 <prototypes>
                                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" rowHeight="57" id="MYf-xY-e7Q" customClass="FixedImageSizeTableCell" customModule="GameRankr" customModuleProvider="target">
                                                         <rect key="frame" x="0.0" y="44.5" width="316" height="57"/>
@@ -140,7 +141,7 @@
                             </scrollView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="D7M-kE-tRZ"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="D7M-kE-tRZ" firstAttribute="bottom" secondItem="lpf-PP-bg9" secondAttribute="bottom" id="4e9-Hw-MFL"/>
                             <constraint firstItem="lpf-PP-bg9" firstAttribute="leading" secondItem="D7M-kE-tRZ" secondAttribute="leading" id="Bx2-us-uu6"/>
@@ -185,7 +186,7 @@
                             </imageView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="t1e-S2-YRu">
                                 <rect key="frame" x="0.0" y="2" width="320" height="458"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" id="ZSA-GG-RL1" customClass="FixedImageSizeTableCell" customModule="GameRankr" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="44.5" width="320" height="62.5"/>
@@ -246,7 +247,6 @@
                             </tableView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="buc-Z8-wfs"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="u8t-Ey-57q" firstAttribute="leading" secondItem="hro-Yq-9ko" secondAttribute="leading" id="AR9-E1-7bw"/>
                             <constraint firstItem="t1e-S2-YRu" firstAttribute="top" secondItem="u8t-Ey-57q" secondAttribute="bottom" id="Crx-6k-Gea"/>
@@ -257,7 +257,7 @@
                             <constraint firstAttribute="trailing" secondItem="t1e-S2-YRu" secondAttribute="trailing" id="wjJ-4K-QqV"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="7FG-ze-9vU"/>
+                    <navigationItem key="navigationItem" title="Recent Reviews" id="7FG-ze-9vU"/>
                     <connections>
                         <outlet property="loadingImage" destination="u8t-Ey-57q" id="yeO-P8-nw7"/>
                         <outlet property="table" destination="t1e-S2-YRu" id="SDk-an-edx"/>
@@ -299,10 +299,13 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="wzs-VF-fxC"/>
+        <segue reference="Z1i-qc-GNX"/>
         <segue reference="zF7-1i-SkC"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="picture" width="25" height="25"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
     </resources>
 </document>

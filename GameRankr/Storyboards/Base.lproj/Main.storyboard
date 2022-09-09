@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="49e-Tb-3d3">
-    <device id="retina3_5" orientation="portrait" appearance="light"/>
+    <device id="retina3_5" orientation="portrait" appearance="dark"/>
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -58,7 +59,7 @@ Add more friends to see more updates.</string>
                             </stackView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="ZXN-PD-Rbm">
                                 <rect key="frame" x="0.0" y="46" width="320" height="385"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" id="PLZ-i2-8tc" customClass="FixedImageSizeTableCell" customModule="GameRankr" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="44.5" width="320" height="62.5"/>
@@ -119,7 +120,7 @@ Add more friends to see more updates.</string>
                             </tableView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="PQr-Ze-W5v"/>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="gtP-6f-HAW" firstAttribute="top" secondItem="PQr-Ze-W5v" secondAttribute="top" id="6Du-tp-l0N"/>
                             <constraint firstItem="ZXN-PD-Rbm" firstAttribute="bottom" secondItem="PQr-Ze-W5v" secondAttribute="bottom" id="BMn-9X-EhT"/>
@@ -159,7 +160,7 @@ Add more friends to see more updates.</string>
                 <navigationController id="sQU-Ad-aBX" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Following" image="people" id="1Ac-h3-PhQ"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="ENV-Xq-8l4">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
@@ -211,7 +212,6 @@ Add more friends to see more updates.</string>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                 </subviews>
-                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
                                                     <constraint firstAttribute="trailing" secondItem="sS3-Ux-UbQ" secondAttribute="trailing" id="52L-41-xML"/>
                                                     <constraint firstItem="sS3-Ux-UbQ" firstAttribute="top" secondItem="UFa-Tf-Mgt" secondAttribute="top" id="7gq-GQ-iLA"/>
@@ -260,7 +260,7 @@ Add more friends to see more updates.</string>
                             </scrollView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="C3j-zI-gIg"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="C3j-zI-gIg" firstAttribute="trailing" secondItem="9nd-jS-KyJ" secondAttribute="trailing" constant="10" id="Hdw-qW-KIV"/>
                             <constraint firstItem="9nd-jS-KyJ" firstAttribute="top" secondItem="C3j-zI-gIg" secondAttribute="top" id="V1g-H3-BBj"/>
@@ -316,7 +316,7 @@ Add more friends to see more updates.</string>
                             </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="aYI-t7-eyP"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="aYI-t7-eyP" firstAttribute="trailing" secondItem="eGV-pe-qXH" secondAttribute="trailing" constant="10" id="4Mx-MU-Jsk"/>
                             <constraint firstItem="Nru-d7-DVd" firstAttribute="leading" secondItem="aYI-t7-eyP" secondAttribute="leading" constant="10" id="Da4-cz-vM2"/>
@@ -376,7 +376,7 @@ Add more friends to see more updates.</string>
                 <navigationController id="PR9-Vd-CNs" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="My Profile" image="person" id="Odj-36-0sp"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="ryH-3y-w8B">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
@@ -420,7 +420,7 @@ Add more friends to see more updates.</string>
                 <navigationController id="WRn-8S-dnY" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="My Games" image="list" id="c7R-oN-MeB"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="QKN-KC-02m">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
@@ -475,7 +475,7 @@ Add more friends to see more updates.</string>
                             </stackView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" keyboardDismissMode="onDrag" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="pTg-81-Txs">
                                 <rect key="frame" x="0.0" y="97" width="320" height="334"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" id="UZE-cd-9Xr" customClass="FixedImageSizeTableCell" customModule="GameRankr" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="44.5" width="320" height="62.5"/>
@@ -536,7 +536,7 @@ Add more friends to see more updates.</string>
                             </tableView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="2Ca-os-QK7"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="4zb-da-t2l" secondAttribute="trailing" id="6hL-Tk-nk9"/>
                             <constraint firstItem="pTg-81-Txs" firstAttribute="bottom" secondItem="2Ca-os-QK7" secondAttribute="bottom" id="80R-nn-E0X"/>
@@ -569,7 +569,7 @@ Add more friends to see more updates.</string>
                 <navigationController id="rJB-QW-iAR" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Search" image="search" id="luE-8e-qtx"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="L7U-np-JOE">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
@@ -625,5 +625,8 @@ Add more friends to see more updates.</string>
         <image name="person" width="25" height="25"/>
         <image name="picture" width="25" height="25"/>
         <image name="search" width="25" height="25"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
     </resources>
 </document>

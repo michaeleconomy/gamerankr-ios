@@ -347,7 +347,7 @@
                                             </label>
                                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="IAJ-CO-P32" customClass="IntrinsicTableView" customModule="GameRankr" customModuleProvider="target">
                                                 <rect key="frame" x="5" y="589" width="310" height="128"/>
-                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                 <prototypes>
                                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" id="FjJ-fX-lZt" customClass="FixedImageSizeTableCell" customModule="GameRankr" customModuleProvider="target">
                                                         <rect key="frame" x="0.0" y="44.5" width="310" height="62.5"/>
@@ -429,7 +429,7 @@
                             </scrollView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="X2d-ae-e1v"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="eIx-zw-G8r" firstAttribute="width" secondItem="X2d-ae-e1v" secondAttribute="width" id="5ut-rO-y90"/>
                             <constraint firstItem="HaI-LT-Ksn" firstAttribute="centerX" secondItem="X2d-ae-e1v" secondAttribute="centerX" id="LOE-ix-eZf"/>
@@ -494,7 +494,7 @@
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="QUp-Am-iKv">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="460"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" textLabel="11V-uA-5v1" detailTextLabel="wYd-6z-TBl" style="IBUITableViewCellStyleSubtitle" id="Fx7-FG-E3p" customClass="SubtitleTableCell" customModule="GameRankr" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="44.5" width="320" height="43.5"/>
@@ -546,14 +546,14 @@
                         <subviews>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="fGW-eW-3C8">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="460"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                                <color key="textColor" systemColor="labelColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="USu-Ij-l03"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="fGW-eW-3C8" firstAttribute="leading" secondItem="USu-Ij-l03" secondAttribute="leading" id="3Xh-MG-O6A"/>
                             <constraint firstItem="fGW-eW-3C8" firstAttribute="top" secondItem="USu-Ij-l03" secondAttribute="top" id="Mws-vT-1oP"/>
@@ -582,29 +582,21 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="460"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="wWZ-o4-hQi">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wWZ-o4-hQi">
                                 <rect key="frame" x="0.0" y="56" width="320" height="2"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="2" id="jkC-Li-Q0M"/>
                                 </constraints>
                             </imageView>
-                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ccb-A2-0kg">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="56"/>
-                                <items>
-                                    <navigationItem title="Shelve This Game" id="dsb-Ti-ULG">
-                                        <barButtonItem key="rightBarButtonItem" title="Done" id="Oz3-q3-WFR"/>
-                                    </navigationItem>
-                                </items>
-                            </navigationBar>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="yIm-yo-iJ6">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="yIm-yo-iJ6">
                                 <rect key="frame" x="0.0" y="56" width="320" height="374"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" id="Xuf-wi-sRT" customClass="UITableViewCellWithSwitch" customModule="GameRankr" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="44.5" width="320" height="43.5"/>
+                                        <rect key="frame" x="0.0" y="44.5" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Xuf-wi-sRT" id="Dq5-IL-u6M">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="hIy-IH-Iu0">
@@ -632,32 +624,30 @@
                                     <constraint firstAttribute="height" constant="30" id="bsV-NW-ipf"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <state key="normal" title="Remove This Game From Your Shelves">
+                                <state key="normal" title="Remove This Game">
                                     <color key="titleColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="gir-oI-VPO"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="ccb-A2-0kg" firstAttribute="leading" secondItem="gir-oI-VPO" secondAttribute="leading" id="9fb-BA-ldq"/>
                             <constraint firstItem="gir-oI-VPO" firstAttribute="trailing" secondItem="yIm-yo-iJ6" secondAttribute="trailing" id="ClS-RY-GTC"/>
                             <constraint firstItem="Xdx-OY-EpT" firstAttribute="top" secondItem="yIm-yo-iJ6" secondAttribute="bottom" id="IsH-bR-t1b"/>
-                            <constraint firstItem="wWZ-o4-hQi" firstAttribute="top" secondItem="ccb-A2-0kg" secondAttribute="bottom" id="OKi-Wq-LTe"/>
                             <constraint firstItem="gir-oI-VPO" firstAttribute="bottom" secondItem="Xdx-OY-EpT" secondAttribute="bottom" id="Pb4-WW-BgL"/>
                             <constraint firstItem="wWZ-o4-hQi" firstAttribute="width" secondItem="soC-Ex-Ep0" secondAttribute="width" id="Ukq-NT-heV"/>
                             <constraint firstItem="wWZ-o4-hQi" firstAttribute="centerX" secondItem="gir-oI-VPO" secondAttribute="centerX" id="ajf-BU-2wC"/>
                             <constraint firstItem="Xdx-OY-EpT" firstAttribute="trailing" secondItem="gir-oI-VPO" secondAttribute="trailing" id="m6e-1Y-L65"/>
                             <constraint firstItem="yIm-yo-iJ6" firstAttribute="top" secondItem="wWZ-o4-hQi" secondAttribute="bottom" constant="-2" id="uVa-oH-GlA"/>
                             <constraint firstItem="Xdx-OY-EpT" firstAttribute="leading" secondItem="gir-oI-VPO" secondAttribute="leading" id="vMe-fL-2XP"/>
-                            <constraint firstItem="ccb-A2-0kg" firstAttribute="trailing" secondItem="gir-oI-VPO" secondAttribute="trailing" id="xGB-kd-4sh"/>
-                            <constraint firstItem="ccb-A2-0kg" firstAttribute="top" secondItem="gir-oI-VPO" secondAttribute="top" id="y59-C2-aL6"/>
                             <constraint firstItem="yIm-yo-iJ6" firstAttribute="leading" secondItem="gir-oI-VPO" secondAttribute="leading" id="yTx-bs-NgQ"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="lut-Dc-d6N"/>
+                    <navigationItem key="navigationItem" id="lut-Dc-d6N">
+                        <barButtonItem key="rightBarButtonItem" title="Done" id="FRl-l1-6VK"/>
+                    </navigationItem>
                     <connections>
-                        <outlet property="doneButton" destination="Oz3-q3-WFR" id="ReR-nV-2sK"/>
+                        <outlet property="doneButton" destination="FRl-l1-6VK" id="JPD-fu-bQj"/>
                         <outlet property="loadingImage" destination="wWZ-o4-hQi" id="txY-Rz-jgg"/>
                         <outlet property="removeButton" destination="Xdx-OY-EpT" id="cWh-qd-9K0"/>
                         <outlet property="tableView" destination="yIm-yo-iJ6" id="ES0-xL-ziL"/>
@@ -705,6 +695,9 @@
         <image name="picture" width="25" height="25"/>
         <image name="share" width="25" height="25"/>
         <image name="star-large-empty" width="50" height="50"/>
+        <systemColor name="labelColor">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
         <systemColor name="secondaryLabelColor">
             <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>

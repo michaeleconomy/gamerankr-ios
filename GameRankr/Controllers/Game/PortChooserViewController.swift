@@ -43,9 +43,16 @@ class PortChooserViewController : UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard let navigationController = navigationController else {
+            silentError("no navigationController")
+            return
+        }
         let port = ports![indexPath.row]
-        let gameViewController = navigationController!.viewControllers[navigationController!.viewControllers.count - 2] as! GameViewController
+        let parentController = navigationController.viewControllers[navigationController.viewControllers.count - 2]
+        guard let gameViewController = parentController as? GameViewController else {
+            return
+        }
         gameViewController.selectPort(portId: port.id)
-        self.navigationController!.popViewController(animated: true)
+        navigationController.popViewController(animated: true)
     }
 }

@@ -45,11 +45,11 @@ class ShelveGameController : UIViewController, UITableViewDataSource, APIMyShelv
             return
         }
         MyGamesManager.sharedInstance.destroyRanking(portId:port.id)
-        self.dismiss(animated: true)
+        navigationController?.popViewController(animated: true)
     }
     
     @objc func doneButtonClick(sender: UIButton) {
-        self.dismiss(animated: true)
+        navigationController?.popViewController(animated: true)
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -123,7 +123,7 @@ class ShelveGameController : UIViewController, UITableViewDataSource, APIMyShelv
     func handleAPIAuthenticationError() {
         easyAlert("You've been signed out.")
         DispatchQueue.main.async {
-            self.dismiss(animated: true)
+            self.navigationController?.popViewController(animated: true)
         }
     }
 }

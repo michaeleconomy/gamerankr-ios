@@ -163,7 +163,7 @@
                                             </label>
                                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="p1G-cs-Ajc" userLabel="gamesTable" customClass="IntrinsicTableView" customModule="GameRankr" customModuleProvider="target">
                                                 <rect key="frame" x="8" y="229" width="304" height="128"/>
-                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                 <prototypes>
                                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="0.0" shouldIndentWhileEditing="NO" reuseIdentifier="Cell" rowHeight="57" id="ow8-Yf-xMa" customClass="FixedImageSizeTableCell" customModule="GameRankr" customModuleProvider="target">
                                                         <rect key="frame" x="0.0" y="44.5" width="304" height="57"/>
