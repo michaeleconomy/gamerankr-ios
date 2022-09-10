@@ -1,12 +1,14 @@
 import UIKit
 import FacebookCore
 import FacebookLogin
+import AuthenticationServices
 
-class SignUpViewController : UIViewController, APILoginDelegate, APIGenericSuccessDelegate {
+class SignUpViewController : UIViewController, APILoginDelegate, APIGenericSuccessDelegate, ASAuthorizationControllerDelegate {
 
     
     @IBOutlet weak var loadingImage: UIImageView!
     @IBOutlet weak var fbButton: UIButton!
+    @IBOutlet weak var appleButton: UIButton!
     @IBOutlet weak var createAccountButton: UIButton!
     @IBOutlet weak var nameField: UITextField!
     @IBOutlet weak var emailField: UITextField!
@@ -23,6 +25,7 @@ class SignUpViewController : UIViewController, APILoginDelegate, APIGenericSucce
         self.navigationController?.navigationBar.tintColor = UIColor.lightGray
         
         fbButton.addTarget(self, action:#selector(fbloginButtonClicked(sender:)), for: .touchUpInside)
+        appleButton.addTarget(self, action: #selector(appleButtonClicked(sender:)), for: .touchUpInside)
         createAccountButton.addTarget(self, action: #selector(createButtonClicked(sender:)), for: .touchUpInside)
         loadingImage.image = PlaceholderImages.loadingBar
         loadingImage.isHidden = true
@@ -79,13 +82,27 @@ class SignUpViewController : UIViewController, APILoginDelegate, APIGenericSucce
         }
     }
     
-    @objc func createButtonClicked(sender: UIButton) {
+    @objc func createButtonClicked(sender: UIButton?) {
         loadingImage.isHidden = false
         api.createAccount(
             email: emailField.text!,
             password: passwordField.text!,
             name: nameField.text!,
             delegate: self)
+    }
+    
+    @objc func appleButtonClicked(sender: UIButton?) {
+        if #available(iOS 13.0, *) {
+            let appleIDProvider = ASAuthorizationAppleIDProvider()
+            let request = appleIDProvider.createRequest()
+            request.requestedScopes = [.fullName, .email]
+            let authorizationController = ASAuthorizationController(authorizationRequests: [request])
+            authorizationController.delegate = self
+            authorizationController.performRequests()
+        }
+        else {
+            easyAlert("AppleID is not available on your device")
+        }
     }
     
     func handleAPISuccess() {
@@ -108,6 +125,49 @@ class SignUpViewController : UIViewController, APILoginDelegate, APIGenericSucce
         DispatchQueue.main.async {
             self.handleLoginUnverified()
         }
+    }
+    
+    
+    @available(iOS 13.0, *)
+    func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
+        guard let appleIDCredential = authorization.credential as?  ASAuthorizationAppleIDCredential else {
+            unexpectedError("Could not get Apple ID Credential")
+            return
+        }
+        
+        guard let tokenRaw = appleIDCredential.identityToken else {
+            easyAlert("Apple ID did not provide token")
+            return
+        }
+        
+        let jwt = JWTDecode.decode(jwtRaw: tokenRaw)
+        NSLog("token decoded: \(String(describing: jwt))")
+        
+        guard let email = jwt["email"] as? String else {
+            easyAlert("Apple ID did not provide an email address")
+            return
+        }
+        
+        guard let sub = jwt["sub"] as? String else {
+            easyAlert("Apple ID did not provide sub")
+            return
+        }
+        
+        guard let fullName = appleIDCredential.fullName else {
+            easyAlert("Apple ID did not provide full name")
+            return
+        }
+        let formatter = PersonNameComponentsFormatter()
+        nameField.text = formatter.string(from: fullName)
+        emailField.text = email
+        passwordField.text = sub
+        
+        createButtonClicked(sender: nil)
+    }
+    
+    @available(iOS 13.0, *)
+    func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
+        unexpectedError("Error with Apple ID: " + error.localizedDescription)
     }
 }
 

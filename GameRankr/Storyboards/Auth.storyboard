@@ -18,7 +18,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="qp0-XC-iwv">
-                                <rect key="frame" x="10" y="0.0" width="300" height="332"/>
+                                <rect key="frame" x="10" y="0.0" width="300" height="318"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="FF5-aQ-IIJ">
                                         <rect key="frame" x="0.0" y="0.0" width="300" height="2"/>
@@ -73,19 +73,44 @@
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ROa-Ca-bQa">
                                         <rect key="frame" x="0.0" y="253" width="300" height="31"/>
                                         <state key="normal" title="Button"/>
-                                        <buttonConfiguration key="configuration" style="plain" title="Have an account? Sign In"/>
+                                        <buttonConfiguration key="configuration" style="plain" title="Sign In"/>
                                         <connections>
                                             <segue destination="KUj-0g-5fm" kind="show" id="jCa-PT-vCM"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8on-P2-QaT">
-                                        <rect key="frame" x="0.0" y="288" width="300" height="44"/>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="O79-pf-1n6">
+                                        <rect key="frame" x="0.0" y="288" width="300" height="30"/>
+                                        <subviews>
+                                            <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="0XC-er-LOT">
+                                                <rect key="frame" x="39.5" y="0.0" width="221" height="30"/>
+                                                <subviews>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sign In With: " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zPn-ir-rxH">
+                                                        <rect key="frame" x="0.0" y="5" width="100" height="20.5"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                        <nil key="textColor"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8on-P2-QaT">
+                                                        <rect key="frame" x="110" y="0.5" width="63" height="29"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                        <state key="normal" title="Facebook"/>
+                                                    </button>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1db-7C-l4h">
+                                                        <rect key="frame" x="183" y="0.5" width="38" height="29"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                        <state key="normal" title="Apple"/>
+                                                    </button>
+                                                </subviews>
+                                            </stackView>
+                                        </subviews>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="44" id="gVN-2n-cHi"/>
+                                            <constraint firstAttribute="bottom" secondItem="0XC-er-LOT" secondAttribute="bottom" id="9gg-1s-h3o"/>
+                                            <constraint firstItem="0XC-er-LOT" firstAttribute="centerX" secondItem="O79-pf-1n6" secondAttribute="centerX" id="LZz-SU-3a9"/>
+                                            <constraint firstAttribute="height" constant="30" id="sNP-uN-6K5"/>
+                                            <constraint firstItem="0XC-er-LOT" firstAttribute="top" secondItem="O79-pf-1n6" secondAttribute="top" id="w4I-dR-Ur1"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <state key="normal" title="Sign in with Facebook"/>
-                                    </button>
+                                    </view>
                                 </subviews>
                             </stackView>
                         </subviews>
@@ -101,6 +126,7 @@
                     <navigationItem key="navigationItem" id="ahV-1D-Qju"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
+                        <outlet property="appleButton" destination="1db-7C-l4h" id="aow-aW-UqS"/>
                         <outlet property="createAccountButton" destination="QtC-Xx-Cuo" id="ypN-oR-kfz"/>
                         <outlet property="emailField" destination="c5Q-nW-lzw" id="RDs-hZ-hF3"/>
                         <outlet property="fbButton" destination="8on-P2-QaT" id="LQB-0t-fe6"/>
@@ -120,13 +146,13 @@
         <!--Sign In-->
         <scene sceneID="E0H-xF-sAl">
             <objects>
-                <viewController id="KUj-0g-5fm" userLabel="Sign In" customClass="SignInViewController" customModule="GameRankr" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="GameRankr Sign In" id="KUj-0g-5fm" userLabel="Sign In" customClass="SignInViewController" customModule="GameRankr" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="FoQ-4w-LKg">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="460"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="Ew6-4X-fbS">
-                                <rect key="frame" x="10" y="10" width="300" height="318.5"/>
+                                <rect key="frame" x="10" y="10" width="300" height="280"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="MC4-CQ-e1L">
                                         <rect key="frame" x="0.0" y="0.0" width="300" height="2"/>
@@ -134,41 +160,35 @@
                                             <constraint firstAttribute="height" constant="2" id="hQL-B0-mkp"/>
                                         </constraints>
                                     </imageView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="GameRankr Sign In" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jh6-CX-Iwy">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Email" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2Fy-DG-oO4" userLabel="emailLabel">
                                         <rect key="frame" x="0.0" y="6" width="300" height="20.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Email" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2Fy-DG-oO4" userLabel="emailLabel">
-                                        <rect key="frame" x="0.0" y="30.5" width="300" height="20.5"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Zi0-R3-KkQ" userLabel="emailField">
-                                        <rect key="frame" x="0.0" y="55" width="300" height="34"/>
+                                        <rect key="frame" x="0.0" y="30.5" width="300" height="34"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" textContentType="email"/>
                                     </textField>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Password" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5zY-r3-xCY" userLabel="passwordLabel">
-                                        <rect key="frame" x="0.0" y="93" width="300" height="20.5"/>
+                                        <rect key="frame" x="0.0" y="68.5" width="300" height="20.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="igc-kO-IBB" userLabel="passwordField">
-                                        <rect key="frame" x="0.0" y="117.5" width="300" height="34"/>
+                                        <rect key="frame" x="0.0" y="93" width="300" height="34"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" secureTextEntry="YES" textContentType="password"/>
                                     </textField>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ebq-e6-mYl">
-                                        <rect key="frame" x="0.0" y="155.5" width="300" height="31"/>
+                                        <rect key="frame" x="0.0" y="131" width="300" height="31"/>
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="filled" title="Sign In" titleAlignment="automatic"/>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="29K-Ta-rlK">
-                                        <rect key="frame" x="0.0" y="190.5" width="300" height="10"/>
+                                        <rect key="frame" x="0.0" y="166" width="300" height="10"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="10" id="76X-UT-ixQ"/>
                                         </constraints>
@@ -177,7 +197,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="S9v-ds-AfD" userLabel="forgotPassword">
-                                        <rect key="frame" x="0.0" y="204.5" width="300" height="31"/>
+                                        <rect key="frame" x="0.0" y="180" width="300" height="31"/>
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="plain" title="Forgot Password?"/>
                                         <connections>
@@ -185,21 +205,46 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="q9t-z5-qM3">
-                                        <rect key="frame" x="0.0" y="239.5" width="300" height="31"/>
+                                        <rect key="frame" x="0.0" y="215" width="300" height="31"/>
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="plain" title="Create Account"/>
                                         <connections>
                                             <segue destination="ydt-Gn-QLv" kind="unwind" unwindAction="unwindToSignUpWithSegue:" id="ItJ-AU-NxG"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SeN-Wf-IwC">
-                                        <rect key="frame" x="0.0" y="274.5" width="300" height="44"/>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uYk-wG-sla">
+                                        <rect key="frame" x="0.0" y="250" width="300" height="30"/>
+                                        <subviews>
+                                            <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Gwd-Im-CU4">
+                                                <rect key="frame" x="39.5" y="0.0" width="221" height="30"/>
+                                                <subviews>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sign In With: " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KRk-Z1-XHv">
+                                                        <rect key="frame" x="0.0" y="5" width="100" height="20.5"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                        <nil key="textColor"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bc5-rO-JzL">
+                                                        <rect key="frame" x="110" y="0.5" width="63" height="29"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                        <state key="normal" title="Facebook"/>
+                                                    </button>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MBo-3A-2dP">
+                                                        <rect key="frame" x="183" y="0.5" width="38" height="29"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                        <state key="normal" title="Apple"/>
+                                                    </button>
+                                                </subviews>
+                                            </stackView>
+                                        </subviews>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="44" id="DwG-0o-BTg"/>
+                                            <constraint firstAttribute="bottom" secondItem="Gwd-Im-CU4" secondAttribute="bottom" id="2dU-ki-WtM"/>
+                                            <constraint firstItem="Gwd-Im-CU4" firstAttribute="centerX" secondItem="uYk-wG-sla" secondAttribute="centerX" id="8A2-5L-QyV"/>
+                                            <constraint firstAttribute="height" constant="30" id="KJw-l2-DO8"/>
+                                            <constraint firstItem="Gwd-Im-CU4" firstAttribute="top" secondItem="uYk-wG-sla" secondAttribute="top" id="mRS-YW-5Ow"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <state key="normal" title="Sign in with Facebook"/>
-                                    </button>
+                                    </view>
                                 </subviews>
                             </stackView>
                         </subviews>
@@ -213,8 +258,9 @@
                     </view>
                     <navigationItem key="navigationItem" id="E81-5w-gcc"/>
                     <connections>
+                        <outlet property="appleButton" destination="MBo-3A-2dP" id="znO-Uh-mGf"/>
                         <outlet property="emailField" destination="Zi0-R3-KkQ" id="Iww-Zd-dFW"/>
-                        <outlet property="fbButton" destination="SeN-Wf-IwC" id="EWG-3a-QBs"/>
+                        <outlet property="fbButton" destination="bc5-rO-JzL" id="V4g-iM-gbC"/>
                         <outlet property="loadingImage" destination="MC4-CQ-e1L" id="3Jv-xN-yYX"/>
                         <outlet property="passwordField" destination="igc-kO-IBB" id="nai-WF-brB"/>
                         <outlet property="signInButton" destination="Ebq-e6-mYl" id="ZxY-xt-Wgw"/>
@@ -440,8 +486,8 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="taI-Ye-HFO"/>
-        <segue reference="y7z-7b-dxH"/>
+        <segue reference="Sge-to-021"/>
+        <segue reference="2eY-Bt-N4e"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="login" width="25" height="25"/>

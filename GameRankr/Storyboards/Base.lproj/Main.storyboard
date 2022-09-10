@@ -160,7 +160,7 @@ Add more friends to see more updates.</string>
                 <navigationController id="sQU-Ad-aBX" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Following" image="people" id="1Ac-h3-PhQ"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="ENV-Xq-8l4">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
@@ -295,6 +295,9 @@ Add more friends to see more updates.</string>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <state key="normal" title="Sign out of GameRankr"/>
+                                <buttonConfiguration key="configuration" style="filled" title="Sign out of GameRankr">
+                                    <fontDescription key="titleFontDescription" type="system" pointSize="20"/>
+                                </buttonConfiguration>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sign Out" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wbS-Gw-b3J">
                                 <rect key="frame" x="10" y="10" width="300" height="21"/>
@@ -376,7 +379,7 @@ Add more friends to see more updates.</string>
                 <navigationController id="PR9-Vd-CNs" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="My Profile" image="person" id="Odj-36-0sp"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="ryH-3y-w8B">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
@@ -403,7 +406,7 @@ Add more friends to see more updates.</string>
                 <navigationController id="Mgj-l5-4h0" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Browse" image="controller" id="yg8-Q3-Nec"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="NeM-Q3-cZb">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
