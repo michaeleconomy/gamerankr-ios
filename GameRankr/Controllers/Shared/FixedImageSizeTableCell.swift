@@ -11,7 +11,7 @@ class FixedImageSizeTableCell: UITableViewCell {
         fixedSizeImageView.frame = CGRect(x: 10, y: (frame.height / 2) - 30, width: 60, height: 60)
     }
     
-    func populateForShelf(with rankingWithGame: RankingWithGame) {
+    func populateForShelf(with rankingWithGame: Api.RankingWithGame) {
         let game = rankingWithGame.game
         let rankingBasic = rankingWithGame.fragments.rankingBasic
         let port = rankingBasic.port
@@ -41,10 +41,10 @@ class FixedImageSizeTableCell: UITableViewCell {
         }
         secondaryText.add("Shelves: " + rankingBasic.shelves.map{$0.fragments.shelfBasic.name}.joined(separator: ", "))
         
-        secondaryText.add("\n" + Formatter.format(dateString: rankingBasic.updatedAt))
-        if (rankingBasic.commentsCount > 0) {
-            secondaryText.add("\(rankingBasic.commentsCount) comment")
-            if (rankingBasic.commentsCount > 1) {
+        secondaryText.add("\n" + Formatter.format(dateString: rankingBasic.updated_at))
+        if (rankingBasic.comments_count > 0) {
+            secondaryText.add("\(rankingBasic.comments_count) comment")
+            if (rankingBasic.comments_count > 1) {
                 secondaryText.add("s")
             }
         }
@@ -53,8 +53,8 @@ class FixedImageSizeTableCell: UITableViewCell {
         setImage(port: rankingBasic.port)
     }
     
-    func setImage(port: RankingBasic.Port?) {
-        if let imageUrl = port?.smallImageUrl {
+    func setImage(port: Api.RankingBasic.Port?) {
+        if let imageUrl = port?.small_image_url {
             fixedSizeImageView?.kf.indicatorType = .activity
             fixedSizeImageView?.kf.setImage(with: URL(string: imageUrl)!, placeholder: PlaceholderImages.game, completionHandler: {
                 (result) in
@@ -66,7 +66,7 @@ class FixedImageSizeTableCell: UITableViewCell {
         }
     }
     
-    func rankingText(rankingBasic: RankingBasic) -> AttributedStringBuilder {
+    func rankingText(rankingBasic: Api.RankingBasic) -> AttributedStringBuilder {
         let text = AttributedStringBuilder()
         
         let review = rankingBasic.review ?? ""
@@ -89,9 +89,9 @@ class FixedImageSizeTableCell: UITableViewCell {
             }
             text.add("\n")
         }
-        text.add(Formatter.format(dateString: rankingBasic.updatedAt))
-        if rankingBasic.commentsCount > 0 {
-            text.add("   \(rankingBasic.commentsCount) Comments")
+        text.add(Formatter.format(dateString: rankingBasic.updated_at))
+        if rankingBasic.comments_count > 0 {
+            text.add("   \(rankingBasic.comments_count) Comments")
         }
         return text
     }

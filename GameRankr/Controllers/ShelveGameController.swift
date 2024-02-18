@@ -8,9 +8,9 @@ class ShelveGameController : UIViewController, UITableViewDataSource, APIMyShelv
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var removeButton: UIButton!
     
-    var game: GameBasic?
-    var ranking: RankingWithGame?
-    var portId: GraphQLID?
+    var game: Api.GameBasic?
+    var ranking: Api.RankingWithGame?
+    var portId: Api.ID?
     
     override func viewDidLoad() {
         super.viewDidLoad()

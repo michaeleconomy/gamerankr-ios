@@ -1,6 +1,4 @@
 import UIKit
-import FacebookCore
-import FacebookLogin
 
 class VerifyViewController: UIViewController, APILoginDelegate, APIGenericSuccessDelegate {
     private var retrying: Bool = false

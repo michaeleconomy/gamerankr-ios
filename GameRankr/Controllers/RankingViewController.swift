@@ -26,19 +26,19 @@ class RankingViewController : UIViewController, UITableViewDataSource, APICommen
     @IBOutlet weak var commentBottomContraint: NSLayoutConstraint!
     let defaultCommentText = "Write a comment..."
     
-    var ranking: RankingBasic?
-    var user: UserBasic?
-    var userId: GraphQLID?
-    var game: GameBasic?
+    var ranking: Api.RankingBasic?
+    var user: Api.UserBasic?
+    var userId: Api.ID?
+    var game: Api.GameBasic?
     
-    private var comments = [CommentBasic]()
-    private var nextPage: String?
+    private var comments = [Api.CommentBasic]()
+    private var nextPage = GraphQLNullable<String>.none
     
     override func viewDidLoad() {
         super.viewDidLoad()
         loadingImage.image = PlaceholderImages.loadingBar
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
         commentField.delegate = self
         commentField.layer.borderColor = UIColor.gray.cgColor
         commentField.layer.borderWidth = 2
@@ -89,13 +89,13 @@ class RankingViewController : UIViewController, UITableViewDataSource, APICommen
         scrollView?.isHidden = false
         commentContainer?.isHidden = false
         self.title = "Comments"
-        userImage?.kf.setImage(with: URL(string: user.photoUrl)!, placeholder: PlaceholderImages.user)
-        userButton?.setTitle(user.realName, for: .normal)
+        userImage?.kf.setImage(with: URL(string: user.photo_url)!, placeholder: PlaceholderImages.user)
+        userButton?.setTitle(user.real_name, for: .normal)
         verbLabel?.text = ranking.verb
         
         let port = ranking.port
         platformLabel?.text = port?.platform.name ?? "Unknown"
-        if let imageUrl = port?.mediumImageUrl {
+        if let imageUrl = port?.medium_image_url {
             gameImage?.kf.setImage(with: URL(string: imageUrl)!, placeholder: PlaceholderImages.game)
         }
         
@@ -128,7 +128,7 @@ class RankingViewController : UIViewController, UITableViewDataSource, APICommen
             reviewLabel.isHidden = true
         }
         
-        if let date = Formatter.formatDate(ranking.updatedAt) {
+        if let date = Formatter.formatDate(ranking.updated_at) {
             dateLabel?.text = date
             dateLabel.isHidden = false
         }
@@ -158,7 +158,7 @@ class RankingViewController : UIViewController, UITableViewDataSource, APICommen
     }
     
     @objc func shareRanking() {
-        share(message: "\(user?.realName ?? "Unknown")'s review of \(game?.title ?? "Unknown") - GameRankr", link: ranking!.url, displayFlag: true)
+        share(message: "\(user?.real_name ?? "Unknown")'s review of \(game?.title ?? "Unknown") - GameRankr", link: ranking!.url, displayFlag: true)
     }
     
     
@@ -179,13 +179,13 @@ class RankingViewController : UIViewController, UITableViewDataSource, APICommen
     }
     
     @objc func keyboardWillShow(_ notification: Notification) {
-        guard let keyboardFrame: NSValue = notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue else {
+        guard let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else {
             NSLog("couldn't get keyboard frame")
             return
         }
         let keyboardRectangle = keyboardFrame.cgRectValue
         let keyboardHeight = keyboardRectangle.height
-        let navBarHeight = navigationController!.navigationBar.frame.size.height
+        let navBarHeight = navigationController?.navigationBar.frame.size.height ?? 0
         commentBottomContraint.constant = keyboardHeight - navBarHeight
     }
     
@@ -230,12 +230,12 @@ class RankingViewController : UIViewController, UITableViewDataSource, APICommen
         let comment = comments[indexPath.row]
         let user = comment.user
 
-        cell.textLabel?.text = user.fragments.userBasic.realName
-        cell.imageView?.kf.setImage(with: URL(string: user.fragments.userBasic.photoUrl)!, placeholder: PlaceholderImages.user, completionHandler: {
+        cell.textLabel?.text = user.fragments.userBasic.real_name
+        cell.imageView?.kf.setImage(with: URL(string: user.fragments.userBasic.photo_url)!, placeholder: PlaceholderImages.user, completionHandler: {
             (result) in
             cell.layoutSubviews()
         })
-        cell.detailTextLabel?.text = "\"\(comment.comment)\"\n\(Formatter.format(dateString: comment.createdAt))"
+        cell.detailTextLabel?.text = "\"\(comment.comment)\"\n\(Formatter.format(dateString: comment.created_at))"
         return cell
     }
     
@@ -250,7 +250,7 @@ class RankingViewController : UIViewController, UITableViewDataSource, APICommen
         return comment.user.fragments.userBasic.id == api.currentUserId
     }
     
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if (editingStyle == .delete) {
             let comment = comments[indexPath.row]
             DispatchQueue.main.async {
@@ -304,7 +304,7 @@ class RankingViewController : UIViewController, UITableViewDataSource, APICommen
         case "requireSignIn": ()
         case "shelfDetail":
             let button = sender as! UIButton
-            guard let shelfIndex = shelvesStack.arrangedSubviews.index(where: {$0 === button}) else {
+            guard let shelfIndex = shelvesStack.arrangedSubviews.firstIndex(where: {$0 === button}) else {
                 unexpectedError("RankingViewController - could not find button in shelvesStack")
                 return
             }
@@ -324,7 +324,7 @@ class RankingViewController : UIViewController, UITableViewDataSource, APICommen
         easyAlert("You've been signed out.")
     }
     
-    func handleAPI(comments: [CommentBasic], nextPage: String?) {
+    func handleAPI(comments: [Api.CommentBasic], nextPage: GraphQLNullable<String>) {
         self.comments.append(contentsOf: comments)
         self.nextPage = nextPage
         
@@ -335,12 +335,12 @@ class RankingViewController : UIViewController, UITableViewDataSource, APICommen
         }
     }
     
-    func handleAPI(comment: CommentBasic) {
+    func handleAPI(comment: Api.CommentBasic) {
         handleAPI(comments: [comment], nextPage: nil)
         //NOTE: this is a bug that prevents comments from continuing to load - but... we don't show duplicate comments
     }
     
-    func handleAPI(userDetail: UserDetail, rankings: [RankingWithGame], nextPage: String?) {
+    func handleAPI(userDetail: Api.UserDetail, rankings: [Api.RankingWithGame], nextPage: GraphQLNullable<String>) {
         user = userDetail.fragments.userBasic
         DispatchQueue.main.async {
             self.loadingImage?.isHidden = false
@@ -348,7 +348,7 @@ class RankingViewController : UIViewController, UITableViewDataSource, APICommen
         }
     }
     
-    func handleAPICommentDestruction(ranking: CommentBasic) {
+    func handleAPICommentDestruction(ranking: Api.CommentBasic) {
         DispatchQueue.main.async {
             self.loadingImage?.isHidden = false
         }

@@ -49,15 +49,15 @@ class GameViewController : UIViewController, APIGameDetailDelegate, APIGameRanki
     let starEmpty = UIImage(named: "star-large-empty")
     
     
-    var nextPage: String?
-    var ranking: RankingWithGame?
-    var rankings = [RankingWithUser]()
-    var friendRankings = [RankingWithUser]()
-    var portId: GraphQLID?
+    var nextPage = GraphQLNullable<String>.none
+    var ranking: Api.RankingWithGame?
+    var rankings = [Api.RankingWithUser]()
+    var friendRankings = [Api.RankingWithUser]()
+    var portId: Api.ID?
     
     private var expanded = false
     
-    var gameDetail: GameQuery.Data.Game? {
+    var gameDetail: Api.GameQuery.Data.Game? {
         didSet {
             if (gameDetail != nil) {
                 if let game = game {
@@ -71,7 +71,7 @@ class GameViewController : UIViewController, APIGameDetailDelegate, APIGameRanki
             }
         }
     }
-    var game: GameBasic? {
+    var game: Api.GameBasic? {
         didSet {
             if game != nil {
                 if(gameDetail != nil && gameDetail!.fragments.gameBasic.id != game!.id) {
@@ -87,7 +87,7 @@ class GameViewController : UIViewController, APIGameDetailDelegate, APIGameRanki
         }
     }
     
-    var gameId: GraphQLID? {
+    var gameId: Api.ID? {
         didSet {
             if let gameId = gameId {
                 game = nil
@@ -121,18 +121,18 @@ class GameViewController : UIViewController, APIGameDetailDelegate, APIGameRanki
         MyGamesManager.sharedInstance.register(delegate: self)
     }
     
-    func selectPort(portId: GraphQLID) {
+    func selectPort(portId: Api.ID) {
         self.portId = portId
     }
     
-    func selectedPort() -> GameBasic.Port {
+    func selectedPort() -> Api.GameBasic.Port {
         if (portId != nil) {
             return game!.ports.first(where: {$0.id == portId!})!
         }
         return game!.ports.first!
     }
     
-    func selectedPortDetail() -> GameBasic.Port? {
+    func selectedPortDetail() -> Api.GameBasic.Port? {
         guard let gameDetail = gameDetail else {
             return nil
         }
@@ -218,7 +218,7 @@ class GameViewController : UIViewController, APIGameDetailDelegate, APIGameRanki
         configureViewWithRanking()
         if gameDetail == nil {
             gameDescription?.isHidden = true
-            if let imageUrl = port.smallImageUrl {
+            if let imageUrl = port.small_image_url {
                 imageView?.kf.setImage(with: URL(string: imageUrl)!)
             }
             else {
@@ -229,7 +229,7 @@ class GameViewController : UIViewController, APIGameDetailDelegate, APIGameRanki
         }
         
         let portDetail = selectedPortDetail()
-        if let imageUrl = portDetail?.mediumImageUrl {
+        if let imageUrl = portDetail?.medium_image_url {
             imageView?.kf.indicatorType = .activity
             imageView?.kf.setImage(with: URL(string: imageUrl)!, options: [.keepCurrentImageWhileLoading])
         }
@@ -265,7 +265,7 @@ class GameViewController : UIViewController, APIGameDetailDelegate, APIGameRanki
         
         setStars(rankingBasic.ranking ?? 0)
         
-        reviewDateLabel?.text = Formatter.formatDate(rankingBasic.updatedAt)
+        reviewDateLabel?.text = Formatter.formatDate(rankingBasic.updated_at)
         reviewPlatformLabel?.text = rankingBasic.port?.platform.shortName ?? "UKN"
 
         let shelfNames = rankingBasic.shelves.map{$0.fragments.shelfBasic.name}
@@ -280,8 +280,8 @@ class GameViewController : UIViewController, APIGameDetailDelegate, APIGameRanki
             reviewLabel?.isHidden = true
             reviewButton?.setTitle("Write a Review", for: .normal)
         }
-        if (rankingBasic.commentsCount > 0) {
-            commentsButton?.setTitle("\(rankingBasic.commentsCount) Comments", for: .normal)
+        if (rankingBasic.comments_count > 0) {
+            commentsButton?.setTitle("\(rankingBasic.comments_count) Comments", for: .normal)
             commentsButton?.isHidden = false
         }
         else {
@@ -305,7 +305,7 @@ class GameViewController : UIViewController, APIGameDetailDelegate, APIGameRanki
             return
         }
         
-        let rankingValue = stars.arrangedSubviews.index(where: {$0 == sender})! + 1
+        let rankingValue = stars.arrangedSubviews.firstIndex(where: {$0 == sender})! + 1
         starRankPort(rankingValue: rankingValue)
     }
     
@@ -334,7 +334,7 @@ class GameViewController : UIViewController, APIGameDetailDelegate, APIGameRanki
         rankPort(rankingValue: rankingValue)
     }
     
-    func rankPort(portId: GraphQLID? = nil, rankingValue: Int? = nil, removeRanking: Bool = false, review: String? = nil, addShelfId: GraphQLID? = nil, removeShelfId: GraphQLID? = nil) {
+    func rankPort(portId: Api.ID? = nil, rankingValue: Int? = nil, removeRanking: Bool = false, review: String? = nil, addShelfId: Api.ID? = nil, removeShelfId: Api.ID? = nil) {
         let optimalPortId = portId ?? ranking?.fragments.rankingBasic.port?.id ?? selectedPort().id
         MyGamesManager.sharedInstance.rankPort(portId: optimalPortId, ranking: rankingValue, removeRanking: removeRanking, review: review, addShelfId: addShelfId, removeShelfId: removeShelfId)
     }
@@ -355,7 +355,7 @@ class GameViewController : UIViewController, APIGameDetailDelegate, APIGameRanki
         }
     }
     
-    func addNonFriendRankings(_ rankings: [RankingWithUser]) {
+    func addNonFriendRankings(_ rankings: [Api.RankingWithUser]) {
         let nonFriendRankings = rankings.filter{ ranking in
             return !friendRankings.contains(where: {$0.fragments.rankingBasic.id == ranking.fragments.rankingBasic.id})
         }
@@ -380,14 +380,14 @@ class GameViewController : UIViewController, APIGameDetailDelegate, APIGameRanki
         let user = ranking.user
         let userBasic = user?.fragments.userBasic
         let rankingBasic = ranking.fragments.rankingBasic
-        let userName = userBasic?.realName ?? "Unknown"
+        let userName = userBasic?.real_name ?? "Unknown"
         var primaryText = "\(userName) \(rankingBasic.verb)"
         let stars = rankingBasic.ranking ?? 0
         if stars > 0 {
             primaryText += " \(String(repeating: "\u{2605}", count: stars))"
         }
         cell.primaryLabel?.text = primaryText
-        if let photoUrl = userBasic?.photoUrl {
+        if let photoUrl = userBasic?.photo_url {
             cell.fixedSizeImageView?.kf.setImage(with: URL(string: photoUrl)!, placeholder: PlaceholderImages.user, completionHandler: {
                 (result) in
                 cell.layoutSubviews()
@@ -402,9 +402,9 @@ class GameViewController : UIViewController, APIGameDetailDelegate, APIGameRanki
         if review != "" {
             secondaryText = "\"\(review)\"\n"
         }
-        secondaryText += "\(Formatter.format(dateString: rankingBasic.updatedAt))"
-        if rankingBasic.commentsCount > 0 {
-            secondaryText += "    \(rankingBasic.commentsCount) comments"
+        secondaryText += "\(Formatter.format(dateString: rankingBasic.updated_at))"
+        if rankingBasic.comments_count > 0 {
+            secondaryText += "    \(rankingBasic.comments_count) comments"
         }
         cell.secondaryLabel?.text = secondaryText
         return cell
@@ -476,12 +476,13 @@ class GameViewController : UIViewController, APIGameDetailDelegate, APIGameRanki
             }
             controller.resourceType = "Game"
             controller.resourceId = game!.id
+        case "requireSignIn": break
         default:
             silentError("unknown segue from game view: \(identifier)")
         }
     }
     
-    func handleAPI(rankings: [RankingWithUser], nextPage: String?) {
+    func handleAPI(rankings: [Api.RankingWithUser], nextPage: GraphQLNullable<String>) {
         self.nextPage = nextPage
         addNonFriendRankings(rankings)
         DispatchQueue.main.async {
@@ -489,7 +490,7 @@ class GameViewController : UIViewController, APIGameDetailDelegate, APIGameRanki
         }
     }
     
-    func handleAPI(gameDetail: GameQuery.Data.Game, rankings: [RankingWithUser], friendRankings: [RankingWithUser], nextPage: String?) {
+    func handleAPI(gameDetail: Api.GameQuery.Data.Game, rankings: [Api.RankingWithUser], friendRankings: [Api.RankingWithUser], nextPage: GraphQLNullable<String>) {
         self.gameDetail = gameDetail
         self.nextPage = nextPage
         self.friendRankings.removeAll()

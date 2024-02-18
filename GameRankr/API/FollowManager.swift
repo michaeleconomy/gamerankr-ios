@@ -6,17 +6,17 @@ protocol FollowChangeDelegate : AuthenticatedAPIErrorDelegate, AnyObject {
 }
 
 class FollowManager : APIFollowDelegate, APIUnfollowDelegate, APIMyFollowingDelegate {
-    func handleAPI(followed: GraphQLID) {
+    func handleAPI(followed: Api.ID) {
         followingIds.insert(followed)
         delegates.forEach{$0.handleFollowUpdates()}
     }
     
-    func handleAPI(unfollowed: GraphQLID) {
+    func handleAPI(unfollowed: Api.ID) {
         followingIds.remove(unfollowed)
         delegates.forEach{$0.handleFollowUpdates()}
     }
     
-    func handleAPI(following: [GraphQLID]) {
+    func handleAPI(following: [Api.ID]) {
         followingIds.removeAll()
         for id in following {
             followingIds.insert(id)
@@ -38,7 +38,7 @@ class FollowManager : APIFollowDelegate, APIUnfollowDelegate, APIMyFollowingDele
     
     static let sharedInstance = FollowManager()
     
-    private var followingIds: Set<GraphQLID> = []
+    private var followingIds: Set<Api.ID> = []
     
     private var delegates = [FollowChangeDelegate]()
     
@@ -57,20 +57,20 @@ class FollowManager : APIFollowDelegate, APIUnfollowDelegate, APIMyFollowingDele
     }
     
     func unsubscribe(delegate: FollowChangeDelegate) {
-        if let index = delegates.index(where: {$0 === delegate}) {
+        if let index = delegates.firstIndex(where: {$0 === delegate}) {
             delegates.remove(at: index)
         }
     }
     
-    func following(id: GraphQLID) -> Bool {
+    func following(id: Api.ID) -> Bool {
         return followingIds.contains(id)
     }
     
-    func follow(id: GraphQLID) {
+    func follow(id: Api.ID) {
         api.follow(id: id, delegate: self)
     }
     
-    func unfollow(id: GraphQLID) {
+    func unfollow(id: Api.ID) {
         api.unfollow(id: id, delegate: self)
     }
 }

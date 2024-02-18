@@ -4,7 +4,7 @@ class RecentReviewsViewController: FullRankingDataSource, APIRecentReviewsDelega
     
     @IBOutlet weak var loadingImage: UIImageView!
     
-    var nextPage: String?
+    var nextPage = GraphQLNullable<String>.none
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,7 +22,7 @@ class RecentReviewsViewController: FullRankingDataSource, APIRecentReviewsDelega
         return super.tableView(tableView, cellForRowAt: indexPath)
     }
     
-    func handleAPI(rankings: [RankingFull], nextPage: String?) {
+    func handleAPI(rankings: [Api.RankingFull], nextPage: GraphQLNullable<String>) {
         self.rankings.append(contentsOf: rankings)
         self.nextPage = nextPage
         DispatchQueue.main.async {

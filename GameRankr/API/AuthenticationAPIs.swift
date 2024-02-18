@@ -151,7 +151,7 @@ extension GameRankrAPI {
         handleLogout()
     }
     
-    internal func handleLogin(currentUserId: GraphQLID, token: String) {
+    internal func handleLogin(currentUserId: Api.ID, token: String) {
         NSLog("login as \(currentUserId) successful.")
         self.signedIn = true
         self.token = token

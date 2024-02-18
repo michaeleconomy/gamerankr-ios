@@ -1,3 +1,4 @@
+// Adapted from: https://github.com/kstenerud/KSCrash
 //
 //  SentryCrashStackCursor_Backtrace.c
 //
@@ -25,17 +26,12 @@
 #include "SentryCrashStackCursor_Backtrace.h"
 #include "SentryCrashCPU.h"
 
-//#define SentryCrashLogger_LocalLevel TRACE
+// #define SentryCrashLogger_LocalLevel TRACE
 #include "SentryCrashLogger.h"
 
 static bool
 advanceCursor(SentryCrashStackCursor *cursor)
 {
-    sentrycrash_async_backtrace_t *async_caller = cursor->state.current_async_caller;
-    if (async_caller) {
-        return sentrycrashsc_advanceAsyncCursor(cursor);
-    }
-
     SentryCrashStackCursor_Backtrace_Context *context
         = (SentryCrashStackCursor_Backtrace_Context *)cursor->context;
     int endDepth = context->backtraceLength - context->skippedEntries;
@@ -50,7 +46,7 @@ advanceCursor(SentryCrashStackCursor *cursor)
             return true;
         }
     }
-    return sentrycrashsc_tryAsyncChain(cursor, cursor->async_caller);
+    return false;
 }
 
 void

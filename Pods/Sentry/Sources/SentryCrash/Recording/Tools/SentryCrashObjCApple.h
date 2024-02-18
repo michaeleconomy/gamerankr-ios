@@ -86,7 +86,7 @@ extern "C" {
 // SentryCrash: The original values wouldn't have worked. The slot shift and
 // mask were incorrect.
 #    define TAG_COUNT 8
-//#define TAG_SLOT_MASK 0xf
+// #define TAG_SLOT_MASK 0xf
 #    define TAG_SLOT_MASK 0x07
 
 #    if SUPPORT_MSB_TAGGED_POINTERS
@@ -96,7 +96,7 @@ extern "C" {
 #        define TAG_PAYLOAD_RSHIFT 4
 #    else
 #        define TAG_MASK 1
-//#   define TAG_SLOT_SHIFT 0
+// #   define TAG_SLOT_SHIFT 0
 #        define TAG_SLOT_SHIFT 1
 #        define TAG_PAYLOAD_LSHIFT 0
 #        define TAG_PAYLOAD_RSHIFT 4
@@ -288,8 +288,8 @@ typedef struct __CFRuntimeBase {
 #    define __CF_BIG_ENDIAN__ 0
 #endif
 
-#define CF_INFO_BITS (!!(__CF_BIG_ENDIAN__)*3)
-#define CF_RC_BITS (!!(__CF_LITTLE_ENDIAN__)*3)
+#define CF_INFO_BITS (!!(__CF_BIG_ENDIAN__) * 3)
+#define CF_RC_BITS (!!(__CF_LITTLE_ENDIAN__) * 3)
 
 /* Bit manipulation macros */
 /* Bits are numbered from 31 on left to 0 on right */
@@ -299,7 +299,7 @@ typedef struct __CFRuntimeBase {
 /* In the following, N1 and N2 specify an inclusive range N2..N1 with N1 >= N2
  */
 #define __CFBitfieldMask(N1, N2) ((((UInt32)~0UL) << (31UL - (N1) + (N2))) >> (31UL - N1))
-#define __CFBitfieldGetValue(V, N1, N2) (((V)&__CFBitfieldMask(N1, N2)) >> (N2))
+#define __CFBitfieldGetValue(V, N1, N2) (((V) & __CFBitfieldMask(N1, N2)) >> (N2))
 
 // ======================================================================
 #pragma mark - CF-1153.18/CFString.c -

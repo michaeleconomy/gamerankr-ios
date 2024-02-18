@@ -5,7 +5,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface
-SentrySDK (Private)
+SentrySDK ()
 
 + (void)captureCrashEvent:(SentryEvent *)event;
 
@@ -21,6 +21,7 @@ SentrySDK (Private)
 + (nullable SentryAppStartMeasurement *)getAppStartMeasurement;
 
 @property (nonatomic, class) NSUInteger startInvocations;
+@property (nullable, nonatomic, class) NSDate *startTimestamp;
 
 + (SentryHub *)currentHub;
 

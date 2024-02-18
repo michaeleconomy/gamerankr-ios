@@ -15,14 +15,14 @@ class FullRankingDataSource : UIViewController, UITableViewDataSource {
         return cell
     }
     
-    func populateCell(cell: FixedImageSizeTableCell, with rankingFull: RankingFull) {
+    func populateCell(cell: FixedImageSizeTableCell, with rankingFull: Api.RankingFull) {
         let rankingWithGame = rankingFull.fragments.rankingWithGame
         let game = rankingWithGame.game
         let rankingBasic = rankingWithGame.fragments.rankingBasic
         let port = rankingBasic.port
         let user = rankingFull.user
-        let userBasic = user?.fragments.userBasic
-        let userName = userBasic?.realName ?? "Unknown"
+        let userBasic: Api.UserBasic? = user?.fragments.userBasic
+        let userName = userBasic?.real_name ?? "Unknown"
         let gameTitle = game?.fragments.gameBasic.title ?? "Unknown"
         
         cell.primaryLabel?.text = "\(userName) \(rankingBasic.verb)"
@@ -39,5 +39,5 @@ class FullRankingDataSource : UIViewController, UITableViewDataSource {
     }
     
     @IBOutlet weak var table: UITableView!
-    internal var rankings = [RankingFull]()
+    internal var rankings = [Api.RankingFull]()
 }

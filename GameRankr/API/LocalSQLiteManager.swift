@@ -7,7 +7,7 @@ class LocalSQLiteManager {
     
     private let db : Connection
     
-    private let rankingsTable = Table("rankings2")
+    private let rankingsTable = Table("rankings3")
     private let rankingId = Expression<String>("id")
     private let serializedRanking = Expression<String>("serializedRanking")
     
@@ -36,7 +36,7 @@ class LocalSQLiteManager {
         try! db.run(createMiscTableQuery)
     }
     
-    func persist(rankings: [RankingWithGame]) {
+    func persist(rankings: [Api.RankingWithGame]) {
         do {
             try db.run(rankingsTable.delete())  // Delete all the existing records
         }
@@ -48,9 +48,10 @@ class LocalSQLiteManager {
         }
     }
     
-    func persist(ranking: RankingWithGame) {
+    func persist(ranking: Api.RankingWithGame) {
         do {
-            let rankingSerialized = try JSONSerialization.data(withJSONObject: ranking.jsonObject, options: [])
+            
+            let rankingSerialized = try JSONSerialization.data(withJSONObject: ranking.__data._data)
             let rankingString = String(data: rankingSerialized, encoding: .utf8)!
             let insert = rankingsTable.insert(rankingId <- ranking.fragments.rankingBasic.id, serializedRanking <- rankingString)
             try db.run(insert)
@@ -60,7 +61,7 @@ class LocalSQLiteManager {
         }
     }
     
-    func delete(rankingId: GraphQLID) {
+    func delete(rankingId: Api.ID) {
         do {
             try db.run(rankingsTable.where(self.rankingId == rankingId).delete())
         }
@@ -78,14 +79,14 @@ class LocalSQLiteManager {
         }
     }
     
-    func getRankings() throws -> [RankingWithGame] {
-        var rankings = [RankingWithGame]()
+    func getRankings() throws -> [Api.RankingWithGame] {
+        var rankings = [Api.RankingWithGame]()
         let rows = try db.prepare(rankingsTable)
         
         for row in rows {
             let rankingData = row[serializedRanking].data(using: .utf8)!
-            let rankingJson = try JSONSerialization.jsonObject(with: rankingData, options: []) as! JSONObject
-            let ranking = try RankingWithGame(jsonObject: rankingJson)
+            let rankingJson = try JSONSerialization.jsonObject(with: rankingData) as! JSONObject
+            let ranking = try Api.RankingWithGame(data: rankingJson)
             rankings.append(ranking)
         }
         return rankings

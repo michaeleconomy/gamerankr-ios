@@ -1,3 +1,4 @@
+// Adapted from: https://github.com/kstenerud/KSCrash
 //
 //  SentryCrashMonitor_System.m
 //
@@ -33,16 +34,19 @@
 #import "SentryCrashSysCtl.h"
 #import "SentryCrashSystemCapabilities.h"
 
-//#define SentryCrashLogger_LocalLevel TRACE
+// #define SentryCrashLogger_LocalLevel TRACE
 #import "SentryCrashLogger.h"
+
+#import "SentryDefines.h"
 
 #import <CommonCrypto/CommonDigest.h>
 #import <Foundation/Foundation.h>
-#if SentryCrashCRASH_HAS_UIKIT
-#    import <UIKit/UIKit.h>
-#endif
 #include <mach-o/dyld.h>
 #include <mach/mach.h>
+
+#if SENTRY_HAS_UIKIT
+#    import <UIKit/UIKit.h>
+#endif // SENTRY_HAS_UIKIT
 
 typedef struct {
     const char *systemName;
@@ -66,14 +70,14 @@ typedef struct {
     int cpuSubType;
     int binaryCPUType;
     int binaryCPUSubType;
-    const char *timezone;
     const char *processName;
     int processID;
     int parentProcessID;
     const char *deviceAppHash;
     const char *buildType;
-    uint64_t storageSize;
-    uint64_t memorySize;
+    bytes totalStorageSize;
+    bytes freeStorageSize;
+    bytes memorySize;
 } SystemData;
 
 static SystemData g_systemData;
@@ -114,6 +118,8 @@ nsstringSysctl(NSString *name)
  * @param name The sysctl name.
  *
  * @return The result of the sysctl call.
+ *
+ * @todo Combine into SentryDevice?
  */
 static const char *
 stringSysctl(const char *name)
@@ -188,30 +194,30 @@ VMStats(vm_statistics_data_t *const vmStats, vm_size_t *const pageSize)
     return true;
 }
 
-static uint64_t
-freeMemory(void)
+static bytes
+freeMemorySize(void)
 {
     vm_statistics_data_t vmStats;
     vm_size_t pageSize;
     if (VMStats(&vmStats, &pageSize)) {
-        return ((uint64_t)pageSize) * vmStats.free_count;
+        return ((bytes)pageSize) * vmStats.free_count;
     }
     return 0;
 }
 
-uint64_t
-sentrycrashcm_system_freememory(void)
+bytes
+sentrycrashcm_system_freememory_size(void)
 {
-    return freeMemory();
+    return freeMemorySize();
 }
 
-static uint64_t
-usableMemory(void)
+static bytes
+usableMemorySize(void)
 {
     vm_statistics_data_t vmStats;
     vm_size_t pageSize;
     if (VMStats(&vmStats, &pageSize)) {
-        return ((uint64_t)pageSize)
+        return ((bytes)pageSize)
             * (vmStats.active_count + vmStats.inactive_count + vmStats.wire_count
                 + vmStats.free_count);
     }
@@ -239,7 +245,7 @@ uuidBytesToString(const uint8_t *uuidBytes)
  * @return Executable path.
  */
 static NSString *
-getExecutablePath()
+getExecutablePath(void)
 {
     NSBundle *mainBundle = [NSBundle mainBundle];
     NSDictionary *infoDict = [mainBundle infoDictionary];
@@ -253,7 +259,7 @@ getExecutablePath()
  * @return The UUID.
  */
 static const char *
-getAppUUID()
+getAppUUID(void)
 {
     const char *result = nil;
 
@@ -275,7 +281,7 @@ getAppUUID()
 
 /** Get the current CPU's architecture.
  *
- * @return The current CPU archutecture.
+ * @return The current CPU architecture.
  */
 static const char *
 getCPUArchForCPUType(cpu_type_t cpuType, cpu_subtype_t subType)
@@ -298,6 +304,9 @@ getCPUArchForCPUType(cpu_type_t cpuType, cpu_subtype_t subType)
         }
         break;
     }
+    case CPU_TYPE_ARM64: {
+        return "arm64";
+    }
     case CPU_TYPE_X86:
         return "x86";
     case CPU_TYPE_X86_64:
@@ -308,7 +317,7 @@ getCPUArchForCPUType(cpu_type_t cpuType, cpu_subtype_t subType)
 }
 
 static const char *
-getCurrentCPUArch()
+getCurrentCPUArch(void)
 {
     const char *result = getCPUArchForCPUType(sentrycrashsysctl_int32ForName("hw.cputype"),
         sentrycrashsysctl_int32ForName("hw.cpusubtype"));
@@ -324,7 +333,7 @@ getCurrentCPUArch()
  * @return YES if the device is jailbroken.
  */
 static bool
-isJailbroken()
+isJailbroken(void)
 {
     return sentrycrashdl_imageNamed("MobileSubstrate", false) != UINT32_MAX;
 }
@@ -334,7 +343,7 @@ isJailbroken()
  * @return YES if the app was built in debug mode.
  */
 static bool
-isDebugBuild()
+isDebugBuild(void)
 {
 #ifdef DEBUG
     return YES;
@@ -348,7 +357,7 @@ isDebugBuild()
  * @return YES if this is a simulator build.
  */
 static bool
-isSimulatorBuild()
+isSimulatorBuild(void)
 {
 #if TARGET_OS_SIMULATOR
     return YES;
@@ -365,26 +374,15 @@ sentrycrash_isSimulatorBuild(void)
 
 /** The file path for the bundle’s App Store receipt.
  *
- * @return App Store receipt for iOS 7+, nil otherwise.
+ * @return App Store receipt for iOS, nil otherwise.
  */
 static NSString *
-getReceiptUrlPath()
+getReceiptUrlPath(void)
 {
-    NSString *path = nil;
 #if SentryCrashCRASH_HOST_IOS
-    // For iOS 6 compatibility
-#    ifdef __IPHONE_11_0
-    if (@available(iOS 7, *)) {
-#    else
-    if ([[UIDevice currentDevice].systemVersion compare:@"7" options:NSNumericSearch]
-        != NSOrderedAscending) {
-#    endif
+    return [NSBundle mainBundle].appStoreReceiptURL.path;
 #endif
-        path = [NSBundle mainBundle].appStoreReceiptURL.path;
-#if SentryCrashCRASH_HOST_IOS
-    }
-#endif
-    return path;
+    return nil;
 }
 
 /** Generate a 20 byte SHA1 hash that remains unique across a single device and
@@ -394,22 +392,23 @@ getReceiptUrlPath()
  * @return The stringified hex representation of the hash for this device + app.
  */
 static const char *
-getDeviceAndAppHash()
+getDeviceAndAppHash(void)
 {
     NSMutableData *data = nil;
 
-#if SentryCrashCRASH_HAS_UIDEVICE
-    if ([[UIDevice currentDevice] respondsToSelector:@selector(identifierForVendor)]) {
+#if SENTRY_HAS_UIKIT
+    UIDevice *currentDevice = [UIDevice currentDevice];
+    if ([currentDevice respondsToSelector:@selector(identifierForVendor)]) {
         data = [NSMutableData dataWithLength:16];
-        [[UIDevice currentDevice].identifierForVendor getUUIDBytes:data.mutableBytes];
+        [currentDevice.identifierForVendor getUUIDBytes:data.mutableBytes];
     } else
-#endif
+#endif // SENTRY_HAS_UIKIT
     {
         data = [NSMutableData dataWithLength:6];
         sentrycrashsysctl_getMacAddress("en0", [data mutableBytes]);
     }
 
-    // Append some device-specific data.
+    // Append some device-specific data. TODO: use SentryDevice API here now?
     [data appendData:(NSData *_Nonnull)[nsstringSysctl(@"hw.machine")
                          dataUsingEncoding:NSUTF8StringEncoding]];
     [data appendData:(NSData *_Nonnull)[nsstringSysctl(@"hw.model")
@@ -442,7 +441,7 @@ getDeviceAndAppHash()
  * @return YES if this is a testing build.
  */
 static bool
-isTestBuild()
+isTestBuild(void)
 {
     return [getReceiptUrlPath().lastPathComponent isEqualToString:@"sandboxReceipt"];
 }
@@ -453,7 +452,7 @@ isTestBuild()
  * @return YES if there is an app store receipt.
  */
 static bool
-hasAppStoreReceipt()
+hasAppStoreReceipt(void)
 {
     NSString *receiptPath = getReceiptUrlPath();
     if (receiptPath == nil) {
@@ -465,14 +464,26 @@ hasAppStoreReceipt()
     return isAppStoreReceipt && receiptExists;
 }
 
+/**
+ * Check if the app has an embdded.mobileprovision file in the bundle.
+ */
+static bool
+hasEmbeddedMobileProvision(void)
+{
+    return [[NSBundle mainBundle] pathForResource:@"embedded" ofType:@"mobileprovision"] != nil;
+}
+
 static const char *
-getBuildType()
+getBuildType(void)
 {
     if (isSimulatorBuild()) {
         return "simulator";
     }
     if (isDebugBuild()) {
         return "debug";
+    }
+    if (hasEmbeddedMobileProvision()) {
+        return "enterprise";
     }
     if (isTestBuild()) {
         return "test";
@@ -483,8 +494,8 @@ getBuildType()
     return "unknown";
 }
 
-static uint64_t
-getStorageSize()
+static bytes
+getTotalStorageSize(void)
 {
     NSNumber *storageSize = [[[NSFileManager defaultManager]
         attributesOfFileSystemForPath:NSHomeDirectory()
@@ -492,12 +503,27 @@ getStorageSize()
     return storageSize.unsignedLongLongValue;
 }
 
+static bytes
+getFreeStorageSize(void)
+{
+    NSNumber *storageSize = [[[NSFileManager defaultManager]
+        attributesOfFileSystemForPath:NSHomeDirectory()
+                                error:nil] objectForKey:NSFileSystemFreeSize];
+    return storageSize.unsignedLongLongValue;
+}
+
+bytes
+sentrycrashcm_system_freestorage_size(void)
+{
+    return getFreeStorageSize();
+}
+
 // ============================================================================
 #pragma mark - API -
 // ============================================================================
 
 static void
-initialize()
+initialize(void)
 {
     static bool isInitialized = false;
     if (!isInitialized) {
@@ -507,16 +533,20 @@ initialize()
         NSDictionary *infoDict = [mainBundle infoDictionary];
         const struct mach_header *header = _dyld_get_image_header(0);
 
-#if SentryCrashCRASH_HAS_UIDEVICE
-        g_systemData.systemName = cString([UIDevice currentDevice].systemName);
-        g_systemData.systemVersion = cString([UIDevice currentDevice].systemVersion);
-#else
-#    if SentryCrashCRASH_HOST_MAC
+#if SentryCrashCRASH_HOST_IOS
+        g_systemData.systemName = "iOS";
+#elif SentryCrashCRASH_HOST_TV
+        g_systemData.systemName = "tvOS";
+#elif SentryCrashCRASH_HOST_MAC
         g_systemData.systemName = "macOS";
-#    endif
-#    if SentryCrashCRASH_HOST_WATCH
+#elif SentryCrashCRASH_HOST_WATCH
         g_systemData.systemName = "watchOS";
-#    endif
+#elif SentryCrashCRASH_HOST_VISION
+        g_systemData.systemName = "visionOS";
+#else
+        g_systemData.systemName = "unknown";
+#endif
+
         NSOperatingSystemVersion version = { 0, 0, 0 };
         if (@available(macOS 10.10, *)) {
             version = [NSProcessInfo processInfo].operatingSystemVersion;
@@ -530,12 +560,13 @@ initialize()
                                       (int)version.minorVersion, (int)version.patchVersion];
         }
         g_systemData.systemVersion = cString(systemVersion);
-#endif
+
         if (isSimulatorBuild()) {
             g_systemData.machine
                 = cString([NSProcessInfo processInfo].environment[@"SIMULATOR_MODEL_IDENTIFIER"]);
             g_systemData.model = "simulator";
         } else {
+            // TODO: combine this into SentryDevice?
 #if SentryCrashCRASH_HOST_MAC
             // MacOS has the machine in the model field, and no model
             g_systemData.machine = stringSysctl("hw.model");
@@ -562,13 +593,13 @@ initialize()
         g_systemData.cpuSubType = sentrycrashsysctl_int32ForName("hw.cpusubtype");
         g_systemData.binaryCPUType = header->cputype;
         g_systemData.binaryCPUSubType = header->cpusubtype;
-        g_systemData.timezone = cString([NSTimeZone localTimeZone].abbreviation);
         g_systemData.processName = cString([NSProcessInfo processInfo].processName);
         g_systemData.processID = [NSProcessInfo processInfo].processIdentifier;
         g_systemData.parentProcessID = getppid();
         g_systemData.deviceAppHash = getDeviceAndAppHash();
         g_systemData.buildType = getBuildType();
-        g_systemData.storageSize = getStorageSize();
+        g_systemData.totalStorageSize = getTotalStorageSize();
+        g_systemData.freeStorageSize = getFreeStorageSize();
         g_systemData.memorySize = sentrycrashsysctl_uint64ForName("hw.memsize");
     }
 }
@@ -585,7 +616,7 @@ setEnabled(bool isEnabled)
 }
 
 static bool
-isEnabled()
+isEnabled(void)
 {
     return g_isEnabled;
 }
@@ -616,21 +647,21 @@ addContextualInfoToEvent(SentryCrash_MonitorContext *eventContext)
         COPY_REFERENCE(cpuSubType);
         COPY_REFERENCE(binaryCPUType);
         COPY_REFERENCE(binaryCPUSubType);
-        COPY_REFERENCE(timezone);
         COPY_REFERENCE(processName);
         COPY_REFERENCE(processID);
         COPY_REFERENCE(parentProcessID);
         COPY_REFERENCE(deviceAppHash);
         COPY_REFERENCE(buildType);
-        COPY_REFERENCE(storageSize);
+        COPY_REFERENCE(totalStorageSize);
+        COPY_REFERENCE(freeStorageSize);
         COPY_REFERENCE(memorySize);
-        eventContext->System.freeMemory = freeMemory();
-        eventContext->System.usableMemory = usableMemory();
+        eventContext->System.freeMemorySize = freeMemorySize();
+        eventContext->System.usableMemorySize = usableMemorySize();
     }
 }
 
 SentryCrashMonitorAPI *
-sentrycrashcm_system_getAPI()
+sentrycrashcm_system_getAPI(void)
 {
     static SentryCrashMonitorAPI api = { .setEnabled = setEnabled,
         .isEnabled = isEnabled,

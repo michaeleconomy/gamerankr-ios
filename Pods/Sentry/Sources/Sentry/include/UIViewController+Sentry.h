@@ -12,10 +12,11 @@ UIViewController (Sentry)
  * An array of view controllers that are descendants, meaning children, grandchildren, ... , of the
  * current view controller.
  */
-@property (nonatomic, readonly, strong) NSArray<UIViewController *> *descendantViewControllers;
+@property (nonatomic, readonly, strong)
+    NSArray<UIViewController *> *sentry_descendantViewControllers;
 
 @end
 
 NS_ASSUME_NONNULL_END
 
-#endif
+#endif // SENTRY_HAS_UIKIT

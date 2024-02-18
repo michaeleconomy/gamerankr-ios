@@ -10,7 +10,7 @@ extension UIViewController {
                 applicationActivities = [FlagActivity(controller: self)]
             }
             let activityVC = UIActivityViewController(activityItems: objectsToShare, applicationActivities: applicationActivities)
-            activityVC.excludedActivityTypes = [UIActivityType.addToReadingList]
+            activityVC.excludedActivityTypes = [UIActivity.ActivityType.addToReadingList]
             self.present(activityVC, animated: true, completion: nil)
         }
     }

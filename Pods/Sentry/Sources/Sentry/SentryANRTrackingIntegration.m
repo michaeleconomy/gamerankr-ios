@@ -3,7 +3,7 @@
 #import "SentryClient+Private.h"
 #import "SentryCrashMachineContext.h"
 #import "SentryCrashWrapper.h"
-#import "SentryDefaultCurrentDateProvider.h"
+#import "SentryDependencyContainer.h"
 #import "SentryDispatchQueueWrapper.h"
 #import "SentryEvent.h"
 #import "SentryException.h"
@@ -11,14 +11,16 @@
 #import "SentryLog.h"
 #import "SentryMechanism.h"
 #import "SentrySDK+Private.h"
+#import "SentryStacktrace.h"
 #import "SentryThread.h"
 #import "SentryThreadInspector.h"
 #import "SentryThreadWrapper.h"
-#import <Foundation/Foundation.h>
-#import <SentryAppState.h>
-#import <SentryAppStateManager.h>
-#import <SentryDependencyContainer.h>
+#import "SentryUIApplication.h"
 #import <SentryOptions+Private.h>
+
+#if SENTRY_HAS_UIKIT
+#    import <UIKit/UIKit.h>
+#endif
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -32,11 +34,10 @@ SentryANRTrackingIntegration ()
 
 @implementation SentryANRTrackingIntegration
 
-- (void)installWithOptions:(SentryOptions *)options
+- (BOOL)installWithOptions:(SentryOptions *)options
 {
-    if ([self shouldBeDisabled:options]) {
-        [options removeEnabledIntegration:NSStringFromClass([self class])];
-        return;
+    if (![super installWithOptions:options]) {
+        return NO;
     }
 
     self.tracker =
@@ -44,30 +45,13 @@ SentryANRTrackingIntegration ()
 
     [self.tracker addListener:self];
     self.options = options;
+
+    return YES;
 }
 
-- (BOOL)shouldBeDisabled:(SentryOptions *)options
+- (SentryIntegrationOption)integrationOptions
 {
-    if (!options.enableAppHangTracking) {
-        [SentryLog logWithMessage:@"Not going to enable App Hanging integration because "
-                                  @"enableAppHangsTracking is disabled."
-                         andLevel:kSentryLevelDebug];
-        return YES;
-    }
-
-    if (options.appHangTimeoutInterval == 0) {
-        [SentryLog logWithMessage:@"Not going to enable App Hanging integration because "
-                                  @"appHangsTimeoutInterval is 0."
-                         andLevel:kSentryLevelDebug];
-        return YES;
-    }
-
-    // In case the debugger is attached
-    if ([SentryDependencyContainer.sharedInstance.crashWrapper isBeingTraced]) {
-        return YES;
-    }
-
-    return NO;
+    return kIntegrationOptionEnableAppHangTracking | kIntegrationOptionDebuggerNotAttached;
 }
 
 - (void)uninstall
@@ -75,20 +59,41 @@ SentryANRTrackingIntegration ()
     [self.tracker removeListener:self];
 }
 
+- (void)dealloc
+{
+    [self uninstall];
+}
+
 - (void)anrDetected
 {
+#if SENTRY_HAS_UIKIT
+    // If the app is not active, the main thread may be blocked or too busy.
+    // Since there is no UI for the user to interact, there is no need to report app hang.
+    if (SentryDependencyContainer.sharedInstance.application.applicationState
+        != UIApplicationStateActive) {
+        return;
+    }
+#endif
     SentryThreadInspector *threadInspector = SentrySDK.currentHub.getClient.threadInspector;
-
-    NSString *message = [NSString stringWithFormat:@"App hanging for at least %li ms.",
-                                  (long)(self.options.appHangTimeoutInterval * 1000)];
 
     NSArray<SentryThread *> *threads = [threadInspector getCurrentThreadsWithStackTrace];
 
+    if (threads.count == 0) {
+        SENTRY_LOG_WARN(@"Getting current thread returned an empty list. Can't create AppHang "
+                        @"event without a stacktrace.");
+        return;
+    }
+
+    NSString *message = [NSString stringWithFormat:@"App hanging for at least %li ms.",
+                                  (long)(self.options.appHangTimeoutInterval * 1000)];
     SentryEvent *event = [[SentryEvent alloc] initWithLevel:kSentryLevelError];
     SentryException *sentryException = [[SentryException alloc] initWithValue:message
                                                                          type:@"App Hanging"];
+
     sentryException.mechanism = [[SentryMechanism alloc] initWithType:@"AppHang"];
     sentryException.stacktrace = [threads[0] stacktrace];
+    sentryException.stacktrace.snapshot = @(YES);
+
     [threads enumerateObjectsUsingBlock:^(SentryThread *_Nonnull obj, NSUInteger idx,
         BOOL *_Nonnull stop) { obj.current = [NSNumber numberWithBool:idx == 0]; }];
 

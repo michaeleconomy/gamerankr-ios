@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Y6W-OH-hqX">
+    <device id="retina3_5" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Settings-->
+        <scene sceneID="s0d-6b-0kx">
+            <objects>
+                <viewController title="Settings" id="Y6W-OH-hqX" userLabel="Settings" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="5EZ-qb-Rvc">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="s8g-oa-GmF">
+                                <rect key="frame" x="10" y="0.0" width="300" height="431"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" alignment="top" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="jHF-xq-Q0B">
+                                        <rect key="frame" x="0.0" y="10" width="300" height="72"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6h4-v6-PrJ">
+                                                <rect key="frame" x="0.0" y="0.0" width="80" height="31"/>
+                                                <state key="normal" title="Button"/>
+                                                <buttonConfiguration key="configuration" style="filled" title="Sign Out"/>
+                                                <connections>
+                                                    <segue destination="CNK-ub-P48" kind="show" id="sIf-x1-9or"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LEd-JT-PBq">
+                                                <rect key="frame" x="0.0" y="41" width="123" height="31"/>
+                                                <state key="normal" title="Button"/>
+                                                <buttonConfiguration key="configuration" style="filled" title="Delete Account"/>
+                                                <connections>
+                                                    <segue destination="V6y-hZ-Gs9" kind="show" id="n0E-Ae-AiA"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="jHF-xq-Q0B" secondAttribute="trailing" id="CM7-Gc-IIb"/>
+                                    <constraint firstItem="jHF-xq-Q0B" firstAttribute="width" secondItem="s8g-oa-GmF" secondAttribute="width" id="Chj-4a-AsS"/>
+                                    <constraint firstItem="jHF-xq-Q0B" firstAttribute="top" secondItem="s8g-oa-GmF" secondAttribute="top" constant="10" id="XvD-hT-76x"/>
+                                    <constraint firstAttribute="bottom" secondItem="jHF-xq-Q0B" secondAttribute="bottom" id="gUX-Ou-bk8"/>
+                                    <constraint firstItem="jHF-xq-Q0B" firstAttribute="leading" secondItem="s8g-oa-GmF" secondAttribute="leading" id="onq-pl-OVU"/>
+                                </constraints>
+                            </scrollView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="vDu-zF-Fre"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="s8g-oa-GmF" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" constant="10" id="7yc-Hm-6Qb"/>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="s8g-oa-GmF" secondAttribute="trailing" constant="10" id="9xK-A3-nSN"/>
+                            <constraint firstItem="s8g-oa-GmF" firstAttribute="top" secondItem="vDu-zF-Fre" secondAttribute="top" id="Tu6-4N-NAX"/>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="bottom" secondItem="s8g-oa-GmF" secondAttribute="bottom" id="m7T-eT-5b6"/>
+                        </constraints>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Settings" selectedImage="gearshape" catalog="system" id="aJW-0M-4hs"/>
+                    <navigationItem key="navigationItem" title="Settings" id="FoF-77-vU5"/>
+                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="13" y="84"/>
+        </scene>
+        <!--Sign Out-->
+        <scene sceneID="dgD-aa-CSV">
+            <objects>
+                <viewController id="CNK-ub-P48" customClass="SignOutViewController" customModule="GameRankr" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="W48-fh-hYY">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="460"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ICN-CO-qh1">
+                                <rect key="frame" x="10" y="380" width="300" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="TKD-d4-ubE"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <state key="normal" title="Sign out of GameRankr"/>
+                                <buttonConfiguration key="configuration" style="filled" title="Sign out of GameRankr">
+                                    <fontDescription key="titleFontDescription" type="system" pointSize="20"/>
+                                </buttonConfiguration>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Are you sure you want to sign out?" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eHU-V6-bey">
+                                <rect key="frame" x="10" y="51" width="300" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="Ytg-e9-7Qq"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="bFE-Wk-Jnb"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="eHU-V6-bey" firstAttribute="leading" secondItem="bFE-Wk-Jnb" secondAttribute="leading" constant="10" id="Wus-6n-tjq"/>
+                            <constraint firstItem="bFE-Wk-Jnb" firstAttribute="bottom" secondItem="ICN-CO-qh1" secondAttribute="bottom" constant="50" id="Zha-Rb-Nfk"/>
+                            <constraint firstItem="ICN-CO-qh1" firstAttribute="leading" secondItem="bFE-Wk-Jnb" secondAttribute="leading" constant="10" id="mtM-zb-B1u"/>
+                            <constraint firstItem="eHU-V6-bey" firstAttribute="top" secondItem="bFE-Wk-Jnb" secondAttribute="top" constant="51" id="qm4-6m-VB6"/>
+                            <constraint firstItem="bFE-Wk-Jnb" firstAttribute="trailing" secondItem="eHU-V6-bey" secondAttribute="trailing" constant="10" id="v5O-Wf-957"/>
+                            <constraint firstItem="bFE-Wk-Jnb" firstAttribute="trailing" secondItem="ICN-CO-qh1" secondAttribute="trailing" constant="10" id="vUA-GO-9Oh"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="Sign Out" id="KJx-Eg-sxh"/>
+                    <connections>
+                        <outlet property="signOutButton" destination="ICN-CO-qh1" id="vqW-Kf-zZK"/>
+                        <segue destination="3dh-VX-5En" kind="show" identifier="requireSignIn" id="0Qp-c1-IhN"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="bs1-LC-UNy" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1172" y="84"/>
+        </scene>
+        <!--Delete Account-->
+        <scene sceneID="wSn-1X-abT">
+            <objects>
+                <viewController id="V6y-hZ-Gs9" userLabel="Delete Account" customClass="DeleteAccountController" customModule="GameRankr" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="ZQY-nQ-Ejw">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="460"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="30" translatesAutoresizingMaskIntoConstraints="NO" id="Ady-l2-Nzu">
+                                <rect key="frame" x="10" y="40" width="300" height="121"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="To delete you account, please use the contact form and I will process your request promptly." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="y2Y-Ti-Erd">
+                                        <rect key="frame" x="0.0" y="0.0" width="300" height="61"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="emt-jI-bVj" userLabel="contactButton">
+                                        <rect key="frame" x="0.0" y="91" width="300" height="30"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="30" id="XGo-Lg-tFG"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                        <state key="normal" title="Sign out of GameRankr"/>
+                                        <buttonConfiguration key="configuration" style="filled" title="Contact GameRankr">
+                                            <fontDescription key="titleFontDescription" type="system" pointSize="20"/>
+                                        </buttonConfiguration>
+                                    </button>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="afe-40-VB2"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="Ady-l2-Nzu" firstAttribute="leading" secondItem="afe-40-VB2" secondAttribute="leading" constant="10" id="8RZ-if-imy"/>
+                            <constraint firstItem="Ady-l2-Nzu" firstAttribute="top" secondItem="afe-40-VB2" secondAttribute="top" constant="40" id="A2M-JP-dhM"/>
+                            <constraint firstItem="afe-40-VB2" firstAttribute="trailing" secondItem="Ady-l2-Nzu" secondAttribute="trailing" constant="10" id="h91-k3-Cyb"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="Delete Account" id="hPM-In-eKE"/>
+                    <connections>
+                        <outlet property="contactButton" destination="emt-jI-bVj" id="ziv-6Z-he9"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="g7D-v2-eax" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1172" y="970"/>
+        </scene>
+        <!--Auth-->
+        <scene sceneID="3Wj-XL-aZ9">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Auth" id="3dh-VX-5En" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="t7B-sd-8Ts"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Kb5-Be-Rpc" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1951" y="84"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="gearshape" catalog="system" width="128" height="121"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

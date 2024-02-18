@@ -3,7 +3,7 @@ import UIKit
 class GameRankrUITabBarController: UITabBarController, APIAuthenticationDelegate {
     
     var signInController: SignUpViewController?
-    var signOutController: SignOutViewController?
+    var settingsController: SettingsController?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,11 +29,11 @@ class GameRankrUITabBarController: UITabBarController, APIAuthenticationDelegate
     private func showHideLogout() {
         if (api.signedIn) {
             removeSignInPage()
-            addPage(signOutController)
+            addPage(settingsController)
             return
         }
         
-        removeSignOutPage()
+        removeSettingsPage()
         addPage(signInController)
     }
     
@@ -42,26 +42,29 @@ class GameRankrUITabBarController: UITabBarController, APIAuthenticationDelegate
             return (controller as? SignUpViewController) != nil
         })
         
-        if(signInIndex == nil) {
+        if (signInIndex == nil) {
+            NSLog("sign in page not found")
             return
         }
         self.signInController = viewControllers!.remove(at: signInIndex!) as? SignUpViewController
     }
     
-    private func removeSignOutPage() {
-        let signOutIndex = viewControllers!.index(where: {controller in
-            return (controller as? SignOutViewController) != nil
+    private func removeSettingsPage() {
+        let settingsIndex = viewControllers?.index(where: {controller in
+            return (controller as? SettingsController) != nil
         })
         
-        if(signOutIndex == nil) {
+        guard let settingsIndex = settingsIndex else {
+            NSLog("settings page not found")
             return
         }
-        self.signOutController = viewControllers!.remove(at: signOutIndex!) as? SignOutViewController
+        settingsController = viewControllers?.remove(at: settingsIndex) as? SettingsController
     }
     
     private func addPage(_ page: UIViewController?) {
         if (page != nil) {
             if (!viewControllers!.contains(page!)) {
+                NSLog("adding controller: \(String(describing: page))")
                 viewControllers!.append(page!)
             }
         }

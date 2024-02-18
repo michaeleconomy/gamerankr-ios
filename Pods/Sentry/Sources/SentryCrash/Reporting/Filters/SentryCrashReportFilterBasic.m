@@ -1,3 +1,4 @@
+// Adapted from: https://github.com/kstenerud/KSCrash
 //
 //  SentryCrashReportFilterBasic.m
 //
@@ -29,7 +30,7 @@
 #import "NSError+SentrySimpleConstructor.h"
 #import "SentryCrashVarArgs.h"
 
-//#define SentryCrashLogger_LocalLevel TRACE
+// #define SentryCrashLogger_LocalLevel TRACE
 #import "SentryCrashLogger.h"
 
 @implementation SentryCrashReportFilterPassthrough

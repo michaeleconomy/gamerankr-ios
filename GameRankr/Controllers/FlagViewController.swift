@@ -3,7 +3,7 @@ import Apollo
 
 class FlagViewController: UIViewController, APIFlagDelegate, UITextViewDelegate {
     
-    var resourceId: GraphQLID?
+    var resourceId: Api.ID?
     var resourceType: String?
     
     @IBOutlet weak var flagText: UITextView!

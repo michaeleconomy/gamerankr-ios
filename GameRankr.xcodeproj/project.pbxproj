@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 48;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -37,7 +37,6 @@
 		4C47F0361FF6A57500E5FD92 /* UserRankings.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 4C47F0351FF6A57500E5FD92 /* UserRankings.graphql */; };
 		4C47F03A1FF8331E00E5FD92 /* ShelfViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C47F0391FF8331E00E5FD92 /* ShelfViewController.swift */; };
 		4C47F03C1FF8364C00E5FD92 /* Shelf.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 4C47F03B1FF8364C00E5FD92 /* Shelf.graphql */; };
-		4C4FC9D91FE23C9F002F6428 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C4FC9D81FE23C9F002F6428 /* API.swift */; };
 		4C4FC9DB1FE23D42002F6428 /* MyGames.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 4C4FC9DA1FE23D42002F6428 /* MyGames.graphql */; };
 		4C57FC151FDF7D9600A04E57 /* GameRankrAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C57FC141FDF7D9600A04E57 /* GameRankrAPI.swift */; };
 		4C5E746320126FA400769D21 /* appIconOriginal.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C5E746220126FA400769D21 /* appIconOriginal.png */; };
@@ -129,11 +128,77 @@
 		6C96733428A1C6930084D692 /* RankingAPIs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C96733328A1C6930084D692 /* RankingAPIs.swift */; };
 		6C96733628A1C7D10084D692 /* Follow.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 6C96733528A1C7D10084D692 /* Follow.graphql */; };
 		6C96733828A1C83D0084D692 /* Unfollow.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 6C96733728A1C83D0084D692 /* Unfollow.graphql */; };
+		6CA5AB6C2B734606004937CF /* Apollo in Frameworks */ = {isa = PBXBuildFile; productRef = 6CA5AB6B2B734606004937CF /* Apollo */; };
+		6CA5AB6E2B734606004937CF /* ApolloAPI in Frameworks */ = {isa = PBXBuildFile; productRef = 6CA5AB6D2B734606004937CF /* ApolloAPI */; };
 		6CB318BE2894C67800EDB9A2 /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CB318BD2894C67800EDB9A2 /* SignInViewController.swift */; };
 		6CB318C02894EFEB00EDB9A2 /* VerifyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CB318BF2894EFEB00EDB9A2 /* VerifyViewController.swift */; };
 		6CB318C32895C17400EDB9A2 /* ResetPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CB318C22895C17400EDB9A2 /* ResetPasswordViewController.swift */; };
+		6CB5F0382B703B310093F74F /* GameBasic.graphql.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CB5EFF92B703B310093F74F /* GameBasic.graphql.swift */; };
+		6CB5F0392B703B310093F74F /* CommentBasic.graphql.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CB5EFFA2B703B310093F74F /* CommentBasic.graphql.swift */; };
+		6CB5F03A2B703B310093F74F /* UserBasic.graphql.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CB5EFFB2B703B310093F74F /* UserBasic.graphql.swift */; };
+		6CB5F03B2B703B310093F74F /* PlatformBasic.graphql.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CB5EFFC2B703B310093F74F /* PlatformBasic.graphql.swift */; };
+		6CB5F03C2B703B310093F74F /* RankingFull.graphql.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CB5EFFD2B703B310093F74F /* RankingFull.graphql.swift */; };
+		6CB5F03D2B703B310093F74F /* RankingBasic.graphql.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CB5EFFE2B703B310093F74F /* RankingBasic.graphql.swift */; };
+		6CB5F03E2B703B310093F74F /* RankingWithUser.graphql.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CB5EFFF2B703B310093F74F /* RankingWithUser.graphql.swift */; };
+		6CB5F03F2B703B310093F74F /* UserDetail.graphql.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CB5F0002B703B310093F74F /* UserDetail.graphql.swift */; };
+		6CB5F0402B703B310093F74F /* ShelfBasic.graphql.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CB5F0012B703B310093F74F /* ShelfBasic.graphql.swift */; };
+		6CB5F0412B703B310093F74F /* RankingWithGame.graphql.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CB5F0022B703B310093F74F /* RankingWithGame.graphql.swift */; };
+		6CB5F0422B703B310093F74F /* Api.graphql.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CB5F0032B703B310093F74F /* Api.graphql.swift */; };
+		6CB5F0432B703B310093F74F /* UnfollowMutation.graphql.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CB5F0062B703B310093F74F /* UnfollowMutation.graphql.swift */; };
+		6CB5F0442B703B310093F74F /* CommentMutation.graphql.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CB5F0072B703B310093F74F /* CommentMutation.graphql.swift */; };
+		6CB5F0452B703B310093F74F /* FollowMutation.graphql.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CB5F0082B703B310093F74F /* FollowMutation.graphql.swift */; };
+		6CB5F0462B703B310093F74F /* FlagMutation.graphql.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CB5F0092B703B310093F74F /* FlagMutation.graphql.swift */; };
+		6CB5F0472B703B310093F74F /* RankPortMutation.graphql.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CB5F00A2B703B310093F74F /* RankPortMutation.graphql.swift */; };
+		6CB5F0482B703B310093F74F /* DestroyCommentMutation.graphql.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CB5F00B2B703B310093F74F /* DestroyCommentMutation.graphql.swift */; };
+		6CB5F0492B703B310093F74F /* DestroyRankingMutation.graphql.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CB5F00C2B703B310093F74F /* DestroyRankingMutation.graphql.swift */; };
+		6CB5F04A2B703B310093F74F /* PopularGamesQuery.graphql.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CB5F00E2B703B310093F74F /* PopularGamesQuery.graphql.swift */; };
+		6CB5F04B2B703B310093F74F /* SearchQuery.graphql.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CB5F00F2B703B310093F74F /* SearchQuery.graphql.swift */; };
+		6CB5F04C2B703B310093F74F /* UserRankingsQuery.graphql.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CB5F0102B703B310093F74F /* UserRankingsQuery.graphql.swift */; };
+		6CB5F04D2B703B310093F74F /* GameQuery.graphql.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CB5F0112B703B310093F74F /* GameQuery.graphql.swift */; };
+		6CB5F04E2B703B310093F74F /* MyFollowingQuery.graphql.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CB5F0122B703B310093F74F /* MyFollowingQuery.graphql.swift */; };
+		6CB5F04F2B703B310093F74F /* FollowingQuery.graphql.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CB5F0132B703B310093F74F /* FollowingQuery.graphql.swift */; };
+		6CB5F0502B703B310093F74F /* RecentReviewsQuery.graphql.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CB5F0142B703B310093F74F /* RecentReviewsQuery.graphql.swift */; };
+		6CB5F0512B703B310093F74F /* CommentsQuery.graphql.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CB5F0152B703B310093F74F /* CommentsQuery.graphql.swift */; };
+		6CB5F0522B703B310093F74F /* UserQuery.graphql.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CB5F0162B703B310093F74F /* UserQuery.graphql.swift */; };
+		6CB5F0532B703B310093F74F /* FeaturedPlatformsQuery.graphql.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CB5F0172B703B310093F74F /* FeaturedPlatformsQuery.graphql.swift */; };
+		6CB5F0542B703B310093F74F /* UpdatesQuery.graphql.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CB5F0182B703B310093F74F /* UpdatesQuery.graphql.swift */; };
+		6CB5F0552B703B310093F74F /* PlatformsQuery.graphql.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CB5F0192B703B310093F74F /* PlatformsQuery.graphql.swift */; };
+		6CB5F0562B703B310093F74F /* MyShelvesQuery.graphql.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CB5F01A2B703B310093F74F /* MyShelvesQuery.graphql.swift */; };
+		6CB5F0572B703B310093F74F /* MeQuery.graphql.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CB5F01B2B703B310093F74F /* MeQuery.graphql.swift */; };
+		6CB5F0582B703B310093F74F /* GameRankingsQuery.graphql.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CB5F01C2B703B310093F74F /* GameRankingsQuery.graphql.swift */; };
+		6CB5F0592B703B310093F74F /* FollowersQuery.graphql.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CB5F01D2B703B310093F74F /* FollowersQuery.graphql.swift */; };
+		6CB5F05A2B703B310093F74F /* ShelfQuery.graphql.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CB5F01E2B703B310093F74F /* ShelfQuery.graphql.swift */; };
+		6CB5F05B2B703B310093F74F /* MyGamesQuery.graphql.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CB5F01F2B703B310093F74F /* MyGamesQuery.graphql.swift */; };
+		6CB5F05C2B703B310093F74F /* CommentConnection.graphql.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CB5F0222B703B310093F74F /* CommentConnection.graphql.swift */; };
+		6CB5F05D2B703B310093F74F /* CommentEdge.graphql.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CB5F0232B703B310093F74F /* CommentEdge.graphql.swift */; };
+		6CB5F05E2B703B310093F74F /* Port.graphql.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CB5F0242B703B310093F74F /* Port.graphql.swift */; };
+		6CB5F05F2B703B310093F74F /* Game.graphql.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CB5F0252B703B310093F74F /* Game.graphql.swift */; };
+		6CB5F0602B703B310093F74F /* UserEdge.graphql.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CB5F0262B703B310093F74F /* UserEdge.graphql.swift */; };
+		6CB5F0612B703B310093F74F /* PlatformConnection.graphql.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CB5F0272B703B310093F74F /* PlatformConnection.graphql.swift */; };
+		6CB5F0622B703B310093F74F /* UserConnection.graphql.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CB5F0282B703B310093F74F /* UserConnection.graphql.swift */; };
+		6CB5F0632B703B310093F74F /* Comment.graphql.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CB5F0292B703B310093F74F /* Comment.graphql.swift */; };
+		6CB5F0642B703B310093F74F /* User.graphql.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CB5F02A2B703B310093F74F /* User.graphql.swift */; };
+		6CB5F0652B703B310093F74F /* GameEdge.graphql.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CB5F02B2B703B310093F74F /* GameEdge.graphql.swift */; };
+		6CB5F0662B703B310093F74F /* Mutation.graphql.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CB5F02C2B703B310093F74F /* Mutation.graphql.swift */; };
+		6CB5F0672B703B310093F74F /* RankingConnection.graphql.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CB5F02D2B703B310093F74F /* RankingConnection.graphql.swift */; };
+		6CB5F0682B703B310093F74F /* PageInfo.graphql.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CB5F02E2B703B310093F74F /* PageInfo.graphql.swift */; };
+		6CB5F0692B703B310093F74F /* Query.graphql.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CB5F02F2B703B310093F74F /* Query.graphql.swift */; };
+		6CB5F06A2B703B310093F74F /* Platform.graphql.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CB5F0302B703B310093F74F /* Platform.graphql.swift */; };
+		6CB5F06B2B703B310093F74F /* Shelf.graphql.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CB5F0312B703B310093F74F /* Shelf.graphql.swift */; };
+		6CB5F06C2B703B310093F74F /* Ranking.graphql.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CB5F0322B703B310093F74F /* Ranking.graphql.swift */; };
+		6CB5F06D2B703B310093F74F /* RankingEdge.graphql.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CB5F0332B703B310093F74F /* RankingEdge.graphql.swift */; };
+		6CB5F06E2B703B310093F74F /* PlatformEdge.graphql.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CB5F0342B703B310093F74F /* PlatformEdge.graphql.swift */; };
+		6CB5F06F2B703B310093F74F /* GameConnection.graphql.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CB5F0352B703B310093F74F /* GameConnection.graphql.swift */; };
+		6CB5F0702B703B310093F74F /* SchemaConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CB5F0362B703B310093F74F /* SchemaConfiguration.swift */; };
+		6CB5F0712B703B310093F74F /* SchemaMetadata.graphql.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CB5F0372B703B310093F74F /* SchemaMetadata.graphql.swift */; };
+		6CB9F7372B6F67E9002DEBC0 /* apollo-codegen-config.json in Resources */ = {isa = PBXBuildFile; fileRef = 6CB9F7362B6F67E9002DEBC0 /* apollo-codegen-config.json */; };
+		6CC565FB28DA22BB00A88006 /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6CC565FA28DA22BB00A88006 /* Settings.storyboard */; };
+		6CC565FD28DA26B000A88006 /* DeleteAccountController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CC565FC28DA26B000A88006 /* DeleteAccountController.swift */; };
+		6CC565FF28DA271800A88006 /* OpenUrlExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CC565FE28DA271800A88006 /* OpenUrlExtension.swift */; };
+		6CC5660128DA296600A88006 /* SettingsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CC5660028DA296600A88006 /* SettingsController.swift */; };
 		6CEF123228AE0E8500E6030A /* SubtitleTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CEF123128AE0E8500E6030A /* SubtitleTableCell.swift */; };
 		6CEF123428AEB4D700E6030A /* Formatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CEF123328AEB4D700E6030A /* Formatter.swift */; };
+		6CF571BA2B81B69000F3424A /* ApolloSQLite in Frameworks */ = {isa = PBXBuildFile; productRef = 6CF571B92B81B69000F3424A /* ApolloSQLite */; };
 		77C4A33059E9FCA84053FA20 /* Pods_GameRankr.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9897AF21C6448A08E485BA89 /* Pods_GameRankr.framework */; };
 /* End PBXBuildFile section */
 
@@ -170,7 +235,6 @@
 		4C47F0351FF6A57500E5FD92 /* UserRankings.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = UserRankings.graphql; sourceTree = "<group>"; };
 		4C47F0391FF8331E00E5FD92 /* ShelfViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShelfViewController.swift; sourceTree = "<group>"; };
 		4C47F03B1FF8364C00E5FD92 /* Shelf.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = Shelf.graphql; sourceTree = "<group>"; };
-		4C4FC9D81FE23C9F002F6428 /* API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		4C4FC9DA1FE23D42002F6428 /* MyGames.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = MyGames.graphql; sourceTree = "<group>"; };
 		4C57FC141FDF7D9600A04E57 /* GameRankrAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameRankrAPI.swift; sourceTree = "<group>"; };
 		4C5E746220126FA400769D21 /* appIconOriginal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = appIconOriginal.png; sourceTree = "<group>"; };
@@ -269,6 +333,69 @@
 		6CB318BD2894C67800EDB9A2 /* SignInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
 		6CB318BF2894EFEB00EDB9A2 /* VerifyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifyViewController.swift; sourceTree = "<group>"; };
 		6CB318C22895C17400EDB9A2 /* ResetPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPasswordViewController.swift; sourceTree = "<group>"; };
+		6CB5EFF92B703B310093F74F /* GameBasic.graphql.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameBasic.graphql.swift; sourceTree = "<group>"; };
+		6CB5EFFA2B703B310093F74F /* CommentBasic.graphql.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentBasic.graphql.swift; sourceTree = "<group>"; };
+		6CB5EFFB2B703B310093F74F /* UserBasic.graphql.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserBasic.graphql.swift; sourceTree = "<group>"; };
+		6CB5EFFC2B703B310093F74F /* PlatformBasic.graphql.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlatformBasic.graphql.swift; sourceTree = "<group>"; };
+		6CB5EFFD2B703B310093F74F /* RankingFull.graphql.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RankingFull.graphql.swift; sourceTree = "<group>"; };
+		6CB5EFFE2B703B310093F74F /* RankingBasic.graphql.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RankingBasic.graphql.swift; sourceTree = "<group>"; };
+		6CB5EFFF2B703B310093F74F /* RankingWithUser.graphql.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RankingWithUser.graphql.swift; sourceTree = "<group>"; };
+		6CB5F0002B703B310093F74F /* UserDetail.graphql.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDetail.graphql.swift; sourceTree = "<group>"; };
+		6CB5F0012B703B310093F74F /* ShelfBasic.graphql.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShelfBasic.graphql.swift; sourceTree = "<group>"; };
+		6CB5F0022B703B310093F74F /* RankingWithGame.graphql.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RankingWithGame.graphql.swift; sourceTree = "<group>"; };
+		6CB5F0032B703B310093F74F /* Api.graphql.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Api.graphql.swift; sourceTree = "<group>"; };
+		6CB5F0062B703B310093F74F /* UnfollowMutation.graphql.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnfollowMutation.graphql.swift; sourceTree = "<group>"; };
+		6CB5F0072B703B310093F74F /* CommentMutation.graphql.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentMutation.graphql.swift; sourceTree = "<group>"; };
+		6CB5F0082B703B310093F74F /* FollowMutation.graphql.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FollowMutation.graphql.swift; sourceTree = "<group>"; };
+		6CB5F0092B703B310093F74F /* FlagMutation.graphql.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlagMutation.graphql.swift; sourceTree = "<group>"; };
+		6CB5F00A2B703B310093F74F /* RankPortMutation.graphql.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RankPortMutation.graphql.swift; sourceTree = "<group>"; };
+		6CB5F00B2B703B310093F74F /* DestroyCommentMutation.graphql.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DestroyCommentMutation.graphql.swift; sourceTree = "<group>"; };
+		6CB5F00C2B703B310093F74F /* DestroyRankingMutation.graphql.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DestroyRankingMutation.graphql.swift; sourceTree = "<group>"; };
+		6CB5F00E2B703B310093F74F /* PopularGamesQuery.graphql.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PopularGamesQuery.graphql.swift; sourceTree = "<group>"; };
+		6CB5F00F2B703B310093F74F /* SearchQuery.graphql.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchQuery.graphql.swift; sourceTree = "<group>"; };
+		6CB5F0102B703B310093F74F /* UserRankingsQuery.graphql.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserRankingsQuery.graphql.swift; sourceTree = "<group>"; };
+		6CB5F0112B703B310093F74F /* GameQuery.graphql.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameQuery.graphql.swift; sourceTree = "<group>"; };
+		6CB5F0122B703B310093F74F /* MyFollowingQuery.graphql.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyFollowingQuery.graphql.swift; sourceTree = "<group>"; };
+		6CB5F0132B703B310093F74F /* FollowingQuery.graphql.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FollowingQuery.graphql.swift; sourceTree = "<group>"; };
+		6CB5F0142B703B310093F74F /* RecentReviewsQuery.graphql.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecentReviewsQuery.graphql.swift; sourceTree = "<group>"; };
+		6CB5F0152B703B310093F74F /* CommentsQuery.graphql.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentsQuery.graphql.swift; sourceTree = "<group>"; };
+		6CB5F0162B703B310093F74F /* UserQuery.graphql.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserQuery.graphql.swift; sourceTree = "<group>"; };
+		6CB5F0172B703B310093F74F /* FeaturedPlatformsQuery.graphql.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeaturedPlatformsQuery.graphql.swift; sourceTree = "<group>"; };
+		6CB5F0182B703B310093F74F /* UpdatesQuery.graphql.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpdatesQuery.graphql.swift; sourceTree = "<group>"; };
+		6CB5F0192B703B310093F74F /* PlatformsQuery.graphql.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlatformsQuery.graphql.swift; sourceTree = "<group>"; };
+		6CB5F01A2B703B310093F74F /* MyShelvesQuery.graphql.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyShelvesQuery.graphql.swift; sourceTree = "<group>"; };
+		6CB5F01B2B703B310093F74F /* MeQuery.graphql.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MeQuery.graphql.swift; sourceTree = "<group>"; };
+		6CB5F01C2B703B310093F74F /* GameRankingsQuery.graphql.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameRankingsQuery.graphql.swift; sourceTree = "<group>"; };
+		6CB5F01D2B703B310093F74F /* FollowersQuery.graphql.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FollowersQuery.graphql.swift; sourceTree = "<group>"; };
+		6CB5F01E2B703B310093F74F /* ShelfQuery.graphql.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShelfQuery.graphql.swift; sourceTree = "<group>"; };
+		6CB5F01F2B703B310093F74F /* MyGamesQuery.graphql.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyGamesQuery.graphql.swift; sourceTree = "<group>"; };
+		6CB5F0222B703B310093F74F /* CommentConnection.graphql.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentConnection.graphql.swift; sourceTree = "<group>"; };
+		6CB5F0232B703B310093F74F /* CommentEdge.graphql.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentEdge.graphql.swift; sourceTree = "<group>"; };
+		6CB5F0242B703B310093F74F /* Port.graphql.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Port.graphql.swift; sourceTree = "<group>"; };
+		6CB5F0252B703B310093F74F /* Game.graphql.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Game.graphql.swift; sourceTree = "<group>"; };
+		6CB5F0262B703B310093F74F /* UserEdge.graphql.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserEdge.graphql.swift; sourceTree = "<group>"; };
+		6CB5F0272B703B310093F74F /* PlatformConnection.graphql.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlatformConnection.graphql.swift; sourceTree = "<group>"; };
+		6CB5F0282B703B310093F74F /* UserConnection.graphql.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserConnection.graphql.swift; sourceTree = "<group>"; };
+		6CB5F0292B703B310093F74F /* Comment.graphql.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Comment.graphql.swift; sourceTree = "<group>"; };
+		6CB5F02A2B703B310093F74F /* User.graphql.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.graphql.swift; sourceTree = "<group>"; };
+		6CB5F02B2B703B310093F74F /* GameEdge.graphql.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameEdge.graphql.swift; sourceTree = "<group>"; };
+		6CB5F02C2B703B310093F74F /* Mutation.graphql.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Mutation.graphql.swift; sourceTree = "<group>"; };
+		6CB5F02D2B703B310093F74F /* RankingConnection.graphql.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RankingConnection.graphql.swift; sourceTree = "<group>"; };
+		6CB5F02E2B703B310093F74F /* PageInfo.graphql.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PageInfo.graphql.swift; sourceTree = "<group>"; };
+		6CB5F02F2B703B310093F74F /* Query.graphql.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Query.graphql.swift; sourceTree = "<group>"; };
+		6CB5F0302B703B310093F74F /* Platform.graphql.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Platform.graphql.swift; sourceTree = "<group>"; };
+		6CB5F0312B703B310093F74F /* Shelf.graphql.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Shelf.graphql.swift; sourceTree = "<group>"; };
+		6CB5F0322B703B310093F74F /* Ranking.graphql.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Ranking.graphql.swift; sourceTree = "<group>"; };
+		6CB5F0332B703B310093F74F /* RankingEdge.graphql.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RankingEdge.graphql.swift; sourceTree = "<group>"; };
+		6CB5F0342B703B310093F74F /* PlatformEdge.graphql.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlatformEdge.graphql.swift; sourceTree = "<group>"; };
+		6CB5F0352B703B310093F74F /* GameConnection.graphql.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameConnection.graphql.swift; sourceTree = "<group>"; };
+		6CB5F0362B703B310093F74F /* SchemaConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SchemaConfiguration.swift; sourceTree = "<group>"; };
+		6CB5F0372B703B310093F74F /* SchemaMetadata.graphql.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SchemaMetadata.graphql.swift; sourceTree = "<group>"; };
+		6CB9F7362B6F67E9002DEBC0 /* apollo-codegen-config.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "apollo-codegen-config.json"; sourceTree = "<group>"; };
+		6CC565FA28DA22BB00A88006 /* Settings.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Settings.storyboard; sourceTree = "<group>"; };
+		6CC565FC28DA26B000A88006 /* DeleteAccountController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteAccountController.swift; sourceTree = "<group>"; };
+		6CC565FE28DA271800A88006 /* OpenUrlExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenUrlExtension.swift; sourceTree = "<group>"; };
+		6CC5660028DA296600A88006 /* SettingsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsController.swift; sourceTree = "<group>"; };
 		6CEF123128AE0E8500E6030A /* SubtitleTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubtitleTableCell.swift; sourceTree = "<group>"; };
 		6CEF123328AEB4D700E6030A /* Formatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Formatter.swift; sourceTree = "<group>"; };
 		9897AF21C6448A08E485BA89 /* Pods_GameRankr.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GameRankr.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -279,7 +406,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6CA5AB6E2B734606004937CF /* ApolloAPI in Frameworks */,
+				6CF571BA2B81B69000F3424A /* ApolloSQLite in Frameworks */,
 				77C4A33059E9FCA84053FA20 /* Pods_GameRankr.framework in Frameworks */,
+				6CA5AB6C2B734606004937CF /* Apollo in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -314,6 +444,7 @@
 				4C2E1BBB1FE9EB4400C048BC /* ShelveGameController.swift */,
 				4CD1C9DC1FDF6B62001A0B8D /* UpdatesViewController.swift */,
 				4CBD0F8A1FE6F4EC00230771 /* UserViewController.swift */,
+				6CC5660028DA296600A88006 /* SettingsController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -331,6 +462,7 @@
 				4C430E6B2001D19100CAC150 /* FullRankingDataSource.swift */,
 				4C5E746820127E2500769D21 /* FlagActivity.swift */,
 				6CEF123328AEB4D700E6030A /* Formatter.swift */,
+				6CC565FE28DA271800A88006 /* OpenUrlExtension.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -495,11 +627,12 @@
 		4CD1C9D91FDF6B62001A0B8D /* GameRankr */ = {
 			isa = PBXGroup;
 			children = (
+				6CB5EFF72B703B310093F74F /* api2 */,
+				6CB9F7362B6F67E9002DEBC0 /* apollo-codegen-config.json */,
 				6C05A00828B0152500FE6626 /* GameRankr.entitlements */,
 				6C46243828A72A0700EA5F29 /* Storyboards */,
 				4C430E54200036D200CAC150 /* Shared */,
 				4C430E4F1FFFF78800CAC150 /* Models */,
-				4C4FC9D81FE23C9F002F6428 /* API.swift */,
 				4C57FC131FDF7D7600A04E57 /* API */,
 				4C42E4F21FE1BC62003F1C68 /* Controllers */,
 				4CD1C9DA1FDF6B62001A0B8D /* AppDelegate.swift */,
@@ -545,6 +678,7 @@
 				6C3FFDA428A730420012FEF6 /* Ranking.storyboard */,
 				6C1ECA8228AAFCEF000C7178 /* Shelf.storyboard */,
 				6C4D97B728A7234A00C20BB5 /* UserProfile.storyboard */,
+				6CC565FA28DA22BB00A88006 /* Settings.storyboard */,
 			);
 			path = Storyboards;
 			sourceTree = "<group>";
@@ -558,8 +692,122 @@
 				6CB318BF2894EFEB00EDB9A2 /* VerifyViewController.swift */,
 				6CB318C22895C17400EDB9A2 /* ResetPasswordViewController.swift */,
 				6C4EEF612898B37C00980DE7 /* WelcomeViewController.swift */,
+				6CC565FC28DA26B000A88006 /* DeleteAccountController.swift */,
 			);
 			path = Auth;
+			sourceTree = "<group>";
+		};
+		6CB5EFF72B703B310093F74F /* api2 */ = {
+			isa = PBXGroup;
+			children = (
+				6CB5EFF82B703B310093F74F /* Fragments */,
+				6CB5F0032B703B310093F74F /* Api.graphql.swift */,
+				6CB5F0042B703B310093F74F /* Operations */,
+				6CB5F0202B703B310093F74F /* Schema */,
+			);
+			path = api2;
+			sourceTree = "<group>";
+		};
+		6CB5EFF82B703B310093F74F /* Fragments */ = {
+			isa = PBXGroup;
+			children = (
+				6CB5EFF92B703B310093F74F /* GameBasic.graphql.swift */,
+				6CB5EFFA2B703B310093F74F /* CommentBasic.graphql.swift */,
+				6CB5EFFB2B703B310093F74F /* UserBasic.graphql.swift */,
+				6CB5EFFC2B703B310093F74F /* PlatformBasic.graphql.swift */,
+				6CB5EFFD2B703B310093F74F /* RankingFull.graphql.swift */,
+				6CB5EFFE2B703B310093F74F /* RankingBasic.graphql.swift */,
+				6CB5EFFF2B703B310093F74F /* RankingWithUser.graphql.swift */,
+				6CB5F0002B703B310093F74F /* UserDetail.graphql.swift */,
+				6CB5F0012B703B310093F74F /* ShelfBasic.graphql.swift */,
+				6CB5F0022B703B310093F74F /* RankingWithGame.graphql.swift */,
+			);
+			path = Fragments;
+			sourceTree = "<group>";
+		};
+		6CB5F0042B703B310093F74F /* Operations */ = {
+			isa = PBXGroup;
+			children = (
+				6CB5F0052B703B310093F74F /* Mutations */,
+				6CB5F00D2B703B310093F74F /* Queries */,
+			);
+			path = Operations;
+			sourceTree = "<group>";
+		};
+		6CB5F0052B703B310093F74F /* Mutations */ = {
+			isa = PBXGroup;
+			children = (
+				6CB5F0062B703B310093F74F /* UnfollowMutation.graphql.swift */,
+				6CB5F0072B703B310093F74F /* CommentMutation.graphql.swift */,
+				6CB5F0082B703B310093F74F /* FollowMutation.graphql.swift */,
+				6CB5F0092B703B310093F74F /* FlagMutation.graphql.swift */,
+				6CB5F00A2B703B310093F74F /* RankPortMutation.graphql.swift */,
+				6CB5F00B2B703B310093F74F /* DestroyCommentMutation.graphql.swift */,
+				6CB5F00C2B703B310093F74F /* DestroyRankingMutation.graphql.swift */,
+			);
+			path = Mutations;
+			sourceTree = "<group>";
+		};
+		6CB5F00D2B703B310093F74F /* Queries */ = {
+			isa = PBXGroup;
+			children = (
+				6CB5F00E2B703B310093F74F /* PopularGamesQuery.graphql.swift */,
+				6CB5F00F2B703B310093F74F /* SearchQuery.graphql.swift */,
+				6CB5F0102B703B310093F74F /* UserRankingsQuery.graphql.swift */,
+				6CB5F0112B703B310093F74F /* GameQuery.graphql.swift */,
+				6CB5F0122B703B310093F74F /* MyFollowingQuery.graphql.swift */,
+				6CB5F0132B703B310093F74F /* FollowingQuery.graphql.swift */,
+				6CB5F0142B703B310093F74F /* RecentReviewsQuery.graphql.swift */,
+				6CB5F0152B703B310093F74F /* CommentsQuery.graphql.swift */,
+				6CB5F0162B703B310093F74F /* UserQuery.graphql.swift */,
+				6CB5F0172B703B310093F74F /* FeaturedPlatformsQuery.graphql.swift */,
+				6CB5F0182B703B310093F74F /* UpdatesQuery.graphql.swift */,
+				6CB5F0192B703B310093F74F /* PlatformsQuery.graphql.swift */,
+				6CB5F01A2B703B310093F74F /* MyShelvesQuery.graphql.swift */,
+				6CB5F01B2B703B310093F74F /* MeQuery.graphql.swift */,
+				6CB5F01C2B703B310093F74F /* GameRankingsQuery.graphql.swift */,
+				6CB5F01D2B703B310093F74F /* FollowersQuery.graphql.swift */,
+				6CB5F01E2B703B310093F74F /* ShelfQuery.graphql.swift */,
+				6CB5F01F2B703B310093F74F /* MyGamesQuery.graphql.swift */,
+			);
+			path = Queries;
+			sourceTree = "<group>";
+		};
+		6CB5F0202B703B310093F74F /* Schema */ = {
+			isa = PBXGroup;
+			children = (
+				6CB5F0212B703B310093F74F /* Objects */,
+				6CB5F0362B703B310093F74F /* SchemaConfiguration.swift */,
+				6CB5F0372B703B310093F74F /* SchemaMetadata.graphql.swift */,
+			);
+			path = Schema;
+			sourceTree = "<group>";
+		};
+		6CB5F0212B703B310093F74F /* Objects */ = {
+			isa = PBXGroup;
+			children = (
+				6CB5F0222B703B310093F74F /* CommentConnection.graphql.swift */,
+				6CB5F0232B703B310093F74F /* CommentEdge.graphql.swift */,
+				6CB5F0242B703B310093F74F /* Port.graphql.swift */,
+				6CB5F0252B703B310093F74F /* Game.graphql.swift */,
+				6CB5F0262B703B310093F74F /* UserEdge.graphql.swift */,
+				6CB5F0272B703B310093F74F /* PlatformConnection.graphql.swift */,
+				6CB5F0282B703B310093F74F /* UserConnection.graphql.swift */,
+				6CB5F0292B703B310093F74F /* Comment.graphql.swift */,
+				6CB5F02A2B703B310093F74F /* User.graphql.swift */,
+				6CB5F02B2B703B310093F74F /* GameEdge.graphql.swift */,
+				6CB5F02C2B703B310093F74F /* Mutation.graphql.swift */,
+				6CB5F02D2B703B310093F74F /* RankingConnection.graphql.swift */,
+				6CB5F02E2B703B310093F74F /* PageInfo.graphql.swift */,
+				6CB5F02F2B703B310093F74F /* Query.graphql.swift */,
+				6CB5F0302B703B310093F74F /* Platform.graphql.swift */,
+				6CB5F0312B703B310093F74F /* Shelf.graphql.swift */,
+				6CB5F0322B703B310093F74F /* Ranking.graphql.swift */,
+				6CB5F0332B703B310093F74F /* RankingEdge.graphql.swift */,
+				6CB5F0342B703B310093F74F /* PlatformEdge.graphql.swift */,
+				6CB5F0352B703B310093F74F /* GameConnection.graphql.swift */,
+			);
+			path = Objects;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -570,8 +818,6 @@
 			buildConfigurationList = 4CD1C9EB1FDF6B62001A0B8D /* Build configuration list for PBXNativeTarget "GameRankr" */;
 			buildPhases = (
 				535736130BBF3F6D186C3199 /* [CP] Check Pods Manifest.lock */,
-				6C4EEF632899A7F000980DE7 /* Download GraphQL Schema */,
-				4C4FC9D51FE2303F002F6428 /* Generate Apollo GraphQL API */,
 				4CD1C9D31FDF6B62001A0B8D /* Sources */,
 				4CD1C9D41FDF6B62001A0B8D /* Frameworks */,
 				4CD1C9D51FDF6B62001A0B8D /* Resources */,
@@ -582,6 +828,11 @@
 			dependencies = (
 			);
 			name = GameRankr;
+			packageProductDependencies = (
+				6CA5AB6B2B734606004937CF /* Apollo */,
+				6CA5AB6D2B734606004937CF /* ApolloAPI */,
+				6CF571B92B81B69000F3424A /* ApolloSQLite */,
+			);
 			productName = GameRankr;
 			productReference = 4CD1C9D71FDF6B62001A0B8D /* GameRankr.app */;
 			productType = "com.apple.product-type.application";
@@ -592,12 +843,14 @@
 		4CD1C9CF1FDF6B62001A0B8D /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				BuildIndependentTargetsInParallel = YES;
 				LastSwiftUpdateCheck = 0920;
-				LastUpgradeCheck = 1120;
+				LastUpgradeCheck = 1520;
 				ORGANIZATIONNAME = Michael;
 				TargetAttributes = {
 					4CD1C9D61FDF6B62001A0B8D = {
 						CreatedOnToolsVersion = 9.2;
+						LastSwiftMigration = "";
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -611,6 +864,9 @@
 				Base,
 			);
 			mainGroup = 4CD1C9CE1FDF6B62001A0B8D;
+			packageReferences = (
+				6CA5AB6A2B734606004937CF /* XCRemoteSwiftPackageReference "apollo-ios" */,
+			);
 			productRefGroup = 4CD1C9D81FDF6B62001A0B8D /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -641,6 +897,7 @@
 				4CA747EF1FF0AD9C00C3BCE0 /* loading-bar-18.png in Resources */,
 				4C430E662001A80900CAC150 /* PlatformBasic.graphql in Resources */,
 				4C47F0361FF6A57500E5FD92 /* UserRankings.graphql in Resources */,
+				6CB9F7372B6F67E9002DEBC0 /* apollo-codegen-config.json in Resources */,
 				4C5E746520126FD200769D21 /* Flag.graphql in Resources */,
 				6C1ECA7828A7316F000C7178 /* Browse.storyboard in Resources */,
 				4C430E5E2001648700CAC150 /* Platforms.graphql in Resources */,
@@ -664,6 +921,7 @@
 				4CAA41711FEAFD85007EBB7C /* MyShelves.graphql in Resources */,
 				4CA747E41FF0AD9C00C3BCE0 /* loading-bar-10.png in Resources */,
 				4CA747EC1FF0AD9C00C3BCE0 /* loading-bar-5.png in Resources */,
+				6CC565FB28DA22BB00A88006 /* Settings.storyboard in Resources */,
 				6C1ECA8128AAFB83000C7178 /* Flag.storyboard in Resources */,
 				4CBD0F851FE6DE0C00230771 /* UserBasic.graphql in Resources */,
 				4C3FC26E1FE4590A00299D7D /* Game.graphql in Resources */,
@@ -706,20 +964,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		4C4FC9D51FE2303F002F6428 /* Generate Apollo GraphQL API */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Generate Apollo GraphQL API";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "SCRIPT_PATH=\"${PODS_ROOT}/Apollo/scripts\"\ncd \"${SRCROOT}/${TARGET_NAME}\"\n\"${SCRIPT_PATH}\"/run-bundled-codegen.sh codegen:generate --target=swift --includes=./**/*.graphql --localSchemaFile=\"schema.json\" API.swift\n";
-		};
 		535736130BBF3F6D186C3199 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -742,24 +986,6 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		6C4EEF632899A7F000980DE7 /* Download GraphQL Schema */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			name = "Download GraphQL Schema";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "SCRIPT_PATH=\"${PODS_ROOT}/Apollo/scripts\"\ncd \"${SRCROOT}/${TARGET_NAME}\"\n\"${SCRIPT_PATH}\"/run-bundled-codegen.sh schema:download --endpoint=\"https://www.gamerankr.com/graphql\"\n";
-		};
 		9C1FD28224DB760D69FD1826 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -767,29 +993,15 @@
 			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-GameRankr/Pods-GameRankr-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/Apollo/Apollo.framework",
-				"${BUILT_PRODUCTS_DIR}/FBSDKCoreKit/FBSDKCoreKit.framework",
-				"${BUILT_PRODUCTS_DIR}/FBSDKLoginKit/FBSDKLoginKit.framework",
-				"${BUILT_PRODUCTS_DIR}/FBSDKShareKit/FBSDKShareKit.framework",
-				"${BUILT_PRODUCTS_DIR}/FacebookCore/FacebookCore.framework",
-				"${BUILT_PRODUCTS_DIR}/FacebookLogin/FacebookLogin.framework",
-				"${BUILT_PRODUCTS_DIR}/FacebookShare/FacebookShare.framework",
 				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
-				"${BUILT_PRODUCTS_DIR}/SQLite.swift/SQLite.framework",
 				"${BUILT_PRODUCTS_DIR}/Sentry/Sentry.framework",
+				"${BUILT_PRODUCTS_DIR}/SentryPrivate/SentryPrivate.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Apollo.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKCoreKit.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKLoginKit.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKShareKit.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FacebookCore.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FacebookLogin.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FacebookShare.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SQLite.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Sentry.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SentryPrivate.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -810,8 +1022,22 @@
 				6CB318C32895C17400EDB9A2 /* ResetPasswordViewController.swift in Sources */,
 				4CD1C9DF1FDF6B62001A0B8D /* SearchViewController.swift in Sources */,
 				4C47F02C1FF402FC00E5FD92 /* GameRankrNetworkTransport.swift in Sources */,
+				6CB5F0672B703B310093F74F /* RankingConnection.graphql.swift in Sources */,
+				6CB5F0422B703B310093F74F /* Api.graphql.swift in Sources */,
+				6CB5F0662B703B310093F74F /* Mutation.graphql.swift in Sources */,
 				4CD1C9DB1FDF6B62001A0B8D /* AppDelegate.swift in Sources */,
+				6CB5F0492B703B310093F74F /* DestroyRankingMutation.graphql.swift in Sources */,
+				6CB5F0382B703B310093F74F /* GameBasic.graphql.swift in Sources */,
+				6CB5F06B2B703B310093F74F /* Shelf.graphql.swift in Sources */,
+				6CB5F0472B703B310093F74F /* RankPortMutation.graphql.swift in Sources */,
+				6CB5F03A2B703B310093F74F /* UserBasic.graphql.swift in Sources */,
+				6CB5F03C2B703B310093F74F /* RankingFull.graphql.swift in Sources */,
+				6CB5F0442B703B310093F74F /* CommentMutation.graphql.swift in Sources */,
+				6CB5F04D2B703B310093F74F /* GameQuery.graphql.swift in Sources */,
 				6CB318C02894EFEB00EDB9A2 /* VerifyViewController.swift in Sources */,
+				6CB5F0432B703B310093F74F /* UnfollowMutation.graphql.swift in Sources */,
+				6CB5F0582B703B310093F74F /* GameRankingsQuery.graphql.swift in Sources */,
+				6CB5F0502B703B310093F74F /* RecentReviewsQuery.graphql.swift in Sources */,
 				4C430E6A2001C8AF00CAC150 /* BrowseViewController.swift in Sources */,
 				4CBD0F8B1FE6F4EC00230771 /* UserViewController.swift in Sources */,
 				6C14F32F28CD45E500979152 /* JWTDecode.swift in Sources */,
@@ -819,42 +1045,88 @@
 				6CB318BE2894C67800EDB9A2 /* SignInViewController.swift in Sources */,
 				4C10838320053C730072C8CA /* AuthenticationAPIs.swift in Sources */,
 				4C5E746B2013C64900769D21 /* FlagViewController.swift in Sources */,
+				6CC5660128DA296600A88006 /* SettingsController.swift in Sources */,
+				6CB5F0622B703B310093F74F /* UserConnection.graphql.swift in Sources */,
+				6CB5F0682B703B310093F74F /* PageInfo.graphql.swift in Sources */,
 				4C430E511FFFF7B500CAC150 /* RankingFilter.swift in Sources */,
+				6CB5F06F2B703B310093F74F /* GameConnection.graphql.swift in Sources */,
 				4CBD0F991FE88EA600230771 /* MyGamesManager.swift in Sources */,
 				4C430E441FFED61F00CAC150 /* ShareExtension.swift in Sources */,
 				4C7CF64C1FE46A5400E7B32A /* PlaceholderImages.swift in Sources */,
 				4C7CF64E1FE4937800E7B32A /* GameViewController.swift in Sources */,
+				6CB5F0532B703B310093F74F /* FeaturedPlatformsQuery.graphql.swift in Sources */,
+				6CB5F06C2B703B310093F74F /* Ranking.graphql.swift in Sources */,
+				6CB5F0642B703B310093F74F /* User.graphql.swift in Sources */,
+				6CB5F03B2B703B310093F74F /* PlatformBasic.graphql.swift in Sources */,
+				6CB5F0392B703B310093F74F /* CommentBasic.graphql.swift in Sources */,
 				4CAA416F1FEAF639007EBB7C /* UITableViewCellWithSwitch.swift in Sources */,
 				4C42E4F11FE1BC58003F1C68 /* MyGamesViewController.swift in Sources */,
 				4C2CF8151FF2E7F700A464AA /* LocalSQLiteManager.swift in Sources */,
 				6CEF123228AE0E8500E6030A /* SubtitleTableCell.swift in Sources */,
+				6CB5F05F2B703B310093F74F /* Game.graphql.swift in Sources */,
 				4CAA41731FEAFFFC007EBB7C /* MyShelvesManager.swift in Sources */,
+				6CB5F06A2B703B310093F74F /* Platform.graphql.swift in Sources */,
 				4C430E6E2001DFEB00CAC150 /* RecentReviewsViewController.swift in Sources */,
 				4C5E746920127E2500769D21 /* FlagActivity.swift in Sources */,
-				4C4FC9D91FE23C9F002F6428 /* API.swift in Sources */,
 				6C4EEF652899DAB000980DE7 /* FollowManager.swift in Sources */,
 				4CBD0F951FE7801F00230771 /* IntrinsicTableView.swift in Sources */,
 				4C430E642001A7CF00CAC150 /* PlatformAPIs.swift in Sources */,
+				6CB5F0522B703B310093F74F /* UserQuery.graphql.swift in Sources */,
 				6C96733428A1C6930084D692 /* RankingAPIs.swift in Sources */,
+				6CB5F03D2B703B310093F74F /* RankingBasic.graphql.swift in Sources */,
 				4C430E622001A5A400CAC150 /* BrowseAPIs.swift in Sources */,
+				6CB5F04E2B703B310093F74F /* MyFollowingQuery.graphql.swift in Sources */,
+				6CB5F0552B703B310093F74F /* PlatformsQuery.graphql.swift in Sources */,
+				6CB5F05C2B703B310093F74F /* CommentConnection.graphql.swift in Sources */,
 				4C5F8854200450F5002D67F5 /* SignOutViewController.swift in Sources */,
+				6CB5F0402B703B310093F74F /* ShelfBasic.graphql.swift in Sources */,
 				4C2E1BBC1FE9EB4400C048BC /* ShelveGameController.swift in Sources */,
+				6CB5F04C2B703B310093F74F /* UserRankingsQuery.graphql.swift in Sources */,
+				6CB5F0612B703B310093F74F /* PlatformConnection.graphql.swift in Sources */,
 				4C430E582000636C00CAC150 /* FixedImageSizeTableCell.swift in Sources */,
+				6CB5F04B2B703B310093F74F /* SearchQuery.graphql.swift in Sources */,
 				4C57FC151FDF7D9600A04E57 /* GameRankrAPI.swift in Sources */,
+				6CB5F04A2B703B310093F74F /* PopularGamesQuery.graphql.swift in Sources */,
+				6CB5F03E2B703B310093F74F /* RankingWithUser.graphql.swift in Sources */,
+				6CB5F0482B703B310093F74F /* DestroyCommentMutation.graphql.swift in Sources */,
 				6C05A00A28B01D5E00FE6626 /* AttributedStringBuilder.swift in Sources */,
 				4CAA416D1FEAE74D007EBB7C /* EditReviewViewController.swift in Sources */,
+				6CB5F0632B703B310093F74F /* Comment.graphql.swift in Sources */,
+				6CB5F0702B703B310093F74F /* SchemaConfiguration.swift in Sources */,
+				6CC565FD28DA26B000A88006 /* DeleteAccountController.swift in Sources */,
+				6CB5F05A2B703B310093F74F /* ShelfQuery.graphql.swift in Sources */,
 				4C9698522005A66A00B88A91 /* AboutViewController.swift in Sources */,
+				6CB5F0652B703B310093F74F /* GameEdge.graphql.swift in Sources */,
 				4CBD0F7D1FE627FB00230771 /* SignUpViewController.swift in Sources */,
 				6C4EEF622898B37C00980DE7 /* WelcomeViewController.swift in Sources */,
 				4C430E56200036EA00CAC150 /* StringExtensions.swift in Sources */,
+				6CB5F06E2B703B310093F74F /* PlatformEdge.graphql.swift in Sources */,
+				6CB5F0712B703B310093F74F /* SchemaMetadata.graphql.swift in Sources */,
+				6CB5F05E2B703B310093F74F /* Port.graphql.swift in Sources */,
+				6CB5F06D2B703B310093F74F /* RankingEdge.graphql.swift in Sources */,
+				6CB5F0692B703B310093F74F /* Query.graphql.swift in Sources */,
+				6CB5F0412B703B310093F74F /* RankingWithGame.graphql.swift in Sources */,
+				6CC565FF28DA271800A88006 /* OpenUrlExtension.swift in Sources */,
+				6CB5F0592B703B310093F74F /* FollowersQuery.graphql.swift in Sources */,
 				4C5F885220044D8D002D67F5 /* GameRankrUITabBarController.swift in Sources */,
+				6CB5F04F2B703B310093F74F /* FollowingQuery.graphql.swift in Sources */,
+				6CB5F0542B703B310093F74F /* UpdatesQuery.graphql.swift in Sources */,
 				4CAA41771FEC186A007EBB7C /* PortChooserViewController.swift in Sources */,
+				6CB5F0602B703B310093F74F /* UserEdge.graphql.swift in Sources */,
 				6CEF123428AEB4D700E6030A /* Formatter.swift in Sources */,
 				4C430E532000109500CAC150 /* MyGamesFilterViewController.swift in Sources */,
 				4CD1C9DD1FDF6B62001A0B8D /* UpdatesViewController.swift in Sources */,
+				6CB5F0562B703B310093F74F /* MyShelvesQuery.graphql.swift in Sources */,
 				4C430E6C2001D19100CAC150 /* FullRankingDataSource.swift in Sources */,
+				6CB5F0572B703B310093F74F /* MeQuery.graphql.swift in Sources */,
+				6CB5F0452B703B310093F74F /* FollowMutation.graphql.swift in Sources */,
 				4C47F03A1FF8331E00E5FD92 /* ShelfViewController.swift in Sources */,
+				6CB5F03F2B703B310093F74F /* UserDetail.graphql.swift in Sources */,
+				6CB5F0462B703B310093F74F /* FlagMutation.graphql.swift in Sources */,
+				6CB5F05B2B703B310093F74F /* MyGamesQuery.graphql.swift in Sources */,
+				6CB5F05D2B703B310093F74F /* CommentEdge.graphql.swift in Sources */,
 				4C2E1BBE1FE9ED3900C048BC /* RankingViewController.swift in Sources */,
+				6CB5F0512B703B310093F74F /* CommentsQuery.graphql.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -905,6 +1177,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -916,6 +1189,7 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -932,7 +1206,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_PREFIX_HEADER = GameRankr/InfoPlistPreprocess.h;
 				INFOPLIST_PREPROCESS = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -966,6 +1240,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -977,6 +1252,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -987,10 +1263,11 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_PREFIX_HEADER = GameRankr/InfoPlistPreprocess.h;
 				INFOPLIST_PREPROCESS = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -1002,19 +1279,26 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = GameRankr/GameRankr.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 9;
+				CURRENT_PROJECT_VERSION = 13;
 				DEVELOPMENT_TEAM = NTDFC8PLCC;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Frameworks",
 				);
 				INFOPLIST_FILE = GameRankr/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.social-networking";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 1.1.3;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.1.5;
 				PRODUCT_BUNDLE_IDENTIFIER = com.michaeleconomy.GameRankr;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -1026,19 +1310,26 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = GameRankr/GameRankr.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 9;
+				CURRENT_PROJECT_VERSION = 13;
 				DEVELOPMENT_TEAM = NTDFC8PLCC;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Frameworks",
 				);
 				INFOPLIST_FILE = GameRankr/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.social-networking";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 1.1.3;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.1.5;
 				PRODUCT_BUNDLE_IDENTIFIER = com.michaeleconomy.GameRankr;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
@@ -1065,6 +1356,35 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		6CA5AB6A2B734606004937CF /* XCRemoteSwiftPackageReference "apollo-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/apollographql/apollo-ios.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.9.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		6CA5AB6B2B734606004937CF /* Apollo */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6CA5AB6A2B734606004937CF /* XCRemoteSwiftPackageReference "apollo-ios" */;
+			productName = Apollo;
+		};
+		6CA5AB6D2B734606004937CF /* ApolloAPI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6CA5AB6A2B734606004937CF /* XCRemoteSwiftPackageReference "apollo-ios" */;
+			productName = ApolloAPI;
+		};
+		6CF571B92B81B69000F3424A /* ApolloSQLite */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6CA5AB6A2B734606004937CF /* XCRemoteSwiftPackageReference "apollo-ios" */;
+			productName = ApolloSQLite;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 4CD1C9CF1FDF6B62001A0B8D /* Project object */;
 }

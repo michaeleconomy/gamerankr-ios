@@ -1,3 +1,4 @@
+// Adapted from: https://github.com/kstenerud/KSCrash
 //
 //  SentryCrashReportStore.c
 //
@@ -59,7 +60,7 @@ compareInt64(const void *a, const void *b)
 }
 
 static inline int64_t
-getNextUniqueID()
+getNextUniqueID(void)
 {
     return g_nextUniqueIDHigh + g_nextUniqueIDLow++;
 }
@@ -97,7 +98,7 @@ getReportIDFromFilePath(const char *filepath)
 }
 
 static int
-getReportCount()
+getReportCount(void)
 {
     int count = 0;
     DIR *dir = opendir(g_reportsPath);
@@ -107,7 +108,7 @@ getReportCount()
     }
     struct dirent *ent;
     while ((ent = readdir(dir)) != NULL) {
-        if (getReportIDFromFilename(ent->d_name) > 0) {
+        if (ent->d_type != DT_DIR && getReportIDFromFilename(ent->d_name) > 0) {
             count++;
         }
     }
@@ -147,7 +148,7 @@ done:
 }
 
 static void
-pruneReports()
+pruneReports(void)
 {
     int reportCount = getReportCount();
     if (reportCount > g_maxReportCount) {
@@ -161,7 +162,7 @@ pruneReports()
 }
 
 static void
-initializeIDs()
+initializeIDs(void)
 {
     time_t rawTime;
     time(&rawTime);
@@ -198,7 +199,7 @@ sentrycrashcrs_getNextCrashReportPath(char *crashReportPathBuffer)
 }
 
 int
-sentrycrashcrs_getReportCount()
+sentrycrashcrs_getReportCount(void)
 {
     pthread_mutex_lock(&g_mutex);
     int count = getReportCount();
@@ -234,16 +235,16 @@ sentrycrashcrs_readReport(int64_t reportID)
 }
 
 void
-sentrycrashcrs_getScreenshotPath_forReportId(int64_t reportID, char *pathBuffer)
+sentrycrashcrs_getAttachmentsPath_forReportId(int64_t reportID, char *pathBuffer)
 {
-    snprintf(pathBuffer, SentryCrashCRS_MAX_PATH_LENGTH, "%s/%s-report-%016llx-screenshots",
+    snprintf(pathBuffer, SentryCrashCRS_MAX_PATH_LENGTH, "%s/%s-report-%016llx-attachments",
         g_reportsPath, g_appName, reportID);
 }
 
 void
-sentrycrashcrs_getScreenshotsPath_forReport(const char *reportPath, char *pathBuffer)
+sentrycrashcrs_getAttachmentsPath_forReport(const char *reportPath, char *pathBuffer)
 {
-    sentrycrashcrs_getScreenshotPath_forReportId(getReportIDFromFilePath(reportPath), pathBuffer);
+    sentrycrashcrs_getAttachmentsPath_forReportId(getReportIDFromFilePath(reportPath), pathBuffer);
 }
 
 int64_t
@@ -279,7 +280,7 @@ done:
 }
 
 void
-sentrycrashcrs_deleteAllReports()
+sentrycrashcrs_deleteAllReports(void)
 {
     pthread_mutex_lock(&g_mutex);
     sentrycrashfu_deleteContentsOfPath(g_reportsPath);

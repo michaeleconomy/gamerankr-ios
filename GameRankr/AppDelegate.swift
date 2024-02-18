@@ -1,17 +1,16 @@
 import UIKit
-import FacebookCore
 import Kingfisher
-import FBSDKLoginKit
 import Sentry
 import Apollo
 import Foundation
+import CoreAudioTypes
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-    var universalLinkId: GraphQLID?
+    var universalLinkId: Api.ID?
     var window: UIWindow?
 
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
         SentrySDK.start { options in
             options.dsn = "https://21746597ddb44404a91dd3139c513e64@o110652.ingest.sentry.io/6661119"
@@ -42,7 +41,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationDidBecomeActive(_ application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-        AppEvents.activateApp()
     }
 
     func applicationWillTerminate(_ application: UIApplication) {
@@ -50,7 +48,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func application(_ application: UIApplication, open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
-        return ApplicationDelegate.shared.application(application, open: url, sourceApplication: sourceApplication, annotation: annotation)
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        return appDelegate.application(application, open: url, sourceApplication: sourceApplication, annotation: annotation)
     }
 
     func application(_ application: UIApplication,
@@ -58,7 +57,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                      restorationHandler: @escaping ([Any]?) -> Void) -> Bool
     {
         NSLog("userActivity: called")
-        
         
         guard userActivity.activityType == NSUserActivityTypeBrowsingWeb else {
             NSLog("userActivity: userActivity.activityType: \(userActivity.activityType)")
@@ -121,12 +119,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return false
     }
     
-    private func getId(_ path: String) -> GraphQLID? {
+    private func getId(_ path: String) -> Api.ID? {
         guard let range = path.range(of: #"(\d+)"#, options: .regularExpression) else {
             return nil
         }
         let idRaw = path[range]
-        return GraphQLID(idRaw)
+        return Api.ID(idRaw)
     }
     
 }

@@ -1,6 +1,4 @@
 import UIKit
-import FacebookCore
-import FacebookLogin
 
 class UpdatesViewController: FullRankingDataSource, APIUpdatesDelegate, APIAuthenticationDelegate {
     
@@ -11,7 +9,7 @@ class UpdatesViewController: FullRankingDataSource, APIUpdatesDelegate, APIAuthe
         
     }
     
-    private var nextPage: String?
+    private var nextPage = GraphQLNullable<String>.none
     var fetchedUpdates = false
     
     override func viewDidLoad() {
@@ -34,7 +32,7 @@ class UpdatesViewController: FullRankingDataSource, APIUpdatesDelegate, APIAuthe
         }
     }
     
-    func handleAPI(updates: [RankingFull], nextPage: String?) {
+    func handleAPI(updates: [Api.RankingFull], nextPage: GraphQLNullable<String>) {
         self.rankings.append(contentsOf: updates)
         
         self.nextPage = nextPage

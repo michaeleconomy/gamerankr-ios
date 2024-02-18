@@ -1,13 +1,14 @@
 #import "SentryUIEventTrackingIntegration.h"
-#import <Foundation/Foundation.h>
-#import <SentryDependencyContainer.h>
-#import <SentryLog.h>
-#import <SentryNSDataSwizzling.h>
-#import <SentryOptions+Private.h>
-#import <SentryOptions.h>
-#import <SentryUIEventTracker.h>
 
 #if SENTRY_HAS_UIKIT
+
+#    import <SentryLog.h>
+#    import <SentryNSDataSwizzling.h>
+#    import <SentryOptions+Private.h>
+#    import <SentryOptions.h>
+#    import <SentryUIEventTracker.h>
+#    import <SentryUIEventTrackerTransactionMode.h>
+
 @interface
 SentryUIEventTrackingIntegration ()
 
@@ -17,53 +18,26 @@ SentryUIEventTrackingIntegration ()
 
 @implementation SentryUIEventTrackingIntegration
 
-- (void)installWithOptions:(SentryOptions *)options
+- (BOOL)installWithOptions:(SentryOptions *)options
 {
-    if ([self shouldBeDisabled:options]) {
-        [options removeEnabledIntegration:NSStringFromClass([self class])];
-        return;
+    if (![super installWithOptions:options]) {
+        return NO;
     }
 
-    SentryDependencyContainer *dependencies = [SentryDependencyContainer sharedInstance];
-    self.uiEventTracker = [[SentryUIEventTracker alloc]
-        initWithSwizzleWrapper:[SentryDependencyContainer sharedInstance].swizzleWrapper
-          dispatchQueueWrapper:dependencies.dispatchQueueWrapper
-                   idleTimeout:options.idleTimeout];
+    SentryUIEventTrackerTransactionMode *mode =
+        [[SentryUIEventTrackerTransactionMode alloc] initWithIdleTimeout:options.idleTimeout];
+
+    self.uiEventTracker = [[SentryUIEventTracker alloc] initWithMode:mode];
 
     [self.uiEventTracker start];
+
+    return YES;
 }
 
-- (BOOL)shouldBeDisabled:(SentryOptions *)options
+- (SentryIntegrationOption)integrationOptions
 {
-    if (!options.enableAutoPerformanceTracking) {
-        [SentryLog logWithMessage:@"Not going to enable User Interaction tracking because "
-                                  @"enableAutoPerformanceTracking is disabled."
-                         andLevel:kSentryLevelDebug];
-        return YES;
-    }
-
-    if (!options.enableSwizzling) {
-        [SentryLog logWithMessage:@"Not going to enable User Interaction tracking because "
-                                  @"enableSwizzling is disabled."
-                         andLevel:kSentryLevelDebug];
-        return YES;
-    }
-
-    if (!options.isTracingEnabled) {
-        [SentryLog logWithMessage:
-                       @"Not going to enable User Interaction tracking because tracing is disabled."
-                         andLevel:kSentryLevelDebug];
-        return YES;
-    }
-
-    if (!options.enableUserInteractionTracing) {
-        [SentryLog logWithMessage:@"Not going to enable User Interaction tracking because "
-                                  @"enableUserInteractionTracing is disabled."
-                         andLevel:kSentryLevelDebug];
-        return YES;
-    }
-
-    return NO;
+    return kIntegrationOptionEnableAutoPerformanceTracing | kIntegrationOptionEnableSwizzling
+        | kIntegrationOptionIsTracingEnabled | kIntegrationOptionEnableUserInteractionTracing;
 }
 
 - (void)uninstall
@@ -74,4 +48,5 @@ SentryUIEventTrackingIntegration ()
 }
 
 @end
-#endif
+
+#endif // SENTRY_HAS_UIKIT

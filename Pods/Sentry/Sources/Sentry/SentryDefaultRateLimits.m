@@ -1,8 +1,9 @@
 #import "SentryDefaultRateLimits.h"
 #import "SentryConcurrentRateLimitsDictionary.h"
-#import "SentryCurrentDate.h"
+#import "SentryCurrentDateProvider.h"
 #import "SentryDataCategoryMapper.h"
 #import "SentryDateUtil.h"
+#import "SentryDependencyContainer.h"
 #import "SentryLog.h"
 #import "SentryRateLimitParser.h"
 #import "SentryRetryAfterHeaderParser.h"
@@ -55,8 +56,8 @@ SentryDefaultRateLimits ()
         NSDictionary<NSNumber *, NSDate *> *limits = [self.rateLimitParser parse:rateLimitsHeader];
 
         for (NSNumber *categoryAsNumber in limits.allKeys) {
-            SentryDataCategory category = [SentryDataCategoryMapper
-                mapIntegerToCategory:(NSUInteger)[categoryAsNumber integerValue]];
+            SentryDataCategory category
+                = sentryDataCategoryForNSUInteger(categoryAsNumber.unsignedIntegerValue);
 
             [self updateRateLimit:category withDate:limits[categoryAsNumber]];
         }
@@ -66,7 +67,8 @@ SentryDefaultRateLimits ()
 
         if (nil == retryAfterHeaderDate) {
             // parsing failed use default value
-            retryAfterHeaderDate = [[SentryCurrentDate date] dateByAddingTimeInterval:60];
+            retryAfterHeaderDate = [[SentryDependencyContainer.sharedInstance.dateProvider date]
+                dateByAddingTimeInterval:60];
         }
 
         [self updateRateLimit:kSentryDataCategoryAll withDate:retryAfterHeaderDate];

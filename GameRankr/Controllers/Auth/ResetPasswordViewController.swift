@@ -1,6 +1,4 @@
 import UIKit
-import FacebookCore
-import FacebookLogin
 
 class ResetPasswordViewController: UIViewController, APIGenericSuccessDelegate {
     private var retrying: Bool = false

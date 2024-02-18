@@ -1,26 +1,28 @@
-#import "SentryEvent.h"
 #import "NSDate+SentryExtras.h"
 #import "NSDictionary+SentrySanitize.h"
 #import "SentryBreadcrumb.h"
 #import "SentryClient.h"
-#import "SentryCurrentDate.h"
+#import "SentryCurrentDateProvider.h"
 #import "SentryDebugMeta.h"
+#import "SentryDependencyContainer.h"
+#import "SentryEvent+Private.h"
 #import "SentryException.h"
 #import "SentryId.h"
+#import "SentryInternalDefines.h"
+#import "SentryLevelMapper.h"
 #import "SentryMessage.h"
 #import "SentryMeta.h"
+#import "SentryRequest.h"
 #import "SentryStacktrace.h"
 #import "SentryThread.h"
 #import "SentryUser.h"
 
+#if SENTRY_HAS_METRIC_KIT
+#    import "SentryMechanism.h"
+#    import "SentryMetricKitIntegration.h"
+#endif // SENTRY_HAS_METRIC_KIT
+
 NS_ASSUME_NONNULL_BEGIN
-
-@interface
-SentryEvent ()
-
-@property (nonatomic) BOOL isCrashEvent;
-
-@end
 
 @implementation SentryEvent
 
@@ -35,8 +37,8 @@ SentryEvent ()
     if (self) {
         self.eventId = [[SentryId alloc] init];
         self.level = level;
-        self.platform = @"cocoa";
-        self.timestamp = [SentryCurrentDate date];
+        self.platform = SentryPlatformName;
+        self.timestamp = [SentryDependencyContainer.sharedInstance.dateProvider date];
     }
     return self;
 }
@@ -51,18 +53,18 @@ SentryEvent ()
 - (NSDictionary<NSString *, id> *)serialize
 {
     if (nil == self.timestamp) {
-        self.timestamp = [SentryCurrentDate date];
+        self.timestamp = [SentryDependencyContainer.sharedInstance.dateProvider date];
     }
 
     NSMutableDictionary *serializedData = @{
         @"event_id" : self.eventId.sentryIdString,
         @"timestamp" : @(self.timestamp.timeIntervalSince1970),
-        @"platform" : @"cocoa",
+        @"platform" : SentryPlatformName,
     }
                                               .mutableCopy;
 
     if (self.level != kSentryLevelNone) {
-        [serializedData setValue:SentryLevelNames[self.level] forKey:@"level"];
+        [serializedData setValue:nameForSentryLevel(self.level) forKey:@"level"];
     }
 
     [self addSimpleProperties:serializedData];
@@ -125,8 +127,6 @@ SentryEvent ()
 
     if (self.transaction) {
         [serializedData setValue:self.transaction forKey:@"transaction"];
-    } else if (self.extra[@"__sentry_transaction"]) {
-        [serializedData setValue:self.extra[@"__sentry_transaction"] forKey:@"transaction"];
     }
 
     [serializedData setValue:self.fingerprint forKey:@"fingerprint"];
@@ -136,7 +136,13 @@ SentryEvent ()
 
     [serializedData setValue:[self.stacktrace serialize] forKey:@"stacktrace"];
 
-    [serializedData setValue:[self serializeBreadcrumbs] forKey:@"breadcrumbs"];
+    NSMutableArray *breadcrumbs = [self serializeBreadcrumbs];
+    if (self.serializedBreadcrumbs.count > 0) {
+        [breadcrumbs addObjectsFromArray:self.serializedBreadcrumbs];
+    }
+    if (breadcrumbs.count > 0) {
+        [serializedData setValue:breadcrumbs forKey:@"breadcrumbs"];
+    }
 
     [serializedData setValue:[self.context sentry_sanitize] forKey:@"contexts"];
 
@@ -156,19 +162,44 @@ SentryEvent ()
                               forKey:@"start_timestamp"];
         }
     }
+
+    if (nil != self.request) {
+        [serializedData setValue:[self.request serialize] forKey:@"request"];
+    }
 }
 
-- (NSArray *_Nullable)serializeBreadcrumbs
+- (NSMutableArray *)serializeBreadcrumbs
 {
     NSMutableArray *crumbs = [NSMutableArray new];
     for (SentryBreadcrumb *crumb in self.breadcrumbs) {
         [crumbs addObject:[crumb serialize]];
     }
-    if (crumbs.count <= 0) {
-        return nil;
-    }
     return crumbs;
 }
+
+#if SENTRY_HAS_METRIC_KIT
+
+- (BOOL)isMetricKitEvent
+{
+    if (self.exceptions == nil || self.exceptions.count != 1) {
+        return NO;
+    }
+
+    NSArray<NSString *> *metricKitMechanisms = @[
+        SentryMetricKitDiskWriteExceptionMechanism, SentryMetricKitCpuExceptionMechanism,
+        SentryMetricKitHangDiagnosticMechanism, @"MXCrashDiagnostic"
+    ];
+
+    SentryException *exception = self.exceptions[0];
+    if (exception.mechanism != nil &&
+        [metricKitMechanisms containsObject:exception.mechanism.type]) {
+        return YES;
+    } else {
+        return NO;
+    }
+}
+
+#endif // SENTRY_HAS_METRIC_KIT
 
 @end
 

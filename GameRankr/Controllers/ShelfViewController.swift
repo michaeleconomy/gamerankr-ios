@@ -3,10 +3,10 @@ import Apollo
 
 class ShelfViewController: UIViewController, UITableViewDataSource, APIShelfDelegate, APIUserRankingsDelegate {
     
-    var shelf: ShelfBasic?
-    var user: UserBasic?
-    private var rankings = [RankingWithGame]()
-    private var nextPage: String?
+    var shelf: Api.ShelfBasic?
+    var user: Api.UserBasic?
+    private var rankings = [Api.RankingWithGame]()
+    private var nextPage = GraphQLNullable<String>.none
     
     @IBOutlet weak var loadingImage: UIImageView!
     @IBOutlet weak var tableView: UITableView!
@@ -30,7 +30,7 @@ class ShelfViewController: UIViewController, UITableViewDataSource, APIShelfDele
     
     func getRankings(getNextPage: Bool = false) {
         if (!getNextPage) {
-            self.nextPage = nil
+            self.nextPage = .none
             rankings.removeAll()
         }
         if (shelf != nil) {
@@ -97,7 +97,7 @@ class ShelfViewController: UIViewController, UITableViewDataSource, APIShelfDele
         }
     }
     
-    func handleAPI(rankings: [RankingWithGame], nextPage: String?) {
+    func handleAPI(rankings: [Api.RankingWithGame], nextPage: GraphQLNullable<String>) {
         self.rankings.append(contentsOf: rankings)
         self.nextPage = nextPage
         DispatchQueue.main.async {

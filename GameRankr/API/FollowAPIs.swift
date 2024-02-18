@@ -2,77 +2,65 @@ import Foundation
 import Apollo
 
 protocol APIFollowersDelegate : AuthenticatedAPIErrorDelegate {
-    func handleAPI(followers: [UserBasic], nextPage: String?)
+    func handleAPI(followers: [Api.UserBasic], nextPage: GraphQLNullable<String>)
 }
 protocol APIFollowingDelegate : AuthenticatedAPIErrorDelegate {
-    func handleAPI(following: [UserBasic], nextPage: String?)
+    func handleAPI(following: [Api.UserBasic], nextPage: GraphQLNullable<String>)
 }
 protocol APIMyFollowingDelegate : AuthenticatedAPIErrorDelegate {
-    func handleAPI(following: [GraphQLID])
+    func handleAPI(following: [Api.ID])
 }
 protocol APIFollowDelegate : AuthenticatedAPIErrorDelegate {
-    func handleAPI(followed: GraphQLID)
+    func handleAPI(followed: Api.ID)
 }
 protocol APIUnfollowDelegate : AuthenticatedAPIErrorDelegate {
-    func handleAPI(unfollowed: GraphQLID)
+    func handleAPI(unfollowed: Api.ID)
 }
 
 extension GameRankrAPI {
-    func followers(userId: GraphQLID, after: String? = nil, delegate: APIFollowersDelegate) {
-        apollo.fetch(query: FollowersQuery(userId: userId, after: after)) { (result) in
+    func followers(userId: Api.ID, after: GraphQLNullable<String> = nil, delegate: APIFollowersDelegate) {
+        apollo.fetch(query: Api.FollowersQuery(userId: userId, after: after)) { (result) in
             if (!self.handleApolloApiErrors(result, delegate: delegate)) { return }
             guard let data = try? result.get().data else {return}
-            guard let data = data else {
-                delegate.handleAPI(error: "Error getting data from result")
-                return
-            }
             let followers = data.user.followers
-            var nextPage : String?
+            var nextPage = GraphQLNullable<String>.none
             if (followers.pageInfo.hasNextPage){
-                nextPage = followers.pageInfo.endCursor
+                if let cursor = followers.pageInfo.endCursor {
+                    nextPage = .some(cursor)
+                }
             }
             delegate.handleAPI(followers: followers.edges!.map{$0!.user!.fragments.userBasic}, nextPage: nextPage)
         }
     }
     
-    func following(userId: GraphQLID, after: String? = nil, delegate: APIFollowingDelegate) {
-        apollo.fetch(query: FollowingQuery(userId: userId, after: after)) { (result) in
+    func following(userId: Api.ID, after: GraphQLNullable<String> = nil, delegate: APIFollowingDelegate) {
+        apollo.fetch(query: Api.FollowingQuery(userId: userId, after: after)) { (result) in
             if (!self.handleApolloApiErrors(result, delegate: delegate)) { return }
             guard let data = try? result.get().data else {return}
-            guard let data = data else {
-                delegate.handleAPI(error: "Error getting data from result")
-                return
-            }
             let followers = data.user.following
-            var nextPage : String?
+            var nextPage = GraphQLNullable<String>.none
             if (followers.pageInfo.hasNextPage){
-                nextPage = followers.pageInfo.endCursor
+                if let cursor = followers.pageInfo.endCursor {
+                    nextPage = .some(cursor)
+                }
             }
             delegate.handleAPI(following: followers.edges!.map{$0!.user!.fragments.userBasic}, nextPage: nextPage)
         }
     }
     
     func myFollowing(delegate: APIMyFollowingDelegate) {
-        apollo.fetch(query: MyFollowingQuery()) { (result) in
+        apollo.fetch(query: Api.MyFollowingQuery()) { (result) in
             if (!self.handleApolloApiErrors(result, delegate: delegate)) { return }
             guard let data = try? result.get().data else {return}
-            guard let data = data else {
-                delegate.handleAPI(error: "Error getting data from result")
-                return
-            }
             delegate.handleAPI(following: data.user.followingUserIds)
         }
     }
     
-    func follow(id: GraphQLID, delegate: APIFollowDelegate) {
-        apollo.perform(mutation: FollowMutation(userId: id)) { (result) in
+    func follow(id: Api.ID, delegate: APIFollowDelegate) {
+        apollo.perform(mutation: Api.FollowMutation(userId: id)) { (result) in
             if (!self.handleApolloApiErrors(result, delegate: delegate)) { return }
             guard let data = try? result.get().data else { return }
             
-            guard let data = data else {
-                delegate.handleAPI(error: "Error getting data from result")
-                return
-            }
             if (!data.follow) {
                 delegate.handleAPI(error: "Could not flag item for unknown reason")
                 return
@@ -81,14 +69,11 @@ extension GameRankrAPI {
         }
     }
     
-    func unfollow(id: GraphQLID, delegate: APIUnfollowDelegate) {
-        apollo.perform(mutation: UnfollowMutation(userId: id)) { (result) in
+    func unfollow(id: Api.ID, delegate: APIUnfollowDelegate) {
+        apollo.perform(mutation: Api.UnfollowMutation(userId: id)) { (result) in
             if (!self.handleApolloApiErrors(result, delegate: delegate)) { return }
             guard let data = try? result.get().data else { return }
-            guard let data = data else {
-                delegate.handleAPI(error: "Error getting data from result")
-                return
-            }
+
             if (!data.unfollow) {
                 delegate.handleAPI(error: "Could not flag item for unknown reason")
                 return

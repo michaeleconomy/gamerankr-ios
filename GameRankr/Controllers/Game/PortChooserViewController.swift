@@ -2,11 +2,11 @@ import UIKit
 import Apollo
 
 class PortChooserViewController : UITableViewController {
-    var game : GameBasic?
-    var selected : GraphQLID?
-    var ranked : GraphQLID?
+    var game : Api.GameBasic?
+    var selected : Api.ID?
+    var ranked : Api.ID?
     
-    private var ports: [GameBasic.Port]?
+    private var ports: [Api.GameBasic.Port]?
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -15,7 +15,7 @@ class PortChooserViewController : UITableViewController {
         ports = game?.ports.sorted(by: { p1, p2 in
             p1.platform.name > p2.platform.name
         })
-        let selectedRow = ports?.index(where: {$0.id == selected})
+        let selectedRow = ports?.firstIndex(where: {$0.id == selected})
         if (selectedRow != nil) {
             tableView.selectRow(at: IndexPath(row: selectedRow!, section: 0), animated: false, scrollPosition: .top)
         }

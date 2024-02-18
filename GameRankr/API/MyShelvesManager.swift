@@ -6,7 +6,7 @@ protocol APIMyShelvesManagerDelegate : AuthenticatedAPIErrorDelegate, AnyObject 
 
 class MyShelvesManager : APIShelvesDelegate {
     static let sharedInstance = MyShelvesManager()
-    var shelves: [MyShelvesQuery.Data.Shelf]?
+    var shelves: [Api.MyShelvesQuery.Data.Shelf]?
     
     var delegates = [APIMyShelvesManagerDelegate]()
     var loading = false
@@ -29,7 +29,7 @@ class MyShelvesManager : APIShelvesDelegate {
     }
     
     
-    subscript(index : Int) -> MyShelvesQuery.Data.Shelf? {
+    subscript(index : Int) -> Api.MyShelvesQuery.Data.Shelf? {
         return shelves?[index]
     }
     
@@ -40,7 +40,7 @@ class MyShelvesManager : APIShelvesDelegate {
         return 0
     }
     
-    func handleAPI(shelves: [MyShelvesQuery.Data.Shelf]) {
+    func handleAPI(shelves: [Api.MyShelvesQuery.Data.Shelf]) {
         self.shelves = shelves
         self.loading = false
         delegates.forEach{$0.handleShelvesUpdates()}
@@ -51,7 +51,7 @@ class MyShelvesManager : APIShelvesDelegate {
     }
     
     func unregister(delegate: APIMyShelvesManagerDelegate) {
-        if let index = self.delegates.index(where: {$0 === delegate}) {
+        if let index = self.delegates.firstIndex(where: {$0 === delegate}) {
             self.delegates.remove(at: index)
         }
     }

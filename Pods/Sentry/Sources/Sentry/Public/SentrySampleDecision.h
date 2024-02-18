@@ -1,4 +1,5 @@
 #import <Foundation/Foundation.h>
+
 /**
  * Trace sample decision flag.
  */
@@ -18,5 +19,3 @@ typedef NS_ENUM(NSUInteger, SentrySampleDecision) {
      */
     kSentrySampleDecisionNo
 };
-
-static NSString *_Nonnull const SentrySampleDecisionNames[] = { @"undecided", @"true", @"false" };

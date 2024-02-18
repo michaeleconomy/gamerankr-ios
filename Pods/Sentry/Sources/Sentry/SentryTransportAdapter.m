@@ -27,11 +27,6 @@ SentryTransportAdapter ()
     return self;
 }
 
-- (void)sendEvent:(SentryEvent *)event attachments:(NSArray<SentryAttachment *> *)attachments
-{
-    [self sendEvent:event traceContext:nil attachments:attachments];
-}
-
 - (void)sendEvent:(SentryEvent *)event
           session:(SentrySession *)session
       attachments:(NSArray<SentryAttachment *> *)attachments
@@ -100,6 +95,11 @@ SentryTransportAdapter ()
 - (void)recordLostEvent:(SentryDataCategory)category reason:(SentryDiscardReason)reason
 {
     [self.transport recordLostEvent:category reason:reason];
+}
+
+- (void)flush:(NSTimeInterval)timeout
+{
+    [self.transport flush:timeout];
 }
 
 - (NSMutableArray<SentryEnvelopeItem *> *)buildEnvelopeItems:(SentryEvent *)event

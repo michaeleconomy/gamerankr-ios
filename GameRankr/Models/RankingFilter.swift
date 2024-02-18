@@ -15,7 +15,7 @@ class RankingFilter {
         }
     }
     
-    func apply(rankings: [RankingWithGame]) -> [RankingWithGame] {
+    func apply(rankings: [Api.RankingWithGame]) -> [Api.RankingWithGame] {
         return rankings.filter({ ranking in
             if (!filterShelves(ranking)) {
                 return false
@@ -27,7 +27,7 @@ class RankingFilter {
         })
     }
     
-    private func filterShelves(_ ranking: RankingWithGame) -> Bool {
+    private func filterShelves(_ ranking: Api.RankingWithGame) -> Bool {
         if (!shelves.isEmpty) {
             let onShelf = ranking.fragments.rankingBasic.shelves.contains(where: { shelf in
                 return shelves.contains(shelf.fragments.shelfBasic.name)
@@ -39,7 +39,7 @@ class RankingFilter {
         return true
     }
     
-    private func filterText(_ ranking: RankingWithGame) -> Bool {
+    private func filterText(_ ranking: Api.RankingWithGame) -> Bool {
         let text = text ?? ""
         if text == "" {
             return true

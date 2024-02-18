@@ -8,8 +8,8 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
     @IBOutlet weak var noGamesLabel: UILabel!
     @IBOutlet weak var tableView: UITableView!
     
-    var results = [GameBasic]()
-    var nextPage: String?
+    var results = [Api.GameBasic]()
+    var nextPage = GraphQLNullable<String>.none
     var lastQuery: String?
     var currentApiTask: Cancellable?
     var shouldClearSearchOnResults = false
@@ -41,7 +41,7 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
         secondaryText += game.ports.map{$0.platform.shortName}.joined(separator: ", ")
         cell.secondaryLabel?.text = secondaryText
         let port = game.ports.first
-        if let imageUrl = port?.smallImageUrl {
+        if let imageUrl = port?.small_image_url {
             cell.fixedSizeImageView?.kf.indicatorType = .activity
             cell.fixedSizeImageView?.kf.setImage(with: URL(string: imageUrl)!, placeholder: PlaceholderImages.game, completionHandler: {
                 (result) in
@@ -63,10 +63,10 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
             shouldClearSearchOnResults = true
             lastQuery = query
         }
-        var nextPage: String?
+        var nextPage = GraphQLNullable<String>.none
         if (getNextPage) {
             nextPage = self.nextPage
-            nextPage = nil
+            self.nextPage = .none
         }
         currentApiTask = api.search(query: lastQuery!, after: nextPage, delegate: self)
         
@@ -90,7 +90,7 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
         }
     }
     
-    func handleAPISearch(results: [GameBasic], nextPage: String?) {
+    func handleAPISearch(results: [Api.GameBasic], nextPage: GraphQLNullable<String>) {
         if (shouldClearSearchOnResults) {
             shouldClearSearchOnResults = false
             self.results.removeAll()

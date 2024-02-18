@@ -1,16 +1,16 @@
 import Foundation
 
 protocol APIPlatformsDelegate: AuthenticatedAPIErrorDelegate {
-    func handleAPI(platforms: [PlatformBasic], nextPage: String?)
+    func handleAPI(platforms: [Api.PlatformBasic], nextPage: String?)
 }
 
 extension GameRankrAPI {
     
-    func platforms(after: String? = nil, delegate: APIPlatformsDelegate) {
-        apollo.fetch(query: PlatformsQuery(after: after)) { (result) in
+    func platforms(after: GraphQLNullable<String> = nil, delegate: APIPlatformsDelegate) {
+        apollo.fetch(query: Api.PlatformsQuery(after: after)) { (result) in
             if (!self.handleApolloApiErrors(result, delegate: delegate)) { return }
             guard let data = try? result.get().data else { return }
-            let platformEdges = data!.platforms
+            let platformEdges = data.platforms
             var nextPage : String?
             if (platformEdges.pageInfo.hasNextPage){
                 nextPage = platformEdges.pageInfo.endCursor
@@ -20,10 +20,10 @@ extension GameRankrAPI {
     }
     
     func featuredPlatforms(delegate: APIPlatformsDelegate) {
-        apollo.fetch(query: FeaturedPlatformsQuery()) { (result) in
+        apollo.fetch(query: Api.FeaturedPlatformsQuery()) { (result) in
             if (!self.handleApolloApiErrors(result, delegate: delegate)) { return }
             guard let data = try? result.get().data else { return }
-            let platforms = data!.platforms
+            let platforms = data.platforms
             delegate.handleAPI(platforms: platforms.map{$0.fragments.platformBasic}, nextPage: nil)
         }
     }

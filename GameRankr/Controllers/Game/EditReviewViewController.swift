@@ -1,7 +1,7 @@
 import UIKit
 
 class EditReviewViewController : UIViewController, UITextViewDelegate {
-    var ranking : RankingWithGame?
+    var ranking : Api.RankingWithGame?
     
     @IBOutlet weak var saveButton: UIBarButtonItem!
     @IBOutlet weak var reviewView: UITextView!
@@ -44,7 +44,7 @@ class EditReviewViewController : UIViewController, UITextViewDelegate {
     
     @objc func saveButtonClick(sender: UIButton) {
         MyGamesManager.sharedInstance.rankPort(portId: ranking!.fragments.rankingBasic.port?.id ?? "0", review: reviewView.text)
-        ranking?.fragments.rankingBasic.review = reviewView.text
+//        ranking?.fragments.rankingBasic.review = reviewView.text
         navigationController!.popViewController(animated: true)
     }
 }

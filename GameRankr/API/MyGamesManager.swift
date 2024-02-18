@@ -1,6 +1,5 @@
 import Foundation
 import Apollo
-
 protocol APIMyGamesManagerDelegate : AuthenticatedAPIErrorDelegate, AnyObject {
     func handleUpdates()
 }
@@ -8,9 +7,9 @@ protocol APIMyGamesManagerDelegate : AuthenticatedAPIErrorDelegate, AnyObject {
 class MyGamesManager : APIMyGamesDelegate, APIRankDelegate, APIDestroyRankingDelegate {
     static let sharedInstance = MyGamesManager()
     
-    var rankings : [RankingWithGame]
-    var rankingsLoading : [RankingWithGame]?
-    var rankingsByGameId = [GraphQLID:RankingWithGame]()
+    var rankings : [Api.RankingWithGame]
+    var rankingsLoading : [Api.RankingWithGame]?
+    var rankingsByGameId = [Api.ID:Api.RankingWithGame]()
     var rankingsWasUnpopulated = false
     
     var delegates = [APIMyGamesManagerDelegate]()
@@ -49,12 +48,12 @@ class MyGamesManager : APIMyGamesDelegate, APIRankDelegate, APIDestroyRankingDel
             return
         }
         self.loadingCount += 1
-        rankingsLoading = [RankingWithGame]()
+        rankingsLoading = [Api.RankingWithGame]()
         api.myGames(delegate: self)
     }
     
     func clear() {
-        rankings = [RankingWithGame]()
+        rankings = [Api.RankingWithGame]()
         LocalSQLiteManager.sharedInstance.clearRankings()
         notifyDelegates()
         rankingsWasUnpopulated = true
@@ -69,12 +68,12 @@ class MyGamesManager : APIMyGamesDelegate, APIRankDelegate, APIDestroyRankingDel
     }
     
     func unregister(delegate: APIMyGamesManagerDelegate) {
-        if let index = self.delegates.index(where: {$0 === delegate}) {
+        if let index = self.delegates.firstIndex(where: {$0 === delegate}) {
             self.delegates.remove(at: index)
         }
     }
     
-    subscript(index : Int) -> RankingWithGame? {
+    subscript(index : Int) -> Api.RankingWithGame? {
         return rankings[index]
     }
     
@@ -82,21 +81,41 @@ class MyGamesManager : APIMyGamesDelegate, APIRankDelegate, APIDestroyRankingDel
         return rankings.count
     }
     
-    func getRanking(gameId : GraphQLID) -> RankingWithGame? {
+    func getRanking(gameId : Api.ID) -> Api.RankingWithGame? {
         return rankingsByGameId[gameId]
     }
     
-    func rankPort(portId: GraphQLID, ranking: Int? = nil, removeRanking: Bool = false, review: String? = nil, addShelfId: GraphQLID? = nil, removeShelfId: GraphQLID? = nil) {
+    func rankPort(portId: Api.ID, ranking: Int? = nil, removeRanking: Bool = false, review: String? = nil, addShelfId: Api.ID? = nil, removeShelfId: Api.ID? = nil) {
         loadingCount += 1
-        api.rankPort(portId: portId, ranking: ranking, removeRanking: removeRanking, review: review, addShelfId: addShelfId, removeShelfId: removeShelfId, delegate: self)
+        var removeRankingN = GraphQLNullable<Bool>.none
+        if removeRanking {
+            removeRankingN = .some(true)
+        }
+        var rankingN = GraphQLNullable<Int>.none
+        if let ranking {
+            rankingN = .some(ranking)
+        }
+        var reviewN = GraphQLNullable<String>.none
+        if let review {
+            reviewN = .some(review)
+        }
+        var addShelfIdN = GraphQLNullable<Api.ID>.none
+        if let addShelfId {
+            addShelfIdN = .some(addShelfId)
+        }
+        var removeShelfIdN = GraphQLNullable<Api.ID>.none
+        if let removeShelfId {
+            removeShelfIdN = .some(removeShelfId)
+        }
+        api.rankPort(portId: portId, ranking: rankingN, removeRanking: removeRankingN, review: reviewN, addShelfId: addShelfIdN, removeShelfId: removeShelfIdN, delegate: self)
     }
     
-    func destroyRanking(portId: GraphQLID) {
+    func destroyRanking(portId: Api.ID) {
         loadingCount += 1
         api.destroyRanking(portId: portId, delegate: self)
     }
     
-    func handleAPIMyGames(rankings: [RankingWithGame], nextPage: String?) {
+    func handleAPIMyGames(rankings: [Api.RankingWithGame], nextPage: GraphQLNullable<String>) {
         if (!rankings.isEmpty) {
             rankingsLoading!.append(contentsOf: rankings)
             if (rankingsWasUnpopulated) {
@@ -121,7 +140,7 @@ class MyGamesManager : APIMyGamesDelegate, APIRankDelegate, APIDestroyRankingDel
     private func doneLoading() {
         loadingCount -= 1
         if (!rankingsWasUnpopulated) {
-            var rankingsByGameIdLoading = [GraphQLID: RankingWithGame]()
+            var rankingsByGameIdLoading = [Api.ID: Api.RankingWithGame]()
             for ranking in rankingsLoading! {
                 guard let game = ranking.game else {
                     continue
@@ -135,11 +154,11 @@ class MyGamesManager : APIMyGamesDelegate, APIRankDelegate, APIDestroyRankingDel
         rankingsWasUnpopulated = false
         
         self.rankingsLoading = nil
-        LocalSQLiteManager.sharedInstance.persist(rankings: rankings)
+//        LocalSQLiteManager.sharedInstance.persist(rankings: rankings)
         notifyDelegates()
     }
     
-    private func addRanking(_ ranking: RankingWithGame) {
+    private func addRanking(_ ranking: Api.RankingWithGame) {
         guard let game = ranking.game else {
             return
         }
@@ -151,27 +170,27 @@ class MyGamesManager : APIMyGamesDelegate, APIRankDelegate, APIDestroyRankingDel
         }
     }
     
-    func handleAPI(ranking: RankingWithGame) {
+    func handleAPI(ranking: Api.RankingWithGame) {
         guard let game = ranking.game else {
             return
         }
         deleteRankingFor(gameId: game.fragments.gameBasic.id)
         addRanking(ranking)
         LocalSQLiteManager.sharedInstance.delete(rankingId: ranking.fragments.rankingBasic.id)
-        LocalSQLiteManager.sharedInstance.persist(ranking: ranking)
+//        LocalSQLiteManager.sharedInstance.persist(ranking: ranking)
         loadingCount -= 1
         notifyDelegates()
     }
     
-    private func deleteRankingFor(gameId: GraphQLID) {
+    private func deleteRankingFor(gameId: Api.ID) {
         if let oldRanking = rankingsByGameId.removeValue(forKey: gameId) {
-            if let oldIndex = rankings.index(where: {$0.fragments.rankingBasic.id == oldRanking.fragments.rankingBasic.id}) {
+            if let oldIndex = rankings.firstIndex(where: {$0.fragments.rankingBasic.id == oldRanking.fragments.rankingBasic.id}) {
                 rankings.remove(at: oldIndex)
             }
         }
         
         if (rankingsLoading != nil) {
-            if let oldIndex = rankingsLoading!.index(where: {$0.game?.fragments.gameBasic.id == gameId}) {
+            if let oldIndex = rankingsLoading!.firstIndex(where: {$0.game?.fragments.gameBasic.id == gameId}) {
                 rankingsLoading!.remove(at: oldIndex)
             }
         }
@@ -193,7 +212,7 @@ class MyGamesManager : APIMyGamesDelegate, APIRankDelegate, APIDestroyRankingDel
         delegates.forEach{$0.handleAPI(error: error)}
     }
     
-    func handleAPIRankingDestruction(ranking: DestroyRankingMutation.Data.Ranking) {
+    func handleAPIRankingDestruction(ranking: Api.DestroyRankingMutation.Data.Ranking) {
         loadingCount -= 1
         
         guard let game = ranking.game else {

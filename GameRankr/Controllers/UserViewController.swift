@@ -23,10 +23,10 @@ class UserViewController : UIViewController, APIUserDetailDelegate, FollowChange
     
     
     
-    var rankings = [RankingWithGame]()
-    var nextPage: String?
+    var rankings = [Api.RankingWithGame]()
+    var nextPage = GraphQLNullable<String>.none
     
-    var userId: GraphQLID? {
+    var userId: Api.ID? {
         didSet {
             if let userId = userId {
                 userDetail = nil
@@ -40,7 +40,7 @@ class UserViewController : UIViewController, APIUserDetailDelegate, FollowChange
     }
     
     
-    var userDetail: UserDetail? {
+    var userDetail: Api.UserDetail? {
         didSet {
             if let userDetail = userDetail {
                 if (user == nil) {
@@ -52,7 +52,7 @@ class UserViewController : UIViewController, APIUserDetailDelegate, FollowChange
             }
         }
     }
-    var user: UserBasic? {
+    var user: Api.UserBasic? {
         didSet {
             if (user != nil) {
                 if (userDetail?.fragments.userBasic.id != user!.id) {
@@ -116,7 +116,7 @@ class UserViewController : UIViewController, APIUserDetailDelegate, FollowChange
             return
         }
         
-        title = user.realName
+        title = user.real_name
         imageView?.kf.setImage(with: largePhotoUrl(), placeholder: PlaceholderImages.user)
         guard let userDetail = userDetail else {
             followerCountButton?.setTitle("?", for: .normal)
@@ -207,7 +207,7 @@ class UserViewController : UIViewController, APIUserDetailDelegate, FollowChange
     }
     
     func largePhotoUrl() -> URL {
-        return URL(string: "\(user!.photoUrl)?type=large")!
+        return URL(string: "\(user!.photo_url)?type=large")!
     }
     
     
@@ -223,7 +223,7 @@ class UserViewController : UIViewController, APIUserDetailDelegate, FollowChange
         return cell
     }
     
-    func populateCell(cell: FixedImageSizeTableCell, with rankingWithGame: RankingWithGame) {
+    func populateCell(cell: FixedImageSizeTableCell, with rankingWithGame: Api.RankingWithGame) {
         let game = rankingWithGame.game
         let rankingBasic = rankingWithGame.fragments.rankingBasic
         let port = rankingBasic.port
@@ -317,7 +317,7 @@ class UserViewController : UIViewController, APIUserDetailDelegate, FollowChange
         }
     }
     
-    func handleAPI(userDetail: UserDetail, rankings: [RankingWithGame], nextPage: String?) {
+    func handleAPI(userDetail: Api.UserDetail, rankings: [Api.RankingWithGame], nextPage: GraphQLNullable<String>) {
         self.userDetail = userDetail
         self.rankings = rankings
         self.nextPage = nextPage

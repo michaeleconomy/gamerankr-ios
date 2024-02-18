@@ -16,7 +16,7 @@ class MyGamesViewController: UIViewController, UITableViewDataSource, APIMyGames
         }
     }
     
-    var filteredRankings: [RankingWithGame]?
+    var filteredRankings: [Api.RankingWithGame]?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -65,7 +65,7 @@ class MyGamesViewController: UIViewController, UITableViewDataSource, APIMyGames
         super.viewWillDisappear(animated)
     }
     
-    func getCurrentRankingArray() -> [RankingWithGame] {
+    func getCurrentRankingArray() -> [Api.RankingWithGame] {
         if (filter == nil) {
             return MyGamesManager.sharedInstance.rankings
         }

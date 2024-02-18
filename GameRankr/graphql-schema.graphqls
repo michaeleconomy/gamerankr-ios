@@ -1,0 +1,412 @@
+"""
+A directive used by the Apollo iOS client to annotate operations or fragments that should be used exclusively for generating local cache mutations instead of as standard operations.
+"""
+directive @apollo_client_ios_localCacheMutation on QUERY | MUTATION | SUBSCRIPTION | FRAGMENT_DEFINITION
+
+"""
+A directive used by the Apollo iOS code generation engine to generate custom import statements in operation or fragment definition files. An import statement to import a module with the name provided in the `module` argument will be added to the generated definition file.
+"""
+directive @import(
+  """The name of the module to import."""
+  module: String!
+) repeatable on QUERY | MUTATION | SUBSCRIPTION | FRAGMENT_DEFINITION
+
+type Comment {
+  comment: String!
+  created_at: String!
+  id: ID!
+  resource: Ranking!
+  user: User!
+}
+
+"""The connection type for Comment."""
+type CommentConnection {
+  """A list of edges."""
+  edges: [CommentEdge]
+
+  """A list of nodes."""
+  nodes: [Comment]
+
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+}
+
+"""An edge in a connection."""
+type CommentEdge {
+  """A cursor for use in pagination."""
+  cursor: String!
+
+  """The item at the end of the edge."""
+  node: Comment
+}
+
+type Game {
+  averageRanking: Float!
+  description: String
+  friend_rankings: [Ranking!]!
+  id: ID!
+  initiallyReleasedAt: String
+  ports: [Port!]!
+  rankings(
+    """Returns the elements in the list that come after the specified cursor."""
+    after: String
+
+    """
+    Returns the elements in the list that come before the specified cursor.
+    """
+    before: String
+
+    """Returns the first _n_ elements from the list."""
+    first: Int
+
+    """Returns the last _n_ elements from the list."""
+    last: Int
+  ): RankingConnection!
+  rankingsCount: Int!
+  title: String!
+  url: String!
+}
+
+"""The connection type for Game."""
+type GameConnection {
+  """A list of edges."""
+  edges: [GameEdge]
+
+  """A list of nodes."""
+  nodes: [Game]
+
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+}
+
+"""An edge in a connection."""
+type GameEdge {
+  """A cursor for use in pagination."""
+  cursor: String!
+
+  """The item at the end of the edge."""
+  node: Game
+}
+
+type Mutation {
+  comment(resource_type: String!, resource_id: ID!, comment: String!): Comment!
+  destroy_comment(id: ID!): Comment!
+  destroy_ranking(port_id: ID!): Ranking!
+  flag(text: String, resource_id: ID!, resource_type: String!): Boolean!
+  follow(userId: ID!): Boolean!
+  rank_port(port_id: ID!, ranking: Int, remove_ranking: Boolean, review: String, add_shelf_id: ID, remove_shelf_id: ID): Ranking!
+  unfollow(userId: ID!): Boolean!
+}
+
+"""Information about pagination in a connection."""
+type PageInfo {
+  """When paginating forwards, the cursor to continue."""
+  endCursor: String
+
+  """When paginating forwards, are there more items?"""
+  hasNextPage: Boolean!
+
+  """When paginating backwards, are there more items?"""
+  hasPreviousPage: Boolean!
+
+  """When paginating backwards, the cursor to continue."""
+  startCursor: String
+}
+
+type Platform {
+  id: ID!
+  name: String!
+  shortName: String!
+}
+
+"""The connection type for Platform."""
+type PlatformConnection {
+  """A list of edges."""
+  edges: [PlatformEdge]
+
+  """A list of nodes."""
+  nodes: [Platform]
+
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+}
+
+"""An edge in a connection."""
+type PlatformEdge {
+  """A cursor for use in pagination."""
+  cursor: String!
+
+  """The item at the end of the edge."""
+  node: Platform
+}
+
+type Port {
+  averageRanking: Float!
+  description: String
+  game: Game!
+  id: ID!
+  large_image_url: String
+  medium_image_url: String
+  platform: Platform!
+  rankings: [Ranking!]!
+  rankingsCount: Int!
+  releasedAt: String
+  small_image_url: String
+  title: String!
+}
+
+type Query {
+  comments(
+    """Returns the elements in the list that come after the specified cursor."""
+    after: String
+
+    """
+    Returns the elements in the list that come before the specified cursor.
+    """
+    before: String
+
+    """Returns the first _n_ elements from the list."""
+    first: Int
+
+    """Returns the last _n_ elements from the list."""
+    last: Int
+    resource_type: String!
+    resource_id: ID!
+  ): CommentConnection!
+  featured_platforms: [Platform!]!
+  friends(
+    """Returns the elements in the list that come after the specified cursor."""
+    after: String
+
+    """
+    Returns the elements in the list that come before the specified cursor.
+    """
+    before: String
+
+    """Returns the first _n_ elements from the list."""
+    first: Int
+
+    """Returns the last _n_ elements from the list."""
+    last: Int
+  ): UserConnection!
+  game(id: ID!): Game!
+  me: User!
+
+  """get games the current user has added"""
+  my_games(
+    """Returns the elements in the list that come after the specified cursor."""
+    after: String
+
+    """
+    Returns the elements in the list that come before the specified cursor.
+    """
+    before: String
+
+    """Returns the first _n_ elements from the list."""
+    first: Int
+
+    """Returns the last _n_ elements from the list."""
+    last: Int
+  ): RankingConnection!
+  my_shelves: [Shelf!]!
+  platforms(
+    """Returns the elements in the list that come after the specified cursor."""
+    after: String
+
+    """
+    Returns the elements in the list that come before the specified cursor.
+    """
+    before: String
+
+    """Returns the first _n_ elements from the list."""
+    first: Int
+
+    """Returns the last _n_ elements from the list."""
+    last: Int
+  ): PlatformConnection!
+  popular_games: [Game!]!
+  recent_reviews(
+    """Returns the elements in the list that come after the specified cursor."""
+    after: String
+
+    """
+    Returns the elements in the list that come before the specified cursor.
+    """
+    before: String
+
+    """Returns the first _n_ elements from the list."""
+    first: Int
+
+    """Returns the last _n_ elements from the list."""
+    last: Int
+  ): RankingConnection!
+
+  """get games matching the query string"""
+  search(
+    """Returns the elements in the list that come after the specified cursor."""
+    after: String
+
+    """
+    Returns the elements in the list that come before the specified cursor.
+    """
+    before: String
+
+    """Returns the first _n_ elements from the list."""
+    first: Int
+
+    """Returns the last _n_ elements from the list."""
+    last: Int
+    query: String!
+    autocomplete: Boolean
+  ): GameConnection!
+  shelf(id: ID!): Shelf!
+  updates(
+    """Returns the elements in the list that come after the specified cursor."""
+    after: String
+
+    """
+    Returns the elements in the list that come before the specified cursor.
+    """
+    before: String
+
+    """Returns the first _n_ elements from the list."""
+    first: Int
+
+    """Returns the last _n_ elements from the list."""
+    last: Int
+  ): RankingConnection!
+  user(id: ID!): User!
+}
+
+type Ranking {
+  comments_count: Int!
+  created_at: String!
+  game: Game
+  id: ID!
+  port: Port
+  ranking: Int
+  review: String
+  shelves: [Shelf!]!
+  updated_at: String!
+  url: String!
+  user: User
+  verb: String!
+}
+
+"""The connection type for Ranking."""
+type RankingConnection {
+  """A list of edges."""
+  edges: [RankingEdge]
+
+  """A list of nodes."""
+  nodes: [Ranking]
+
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+}
+
+"""An edge in a connection."""
+type RankingEdge {
+  """A cursor for use in pagination."""
+  cursor: String!
+
+  """The item at the end of the edge."""
+  node: Ranking
+}
+
+type Shelf {
+  id: ID!
+  name: String!
+  rankings(
+    """Returns the elements in the list that come after the specified cursor."""
+    after: String
+
+    """
+    Returns the elements in the list that come before the specified cursor.
+    """
+    before: String
+
+    """Returns the first _n_ elements from the list."""
+    first: Int
+
+    """Returns the last _n_ elements from the list."""
+    last: Int
+  ): RankingConnection!
+}
+
+type User {
+  followerCount: Int!
+  followers(
+    """Returns the elements in the list that come after the specified cursor."""
+    after: String
+
+    """
+    Returns the elements in the list that come before the specified cursor.
+    """
+    before: String
+
+    """Returns the first _n_ elements from the list."""
+    first: Int
+
+    """Returns the last _n_ elements from the list."""
+    last: Int
+  ): UserConnection!
+  following(
+    """Returns the elements in the list that come after the specified cursor."""
+    after: String
+
+    """
+    Returns the elements in the list that come before the specified cursor.
+    """
+    before: String
+
+    """Returns the first _n_ elements from the list."""
+    first: Int
+
+    """Returns the last _n_ elements from the list."""
+    last: Int
+  ): UserConnection!
+  followingCount: Int!
+  followingUserIds: [ID!]!
+  id: ID!
+  photo_url: String!
+  rankings(
+    """Returns the elements in the list that come after the specified cursor."""
+    after: String
+
+    """
+    Returns the elements in the list that come before the specified cursor.
+    """
+    before: String
+
+    """Returns the first _n_ elements from the list."""
+    first: Int
+
+    """Returns the last _n_ elements from the list."""
+    last: Int
+  ): RankingConnection!
+  rankingsCount: Int!
+  real_name: String!
+  shelves: [Shelf!]!
+}
+
+"""The connection type for User."""
+type UserConnection {
+  """A list of edges."""
+  edges: [UserEdge]
+
+  """A list of nodes."""
+  nodes: [User]
+
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+}
+
+"""An edge in a connection."""
+type UserEdge {
+  """A cursor for use in pagination."""
+  cursor: String!
+
+  """The item at the end of the edge."""
+  node: User
+}

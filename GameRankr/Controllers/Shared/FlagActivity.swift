@@ -15,9 +15,9 @@ class FlagActivity: UIActivity {
         }
     }
     
-    override var activityType: UIActivityType? {
+    override var activityType: UIActivity.ActivityType? {
         get {
-            return UIActivityType("flag")
+            return UIActivity.ActivityType("flag")
         }
     }
     

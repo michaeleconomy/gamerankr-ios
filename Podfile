@@ -5,12 +5,8 @@ target 'GameRankr' do
   # Comment the next line if you're not using Swift and don't want to use dynamic frameworks
   use_frameworks!
 
-  pod 'FacebookCore'
-  pod 'FacebookLogin'
-  pod 'FacebookShare'
-  
-  pod 'Apollo'
+#  pod 'Apollo'
   pod 'Kingfisher'
-  pod 'SQLite.swift'
-  pod 'Sentry', :git => 'https://github.com/getsentry/sentry-cocoa.git', :tag => '7.23.0'
+#  pod 'SQLite.swift'
+  pod 'Sentry'
 end

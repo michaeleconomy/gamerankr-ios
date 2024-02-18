@@ -1,4 +1,5 @@
 import Foundation
+import UIKit
 import Apollo
 
 let api = GameRankrAPI()
@@ -20,28 +21,28 @@ extension AuthenticatedAPIErrorDelegate where Self: UIViewController {
 }
 
 protocol APISearchResultsDelegate: AuthenticatedAPIErrorDelegate {
-    func handleAPISearch(results: [GameBasic], nextPage: String?)
+    func handleAPISearch(results: [Api.GameBasic], nextPage: GraphQLNullable<String>)
 }
 
 protocol APIGameDetailDelegate: AuthenticatedAPIErrorDelegate {
-    func handleAPI(gameDetail: GameQuery.Data.Game, rankings: [RankingWithUser], friendRankings: [RankingWithUser], nextPage: String?)
+    func handleAPI(gameDetail: Api.GameQuery.Data.Game, rankings: [Api.RankingWithUser], friendRankings: [Api.RankingWithUser], nextPage: GraphQLNullable<String>)
 }
 
 
 protocol APIUserDetailDelegate: AuthenticatedAPIErrorDelegate {
-    func handleAPI(userDetail: UserDetail, rankings: [RankingWithGame], nextPage: String?)
+    func handleAPI(userDetail: Api.UserDetail, rankings: [Api.RankingWithGame], nextPage: GraphQLNullable<String>)
 }
 
 protocol APIShelfDelegate: AuthenticatedAPIErrorDelegate {
-    func handleAPI(rankings: [RankingWithGame], nextPage: String?)
+    func handleAPI(rankings: [Api.RankingWithGame], nextPage: GraphQLNullable<String>)
 }
 
 protocol APIUpdatesDelegate: AuthenticatedAPIErrorDelegate {
-    func handleAPI(updates: [RankingFull], nextPage: String?)
+    func handleAPI(updates: [Api.RankingFull], nextPage: GraphQLNullable<String>)
 }
 
 protocol APIShelvesDelegate: AuthenticatedAPIErrorDelegate {
-    func handleAPI(shelves: [MyShelvesQuery.Data.Shelf])
+    func handleAPI(shelves: [Api.MyShelvesQuery.Data.Shelf])
 }
 
 class GameRankrAPI {
@@ -59,7 +60,7 @@ class GameRankrAPI {
     let base_url = "https://www.gamerankr.com"
     internal var authDelegates = [APIAuthenticationDelegate]()
     public internal(set) var token: String?
-    public internal(set) var currentUserId: GraphQLID?
+    public internal(set) var currentUserId: Api.ID?
     private(set) var apollo: ApolloClient
     init() {
         let token = LocalSQLiteManager.sharedInstance.getMisc(key: "token")
@@ -90,76 +91,70 @@ class GameRankrAPI {
     }
     
     
-    func search(query: String, after: String? = nil, delegate: APISearchResultsDelegate) -> Cancellable {
-        return apollo.fetch(query: SearchQuery(query: query, after: after)) { (result) in
+    func search(query: String, after: GraphQLNullable<String> = nil, delegate: APISearchResultsDelegate) -> Cancellable {
+        return apollo.fetch(query: Api.SearchQuery(query: query, after: after)) { (result) in
             if (!self.handleApolloApiErrors(result, delegate: delegate)) { return }
             guard let data = try? result.get().data else {return}
-            guard let data = data else {
-                delegate.handleAPI(error: "Error getting data from result")
-                return
-            }
             let games = data.search
-            var nextPage : String?
+            var nextPage = GraphQLNullable<String>.none
             if (games.pageInfo.hasNextPage){
-                nextPage = games.pageInfo.endCursor
+                if let cursor = games.pageInfo.endCursor {
+                    nextPage = .some(cursor)
+                }
             }
             let results = games.edges!.map{$0!.game!.fragments.gameBasic}
             delegate.handleAPISearch(results: results, nextPage: nextPage)
         }
     }
     
-    func gameDetail(id: GraphQLID, delegate: APIGameDetailDelegate) {
-        apollo.fetch(query: GameQuery(id: id)) { (result) in
+    func gameDetail(id: Api.ID, delegate: APIGameDetailDelegate) {
+        apollo.fetch(query: Api.GameQuery(id: id)) { (result) in
             if (!self.handleApolloApiErrors(result, delegate: delegate)) { return }
             guard let data = try? result.get().data else {return}
-            guard let data = data else {
-                delegate.handleAPI(error: "Error getting data from result")
-                return
-            }
             let game = data.game
             let rankingEdges = game.rankings
             
-            var nextPage : String?
-            if (rankingEdges.pageInfo.hasNextPage == true){
-                nextPage = rankingEdges.pageInfo.endCursor
+            var nextPage = GraphQLNullable<String>.none
+            if (rankingEdges.pageInfo.hasNextPage){
+                if let cursor = rankingEdges.pageInfo.endCursor {
+                    nextPage = .some(cursor)
+                }
             }
             let rankings = rankingEdges.edges!.map{$0!.node!.fragments.rankingWithUser}
-            let friendRankings = game.friendRankings.map{$0.fragments.rankingWithUser}
+            let friendRankings = game.friend_rankings.map{$0.fragments.rankingWithUser}
             delegate.handleAPI(gameDetail: game, rankings: rankings, friendRankings: friendRankings, nextPage: nextPage)
         }
     }
     
-    func shelf(id: GraphQLID, after: String? = nil, delegate: APIShelfDelegate) {
-        apollo.fetch(query: ShelfQuery(id: id, after: after)) { (result) in
+    func shelf(id: Api.ID, after: GraphQLNullable<String> = nil, delegate: APIShelfDelegate) {
+        apollo.fetch(query: Api.ShelfQuery(id: id, after: after)) { (result) in
             if (!self.handleApolloApiErrors(result, delegate: delegate)) { return }
             guard let data = try? result.get().data else {return}
-            guard let data = data else {
-                delegate.handleAPI(error: "Error getting data from result")
-                return
-            }
             let rankingEdges = data.shelf.rankings
-            var nextPage : String?
-            if (rankingEdges.pageInfo.hasNextPage == true) {
-                nextPage = rankingEdges.pageInfo.endCursor
+            
+            var nextPage = GraphQLNullable<String>.none
+            if (rankingEdges.pageInfo.hasNextPage){
+                if let cursor = rankingEdges.pageInfo.endCursor {
+                    nextPage = .some(cursor)
+                }
             }
             let rankings = rankingEdges.edges!.map{$0!.ranking!.fragments.rankingWithGame}
             delegate.handleAPI(rankings: rankings, nextPage: nextPage)
         }
     }
     
-    func userDetail(id: GraphQLID, delegate: APIUserDetailDelegate) {
-        apollo.fetch(query: UserQuery(id: id)) { (result) in
+    func userDetail(id: Api.ID, delegate: APIUserDetailDelegate) {
+        apollo.fetch(query: Api.UserQuery(id: id)) { (result) in
             if (!self.handleApolloApiErrors(result, delegate: delegate)) { return }
             guard let data = try? result.get().data else {return}
-            guard let data = data else {
-                delegate.handleAPI(error: "Error getting data from result")
-                return
-            }
             let user = data.user
             let rankingEdges = user.fragments.userDetail.rankings
-            var nextPage : String?
-            if (rankingEdges.pageInfo.hasNextPage == true){
-                nextPage = rankingEdges.pageInfo.endCursor
+            
+            var nextPage = GraphQLNullable<String>.none
+            if (rankingEdges.pageInfo.hasNextPage){
+                if let cursor = rankingEdges.pageInfo.endCursor {
+                    nextPage = .some(cursor)
+                }
             }
             let rankings = rankingEdges.edges!.map{$0!.ranking!.fragments.rankingWithGame}
             delegate.handleAPI(userDetail: user.fragments.userDetail, rankings: rankings, nextPage: nextPage)
@@ -167,18 +162,17 @@ class GameRankrAPI {
     }
 
     func me(delegate: APIUserDetailDelegate) {
-        apollo.fetch(query: MeQuery()) { (result) in
+        apollo.fetch(query: Api.MeQuery()) { (result) in
             if (!self.handleApolloApiErrors(result, delegate: delegate)) { return }
             guard let data = try? result.get().data else {return}
-            guard let data = data else {
-                delegate.handleAPI(error: "Error getting data from result")
-                return
-            }
             let user = data.user
             let rankingEdges = user.fragments.userDetail.rankings
-            var nextPage : String?
+            
+            var nextPage = GraphQLNullable<String>.none
             if (rankingEdges.pageInfo.hasNextPage){
-                nextPage = rankingEdges.pageInfo.endCursor
+                if let cursor = rankingEdges.pageInfo.endCursor {
+                    nextPage = .some(cursor)
+                }
             }
             let rankings = rankingEdges.edges!.map{$0!.ranking!.fragments.rankingWithGame}
             delegate.handleAPI(userDetail: user.fragments.userDetail, rankings: rankings, nextPage: nextPage)
@@ -186,29 +180,25 @@ class GameRankrAPI {
     }
     
     func myShelves(delegate: APIShelvesDelegate) {
-        apollo.fetch(query: MyShelvesQuery(), cachePolicy: .fetchIgnoringCacheData) { (result) in
+        apollo.fetch(query: Api.MyShelvesQuery(), cachePolicy: .fetchIgnoringCacheData) { (result) in
             if (!self.handleApolloApiErrors(result, delegate: delegate)) { return }
             guard let data = try? result.get().data else {return}
-            guard let data = data else {
-                delegate.handleAPI(error: "Error getting data from result")
-                return
-            }
             delegate.handleAPI(shelves: data.shelves)
         }
     }
     
-    func updates(after: String? = nil, delegate: APIUpdatesDelegate) {
-        apollo.fetch(query: UpdatesQuery(after: after)) { (result) in
+    func updates(after: GraphQLNullable<String> = nil, delegate: APIUpdatesDelegate) {
+        
+        apollo.fetch(query: Api.UpdatesQuery(after: after)) { (result) in
             if (!self.handleApolloApiErrors(result, delegate: delegate)) { return }
             guard let data = try? result.get().data else {return}
-            guard let data = data else {
-                delegate.handleAPI(error: "Error getting data from result")
-                return
-            }
             let updates = data.updates
-            var nextPage : String?
+            
+            var nextPage = GraphQLNullable<String>.none
             if (updates.pageInfo.hasNextPage){
-                nextPage = updates.pageInfo.endCursor
+                if let cursor = updates.pageInfo.endCursor {
+                    nextPage = .some(cursor)
+                }
             }
             delegate.handleAPI(updates: updates.edges!.map{$0!.ranking!.fragments.rankingFull}, nextPage: nextPage)
         }
@@ -262,6 +252,8 @@ class GameRankrAPI {
 }
 
 class GameRankrAuthInterceptor : ApolloInterceptor {
+    var id: String = "GameRankrAuthInterceptor"
+    
     func interceptAsync<Operation>(chain: RequestChain, request: HTTPRequest<Operation>, response: HTTPResponse<Operation>?, completion: @escaping (Result<GraphQLResult<Operation.Data>, Error>) -> Void) where Operation : GraphQLOperation {
         if (api.token != nil) {
             request.addHeader(name: "api-token", value: api.token!)
@@ -271,6 +263,8 @@ class GameRankrAuthInterceptor : ApolloInterceptor {
 }
 
 class GameRankrResponseInterceptor : ApolloInterceptor {
+    var id: String = "GameRankrResponseInterceptor"
+    
     func interceptAsync<Operation>(chain: RequestChain, request: HTTPRequest<Operation>, response: HTTPResponse<Operation>?, completion: @escaping (Result<GraphQLResult<Operation.Data>, Error>) -> Void) where Operation : GraphQLOperation {
         guard let httpResponse = response?.httpResponse else {
             fatalError("Response should be an HTTPURLResponse")

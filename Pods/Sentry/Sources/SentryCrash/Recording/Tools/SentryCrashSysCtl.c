@@ -1,3 +1,4 @@
+// Adapted from: https://github.com/kstenerud/KSCrash
 //
 //  SentryCrashSysCtl.m
 //
@@ -26,7 +27,7 @@
 
 #include "SentryCrashSysCtl.h"
 
-//#define SentryCrashLogger_LocalLevel TRACE
+// #define SentryCrashLogger_LocalLevel TRACE
 #include "SentryCrashLogger.h"
 
 #include <errno.h>
@@ -192,7 +193,7 @@ sentrycrashsysctl_timevalForName(const char *const name)
 }
 
 struct timeval
-sentrycrashsysctl_currentProcessStartTime()
+sentrycrashsysctl_currentProcessStartTime(void)
 {
     size_t len = 4;
     int mib[len];

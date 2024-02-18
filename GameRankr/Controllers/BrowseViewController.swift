@@ -12,8 +12,8 @@ class BrowseViewController: FullRankingDataSource, APIPopularGamesDelegate, APIR
         
     }
     
-    private var games: [GameBasic]?
-    private var nextPage: String?
+    private var games: [Api.GameBasic]?
+    private var nextPage = GraphQLNullable<String>.none
     private var fetchedUpdates = false
     
     override func viewDidLoad() {
@@ -56,8 +56,8 @@ class BrowseViewController: FullRankingDataSource, APIPopularGamesDelegate, APIR
             gameImage.addConstraint(gameImage.widthAnchor.constraint(equalToConstant: 60))
             gameImage.addConstraint(gameImage.heightAnchor.constraint(equalToConstant: 60))
             
-            if (port.smallImageUrl != nil) {
-                gameImage.kf.setImage(with: URL(string: port.smallImageUrl!)!, for: .normal, placeholder: PlaceholderImages.game)
+            if (port.small_image_url != nil) {
+                gameImage.kf.setImage(with: URL(string: port.small_image_url!)!, for: .normal, placeholder: PlaceholderImages.game)
             }
             else {
                 gameImage.setImage(PlaceholderImages.game, for: .normal)
@@ -94,7 +94,7 @@ class BrowseViewController: FullRankingDataSource, APIPopularGamesDelegate, APIR
             controller.game = ranking.fragments.rankingWithGame.game?.fragments.gameBasic
         case "gameDetail":
             let button = sender as! UIButton
-            guard let index = gamesStack.arrangedSubviews.index(of: button) else {
+            guard let index = gamesStack.arrangedSubviews.firstIndex(of: button) else {
                 unexpectedError("could not find button in gamesStack")
                 return
             }
@@ -135,7 +135,7 @@ class BrowseViewController: FullRankingDataSource, APIPopularGamesDelegate, APIR
         }
     }
     
-    func handleAPI(games: [GameBasic]) {
+    func handleAPI(games: [Api.GameBasic]) {
         self.games = games
         
         DispatchQueue.main.async {
@@ -144,7 +144,7 @@ class BrowseViewController: FullRankingDataSource, APIPopularGamesDelegate, APIR
         }
     }
     
-    func handleAPI(rankings: [RankingFull], nextPage: String?) {
+    func handleAPI(rankings: [Api.RankingFull], nextPage: GraphQLNullable<String>) {
         self.rankings.append(contentsOf: rankings)
         fetchedUpdates = true
         self.nextPage = nextPage

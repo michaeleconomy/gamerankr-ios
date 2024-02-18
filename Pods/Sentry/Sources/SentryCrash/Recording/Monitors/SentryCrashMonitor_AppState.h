@@ -1,3 +1,4 @@
+// Adapted from: https://github.com/kstenerud/KSCrash
 //
 //  SentryCrashMonitor_AppState.h
 //
@@ -66,6 +67,10 @@ typedef struct {
     /** If true, the application crashed on the previous launch. */
     bool crashedLastLaunch;
 
+    /** Total time in seconds from the crash state init to the last crash. Only contains a value
+     * bigger than zero if crashedLastLaunch is true. */
+    double durationFromCrashStateInitToLastCrash;
+
     // Live data
 
     /** If true, the application crashed on this launch. */
@@ -93,6 +98,8 @@ void sentrycrashstate_initialize(const char *stateFilePath);
  */
 bool sentrycrashstate_reset(void);
 
+const char *sentrycrashstate_filePath(void);
+
 /** Notify the crash reporter of the application active state.
  *
  * @param isActive true if the application is active, otherwise false.
@@ -116,7 +123,7 @@ void sentrycrashstate_notifyAppCrash(void);
 
 /** Read-only access into the current state.
  */
-const SentryCrash_AppState *const sentrycrashstate_currentState(void);
+const SentryCrash_AppState *sentrycrashstate_currentState(void);
 
 /** Access the Monitor API.
  */

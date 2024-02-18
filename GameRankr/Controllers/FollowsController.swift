@@ -10,14 +10,14 @@ class FollowsController : UIViewController, APIFollowersDelegate, APIFollowingDe
     @IBOutlet weak var addButton: UIBarButtonItem!
     @IBOutlet weak var followerFollowingSwitch: UISegmentedControl!
     
-    var follows = [UserBasic]()
+    var follows = [Api.UserBasic]()
     var fetchedFriends = false
-    var nextPage: String?
+    var nextPage: GraphQLNullable<String> = nil
     
     var showFollowings = true
     
-    var user: UserBasic?
-    var userId: GraphQLID?
+    var user: Api.UserBasic?
+    var userId: Api.ID?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -49,7 +49,7 @@ class FollowsController : UIViewController, APIFollowersDelegate, APIFollowingDe
     }
     
     private func configureView() {
-        title = user?.realName ?? ""
+        title = user?.real_name ?? ""
     }
     
     
@@ -71,8 +71,8 @@ class FollowsController : UIViewController, APIFollowersDelegate, APIFollowingDe
         }
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
         let user = follows[indexPath.row]
-        cell.textLabel?.text = user.realName
-        cell.imageView?.kf.setImage(with: URL(string: user.photoUrl)!, placeholder: PlaceholderImages.user, completionHandler: {
+        cell.textLabel?.text = user.real_name
+        cell.imageView?.kf.setImage(with: URL(string: user.photo_url)!, placeholder: PlaceholderImages.user, completionHandler: {
             (result) in
             cell.layoutSubviews()
         })
@@ -93,7 +93,7 @@ class FollowsController : UIViewController, APIFollowersDelegate, APIFollowingDe
         nextPage = nil
     }
     
-    func handleAPI(followers: [UserBasic], nextPage: String?) {
+    func handleAPI(followers: [Api.UserBasic], nextPage: GraphQLNullable<String>) {
         if !showFollowings {
             follows.append(contentsOf: followers)
             self.nextPage = nextPage
@@ -105,7 +105,7 @@ class FollowsController : UIViewController, APIFollowersDelegate, APIFollowingDe
         }
     }
     
-    func handleAPI(following: [UserBasic], nextPage: String?) {
+    func handleAPI(following: [Api.UserBasic], nextPage: GraphQLNullable<String>) {
         if showFollowings {
             follows.append(contentsOf: following)
             self.nextPage = nextPage

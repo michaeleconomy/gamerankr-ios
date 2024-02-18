@@ -1,4 +1,5 @@
 #import "SentryLog.h"
+#import "SentryLevelMapper.h"
 #import "SentryLogOutput.h"
 
 NS_ASSUME_NONNULL_BEGIN
@@ -11,11 +12,19 @@ NS_ASSUME_NONNULL_BEGIN
 static BOOL isDebug = YES;
 static SentryLevel diagnosticLevel = kSentryLevelError;
 static SentryLogOutput *logOutput;
+static NSObject *logConfigureLock;
+
++ (void)initialize
+{
+    logConfigureLock = [[NSObject alloc] init];
+}
 
 + (void)configure:(BOOL)debug diagnosticLevel:(SentryLevel)level
 {
-    isDebug = debug;
-    diagnosticLevel = level;
+    @synchronized(logConfigureLock) {
+        isDebug = debug;
+        diagnosticLevel = level;
+    }
 }
 
 + (void)logWithMessage:(NSString *)message andLevel:(SentryLevel)level
@@ -24,18 +33,41 @@ static SentryLogOutput *logOutput;
         logOutput = [[SentryLogOutput alloc] init];
     }
 
-    if (isDebug && level != kSentryLevelNone && level >= diagnosticLevel) {
-        [logOutput
-            log:[NSString stringWithFormat:@"Sentry - %@:: %@", SentryLevelNames[level], message]];
+    if ([self willLogAtLevel:level]) {
+        [logOutput log:[NSString stringWithFormat:@"[Sentry] [%@] %@", nameForSentryLevel(level),
+                                 message]];
     }
 }
 
-/**
- * Internal and only needed for testing.
- */
-+ (void)setLogOutput:(nullable SentryLogOutput *)output
++ (BOOL)willLogAtLevel:(SentryLevel)level
+{
+    @synchronized(logConfigureLock) {
+        return isDebug && level != kSentryLevelNone && level >= diagnosticLevel;
+    }
+}
+
+// Internal and only needed for testing.
++ (void)setLogOutput:(SentryLogOutput *)output
 {
     logOutput = output;
+}
+
+// Internal and only needed for testing.
++ (SentryLogOutput *)logOutput
+{
+    return logOutput;
+}
+
+// Internal and only needed for testing.
++ (BOOL)isDebug
+{
+    return isDebug;
+}
+
+// Internal and only needed for testing.
++ (SentryLevel)diagnosticLevel
+{
+    return diagnosticLevel;
 }
 
 @end
